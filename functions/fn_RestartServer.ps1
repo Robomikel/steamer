@@ -20,5 +20,5 @@ Function select-RestartsServer {
     Start-Countdown -Seconds 10 -Message "Restarting server"
     & "$global:currentdir\$global:server\Launch-*.ps1"
     Set-Location $global:currentdir
-    Select-Steamer
+    #Select-Steamer
 }

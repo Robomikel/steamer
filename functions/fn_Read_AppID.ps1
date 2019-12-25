@@ -17,7 +17,7 @@ Function Set-SteamInfoAppID
         Write-Host 'Entered Y'
     } else {
         Write-Host 'Entered N'
-        Select-Steamer
+        #Select-Steamer
     }
 }
 Function Read-AppID     

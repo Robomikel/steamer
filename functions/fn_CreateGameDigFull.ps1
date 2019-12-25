@@ -5,5 +5,5 @@ Function New-GameDigFullScript {
     Add-Content -Path $global:currentdir\$global:server\GameDigFull-$global:server.ps1 -Value "Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64"
     Add-Content -Path $global:currentdir\$global:server\GameDigFull-$global:server.ps1 -Value ".\gamedig --type $global:game ${global:EXTIP}:${global:PORT} --pretty"
     Add-Content -Path $global:currentdir\$global:server\GameDigFull-$global:server.ps1 -Value "Set-Location $global:currentdir"
-    Add-Content -Path $global:currentdir\$global:server\GameDigFull-$global:server.ps1 -Value "Select-Steamer"
+    #Add-Content -Path $global:currentdir\$global:server\GameDigFull-$global:server.ps1 -Value "Select-Steamer"
 }

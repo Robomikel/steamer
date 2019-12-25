@@ -129,6 +129,6 @@ function Select-Steamer
                 Write-Host "details"
                 Write-Host "gamedig"
                 Write-Host "steamer update"
-                Select-Steamer
+                #Select-Steamer
         }
     }
