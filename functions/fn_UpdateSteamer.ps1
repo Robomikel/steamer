@@ -1,8 +1,9 @@
 #####  NOT FUNCTIONAL YET  ###################
-$githuburl="https://github.com/Michaelawilliams28/steamer"
+#$githuburl="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/Robomikel/steamer"
 #(New-Object Net.WebClient).DownloadFile("https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/Michaelawilliams28/steamer", "$global:currentdir\steamer.zip")
 
 Function Get-UpdateSteamer {
-    (New-Object Net.WebClient).DownloadFile("https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/Michaelawilliams28/steamer", "$global:currentdir\steamer.zip")
-    #(New-Object Net.WebClient).DownloadFile("https://raw.githubusercontent.com/Michaelawilliams28/steamer/functions", "$global:currentdir\functions")
+    (New-Object Net.WebClient).DownloadFile("https://github.com/Robomikel/steamer/archive/master.zip", "steamer.zip")
+    Expand-Archive ".\steamer.zip" ".\steamer"
+    Get-ChildItem -Path ".\steamer\steamer-master" -Recurse | Move-Item -Destination ".\"
 }
