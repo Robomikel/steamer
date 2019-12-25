@@ -32,4 +32,5 @@ Install steam server >_ ./steamer install misserver
  - Details >_ ./steamer details sdtdseerver * not supported for miscreated although supported by several games. TBD (Downloads and installes NodeJS and Gamedig)
  
  Does not install Dedpendencies like Visual C++ Redistributable or Direct X
+ 
  Does not Forward ports or open ports on firewall
