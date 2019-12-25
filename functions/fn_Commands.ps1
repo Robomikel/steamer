@@ -33,7 +33,7 @@ function Select-Steamer
                 New-GameDigFullScript
                 Set-CreateMonitorScript
                 New-DiscordScript
-                Select-Steamer
+                #Select-Steamer
             }elseif($global:command -eq "install"){
                 Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
                 Write-Host ".|||--WELCOME TO STEAMER THE WINDOWS STEAM SERVER INSTALLER--|||." -ForegroundColor Magenta -BackgroundColor Black
@@ -54,7 +54,7 @@ function Select-Steamer
                 New-GameDigFullScript
                 Set-CreateMonitorScript
                 New-DiscordScript
-                Select-Steamer
+                #Select-Steamer
             }elseif(($global:command -eq "update") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server updates'
                 Select-UpdateServer
