@@ -29,6 +29,7 @@ $global:currentdir = Get-Location
 .$global:currentdir\functions\fn_SteamInfo.ps1
 .$global:currentdir\functions\fn_StopsServer.ps1
 .$global:currentdir\functions\fn_UpdateServer.ps1
+.$global:currentdir\functions\fn_UpdateSteamer.ps1
 .$global:currentdir\functions\fn_ValidateServer.ps1
 
 
