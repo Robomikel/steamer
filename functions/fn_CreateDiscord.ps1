@@ -5,7 +5,7 @@ Add-Content -Path $global:currentdir\$global:server\Discord-$global:server.ps1 -
 Add-Content -Path $global:currentdir\$global:server\Discord-$global:server.ps1 -Value  "[System.Collections.ArrayList]`$embedArray = @()"
 #Store embed values
 Add-Content -Path $global:currentdir\$global:server\Discord-$global:server.ps1 -Value  "`$title       = '$global:HOSTNAME'"
-Add-Content -Path $global:currentdir\$global:server\Discord-$global:server.ps1 -Value  "`$description = 'Starting Server!'"
+Add-Content -Path $global:currentdir\$global:server\Discord-$global:server.ps1 -Value  "`$description = 'Server not Running, Starting Server!'"
 Add-Content -Path $global:currentdir\$global:server\Discord-$global:server.ps1 -Value  "`$color       = '16711680'"
 #Create embed object
 Add-Content -Path $global:currentdir\$global:server\Discord-$global:server.ps1 -Value  "`$embedObject = [PSCustomObject]@{"
