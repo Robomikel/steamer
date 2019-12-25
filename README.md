@@ -28,8 +28,9 @@ Install steam server >_ ./steamer install misserver
  - backup server >_ ./steamer backup steamer - Creates zip folder of serverfiles in server folder (Downloads and installs 7Zip)
  - Monitor server * run monitor script in server folder as scheduled task to check process and start if needed
  - Discord Alert * run Discord script in server folder to send discord alert with Monitor script
- - Gamedig >_ ./steamer gamedig sdtdserver * not supported for miscreated although supported by several games. TBD (Downloads and installes NodeJS and Gamedig)
- - Details >_ ./steamer details sdtdseerver * not supported for miscreated although supported by several games. TBD (Downloads and installes NodeJS and Gamedig)
+ - Gamedig >_ ./steamer gamedig sdtdserver * not supported for miscreated. although supported by several games. TBD (Downloads and installes NodeJS and Gamedig)
+ - Details >_ ./steamer details sdtdserver * not supported for miscreated. although supported by several games. TBD (Downloads and installes NodeJS and Gamedig)
+ - Update Steamer >_ ./steamer steamer update  - Downloads and overwrites steamer github files
  
  Does not install Dedpendencies like Visual C++ Redistributable or Direct X
  
