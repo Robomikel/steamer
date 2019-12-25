@@ -16,6 +16,7 @@ $global:currentdir = Get-Location
 .$global:currentdir\functions\fn_CreateServerFolder.ps1
 .$global:currentdir\functions\fn_CreateStopsScript.ps1
 .$global:currentdir\functions\fn_CreateValidateScript.ps1
+.$global:currentdir\functions\fn_CreateMonitorJob.ps1
 .$global:currentdir\functions\fn_GameDig.ps1
 .$global:currentdir\functions\fn_GameDigFull.ps1
 .$global:currentdir\functions\fn_InstallNodejs.ps1

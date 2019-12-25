@@ -99,6 +99,11 @@ function Select-Steamer
             }elseif($global:command -eq "details"){
                 Get-NodeJS
                 Select-GameDigServer
+            }elseif(($global:command -eq "montior") -and ($null -eq $global:server)){
+                $global:server = Read-host -Prompt 'Server FolderName for monitor'
+                New-MontiorJob
+            }elseif($global:command -eq "monitor"){
+                New-MontiorJob
             }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for gamedig'
                 Get-NodeJS
@@ -128,6 +133,7 @@ function Select-Steamer
                 Write-Host "exit"
                 Write-Host "details"
                 Write-Host "gamedig"
+                Write-Host "monitor"
                 Write-Host "steamer update"
                 #Select-Steamer
         }
