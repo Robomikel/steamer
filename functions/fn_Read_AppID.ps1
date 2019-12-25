@@ -50,6 +50,6 @@ Function Read-AppID
         #} elseif($global:AppID -eq ""){
         #    Write-Host "space?"
         } else {
-        Write-Host("No Launch Script Found for this server")
+        Write-Host "No Launch Script Found for this server"
     }
 }
