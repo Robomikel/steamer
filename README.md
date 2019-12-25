@@ -27,7 +27,7 @@ Install steam server >_ ./steamer install misserver
  - validate server >_ ./steamer validate misserver - Validate App ID files
  - check server >_ ./steamer check misserver - checks process for miscreated server
  - update server >_ ./steamer update misserver - updates App ID
- - backup server >_ ./steamer backup steamer - Creates zip folder of serverfiles in server folder (Downloads portable 7Zip)
+ - backup server >_ ./steamer backup steamer - Creates zip folder of serverfiles in backups folder (Downloads portable 7Zip)
  - Monitor server * run monitor script in server folder as scheduled task to check process and start if needed
  - Discord Alert * run Discord script in server folder to send discord alert with Monitor script
  - Gamedig >_ ./steamer gamedig sdtdserver * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
