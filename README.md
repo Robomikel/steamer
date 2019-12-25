@@ -1,2 +1,2 @@
 # steamer
-PowerShell Steam Server Installer
+PowerShell Steam Server Scripter
