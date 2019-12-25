@@ -9,6 +9,7 @@ Function New-BackupServer {
     ./7za a $global:currentdir\$global:server\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\*
     #Compress-Archive -Path $global:currentdir\$global:server\* -DestinationPath ("$global:currentdir\$global:server\Backup-$global:server" + (get-date -Format yyyyMMdd) + '.zip') -CompressionLevel Optimal
     #Compress-Archive -Path $global:currentdir\$global:server\* -DestinationPath $global:currentdir\$global:server\Backup-$global:server.zip
+    Enable-ScheduledTask -TaskName "$global:server monitor"
     Set-Location $global:currentdir
     #Set-Steamer
 }
