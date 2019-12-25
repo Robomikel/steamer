@@ -32,6 +32,19 @@ Install steam server >_ ./steamer install misserver
  - Details >_ ./steamer details sdtdserver * not supported for miscreated. although supported by several games. TBD (Downloads and installes NodeJS and Gamedig)
  - Update Steamer >_ ./steamer steamer update  - Downloads and overwrites steamer github files
  
+ 
+ Creating a Schedule task to run Monitor script.
+- If using a user windows account. Will need to add user to the "log on as batch job" to run the task under that account
+- - - -
+Go to the Start menu.
+Run.
+Type secpol.msc and press Enter.
+The Local Security Policy manager opens.
+Go to Security Settings – Local Policies – User Rights Assignment node.
+Double click Log on as a batch job on the right side.
+Click Add User
+Select the user and click OK.
+- - - - 
  Does not install Dedpendencies like Visual C++ Redistributable or Direct X
  
  Does not Forward ports or open ports on firewall
