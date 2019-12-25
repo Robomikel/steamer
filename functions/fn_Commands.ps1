@@ -101,9 +101,9 @@ function Select-Steamer
                 Select-GameDigServer
             }elseif(($global:command -eq "monitor") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for monitor'
-                New-MontiorJob
+                Set-MonitorJob
             }elseif($global:command -eq "monitor"){
-                New-MontiorJob
+                Set-MonitorJob
             }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for gamedig'
                 Get-NodeJS
