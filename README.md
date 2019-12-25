@@ -3,6 +3,7 @@ PowerShell Steam Server Scripter
 
 
 Install:  
+          
           place in C:\Users\%Username%\functions\*
           place in C:\Users\%Username%\steamer.ps1
 
