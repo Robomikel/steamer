@@ -2,6 +2,8 @@ Function New-BackupServer {
     $BackupDate = get-date -Format yyyyMMdd
     Write-Host '*** Stopping Server Process *****' -ForegroundColor Yellow -BackgroundColor Black  
     & "$global:currentdir\$global:server\Stops-*.ps1"
+    Write-Host '*** disabling scheduled task *****' -ForegroundColor Yellow -BackgroundColor Black 
+    Disable-ScheduledTask -TaskName "$global:server monitor"
     Write-Host '*** Server Backup Started *****' -ForegroundColor Yellow -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
     ./7za a $global:currentdir\$global:server\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\*
