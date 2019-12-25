@@ -14,6 +14,11 @@ as user NOT Admin
 Install steam server >_ ./steamer install misserver
  - Creates Server Folder Named misserver and starts install scripts
  - uses Steam.db App ID - Miscreated Server App ID 302200 (Downloads and extract steamcmd)
+   * 7 Days to Die server (294420)- sdtdserver  
+   * Insurgency Server (237410)- insserver
+   * Insugency: Sandstorm Server (581330) - inssserver
+   * Rust server (258550) -  rustserver
+   * Arma3 Server (233780)-  arma3server
  - Creates Launch Script  >_ ./steamer start missesrver  - Starts miscreated server process
  - Stops server >_ ./steamer stops misserver - stop process for miscreated server
  - restart server >_ ./steamer restart misserver - stops and starts process for miscreated server]
