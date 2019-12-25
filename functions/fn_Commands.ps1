@@ -110,6 +110,7 @@ function Select-Steamer
                 exit
             }elseif($global:command -eq "x"){
             }elseif(($global:command -eq "steamer") -and ($global:server -eq "update")){
+                Get-UpdateSteamer
                 # $global:server = Read-host -Prompt 'Server FolderName for gamedig'
                  #Get-NodeJS
                  #Select-GameDigFullServer
@@ -127,6 +128,7 @@ function Select-Steamer
                 Write-Host "exit"
                 Write-Host "details"
                 Write-Host "gamedig"
+                Write-Host "steamer update"
                 Select-Steamer
         }
     }
