@@ -42,7 +42,7 @@ Install steam server ```>_./steamer install misserver```
  - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
 # Other Functions:
  * Monitor * monitor script in server folder as scheduled task to check process and start if needed, Send Discord Alert
- * Discord Alert * Discord script in server folder. 
+ * Discord Alert * Discord script in server folder. requires Discord webhook
  
  
 
