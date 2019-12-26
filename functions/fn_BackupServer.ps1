@@ -28,9 +28,9 @@ Function New-BackupServer {
     Set-Location $global:currentdir
     #Set-Steamer
 }
-$url = "https://www.7-zip.org/a/7za920.zip"
-$output = "7za920.zip"
-$start_time = Get-Date
+#$url = "https://www.7-zip.org/a/7za920.zip"
+##$output = "7za920.zip"
+#$start_time = Get-Date
 Function Get-SevenZip 
     {
         $path = ".\7za920\" 
@@ -40,11 +40,11 @@ Function Get-SevenZip
     } 
     Else 
     {  
-        #(New-Object Net.WebClient).DownloadFile("https://www.7-zip.org/a/7za920.zip", "7za920.zip")
+        (New-Object Net.WebClient).DownloadFile("https://www.7-zip.org/a/7za920.zip", "7za920.zip")
         #####
         Write-Host '*** Downloading and Extracting 7ZIP *****' -ForegroundColor Blue -BackgroundColor Black  
-        Invoke-WebRequest -Uri $url -OutFile $output
-        Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+        #Invoke-WebRequest -Uri $url -OutFile $output
+        #Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
         Expand-Archive ".\7za920.zip" ".\7za920\"
     }
 }
