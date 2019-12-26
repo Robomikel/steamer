@@ -15,12 +15,12 @@ Steamer accepts 1 or 2 parameters. first param specifies steamer command and the
 ```>_ ./steamer <command> <serverFolder>```
           
 Install steam server ```>_ ./steamer install misserver```
- - Creates Server Folder Named misserver and starts install scripts
+ - Creates Server Folder Named misserver and starts install
  - Downloads and extract steamcmd
  - uses Steaminfo.db App ID -
  - uses anon or steam login for install         
  - Creates Launch Script - per App ID, if exists.
- - Creates custom config for server- if avaible by steamer 
+ - Creates custom config for server- if available by steamer 
    * Miscreated Server (302200) - misserver 
    * 7 Days to Die server (294420) - sdtdserver  
    * Insurgency Server (237410) - insserver
