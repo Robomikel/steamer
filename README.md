@@ -2,7 +2,7 @@
 PowerShell Steam Server Scripter
 
 
-Install:  
+Install location:  
           
           place in C:\Users\%Username%\functions\*
           place in C:\Users\%Username%\steamer.ps1
@@ -28,7 +28,7 @@ Install steam server ```>_ ./steamer install misserver```
    * Rust server (258550) -  rustserver
    * Arma3 Server (233780)-  arma3server        
  - Creates Stop, Start, Update, Validate, Restart, Check, Monitor, gamedig, details, and Discord PS sctipts. 
- Commands:  
+ # Commands:  
  - ```Start <serverFolder>  >_ ./steamer start missesrver```  - Starts miscreated server process          
  - ```Stops <serverFolder> >_ ./steamer stops misserver``` - stop process for miscreated server
  - ```restart <serverFolder> >_ ./steamer restart misserver``` - stops and starts process for miscreated server]
@@ -40,7 +40,7 @@ Install steam server ```>_ ./steamer install misserver```
  - ```gamedig <serverFolder> >_ ./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```details <serverFolder> >_ ./steamer details sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```Update Steamer >_ ./steamer steamer update```  - Downloads and overwrites steamer github files
-Other Functions:
+# Other Functions:
  * Monitor * monitor script in server folder as scheduled task to check process and start if needed, Send Discord Alert
  * Discord Alert * Discord script in server folder. 
  
