@@ -21,12 +21,12 @@ Install steam server ```>_ ./steamer install misserver```
  - uses anon or steam login for install         
  - Creates Launch Script - per App ID, if exists.
  - Creates custom config for server- if available by steamer 
-   * Miscreated Server (302200) - misserver 
-   * 7 Days to Die server (294420) - sdtdserver  
-   * Insurgency Server (237410) - insserver
-   * Insugency: Sandstorm Server (581330) - inssserver
-   * Rust server (258550) -  rustserver
-   * Arma3 Server (233780)-  arma3server        
+   * Miscreated Server (302200) - misserver (optional server folder name) 
+   * 7 Days to Die server (294420) - sdtdserver (optional server folder name)  
+   * Insurgency Server (237410) - insserver (optional server folder name) 
+   * Insugency: Sandstorm Server (581330) - inssserver (optional server folder name) 
+   * Rust server (258550) -  rustserver (optional server folder name) 
+   * Arma3 Server (233780)-  arma3server (optional server folder name)         
  - Creates Stop, Start, Update, Validate, Restart, Check, Monitor, gamedig, details, and Discord PS sctipts. 
  # Commands:  
  - ```Start <serverFolder>  >_ ./steamer start missesrver```  - Starts miscreated server process          
