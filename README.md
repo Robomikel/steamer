@@ -11,7 +11,9 @@ Run: open Powershell
 as user NOT Admin
 
 Steamer accepts 1 or 2 parameters. first param specifies steamer command and the second is server folder name. if server folder name does not exists it creates it.
+
 >_ ./steamer <command> <serverFolder>
+          
 Install steam server >_ ./steamer install misserver
  - Creates Server Folder Named misserver and starts install scripts
  - Downloads and extract steamcmd
