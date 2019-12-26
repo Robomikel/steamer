@@ -14,11 +14,12 @@ Steamer accepts 1 or 2 parameters. first param specifies steamer command and the
 
 Install steam server >_ ./steamer install misserver
  - Creates Server Folder Named misserver and starts install scripts
+ - Downloads and extract steamcmd
  - uses Steam.db App ID - 
  - Creates Launch Script  >_ ./steamer start missesrver  - Starts miscreated server process
-   * Miscreated Server App ID 302200 (Downloads and extract steamcmd)
-   * 7 Days to Die server (294420)- sdtdserver  
-   * Insurgency Server (237410)- insserver
+   * Miscreated Server (302200) - misserver 
+   * 7 Days to Die server (294420) - sdtdserver  
+   * Insurgency Server (237410) - insserver
    * Insugency: Sandstorm Server (581330) - inssserver
    * Rust server (258550) -  rustserver
    * Arma3 Server (233780)-  arma3server
