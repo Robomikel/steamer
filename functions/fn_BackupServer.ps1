@@ -21,7 +21,7 @@ Function New-BackupServer {
     New-BackupFolder
     Write-Host '*** Server Backup Started *****' -ForegroundColor Yellow -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
-    ./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\backups\*
+    ./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\*
     #Compress-Archive -Path $global:currentdir\$global:server\* -DestinationPath ("$global:currentdir\$global:server\Backup-$global:server" + (get-date -Format yyyyMMdd) + '.zip') -CompressionLevel Optimal
     #Compress-Archive -Path $global:currentdir\$global:server\* -DestinationPath $global:currentdir\$global:server\Backup-$global:server.zip
     Enable-ScheduledTask -TaskName "$global:server monitor"
