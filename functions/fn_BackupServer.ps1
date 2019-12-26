@@ -5,12 +5,13 @@ Function Get-ChecktaskDisable {
 # http://blogs.msdn.com/b/powershell/archive/2006/09/15/errorlevel-equivalent.aspx
 if($?) {
     #write-host "True, last operation succeeded"
+    Write-Host '*** disabling scheduled task *****' -ForegroundColor Yellow -BackgroundColor Black
     Disable-ScheduledTask -TaskName "$global:server monitor"
 }
 
 if (!$?) {
     #write-host "Not True, last operation failed"
-    write-host "Scheduled Task does not exist"
+    write-host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black
     
 }
     
@@ -22,12 +23,13 @@ Function Get-ChecktaskEnable {
 # http://blogs.msdn.com/b/powershell/archive/2006/09/15/errorlevel-equivalent.aspx
 if($?) {
     #write-host "True, last operation succeeded"
+    Write-Host '*** Enabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
     Enable-ScheduledTask -TaskName "$global:server monitor"
 }
 
 if (!$?) {
     #write-host "Not True, last operation failed"
-    write-host "Scheduled Task does not exist"
+    write-host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black
     
 }
     
@@ -50,7 +52,7 @@ Function New-BackupServer {
     $BackupDate = get-date -Format yyyyMMdd
     Write-Host '*** Stopping Server Process *****' -ForegroundColor Yellow -BackgroundColor Black  
     & "$global:currentdir\$global:server\Stops-*.ps1"
-    Write-Host '*** disabling scheduled task *****' -ForegroundColor Yellow -BackgroundColor Black
+    #Write-Host '*** disabling scheduled task *****' -ForegroundColor Yellow -BackgroundColor Black
     Get-ChecktaskDisable 
     #Disable-ScheduledTask -TaskName "$global:server monitor"
     New-BackupFolder
