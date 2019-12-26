@@ -1,4 +1,5 @@
 Function New-StopsScript {
+    Write-Host '*** Creating Stop Script *****' -ForegroundColor Yellow -BackgroundColor Black 
     New-Item $global:currentdir\$global:server\Stops-$global:server.ps1 -Force
     #Add-Content -Path $global:currentdir\$global:server\Stops-$global:server.ps1 -Value "stop-process -Name '$global:process' -Force"
     Add-Content -Path $global:currentdir\$global:server\Stops-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"

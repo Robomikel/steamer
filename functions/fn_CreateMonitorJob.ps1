@@ -26,7 +26,7 @@ Function New-MontiorJobBG {
 Function Set-MonitorJob
     {
         $title    = 'Create Monitor job'
-        $question = 'Create monitor job to run in background?'
+        $question = 'Create monitor job to run in background? Requires windows logon'
     
         $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
         $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))

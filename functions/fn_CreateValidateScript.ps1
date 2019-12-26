@@ -2,6 +2,7 @@
 #:::::::::::     Create update Validate-Script          ::::::::::::::::::::::::
 Function New-ValidateScriptPS
 {
+    Write-Host '*** Creating Validate Script *****' -ForegroundColor Yellow -BackgroundColor Black 
     New-Item $global:currentdir\$global:server\Validate-$global:server.ps1 -Force
     #Add-Content -Path $global:currentdir\$global:server\Validate-$global:server.ps1 -Value "stop-process -Name $global:process -Force"
     Add-Content -Path $global:currentdir\$global:server\Validate-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
@@ -18,6 +19,7 @@ Function New-ValidateScriptPS
 #:::::::::::     Create update Validate-Script for Login  ::::::::::::::::::::::::
 Function New-ValidateScriptlPS
 {
+    Write-Host '*** Creating Validate Script *****' -ForegroundColor Yellow -BackgroundColor Black 
     New-Item $global:currentdir\$global:server\Validate-$global:server.ps1 -Force
     #Add-Content -Path $global:currentdir\$global:server\Validate-$global:server.ps1 -Value "stop-process -Name $global:process -Force"
     Add-Content -Path $global:currentdir\$global:server\Validate-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"

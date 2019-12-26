@@ -11,6 +11,7 @@ Function New-ServerFolder
         }elseif(Test-Path ".\$global:server\" ){
             Write-Host 'Server Folder Already Created!' -ForegroundColor Yellow -BackgroundColor Black
         }else{
+            Write-Host '*** Creating Server Folder *****' -ForegroundColor Yellow -BackgroundColor Black 
             New-Item -Path . -Name "$global:server" -ItemType "directory"
         }
     }
