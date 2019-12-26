@@ -29,17 +29,17 @@ Install steam server ```>_./steamer install misserver```
    * Arma3 Server (233780)- “arma3server" (optional server folder name)         
  - Creates Stop, Start, Update, Validate, Restart, Check, Monitor, gamedig, details, and Discord PS scripts. 
  # Commands:  
- - ```Start <serverFolder> >_./steamer start missesrver```  - Starts miscreated server process          
- - ```Stops <serverFolder> >_./steamer stops misserver``` - stop process for miscreated server
- - ```restart <serverFolder> >_./steamer restart misserver``` - stops and starts process for miscreated server]
- - ```validate <serverFolder> >_./steamer validate misserver``` - Validate App ID files
- - ```check <serverFolder> >_./steamer check misserver``` - checks process for miscreated server
- - ```update <serverFolder> >_./steamer update misserver``` - updates App ID
- - ```backup <serverFolder> >_./steamer backup misserver``` - Creates zip folder of server files in backups folder (Downloads portable 7Zip)
- - ```monitor <serverFolder> >_./steamer monitor misserver``` - Creates Scheduled Task with monitor and Discord scripts 
- - ```gamedig <serverFolder> >_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
- - ```details <serverFolder> >_./steamer details sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
- - ```Update Steamer >_./steamer steamer update```  - Downloads and overwrites steamer github files
+ - ```Start <serverFolder> - >_./steamer start missesrver```  - Starts miscreated server process          
+ - ```Stops <serverFolder> - >_./steamer stops misserver``` - stop process for miscreated server
+ - ```restart <serverFolder> - >_./steamer restart misserver``` - stops and starts process for miscreated server]
+ - ```validate <serverFolder> - >_./steamer validate misserver``` - Validate App ID files
+ - ```check <serverFolder> - >_./steamer check misserver``` - checks process for miscreated server
+ - ```update <serverFolder> - >_./steamer update misserver``` - updates App ID
+ - ```backup <serverFolder> - >_./steamer backup misserver``` - Creates zip folder of server files in backups folder (Downloads portable 7Zip)
+ - ```monitor <serverFolder> - >_./steamer monitor misserver``` - Creates Scheduled Task with monitor and Discord scripts 
+ - ```gamedig <serverFolder> - >_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
+ - ```details <serverFolder> - >_./steamer details sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
+ - ```Update Steamer - >_./steamer steamer update```  - Downloads and overwrites steamer github files
 # Other Functions:
  * Monitor * monitor script in server folder as scheduled task to check process and start if needed, Send Discord Alert
  * Discord Alert * Discord script in server folder. 
