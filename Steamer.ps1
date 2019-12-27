@@ -27,6 +27,7 @@ $global:currentdir = Get-Location
 .$global:currentdir\functions\fn_Miscreated.ps1
 .$global:currentdir\functions\fn_Read_AppID.ps1
 .$global:currentdir\functions\fn_RestartServer.ps1
+.$global:currentdir\functions\fn_Sandstorm.ps1
 .$global:currentdir\functions\fn_SetConsole.ps1
 .$global:currentdir\functions\fn_SteamInfo.ps1
 .$global:currentdir\functions\fn_StopsServer.ps1
