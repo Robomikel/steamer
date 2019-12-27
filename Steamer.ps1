@@ -22,6 +22,7 @@ $global:currentdir = Get-Location
 .$global:currentdir\functions\fn_InstallNodejs.ps1
 .$global:currentdir\functions\fn_InstallServer.ps1
 .$global:currentdir\functions\fn_InstallSteam.ps1
+.$global:currentdir\functions\fn_Insurgency.ps1
 .$global:currentdir\functions\fn_LaunchServer.ps1
 .$global:currentdir\functions\fn_Miscreated.ps1
 .$global:currentdir\functions\fn_Read_AppID.ps1
