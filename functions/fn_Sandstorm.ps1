@@ -15,7 +15,7 @@ Function New-LaunchScriptInssserverPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Starting`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Update-$global:server.ps1"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\InsurgencyServer.exe $global:MAP`?Scenario=$global:SCENARIO`?MaxPlayers=$global:MAXPLAYERS`?password=$global:SERVERPASSWORD -Port=$global:PORT -QueryPort=$global:QUERYPORT -log -hostname='$global:HOSTNAME'  -GSLTToken= -mutators= "
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\InsurgencyServer.exe $global:MAP`?Scenario=$global:SCENARIO`?MaxPlayers=$global:MAXPLAYERS`?password=$global:SERVERPASSWORD -Port=$global:PORT -QueryPort=$global:QUERYPORT -log -hostname='$global:HOSTNAME'"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
@@ -26,10 +26,10 @@ Function New-LaunchScriptInssserverPS
   #     New-Item -Path "$global:currentdir\inssserver\Insurgency\Config\Server" -Name "logfiles" -ItemType "directory"
   #      New-Item -Path "$global:currentdir\inssserver\Insurgency\Saved\Config\WindowsServer" -Name "logfiles" -ItemType "directory"
   #      mkdir $global:currentdir\inssserver
-        mkdir $global:currentdir\inssserver\Insurgency\Config\Server
+        mkdir $global:currentdir\inssserver\Insurgency\Config\Server   >$null 2>&1
         $MapCyclePath = "$global:currentdir\inssserver\Insurgency\Config\Server"
         
-        mkdir $global:currentdir\inssserver\Insurgency\Saved\Config\WindowsServer
+        mkdir $global:currentdir\inssserver\Insurgency\Saved\Config\WindowsServer   >$null 2>&1
         $GamePath = "$global:currentdir\inssserver\Insurgency\Saved\Config\WindowsServer"
         # - - - - - - MAPCYCLE.TXT - - - - - - # EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Ministry_Checkpoint_Security

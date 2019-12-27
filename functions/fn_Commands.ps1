@@ -29,10 +29,15 @@ function Select-Steamer
                 New-ValidateScriptPS
                 New-StopsScript
                 New-ServerStatusScript
-                New-GameDigScript
-                New-GameDigFullScript
                 Set-CreateMonitorScript
                 New-DiscordScript
+                if( $global:AppID -eq 581330) {  
+                    New-GameDigFullScriptQ
+                    New-GameDigScriptQ
+                    exit
+                    }
+                New-GameDigScript
+                New-GameDigFullScript
                 #Select-Steamer
             }elseif($global:command -eq "install"){
                 Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
@@ -50,10 +55,15 @@ function Select-Steamer
                 New-ValidateScriptPS
                 New-StopsScript
                 New-ServerStatusScript
-                New-GameDigScript
-                New-GameDigFullScript
                 Set-CreateMonitorScript
                 New-DiscordScript
+              if( $global:AppID -eq 581330) {  
+                    New-GameDigFullScriptQ
+                    New-GameDigScriptQ
+                    exit
+                    }
+                New-GameDigScript
+                New-GameDigFullScript
                 #Select-Steamer
             }elseif(($global:command -eq "update") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server updates'
