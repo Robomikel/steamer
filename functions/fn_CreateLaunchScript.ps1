@@ -146,28 +146,28 @@ Function New-LaunchScriptArma3serverPS
 #        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
 #    }
     
-    Function New-LaunchScriptInssserverPS 
-    {
+##    Function New-LaunchScriptInssserverPS 
+ #   {
         #----------   Ask For Folder Name and App ID   -------------------
-        $global:process = "InsurgencyServer-Win64-Shipping" 
-        if(($global:SCENARIO = Read-Host "Input Server Scenario, Press enter to accept default value [Scenario_Outskirts_Checkpoint_Security]") -eq ''){$global:SCENARIO="Scenario_Outskirts_Checkpoint_Security"}else{$global:SCENARIO}
-        if(($global:MAP = Read-Host "Input Server Map, Press enter to accept default value [Compound]") -eq ''){$global:MAP="Compound"}else{$global:MAP}
-        if(($global:MAXPLAYERS = Read-Host "Input Server Maxplayers, Press enter to accept default value [8]") -eq ''){$global:MAXPLAYERS="8"}else{$global:MAXPLAYERS}
-        if(($global:PORT = Read-Host "Input Server Port, Press enter to accept default value [27102]") -eq ''){$global:PORT="27102"}else{$global:PORT}
-        if(($global:QUERYPORT = Read-Host "Input Server Query Port, Press enter to accept default value [27131]") -eq ''){$global:QUERYPORT="27131"}else{$global:QUERYPORT}
-        #$global:SERVERPASSWORD = Read-host -Prompt 'Input server password'
-        if(($global:SERVERPASSWORD = Read-Host "Input Server Password, Press enter to accept default value []") -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
-        $global:HOSTNAME = Read-host -Prompt 'Input server hostname'
-        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Starting`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Update-$global:server.ps1"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\InsurgencyServer.exe $global:MAP`?Scenario=$global:SCENARIO`?MaxPlayers=$global:MAXPLAYERS`?password=$global:SERVERPASSWORD -Port=$global:PORT -QueryPort=$global:QUERYPORT -log -hostname='$global:HOSTNAME'"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
+ #       $global:process = "InsurgencyServer-Win64-Shipping" 
+ #       if(($global:SCENARIO = Read-Host "Input Server Scenario, Press enter to accept default value [Scenario_Outskirts_Checkpoint_Security]") -eq ''){$global:SCENARIO="Scenario_Outskirts_Checkpoint_Security"}else{$global:SCENARIO}
+ #       if(($global:MAP = Read-Host "Input Server Map, Press enter to accept default value [Compound]") -eq ''){$global:MAP="Compound"}else{$global:MAP}
+ #       if(($global:MAXPLAYERS = Read-Host "Input Server Maxplayers, Press enter to accept default value [8]") -eq ''){$global:MAXPLAYERS="8"}else{$global:MAXPLAYERS}
+ #       if(($global:PORT = Read-Host "Input Server Port, Press enter to accept default value [27102]") -eq ''){$global:PORT="27102"}else{$global:PORT}
+ #       if(($global:QUERYPORT = Read-Host "Input Server Query Port, Press enter to accept default value [27131]") -eq ''){$global:QUERYPORT="27131"}else{$global:QUERYPORT}
+ #       #$global:SERVERPASSWORD = Read-host -Prompt 'Input server password'
+ #       if(($global:SERVERPASSWORD = Read-Host "Input Server Password, Press enter to accept default value []") -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
+ #       $global:HOSTNAME = Read-host -Prompt 'Input server hostname'
+ #       New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+ #       Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
+ #       Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Starting`" -ForegroundColor Magenta -BackgroundColor Black"
+ #       Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Update-$global:server.ps1"
+ #       Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
+ #       Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\InsurgencyServer.exe $global:MAP`?Scenario=$global:SCENARIO`?MaxPlayers=$global:MAXPLAYERS`?password=$global:SERVERPASSWORD -Port=$global:PORT -QueryPort=$global:QUERYPORT -log -hostname='$global:HOSTNAME'"
+ #       Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
+ #       Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
+ #       Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
         #if(($global:SERVERPASSWORD = Read-Host "Input Server Password, Press enter to accept default value []") -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
-        If ($global:SERVERPASSWORD -eq ""){((Get-Content -path $global:currentdir\$global:server\Launch-$global:server.ps1 -Raw) -replace "\?password=","") | Set-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1}
+ #       If ($global:SERVERPASSWORD -eq ""){((Get-Content -path $global:currentdir\$global:server\Launch-$global:server.ps1 -Raw) -replace "\?password=","") | Set-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1}
         #Get-Content $global:currentdir\$global:server\Launch-$global:server.ps1  | ForEach-Object {$_ -replace '\?password=', ""}  | Set-Content "$global:currentdir\$global:server\Launch-$global:server.ps1"
-    }
+ #   }
