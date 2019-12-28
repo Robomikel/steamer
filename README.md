@@ -2,8 +2,8 @@
 PowerShell Steam Server Scripter
 
 
-Install location:  
-          
+Install Any location:  
+          Recomend this location to avoid a cd command to user home
           place in C:\Users\%Username%\functions\*
           place in C:\Users\%Username%\steamer.ps1
 
@@ -38,7 +38,6 @@ Install steam server ```>_./steamer install misserver```
  - ```backup <serverFolder>``` - ```>_./steamer backup misserver``` - Creates zip folder of server files in backups folder (Downloads portable 7Zip)
  - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task with monitor and Discord scripts 
  - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
- - ```details <serverFolder>``` - ```>_./steamer details sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
 # Other Functions:
  * Monitor * monitor script in server folder as scheduled task to check process and start if needed, Send Discord Alert
