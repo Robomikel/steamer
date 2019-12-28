@@ -6,6 +6,7 @@
 $global:currentdir=Get-Location
 $global:serverdir="$global:currentdir\$global:server"
 ${global:EXTIP}=(Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
+${global:IP}=((ipconfig | findstr [0-9].\.)[0]).Split()[-1]
 $global:githuburl="https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master"
 #NodeJs Version
 $global:nodeversion="12.13.1"
@@ -52,7 +53,7 @@ $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
 .$global:currentdir\functions\fn_UpdateSteamer.ps1
 $global:command=$($args[0])
 $global:server=$($args[1])     
-Set-Console
+Set-Console  >$null 2>&1
 
 #Select-Steamer $global:command
 Function Set-Steamer {
