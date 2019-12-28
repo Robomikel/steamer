@@ -17,17 +17,17 @@ Steamer accepts 1 or 2 parameters. first param specifies steamer command and the
 Install steam server ```>_./steamer install misserver```
  - Creates Server Folder Named misserver and starts install
  - Downloads and extract steamcmd
- - uses Steaminfo.db App ID -
+ - Asks and uses Steaminfo.db App ID -
  - uses anon or steam login for install         
  - Creates Launch Script - per App ID, if exists.
- - Creates custom config for server- if available by steamer 
+ - Creates custom default config for server- if available by steamer 
    * Miscreated Server (302200) - "misserver" (optional server folder name) 
    * 7 Days to Die server (294420) - "sdtdserver" (optional server folder name)  
    * Insurgency Server (237410) - "insserver" (optional server folder name) 
    * Insurgency: Sandstorm Server (581330) - "inssserver" (optional server folder name) 
    * Rust server (258550) - "rustserver" (optional server folder name) 
    * Arma3 Server (233780)- “arma3server" (optional server folder name)         
- - Creates Stop, Start, Update, Validate, Restart, Check, Monitor, gamedig, details, and Discord PS scripts. 
+ - Creates Stop, Start, Update, Validate, Restart, Check, Monitor, gamedig, and Discord PS scripts. 
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
  - ```Stops <serverFolder>``` - ```>_./steamer stops misserver``` - stop process for miscreated server
