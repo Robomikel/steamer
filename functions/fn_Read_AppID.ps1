@@ -1,7 +1,4 @@
-#----------   Determine script current location ---------------------
-#$global:currentdir = Get-Location
-#.$global:currentdir\functions\fn_CreateLaunchScript.ps1
-#$global:AppID = 302200
+
 Function Set-SteamInfoAppID 
     {
         $title    = 'Launch Script create'
@@ -51,5 +48,6 @@ Function Read-AppID
         #    Write-Host "space?"
         } else {
         Write-Host "No Launch Script Found for this server"
+        exit
     }
 }

@@ -1,5 +1,6 @@
 #:::::::::::::   CREATE LAUNCH SCRIPT FOR SERVER :::::::::::::::::::::::::
-$githuburl="https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master"
+
+
 
 
 Function New-LaunchScriptRustPS
@@ -36,8 +37,8 @@ Function New-LaunchScriptArma3serverPS
         ${gamedirname}="Arma3"
         ${config1}="server.cfg"
         ${config2}="network.cfg"
-        (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server.cfg")
-        (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config2}", "$global:currentdir\$global:server\network.cfg")
+        (New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server.cfg")
+        (New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config2}", "$global:currentdir\$global:server\network.cfg")
         $global:process = "arma3Server"
         ${global:IP} = Read-host -Prompt 'Input Server local IP'
         $global:MAXPLAYERS = Read-host -Prompt 'Input maxplayers'
@@ -119,7 +120,7 @@ Function New-LaunchScriptArma3serverPS
 #        #----------   Ask For Folder Name and App ID   -------------------
 #        ${gamedirname}="Insurgency"
 #        ${config1}="server.cfg"
-#        (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
+#        (New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
 #        $global:process = "srcds"
 #        ${global:IP} = Read-host -Prompt 'Input Server local IP'
 #        if(($global:PORT = Read-Host "Input Server Port,Press enter to accept default value [27016]") -eq ''){$global:PORT="27016"}else{$global:PORT}

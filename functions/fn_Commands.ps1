@@ -25,10 +25,7 @@ function Select-Steamer
                 Set-SteamInfo
                 #::::: Create Launch Script per AppID Version 4 update :::::::::::::
                 Set-SteamInfoAppID
-                #New-UpdateScript
-                New-ValidateScriptPS
-                New-StopsScript
-                New-ServerStatusScript
+                New-CreateVariables
                 Set-CreateMonitorScript
                 New-DiscordScript
                 if( $global:AppID -eq 581330) {  
@@ -49,22 +46,10 @@ function Select-Steamer
                 Get-Steam
                 #Test-output 
                 Set-SteamInfo
-                #::::: Create Launch Script per AppID Version 4 update :::::::::::::
                 Set-SteamInfoAppID
-                #New-UpdateScript
-                New-ValidateScriptPS
-                New-StopsScript
-                New-ServerStatusScript
+                New-CreateVariables
                 Set-CreateMonitorScript
                 New-DiscordScript
-              if( $global:AppID -eq 581330) {  
-                    New-GameDigFullScriptQ
-                    New-GameDigScriptQ
-                    exit
-                    }
-                New-GameDigScript
-                New-GameDigFullScript
-                #Select-Steamer
             }elseif(($global:command -eq "update") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server updates'
                 Select-UpdateServer
@@ -72,9 +57,11 @@ function Select-Steamer
                 Select-UpdateServer
             }elseif(($global:command -eq "validate") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server validate'
-                Select-ValidateServer
+                Get-createdvaribles
+                Get-ValidateServer
             }elseif($global:command -eq "validate"){
-                Select-ValidateServer
+                Get-createdvaribles
+                Get-ValidateServer
             }elseif(($global:command -eq "start") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server launch, warning stops running process!'
                 Select-launchServer
@@ -82,33 +69,34 @@ function Select-Steamer
                 Select-launchServer
             }elseif(($global:command -eq "stop") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server stop, warning stops running process!'
-                Select-StopsServer
+                Get-createdvaribles
+                Get-StopServer
             }elseif($global:command -eq "stop"){
-                Select-StopsServer
+                Get-createdvaribles
+                Get-StopServer
             }elseif(($global:command -eq "restart") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server restart, warning stops running process!'
-                Select-RestartsServer
+                Get-createdvaribles
+                Get-RestartsServer
             }elseif($global:command -eq "restart"){
-                Select-RestartsServer
+                Get-createdvaribles
+                Get-RestartsServer   
             }elseif(($global:command -eq "check") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server check'
-                Select-CheckServer
+                Get-createdvaribles
+                Get-CheckServer
             }elseif($global:command -eq "check"){
-                Select-CheckServer
+                Get-createdvaribles
+                Get-CheckServer
             }elseif(($global:command -eq "backup") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server backup'
                 Get-SevenZip
+                Get-createdvaribles
                 New-BackupServer
             }elseif($global:command -eq "backup"){
                 Get-SevenZip
+                Get-createdvaribles
                 New-BackupServer  
-            }elseif(($global:command -eq "details") -and ($null -eq $global:server)){
-                $global:server = Read-host -Prompt 'Server FolderName for details'
-                Get-NodeJS
-                Select-GameDigServer
-            }elseif($global:command -eq "details"){
-                Get-NodeJS
-                Select-GameDigServer
             }elseif(($global:command -eq "monitor") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for monitor'
                 Set-MonitorJob
@@ -116,22 +104,30 @@ function Select-Steamer
                 Set-MonitorJob
             }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for gamedig'
-                Get-NodeJS
-                Select-GameDigFullServer
+                Get-createdvaribles
+                if( $global:AppID -eq 581330) {  
+                    Get-GamedigServerQ
+                    exit
+                    }
+                Get-GamedigServer
+                #Select-Steamer
             }elseif($global:command -eq "gamedig"){
-                Get-NodeJS
-                Select-GameDigFullServer
+                Get-createdvaribles
+                if( $global:AppID -eq 581330) {  
+                    Get-GamedigServerQ
+                    exit
+                    }
+                Get-GamedigServer
+                #Select-Steamer
             }elseif($global:command -eq "exit"){
                 exit
             }elseif($global:command -eq "x"){
             }elseif(($global:command -eq "steamer") -and ($global:server -eq "update")){
                 Get-UpdateSteamer
-                # $global:server = Read-host -Prompt 'Server FolderName for gamedig'
-                 #Get-NodeJS
-                 #Select-GameDigFullServer
-
             } else {
                 Write-Host "Command not found! Available Commands" -ForegroundColor Red -BackgroundColor Black
+                Write-Host "<Command> <serverFolderName>" -ForegroundColor Red -BackgroundColor Black
+                Write-Host "IE. install  insserver" -ForegroundColor Red -BackgroundColor Black
                 Write-Host "install"
                 Write-Host "update"
                 Write-Host "validate"

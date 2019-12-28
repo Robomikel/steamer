@@ -8,7 +8,7 @@ Function New-ServerFolder
        }elseif (($global:AppID -eq "") -or ($global:AppID -eq " ")){
             Write-Host "You Entered a space or Empty" -ForegroundColor Red -BackgroundColor Black
             Select-Steamer
-        }elseif(Test-Path ".\$global:server\" ){
+        }elseif(Test-Path "$global:currentdir\$global:server\" ){
             Write-Host 'Server Folder Already Created!' -ForegroundColor Yellow -BackgroundColor Black
         }else{
             Write-Host '*** Creating Server Folder *****' -ForegroundColor Yellow -BackgroundColor Black 

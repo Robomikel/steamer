@@ -49,10 +49,9 @@ Function New-LaunchScriptRustPS
     
     Function Get-Oxide {
 
-    # Oxide
-    $oxiderustlatestlink=https://umod.org/games/rust/download
+
     Write-Host '*** Downloading and Extracting Oxide *****' -ForegroundColor Blue -BackgroundColor Black
-    (New-Object Net.WebClient).DownloadFile("$oxiderustlatestlink", "$global:currentdir\oxide.zip")
+    (New-Object Net.WebClient).DownloadFile("$global:oxiderustlatestlink", "$global:currentdir\oxide.zip")
     Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
     Copy-Item -Path $global:currentdir\oxide\RustDedicated_Data\* -Destination $global:currentdir\$global:server\RustDedicated_Data\ -Force -Recurse
     #oxiderustlatestlink="https://umod.org/games/rust/download/develop" # fix for linux build 06.09.2019

@@ -1,3 +1,5 @@
+
+
 Function Set-CreateMonitorScript{
 Write-Host '*** Creating Monitor Script *****' -ForegroundColor Yellow -BackgroundColor Black 
 New-Item $global:currentdir\$global:server\Monitor-$global:server.ps1 -Force
