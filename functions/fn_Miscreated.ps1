@@ -10,7 +10,7 @@ Function New-LaunchScriptMiscreatedPS
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Starting`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Update-$global:server.ps1"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Bin64_dedicated\MiscreatedServer.exe  +sv_bind ${global:IP} +sv_maxplayers $global:MAXPLAYERS +map islands -sv_port $global:PORT +http_startserver -mis_gameserverid 100 +sv_servername '$global:HOSTNAME'"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Bin64_dedicated\MiscreatedServer.exe  +sv_bind ${global:IP} +sv_maxplayers $global:MAXPLAYERS +map islands -sv_port $global:PORT +http_startserver -mis_gameserverid 100"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
