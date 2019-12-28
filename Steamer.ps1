@@ -35,15 +35,16 @@ $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
 .$global:currentdir\functions\fn_CreateDiscord.ps1
 .$global:currentdir\functions\fn_CreateLaunchScript.ps1
 .$global:currentdir\functions\fn_CreateMonitor.ps1
+.$global:currentdir\functions\fn_CreateMonitorJob.ps1
 .$global:currentdir\functions\fn_CreateServerFolder.ps1
 .$global:currentdir\functions\fn_CreateVaribles.ps1
-.$global:currentdir\functions\fn_CreateMonitorJob.ps1
 .$global:currentdir\functions\fn_InstallNodejs.ps1
 .$global:currentdir\functions\fn_InstallServer.ps1
 .$global:currentdir\functions\fn_InstallSteam.ps1
 .$global:currentdir\functions\fn_Insurgency.ps1
 .$global:currentdir\functions\fn_LaunchServer.ps1
 .$global:currentdir\functions\fn_Miscreated.ps1
+.$global:currentdir\functions\fn_Rust.ps1
 .$global:currentdir\functions\fn_Read_AppID.ps1
 .$global:currentdir\functions\fn_Sandstorm.ps1
 .$global:currentdir\functions\fn_SetConsole.ps1
