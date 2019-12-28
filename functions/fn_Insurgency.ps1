@@ -12,6 +12,7 @@ Function New-LaunchScriptInsserverPS
     $global:PLAYERS = Read-host -Prompt 'Input players  (mp_coop_lobbysize [1-8])'
     $global:HOSTNAME = Read-host -Prompt 'Input hostname'
     $global:RCONPASSORD = Read-host -Prompt 'Input rcon_password'
+    if(($global:workshop = Read-Host "Input 1 to enable workshop, Press enter to accept default value [0]") -eq ''){$global:workshop="0"}else{$global:workshop}
     if(($global:sv_pure = Read-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []") -eq ''){}else{$global:sv_pure}
     ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
     ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSORD") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
@@ -27,7 +28,7 @@ Function New-LaunchScriptInsserverPS
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Starting`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Update-$global:server.ps1"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -ip ${global:IP} -port $global:PORT +maxplayers $global:MAXPLAYERS +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:sv_pure"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -ip ${global:IP} -port $global:PORT +maxplayers $global:MAXPLAYERS +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:workshop $global:sv_pure"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"

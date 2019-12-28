@@ -104,6 +104,7 @@ function Select-Steamer
                 Set-MonitorJob
             }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for gamedig'
+                Get-NodeJS
                 Get-createdvaribles
                 if( $global:AppID -eq 581330) {  
                     Get-GamedigServerQ
@@ -112,6 +113,7 @@ function Select-Steamer
                 Get-GamedigServer
                 #Select-Steamer
             }elseif($global:command -eq "gamedig"){
+                Get-NodeJS
                 Get-createdvaribles
                 if( $global:AppID -eq 581330) {  
                     Get-GamedigServerQ
