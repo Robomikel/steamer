@@ -3,9 +3,7 @@ PowerShell Steam Server Scripter
 
 
 Install Any location:  
-          Recomend this location to avoid a cd command to user home
-          place in C:\Users\%Username%\functions\*
-          place in C:\Users\%Username%\steamer.ps1
+Open PowerShell and Change Directory to steamer.ps1
 
 Run: open PowerShell
 as user NOT Admin
