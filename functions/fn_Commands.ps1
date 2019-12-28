@@ -127,9 +127,9 @@ function Select-Steamer
             }elseif(($global:command -eq "steamer") -and ($global:server -eq "update")){
                 Get-UpdateSteamer
             } else {
+                Write-Host "Format:  ./steamer <Command> <serverFolderName>" -ForegroundColor Red -BackgroundColor Black
+                Write-Host "IE:      ./steamer install  insserver" -ForegroundColor Red -BackgroundColor Black
                 Write-Host "Command not found! Available Commands" -ForegroundColor Red -BackgroundColor Black
-                Write-Host "<Command> <serverFolderName>" -ForegroundColor Red -BackgroundColor Black
-                Write-Host "IE. install  insserver" -ForegroundColor Red -BackgroundColor Black
                 Write-Host "install"
                 Write-Host "update"
                 Write-Host "validate"
@@ -139,7 +139,6 @@ function Select-Steamer
                 Write-Host "check"
                 Write-Host "backup"
                 Write-Host "exit"
-                Write-Host "details"
                 Write-Host "gamedig"
                 Write-Host "monitor"
                 Write-Host "steamer update"
