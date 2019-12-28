@@ -1,6 +1,7 @@
 
 Function Get-NodeJS
     {
+        Set-Console
         $path = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64"
         $patha = "$global:currentdir\node-v$global:nodeversion-win-x64-validate\node-v$global:nodeversion-win-x64"
         $path2 = "node-v$global:nodeversion-win-x64-validate.zip"
