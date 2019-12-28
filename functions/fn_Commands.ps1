@@ -33,8 +33,6 @@ function Select-Steamer
                     New-GameDigScriptQ
                     exit
                     }
-                New-GameDigScript
-                New-GameDigFullScript
                 #Select-Steamer
             }elseif($global:command -eq "install"){
                 Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
