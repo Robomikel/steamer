@@ -17,9 +17,11 @@ Function Get-StopServer {
 Function Get-ValidateServer {
     
     Get-StopServer
+    Get-ChecktaskDisable
     Write-Host '*** Validating Server *****' -ForegroundColor Yellow -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Validate-$global:server.txt
+    Get-ChecktaskEnable
     Set-Location $global:currentdir
 }
 
