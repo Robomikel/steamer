@@ -65,8 +65,10 @@ function Select-Steamer
             }elseif(($global:command -eq "start") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server launch, warning stops running process!'
                 Select-launchServer
+                Get-ChecktaskEnable
             }elseif($global:command -eq "start"){
                 Select-launchServer
+                Get-ChecktaskEnable
             }elseif(($global:command -eq "stop") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server stop, warning stops running process!'
                 Get-createdvaribles

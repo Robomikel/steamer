@@ -9,6 +9,7 @@ Function Get-CheckServer{
 }
 
 Function Get-StopServer {
+    Get-ChecktaskDisable
     Write-Host '*** Stopping Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
     Write-Host "Not Running" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:process" -Force}
