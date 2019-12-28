@@ -52,9 +52,11 @@ function Select-Steamer
                 New-DiscordScript
             }elseif(($global:command -eq "update") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server updates'
-                Select-UpdateServer
+                Get-createdvaribles
+                Get-UpdateServer
             }elseif($global:command -eq "update"){
-                Select-UpdateServer
+                Get-createdvaribles
+                Get-UpdateServer
             }elseif(($global:command -eq "validate") -and ($null -eq $global:server)){
                 $global:server = Read-host -Prompt 'Server FolderName for server validate'
                 Get-createdvaribles

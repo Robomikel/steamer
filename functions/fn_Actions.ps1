@@ -3,7 +3,7 @@ Function Get-createdvaribles {
     & "$global:currentdir\$global:server\Varibles-$global:server.ps1"
 }
 Function Get-CheckServer{
-    Write-Host '*** Check servering*****' -ForegroundColor Yellow -BackgroundColor Black 
+    Write-Host '*** Check  Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
     Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-Process "$global:process"}
 }
@@ -20,8 +20,17 @@ Function Get-ValidateServer {
     Write-Host '*** Validating Server *****' -ForegroundColor Yellow -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Validate-$global:server.txt
+    Set-Location $global:currentdir
 }
 
+Function Get-UpdateServer {
+    
+    Get-StopServer    >$null 2>&1
+    Write-Host '*** Updating Server *****' -ForegroundColor Yellow -BackgroundColor Black
+     Set-Location $global:currentdir\SteamCMD\   
+    .\steamcmd +runscript Updates-$global:server.txt
+    Set-Location $global:currentdir
+}
 
 
 Function Get-GamedigServer {
