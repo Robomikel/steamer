@@ -71,18 +71,18 @@ Function New-BackupServer {
 #$start_time = Get-Date
 Function Get-SevenZip 
     {
-        $path = ".\7za920\" 
+        $path = "$global:currentdir\7za920\" 
     If(Test-Path $path) 
     { 
         Write-Host '7Zip already downloaded!' -ForegroundColor Yellow -BackgroundColor Black
     } 
     Else 
     {  
-        (New-Object Net.WebClient).DownloadFile("https://www.7-zip.org/a/7za920.zip", "7za920.zip")
+        (New-Object Net.WebClient).DownloadFile("https://www.7-zip.org/a/7za920.zip", "$global:currentdir\7za920.zip")
         #####
         Write-Host '*** Downloading and Extracting 7ZIP *****' -ForegroundColor Blue -BackgroundColor Black  
         #Invoke-WebRequest -Uri $url -OutFile $output
         #Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
-        Expand-Archive ".\7za920.zip" ".\7za920\"
+        Expand-Archive "$global:currentdir\7za920.zip" "$global:currentdir\7za920\"
     }
 }

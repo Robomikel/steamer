@@ -54,8 +54,8 @@ $metamodmversion="1.10"
 $WebResponse = Invoke-WebRequest "https://mms.alliedmods.net/mmsdrop/$metamodmversion/mmsource-latest-windows"
 $WebResponse = $WebResponse.content
 Write-Host '*** Downloading and Extracting Meta Mod *****' -ForegroundColor Blue -BackgroundColor Black 
-(New-Object Net.WebClient).DownloadFile("https://mms.alliedmods.net/mmsdrop/$metamodmversion/$WebResponse", "metamod.zip")
-Expand-Archive ".\metamod.zip" ".\metamod\" -Force
+(New-Object Net.WebClient).DownloadFile("https://mms.alliedmods.net/mmsdrop/$metamodmversion/$WebResponse", "$global:currentdir\metamod.zip")
+Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
 #Move-Item -Path .\metamod\* -Destination 
 Copy-Item -Path .\metamod\* -Destination $global:currentdir\$global:server\insurgency -Force -Recurse
 
@@ -64,8 +64,8 @@ $sourcemodmversion="1.10"
 $WebResponse = Invoke-WebRequest "https://sm.alliedmods.net/smdrop/$sourcemodmversion/sourcemod-latest-windows"
 $WebResponse = $WebResponse.content
 Write-Host '*** Downloading and Extracting SourceMod *****' -ForegroundColor Blue -BackgroundColor Black
-(New-Object Net.WebClient).DownloadFile("https://sm.alliedmods.net/smdrop/$sourcemodmversion/$WebResponse", "sourcemod.zip") 
-Expand-Archive ".\sourcemod.zip" ".\sourcemod\" -Force
+(New-Object Net.WebClient).DownloadFile("https://sm.alliedmods.net/smdrop/$sourcemodmversion/$WebResponse", "$global:currentdir\sourcemod.zip") 
+Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
 Copy-Item -Path .\sourcemod\* -Destination $global:currentdir\$global:server\insurgency -Force -Recurse
 
 }

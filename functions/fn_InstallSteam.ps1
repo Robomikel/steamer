@@ -5,7 +5,7 @@ $start_time = Get-Date
 
 Function Get-Steam 
     {
-        $path = ".\steamcmd\" 
+        $path = "$global:currentdir\steamcmd\" 
     If(Test-Path $path) 
     { 
         Write-Host 'steamCMD already downloaded!' -ForegroundColor Yellow -BackgroundColor Black
@@ -17,7 +17,7 @@ Function Get-Steam
         Write-Host '*** Downloading and Extracting SteamCMD *****' -ForegroundColor Blue -BackgroundColor Black  
         Invoke-WebRequest -Uri $url -OutFile $output
         Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
-        Expand-Archive ".\steamcmd.zip" ".\steamcmd\"
+        Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\"
     }
 }
 

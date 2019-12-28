@@ -10,7 +10,7 @@ Function Get-NodeJS
     {
     Write-Host '*** Downloading and Extracting Nodejs *****' -ForegroundColor Yellow -BackgroundColor Black  
     (New-Object Net.WebClient).DownloadFile("https://nodejs.org/dist/v$global:nodeversion/node-v$global:nodeversion-win-x64.zip", "node-v$global:nodeversion-win-x64.zip")
-    Expand-Archive ".\node-v$global:nodeversion-win-x64.zip" ".\node-v$global:nodeversion-win-x64\"
+    Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64.zip" "$global:currentdir\node-v$global:nodeversion-win-x64\"
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\npm install gamedig
     .\npm install gamedig -g
