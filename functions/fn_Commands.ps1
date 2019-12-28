@@ -11,7 +11,7 @@ function Select-Steamer
              #[string[]]
              #[Parameter(Position=1, ValueFromRemainingArguments)]
              #$Remaining)
-            Set-Console
+            Set-Console  >$null 2>&1
             If (($global:command -eq "install") -and ($null -eq $global:server)){
                 Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
                 Write-Host ".|||--WELCOME TO STEAMER THE WINDOWS STEAM SERVER INSTALLER--|||." -ForegroundColor Magenta -BackgroundColor Black
@@ -28,11 +28,11 @@ function Select-Steamer
                 New-CreateVariables
                 Set-CreateMonitorScript
                 New-DiscordScript
-                if( $global:AppID -eq 581330) {  
-                    New-GameDigFullScriptQ
-                    New-GameDigScriptQ
-                    exit
-                    }
+                #if( $global:AppID -eq 581330) {  
+                #    New-GameDigFullScriptQ
+                #    New-GameDigScriptQ
+                #    exit
+                #    }
                 #Select-Steamer
             }elseif($global:command -eq "install"){
                 Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
@@ -121,6 +121,25 @@ function Select-Steamer
                     }
                 Get-GamedigServer
                 #Select-Steamer
+            }elseif(($global:command -eq "gamedigPrivate") -and ($null -eq $global:server)){
+                $global:server = Read-host -Prompt 'Server FolderName for gamedig'
+                Get-NodeJS
+                Get-createdvaribles
+                if( $global:AppID -eq 581330) {  
+                    Get-GamedigServerQPrivate
+                    exit
+                    }
+                Get-GamedigServerPrivate
+                #Select-Steamer
+            }elseif($global:command -eq "gamedigPrivate"){
+                Get-NodeJS
+                Get-createdvaribles
+                if( $global:AppID -eq 581330) {  
+                    Get-GamedigServerQPrivate
+                    exit
+                    }
+                Get-GamedigServerPrivate
+                #Select-Steamer
             }elseif($global:command -eq "exit"){
                 exit
             }elseif($global:command -eq "x"){
@@ -140,6 +159,7 @@ function Select-Steamer
                 Write-Host "backup"
                 Write-Host "exit"
                 Write-Host "gamedig"
+                Write-Host "gamedigPrivate"
                 Write-Host "monitor"
                 Write-Host "steamer update"
                 #Select-Steamer

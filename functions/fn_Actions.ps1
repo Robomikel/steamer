@@ -46,7 +46,19 @@ Function Get-GamedigServerQ {
     .\gamedig --type $global:game ${global:EXTIP}:${global:QUERYPORT} --pretty
     Set-Location $global:currentdir
 }
+Function Get-GamedigServerPrivate {
+    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Yellow -BackgroundColor Black
+    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+    .\gamedig --type $global:game ${global:IP}:${global:PORT} --pretty
+    Set-Location $global:currentdir
+}
 
+Function Get-GamedigServerQPrivate {
+    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Yellow -BackgroundColor Black
+    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+    .\gamedig --type $global:game ${global:IP}:${global:QUERYPORT} --pretty
+    Set-Location $global:currentdir
+}
 Function Start-Countdown {
     Param(
     [Int32]$Seconds = 10,
