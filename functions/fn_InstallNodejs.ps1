@@ -27,7 +27,7 @@ Compare-Object $path $patha   >$null 2>&1
 Function add-nodejs {
 Write-Host '*** Downloading and Extracting Nodejs *****' -ForegroundColor Yellow -BackgroundColor Black  
     
-(New-Object Net.WebClient).DownloadFile("https://nodejs.org/dist/v12.13.1/node-v12.13.1-win-x64.zip", "node-v12.13.1-win-x64.zip")
+(New-Object Net.WebClient).DownloadFile("$global:nodejsurl", "$global:currentdir\node-v$global:nodeversion-win-x64-validate.zip")
 Copy-Item $global:currentdir\node-v$global:nodeversion-win-x64-validate.zip $global:currentdir\node-v$global:nodeversion-win-x64.zip
 Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64-validate.zip" "$global:currentdir\node-v$global:nodeversion-win-x64-validate\" -Force
 Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64.zip" "$global:currentdir\node-v$global:nodeversion-win-x64\" -Force
