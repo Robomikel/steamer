@@ -20,27 +20,27 @@ Function Set-SteamInfoAppID
 Function Read-AppID     
     {
         if($global:AppID -eq 302200){
-            Set-Console
+            Set-Console  >$null 2>&1
         New-LaunchScriptMiscreatedPS
         } elseif($global:AppID -eq 294420){
         $global:game="7d2d"
-        Set-Console
+        Set-Console  >$null 2>&1
         New-LaunchScriptSdtdserverPS
         } elseif($global:AppID -eq 237410){
         $global:game="insurgency"
-        Set-Console
+        Set-Console  >$null 2>&1
         New-LaunchScriptInsserverPS
         } elseif($global:AppID -eq 581330){
         $global:game="insurgencysandstorm"
-        Set-Console
+        Set-Console  >$null 2>&1
         New-LaunchScriptInssserverPS
         } elseif($global:AppID -eq 233780){
         $global:game="arma3"
-        Set-Console
+        Set-Console  >$null 2>&1
         New-LaunchScriptArma3serverPS
         } elseif($global:AppID -eq 258550){
         $global:game="rust"
-        Set-Console
+        Set-Console  >$null 2>&1
         New-LaunchScriptRustPS
         #} elseif($null -eq $global:AppID){
         ##Write-Host "you entered Null or blank"

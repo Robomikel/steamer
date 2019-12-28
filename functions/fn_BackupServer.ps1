@@ -49,7 +49,7 @@ Function New-BackupFolder
 }
 
 Function New-BackupServer {
-    Set-Console
+    Set-Console  >$null 2>&1
     $BackupDate = get-date -Format yyyyMMdd
     #Write-Host '*** Stopping Server Process *****' -ForegroundColor Yellow -BackgroundColor Black  
     Get-StopServer
