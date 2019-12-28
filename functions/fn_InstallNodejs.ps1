@@ -1,7 +1,7 @@
 
 Function Get-NodeJS
     {
-        Set-Console
+        #Set-Console
         $path = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64"
         $patha = "$global:currentdir\node-v$global:nodeversion-win-x64-validate\node-v$global:nodeversion-win-x64"
         $path2 = "node-v$global:nodeversion-win-x64-validate.zip"
@@ -27,7 +27,7 @@ Compare-Object $path $patha   >$null 2>&1
 Function add-nodejs {
 Write-Host '*** Downloading and Extracting Nodejs *****' -ForegroundColor Yellow -BackgroundColor Black  
     
-(New-Object Net.WebClient).DownloadFile("$global:nodejsurl", "node-v$global:nodeversion-win-x64-validate.zip")
+(New-Object Net.WebClient).DownloadFile("https://nodejs.org/dist/v12.13.1/node-v12.13.1-win-x64.zip", "node-v12.13.1-win-x64.zip")
 Copy-Item $global:currentdir\node-v$global:nodeversion-win-x64-validate.zip $global:currentdir\node-v$global:nodeversion-win-x64.zip
 Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64-validate.zip" "$global:currentdir\node-v$global:nodeversion-win-x64-validate\" -Force
 Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64.zip" "$global:currentdir\node-v$global:nodeversion-win-x64\" -Force
