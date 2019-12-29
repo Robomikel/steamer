@@ -44,8 +44,10 @@ Function New-LaunchScriptInsserverPS
     if ($decision -eq 0) {
     Get-SourceMetaMod
     Write-Host 'Entered Y'
+    Get-Gamemode
 } else {
     Write-Host 'Entered N'
+    Get-Gamemode
     #Select-Steamer
 }
 
@@ -68,10 +70,74 @@ Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$
 }
   #  https://sm.alliedmods.net/smdrop/1.11/sourcemod-1.11.0-git6478-windows.zip
   #  https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1128-windows.zip
+Function Get-Playlist {
+    Write-Host "Checking playlist" -ForegroundColor Magenta
+    if($global:playlist -eq "comp") {
+        Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
+        ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_comp.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+    }elseif($global:playlist -eq "coop") {
+            Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
+            ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+    }elseif($global:playlist -eq "coop_elite") {
+                Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
+                ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+                #Add-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Value "//edited by steamer"
+    }elseif($global:playlist -eq "coop_hardcore"){
+                    Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
+                    ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+    }elseif($global:playlist -eq "pvp_sustained"){
+                        Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
+                        ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_sustained_combat.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+    }elseif($global:playlist -eq "pvp_tactical"){
+                            Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
+                            ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_tactical_operations.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+    }elseif($global:playlist -eq "conquer"){
+                                Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
+                                ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_conquer.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+    }elseif($null -eq $global:playlist) {
+                                    Write-Host "entered blank or null" -ForegroundColor Magenta
+                                    #
+    }
+}
+                
+
+Function Set-Gamemode 
+{
+        Write-Host "Enter one of the listed modes" -ForegroundColor Yellow
+        Write-Host "comp" -ForegroundColor Magenta
+        Write-Host "coop" -ForegroundColor Magenta
+        Write-Host "coop_elite" -ForegroundColor Magenta
+        Write-Host "coop_hardcore" -ForegroundColor Magenta
+        Write-Host "pvp_sustained" -ForegroundColor Magenta
+        Write-Host "pvp_tactical" -ForegroundColor Magenta
+        Write-Host "conquer" -ForegroundColor Magenta
+        $global:playlist = Read-Host "Enter mode, Will add Mapcycle per mode"
+        if(($global:playlist -eq "comp") -or ($global:playlist -eq "coop") -or ($global:playlist -eq "coop_elite") -or ($global:playlist -eq "coop_hardcore") -or ($global:playlist -eq "pvp_sustained") -or ($global:playlist -eq "pvp_tactical")-or ($global:playlist -eq "conquer")) {
+        Write-Host "Editing nwi/$global:playlist playlist in server.cfg" -ForegroundColor Magenta
+        ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "sv_playlist `"nwi/coop`"","sv_playlist `"nwi/$global:playlist`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+        Get-Playlist
+    }
+}
+Function Get-Gamemode {
+    
+    
+    $title    = 'Set playlist and Mapcycle now?'
+    $question = 'Set Gamemode (playlist) and Mapcycle now?'
+
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+        #Get-SourceMetaMod
+        Set-Gamemode
+        Write-Host 'Entered Y'
+        } else {
+        Write-Host 'Entered N'
+        #Select-Steamer
+    }
 
 
 
-
-
-
-
+}
