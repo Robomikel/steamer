@@ -41,7 +41,7 @@ Function New-BackupFolder {
 }
 
 Function New-BackupServer {
-    Set-Console  >$null 2>&1
+    #Set-Console  >$null 2>&1
     $BackupDate = get-date -Format yyyyMMdd
     Get-StopServer
     Get-ChecktaskDisable 
