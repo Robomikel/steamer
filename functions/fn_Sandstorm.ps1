@@ -26,11 +26,15 @@ Function New-LaunchScriptInssserverPS
   #     New-Item -Path "$global:currentdir\inssserver\Insurgency\Config\Server" -Name "logfiles" -ItemType "directory"
   #      New-Item -Path "$global:currentdir\inssserver\Insurgency\Saved\Config\WindowsServer" -Name "logfiles" -ItemType "directory"
   #      mkdir $global:currentdir\inssserver
-        mkdir $global:currentdir\inssserver\Insurgency\Config\Server   >$null 2>&1
-        $MapCyclePath = "$global:currentdir\inssserver\Insurgency\Config\Server"
+        mkdir $global:currentdir\$global:server\Insurgency\Config\Server   >$null 2>&1
+        $MapCyclePath = "$global:currentdir\$global:server\Insurgency\Config\Server"
         
-        mkdir $global:currentdir\inssserver\Insurgency\Saved\Config\WindowsServer   >$null 2>&1
-        $GamePath = "$global:currentdir\inssserver\Insurgency\Saved\Config\WindowsServer"
+        mkdir $global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer   >$null 2>&1
+        $GamePath = "$global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer"
+
+        New-Item $MapCyclePath\Mapcycle.txt -Force
+        New-Item $GamePath\Game.ini -Force
+        New-Item $MapCyclePath\Admins.txt -Force
         # - - - - - - MAPCYCLE.TXT - - - - - - # EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Ministry_Checkpoint_Security
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Outskirts_Checkpoint_Security
