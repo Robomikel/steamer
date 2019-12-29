@@ -3,7 +3,7 @@ function Select-Steamer
     {
          param(
             [string]
-             [Parameter(Mandatory=$true,Position=0,HelpMessage="Enter in Command`/s`, CTL `+ C and see .`/steamer `?")]
+             [Parameter(Mandatory=$true,Position=0,HelpMessage="Enter in Command/s, CTL + C and see ./steamer ?")]
              $global:command,
              [string[]]
              [Parameter(Mandatory = $false, Position=1)]
