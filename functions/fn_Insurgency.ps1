@@ -1,6 +1,6 @@
 Function New-LaunchScriptInsserverPS
 {
-    #----------   Ask For Folder Name and App ID   -------------------
+    #----------   Insurgency Server CFG    -------------------
     ${gamedirname}="Insurgency"
     ${config1}="server.cfg"
     (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")

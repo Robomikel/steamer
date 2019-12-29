@@ -10,7 +10,6 @@ Function Get-NodeJS
     { 
         search-nodejs
             if (!$?) {
-            #write-host "Not True, last operation failed"
             write-host "nodejs files did not validate" -ForegroundColor Yellow -BackgroundColor Black
             add-nodejs
             }

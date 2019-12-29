@@ -23,16 +23,10 @@ function Select-Steamer
                 Get-Steam
                 #Test-output 
                 Set-SteamInfo
-                #::::: Create Launch Script per AppID Version 4 update :::::::::::::
                 Set-SteamInfoAppID
                 New-CreateVariables
                 Set-CreateMonitorScript
                 New-DiscordScript
-                #if( $global:AppID -eq 581330) {  
-                #    New-GameDigFullScriptQ
-                #    New-GameDigScriptQ
-                #    exit
-                #    }
                 #Select-Steamer
             }elseif($global:command -eq "install"){
                 Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black

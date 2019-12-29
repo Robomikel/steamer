@@ -1,8 +1,8 @@
 ###                        ~[STEAMER]~                             ###           
 ######################################################################
-###---------- Steam Server Install Current Folder -------------######
+###--------------- PowerShell Steam Server Install -------------######
 ######################################################################
-#----------   Determine script current location ---------------------
+#----------                                        ------------------#
 $global:currentdir=Get-Location
 $global:serverdir="$global:currentdir\$global:server"
 ${global:EXTIP}=(Invoke-WebRequest -uri "http://ifconfig.me/ip").Content

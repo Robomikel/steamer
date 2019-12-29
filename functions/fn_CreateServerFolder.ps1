@@ -1,4 +1,4 @@
-#$global:currentdir = Get-Location
+
 Function New-ServerFolder 
     {   
         ##-- Create Folder for Server -- In current folder

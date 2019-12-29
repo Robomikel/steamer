@@ -1,6 +1,6 @@
 Function New-LaunchScriptRustPS
     {
-        #----------   Ask For Folder Name and App ID   -------------------
+        #----------   Rust server CDF  -------------------
         $global:process = "RustDedicated"
         ${global:IP} = Read-host -Prompt 'Input Server local IP'
         if(($global:PORT = Read-Host "Input Server Port,Press enter to accept default value [28015]") -eq ''){$global:PORT="28015"}else{$global:PORT}
@@ -36,10 +36,10 @@ Function New-LaunchScriptRustPS
         $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
     
         $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-        if ($decision -eq 0) {
-        Get-Oxide
-        Write-Host 'Entered Y'
-    } else {
+            if ($decision -eq 0) {
+                Get-Oxide
+                Write-Host 'Entered Y'
+            } else {
         Write-Host 'Entered N'
         #Select-Steamer
     }
@@ -48,17 +48,13 @@ Function New-LaunchScriptRustPS
     
     
     Function Get-Oxide {
-
-
-    Write-Host '*** Downloading and Extracting Oxide *****' -ForegroundColor Blue -BackgroundColor Black
-    (New-Object Net.WebClient).DownloadFile("$global:oxiderustlatestlink", "$global:currentdir\oxide.zip")
-    Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
-    Copy-Item -Path $global:currentdir\oxide\RustDedicated_Data\* -Destination $global:currentdir\$global:server\RustDedicated_Data\ -Force -Recurse
-    #oxiderustlatestlink="https://umod.org/games/rust/download/develop" # fix for linux build 06.09.2019
-    #oxidehurtworldlatestlink=$(curl -sL https://api.github.com/repos/OxideMod/Oxide.Hurtworld/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep "Oxide.Hurtworld.zip")
-    #oxidesdtdlatestlink=$(curl -sL https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest | grep browser_download_url | cut -d '"' -f 4)    
-    
-
+        Write-Host '*** Downloading and Extracting Oxide *****' -ForegroundColor Blue -BackgroundColor Black
+        (New-Object Net.WebClient).DownloadFile("$global:oxiderustlatestlink", "$global:currentdir\oxide.zip")
+        Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
+        Copy-Item -Path $global:currentdir\oxide\RustDedicated_Data\* -Destination $global:currentdir\$global:server\RustDedicated_Data\ -Force -Recurse
+        #oxiderustlatestlink="https://umod.org/games/rust/download/develop" # fix for linux build 06.09.2019
+        #oxidehurtworldlatestlink=$(curl -sL https://api.github.com/repos/OxideMod/Oxide.Hurtworld/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep "Oxide.Hurtworld.zip")
+        #oxidesdtdlatestlink=$(curl -sL https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest | grep browser_download_url | cut -d '"' -f 4)    
     }
   
     

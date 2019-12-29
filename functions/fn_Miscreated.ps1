@@ -1,6 +1,6 @@
 Function New-LaunchScriptMiscreatedPS
     {
-        #----------   Ask For Folder Name and App ID   -------------------
+        #----------   Miscreated Server CFG  -------------------
         $global:process = "MiscreatedServer"
         ${global:IP} = Read-host -Prompt 'Input Server local IP'
         $global:MAXPLAYERS = Read-host -Prompt 'Input maxplayers'

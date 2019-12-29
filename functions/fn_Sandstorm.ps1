@@ -1,6 +1,6 @@
 Function New-LaunchScriptInssserverPS 
     {
-        #----------   Ask For Folder Name and App ID   -------------------
+        #----------   INS: Sandstorm Server CFG  -------------------
         $global:process = "InsurgencyServer-Win64-Shipping" 
         if(($global:SCENARIO = Read-Host "Input Server Scenario, Press enter to accept default value [Scenario_Outskirts_Checkpoint_Security]") -eq ''){$global:SCENARIO="Scenario_Outskirts_Checkpoint_Security"}else{$global:SCENARIO}
         if(($global:MAP = Read-Host "Input Server Map, Press enter to accept default value [Compound]") -eq ''){$global:MAP="Compound"}else{$global:MAP}
