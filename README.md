@@ -24,7 +24,7 @@ Install steam server ```>_./steamer install misserver```
    * Insurgency: Sandstorm Server (581330) - "inssserver" (optional server folder name) 
    * Rust server (258550) - "rustserver" (optional server folder name) 
    * Arma3 Server (233780)- “arma3server" (optional server folder name)         
- - Creates Launch, Monitor, gamedig, per serverfolder/instance variables, and Discord PS scripts.
+ - Creates Launch, Monitor, per serverfolder/instance variables, and Discord PS scripts.
  - Manage Steam server with features
    * install steam server
    * starting server 
