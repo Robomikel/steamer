@@ -26,18 +26,18 @@ Install steam server ```>_./steamer install misserver```
    * Arma3 Server (233780)- “arma3server" (optional server folder name)         
  - Creates Launch, Monitor, gamedig, and Discord PS scripts.
  - Manage Steam server with features
-          * install steam server
-          * starting server
-          * stopping server
-          * restarting server
-          * check if running
-          * update server
-          * validate server files
-          * backup server files
-          * monitor server process
-          * send discord alert
-          * run gamedig on hosted server
-          * update steamer PS scripts from github
+                    * install steam server
+                    * starting server
+                    * stopping server
+                    * restarting server
+                    * check if running
+                    * update server
+                    * validate server files
+                    * backup server files
+                    * monitor server process
+                    * send discord alert
+                    * run gamedig on hosted server
+                    * update steamer PS scripts from github
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
  - ```Stops <serverFolder>``` - ```>_./steamer stops misserver``` - stop process for miscreated server
