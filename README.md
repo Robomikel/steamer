@@ -2,13 +2,12 @@
 PowerShell Steam Server Scripter
 
 
-Install Any location:  
-Open PowerShell and Change Directory to steamer.ps1
+Install Any location:
+Download, Extract, and Open PowerShell and Change Directory to steamer.ps1
 
-Run: open PowerShell
-as user NOT Admin
-
-Steamer accepts 1 or 2 parameters. first param specifies steamer command and the second is server folder name. if server folder name does not exist it creates it.
+Run: 
+open PowerShell as user NOT Admin
+Steamer accepts 1 or 2 parameters. first param specifies steamer command and the second is server folder name. if server folder name does not exist it creates it.   ```.\steamer.ps1 install insserver```
 
 ```>_./steamer <command> <serverFolder>```
           
