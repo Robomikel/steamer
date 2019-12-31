@@ -1,10 +1,10 @@
 
 Function Get-ChecktaskDisable {
-    Get-ScheduledTask -TaskName "$global:server monitor"  >$null 2>&1
+    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
 if($?) {
     #write-host "True, last operation succeeded"
-    Write-Host '*** disabling scheduled task *****' -ForegroundColor Yellow -BackgroundColor Black
-    Disable-ScheduledTask -TaskName "$global:server monitor"
+    Write-Host '*** disabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
+    Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
 }
 
 if (!$?) {
@@ -16,11 +16,11 @@ if (!$?) {
 }
 
 Function Get-ChecktaskEnable {
-    Get-ScheduledTask -TaskName "$global:server monitor"  >$null 2>&1
+    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
 if($?) {
     #write-host "True, last operation succeeded"
     Write-Host '*** Enabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
-    Enable-ScheduledTask -TaskName "$global:server monitor"
+    Enable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
     }
 if (!$?) {
     #write-host "Not True, last operation failed"
@@ -35,7 +35,7 @@ Function New-BackupFolder {
     } 
     Else 
     {  
-        Write-Host '*** Creating backup folder *****' -ForegroundColor Blue -BackgroundColor Black
+        Write-Host '*** Creating backup folder *****' -ForegroundColor Magenta -BackgroundColor Black
         New-Item -Path "$global:currentdir\" -Name "backups" -ItemType "directory"  
     }
 }
@@ -46,7 +46,7 @@ Function New-BackupServer {
     Get-StopServer
     Get-ChecktaskDisable 
     New-BackupFolder
-    Write-Host '*** Server Backup Started *****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Server Backup Started *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
     #./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* -an > backup.log
     ./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* > backup.log
@@ -61,7 +61,8 @@ Function Get-SevenZip {
         $path = "$global:currentdir\7za920\"
         $patha = "$global:currentdir\7za920-validate"
         $path2 = "$global:currentdir\7za920-validate.zip"
-        $pathb = "$global:currentdir\7za920.zip"  
+        $pathb = "$global:currentdir\7za920.zip"
+        Write-Host '*** Checking for 7ZIP *****' -ForegroundColor Yellow -BackgroundColor Black   
     If((Test-Path $path) -and (Test-Path $path2) -and (Test-Path $patha) -and (Test-Path $pathb)) 
     { 
         search-sevenzip
@@ -80,9 +81,12 @@ Function search-sevenzip {
     Compare-Object $path $patha   >$null 2>&1
     }
 Function add-sevenzip {
+    Write-Host '*** Downloading 7ZIP *****' -ForegroundColor Magenta -BackgroundColor Black 
     (New-Object Net.WebClient).DownloadFile("$global:sevenzip", "$global:currentdir\7za920.zip")
+    Write-Host '***  Copying 7ZIP *****' -ForegroundColor Magenta -BackgroundColor Black 
     Copy-Item $global:currentdir\7za920.zip $global:currentdir\7za920-validate.zip -Force
-    Write-Host '*** Downloading and Extracting 7ZIP *****' -ForegroundColor Blue -BackgroundColor Black  
+    #Write-Host '*** Downloading and Extracting 7ZIP *****' -ForegroundColor Blue -BackgroundColor Black
+    Write-Host '***  Extracting 7ZIP *****' -ForegroundColor Magenta -BackgroundColor Black   
     Expand-Archive "$global:currentdir\7za920-validate.zip" "$global:currentdir\7za920-validate" -Force
     Expand-Archive "$global:currentdir\7za920.zip" "$global:currentdir\7za920\" -Force
 }    

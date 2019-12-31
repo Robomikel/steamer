@@ -25,8 +25,9 @@ Function New-LaunchScriptInsserverPS
     #Add-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Value "mapcyclefile 'mapcycle_checkpoint.txt'"
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Starting`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Starting`" -ForegroundColor Magenta -BackgroundColor Black"
+    #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -ip ${global:IP} -port $global:PORT +maxplayers $global:MAXPLAYERS +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:workshop $global:sv_pure"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
@@ -55,14 +56,14 @@ Function New-LaunchScriptInsserverPS
 
 Function Get-SourceMetaMod {
 
-Write-Host '*** Downloading and Extracting Meta Mod *****' -ForegroundColor Blue -BackgroundColor Black 
+Write-Host '*** Downloading and Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
 (New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
 Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
 #Move-Item -Path $global:currentdir\metamod\* -Destination 
 Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\insurgency -Force -Recurse
 
 
-Write-Host '*** Downloading and Extracting SourceMod *****' -ForegroundColor Blue -BackgroundColor Black
+Write-Host '*** Downloading and Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
 (New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip") 
 Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
 Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\insurgency -Force -Recurse
@@ -71,7 +72,7 @@ Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$
   #  https://sm.alliedmods.net/smdrop/1.11/sourcemod-1.11.0-git6478-windows.zip
   #  https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1128-windows.zip
 Function Get-Playlist {
-    Write-Host "Checking playlist" -ForegroundColor Magenta
+    Write-Host "Checking playlist" -ForegroundColor Yellow
     if($global:playlist -eq "comp") {
         Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
         ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_comp.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
@@ -104,13 +105,13 @@ Function Get-Playlist {
 Function Set-Gamemode 
 {
         Write-Host "Enter one of the listed modes" -ForegroundColor Yellow
-        Write-Host "comp" -ForegroundColor Magenta
-        Write-Host "coop" -ForegroundColor Magenta
-        Write-Host "coop_elite" -ForegroundColor Magenta
-        Write-Host "coop_hardcore" -ForegroundColor Magenta
-        Write-Host "pvp_sustained" -ForegroundColor Magenta
-        Write-Host "pvp_tactical" -ForegroundColor Magenta
-        Write-Host "conquer" -ForegroundColor Magenta
+        Write-Host "comp" -ForegroundColor Yellow
+        Write-Host "coop" -ForegroundColor Yellow
+        Write-Host "coop_elite" -ForegroundColor Yellow
+        Write-Host "coop_hardcore" -ForegroundColor Yellow
+        Write-Host "pvp_sustained" -ForegroundColor Yellow
+        Write-Host "pvp_tactical" -ForegroundColor Yellow
+        Write-Host "conquer" -ForegroundColor Yellow
         $global:playlist = Read-Host "Enter mode, Will add Mapcycle per mode"
         if(($global:playlist -eq "comp") -or ($global:playlist -eq "coop") -or ($global:playlist -eq "coop_elite") -or ($global:playlist -eq "coop_hardcore") -or ($global:playlist -eq "pvp_sustained") -or ($global:playlist -eq "pvp_tactical")-or ($global:playlist -eq "conquer")) {
         Write-Host "Editing nwi/$global:playlist playlist in server.cfg" -ForegroundColor Magenta

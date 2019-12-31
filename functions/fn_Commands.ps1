@@ -3,7 +3,7 @@ function Select-Steamer
     {
          param(
             [string]
-             [Parameter(Mandatory=$true,Position=0,HelpMessage="Enter in Command/s, CTL + C and see ./steamer ?")]
+             [Parameter(Mandatory=$true,Position=0,HelpMessage=" CTL + C and ./steamer ?   ")]
              $global:command,
              [string[]]
              [Parameter(Mandatory = $false, Position=1)]
@@ -142,8 +142,8 @@ function Select-Steamer
             }elseif(($global:command -eq "steamer") -and ($global:server -eq "update")){
                 Get-UpdateSteamer
             } else {
-                Write-Host "Format:  ./steamer <Command> <serverFolderName>" -ForegroundColor Red -BackgroundColor Black
-                Write-Host "IE:      ./steamer install  insserver" -ForegroundColor Red -BackgroundColor Black
+                Write-Host "Format:  ./steamer <Command> <serverFolderName>" -ForegroundColor Yellow -BackgroundColor Black
+                Write-Host "IE:      ./steamer install  insserver" -ForegroundColor Yellow -BackgroundColor Black
                 Write-Host "Command not found! Available Commands" -ForegroundColor Red -BackgroundColor Black
                 Write-Host "install"
                 Write-Host "update"

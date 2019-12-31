@@ -2,14 +2,14 @@ Function Get-createdvaribles {
     Write-Host "*** Getting Server Varibles *****" -ForegroundColor Yellow -BackgroundColor Black  
     & "$global:currentdir\$global:server\Varibles-$global:server.ps1"
 }
-Function Get-CheckServer{
+Function Get-CheckServer {
     Write-Host '*** Check  Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
     Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-Process "$global:process"}
 }
 
 Function Get-StopServer {
-    Get-ChecktaskDisable
+    Get-ChecktaskDisable 
     Write-Host '*** Stopping Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
     Write-Host "Not Running" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:process" -Force}
@@ -18,7 +18,7 @@ Function Get-StopServer {
 Function Get-ValidateServer {
     
     Get-StopServer
-    Get-ChecktaskDisable
+    #Get-ChecktaskDisable
     Write-Host '*** Validating Server *****' -ForegroundColor Yellow -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Validate-$global:server.txt
@@ -28,7 +28,7 @@ Function Get-ValidateServer {
 
 Function Get-UpdateServer {
     
-    Get-StopServer    >$null 2>&1
+    Get-StopServer >$null 2>&1
     Write-Host '*** Updating Server *****' -ForegroundColor Yellow -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Updates-$global:server.txt
