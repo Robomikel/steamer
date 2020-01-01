@@ -2,6 +2,7 @@
 
 #----------      Install server as Anon     ----------------------
 Function Install-Anonserver{
+        Write-Host '*** Creating SteamCMD Run txt *****' -ForegroundColor Magenta -BackgroundColor Black 
         New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
         Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
         Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"
@@ -21,6 +22,7 @@ Function Install-Anonserver{
 #--------- Install server as User  -----------------
 Function Install-Server{
         $global:username = Read-host -Prompt 'Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd'
+        Write-Host '*** Creating SteamCMD Run txt *****' -ForegroundColor Magenta -BackgroundColor Black 
         New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
         Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
         #Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"
