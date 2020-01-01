@@ -14,9 +14,10 @@ Function Get-Steam
     {  
         #(New-Object Net.WebClient).DownloadFile("$global:steamurl", "steamcmd.zip")
         #####
-        Write-Host '*** Downloading and Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black  
+        Write-Host '*** Downloading SteamCMD *****' -ForegroundColor Cyan -BackgroundColor Black  
         Invoke-WebRequest -Uri $global:steamurl -OutFile $global:steamoutput
         Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+        Write-Host '***  Extracting SteamCMD *****' -ForegroundColor Cyan -BackgroundColor Black 
         Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\"
     }
 }
