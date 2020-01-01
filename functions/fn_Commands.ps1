@@ -13,9 +13,17 @@ function Select-Steamer
              #$Remaining)
             Set-Console  >$null 2>&1
             If (($global:command -eq "install") -and ($null -eq $global:server)){
-                Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
-                Write-Host ".|||--WELCOME TO STEAMER THE WINDOWS STEAM SERVER INSTALLER--|||." -ForegroundColor Magenta -BackgroundColor Black
-                Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
+                Write-Host "                
+                                  _________  __                                           
+                                 /   _____/_/  |_   ____  _____     _____    ____ _______ 
+                                 \_____  \ \   __\_/ __ \ \__  \   /     \ _/ __ \\_  __ \
+                                 /        \ |  |  \  ___/  / __ \_|  Y Y  \\  ___/ |  | \/
+                                /_______  / |__|   \___  >(____  /|__|_|  / \___  >|__|   
+                                        \/             \/      \/       \/      \/        
+                "
+                #Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
+                #Write-Host ".|||--WELCOME TO STEAMER THE WINDOWS STEAM SERVER INSTALLER--|||." -ForegroundColor Magenta -BackgroundColor Black
+                #Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
                 $global:server = Read-host -Prompt 'Input Server Folder Name make unique to instance [i.e. sdtdserver (No Spaces!)]'
                 $global:AppID = Read-host -Prompt 'Input Steam Server App ID'
                 $global:Branch = Read-host -Prompt 'Add Argument?, -beta... or leave Blank for none'
@@ -29,9 +37,14 @@ function Select-Steamer
                 New-DiscordScript
                 #Select-Steamer
             }elseif($global:command -eq "install"){
-                Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
-                Write-Host ".|||--WELCOME TO STEAMER THE WINDOWS STEAM SERVER INSTALLER--|||." -ForegroundColor Magenta -BackgroundColor Black
-                Write-Host ".|||--##############################################--|||." -ForegroundColor Magenta -BackgroundColor Black
+                Write-Host " 
+                                  _________  __                                           
+                                 /   _____/_/  |_   ____  _____     _____    ____ _______ 
+                                 \_____  \ \   __\_/ __ \ \__  \   /     \ _/ __ \\_  __ \
+                                 /        \ |  |  \  ___/  / __ \_|  Y Y  \\  ___/ |  | \/
+                                /_______  / |__|   \___  >(____  /|__|_|  / \___  >|__|   
+                                        \/             \/      \/       \/      \/        
+                "
                 $global:AppID = Read-host -Prompt 'Input Steam Server App ID'
                 $global:Branch = Read-host -Prompt 'Add Argument?, -beta... or leave Blank for none'
                 New-ServerFolder
