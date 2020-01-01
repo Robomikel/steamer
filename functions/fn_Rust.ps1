@@ -13,6 +13,7 @@ Function New-LaunchScriptRustPS
         if(($global:WORLDSIZE = Read-Host "Input Server WorldSize,Press enter to accept default value [3000]") -eq ''){$global:WORLDSIZE="3000"}else{$global:WORLDSIZE}
         if(($global:SAVEINTERVAL = Read-Host "Input Server Save Interval,Press enter to accept default value [300]") -eq ''){$global:SAVEINTERVAL="300"}else{$global:SAVEINTERVAL}
         if(($global:TICKRATE = Read-Host "Input Server Tickrate,Press enter to accept default value [30]") -eq ''){$global:TICKRATE="30"}else{$global:TICKRATE}
+        Write-Host "***  Creating Launch script  ***" -ForegroundColor Cyan -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
@@ -26,6 +27,7 @@ Function New-LaunchScriptRustPS
         ${gamedirname}="Rust"
         ${config1}="server.cfg"
         #{config2}="network.cfg"
+        Write-Host "***  Downloading Default server.cfg  ***" -ForegroundColor Cyan -BackgroundColor Black
         (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server\my_server_identity\server.cfg")
         #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config2}", "$global:currentdir\$global:server\network.cfg")
 
@@ -49,13 +51,13 @@ Function New-LaunchScriptRustPS
     
     
     Function Get-Oxide {
-        Write-Host '*** Downloading Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
+        Write-Host '*** Downloading Oxide *****' -ForegroundColor Cyan -BackgroundColor Black
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
         Invoke-WebRequest -Uri $global:oxiderustlatestlink -OutFile $global:currentdir\oxide.zip 
         #(New-Object Net.WebClient).DownloadFile("$global:oxiderustlatestlink", "$global:currentdir\oxide.zip")
-        Write-Host '***Extracting Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
+        Write-Host '***Extracting Oxide *****' -ForegroundColor Cyan -BackgroundColor Black
         Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
-        Write-Host '***Copying Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
+        Write-Host '***Copying Oxide *****' -ForegroundColor Cyan -BackgroundColor Black
         Copy-Item -Path $global:currentdir\oxide\RustDedicated_Data\* -Destination $global:currentdir\$global:server\RustDedicated_Data\ -Force -Recurse
         #oxiderustlatestlink="https://umod.org/games/rust/download/develop" # fix for linux build 06.09.2019
         #oxidehurtworldlatestlink=$(curl -sL https://api.github.com/repos/OxideMod/Oxide.Hurtworld/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep "Oxide.Hurtworld.zip")
