@@ -24,10 +24,7 @@ Function New-LaunchScriptRustPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\ "
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process 'cmd'  '/c start RustDedicated.exe -batchmode +server.ip ${global:IP}  +server.port $global:PORT +server.tickrate $global:TICKRATE +server.hostname `"$global:HOSTNAME`" +server.maxplayers $global:MAXPLAYERS +server.worldsize $global:WORLDSIZE +server.saveinterval $global:SAVEINTERVAL +rcon.web $global:RCONWEB +rcon.ip 0.0.0.0 +rcon.port $global:RCONPORT +rcon.password `"$global:RCONPASSWORD`" -logfile `"Serverlog.log`"'"
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location C:\Users\inssserver"
-        #Set-Location C:\Users\inssserver\rustserver\ 
-        #Start-Process 'cmd'  '/c start RustDedicated.exe -batchmode +server.ip 10.0.1.23 +server.port 28015 +server.tickrate 10 +server.hostname "Steamer Test" +server.seed 793198 +server.maxplayers 25 +server.worldsize 3000 +server.saveinterval 600 +rcon.ip 0.0.0.0 +rcon.port 28017 +rcon.password "Eatsleepgame#1" +rcon.web 0 -logfile "Serverlog.log"'
-        #Set-Location C:\Users\inssserver
+
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
