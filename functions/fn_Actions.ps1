@@ -10,7 +10,7 @@ Function Get-CheckServer {
 
 Function Get-StopServer {
     Get-ChecktaskDisable 
-    Write-Host '*** Stopping Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
+    Write-Host '*** Stopping Server Process *****' -ForegroundColor Magenta -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
     Write-Host "Not Running" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:process" -Force}
 }
@@ -19,7 +19,7 @@ Function Get-ValidateServer {
     
     Get-StopServer
     #Get-ChecktaskDisable
-    Write-Host '*** Validating Server *****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Validate-$global:server.txt
     Get-ChecktaskEnable
@@ -29,7 +29,7 @@ Function Get-ValidateServer {
 Function Get-UpdateServer {
     
     Get-StopServer >$null 2>&1
-    Write-Host '*** Updating Server *****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Updating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Updates-$global:server.txt
     Set-Location $global:currentdir
@@ -37,27 +37,27 @@ Function Get-UpdateServer {
 
 
 Function Get-GamedigServer {
-    Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\gamedig --type $global:game ${global:EXTIP}:${global:PORT} --pretty
     Set-Location $global:currentdir
 }
 
 Function Get-GamedigServerQ {
-    Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\gamedig --type $global:game ${global:EXTIP}:${global:QUERYPORT} --pretty
     Set-Location $global:currentdir
 }
 Function Get-GamedigServerPrivate {
-    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\gamedig --type $global:game ${global:IP}:${global:PORT} --pretty
     Set-Location $global:currentdir
 }
 
 Function Get-GamedigServerQPrivate {
-    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\gamedig --type $global:game ${global:IP}:${global:QUERYPORT} --pretty
     Set-Location $global:currentdir
