@@ -1,15 +1,17 @@
 Function New-LaunchScriptInssserverPS 
     {
         #----------   INS: Sandstorm Server CFG  -------------------
-        $global:process = "InsurgencyServer-Win64-Shipping" 
-        if(($global:SCENARIO = Read-Host "Input Server Scenario, Press enter to accept default value [Scenario_Outskirts_Checkpoint_Security]") -eq ''){$global:SCENARIO="Scenario_Outskirts_Checkpoint_Security"}else{$global:SCENARIO}
-        if(($global:MAP = Read-Host "Input Server Map, Press enter to accept default value [Compound]") -eq ''){$global:MAP="Compound"}else{$global:MAP}
-        if(($global:MAXPLAYERS = Read-Host "Input Server Maxplayers, Press enter to accept default value [8]") -eq ''){$global:MAXPLAYERS="8"}else{$global:MAXPLAYERS}
-        if(($global:PORT = Read-Host "Input Server Port, Press enter to accept default value [27102]") -eq ''){$global:PORT="27102"}else{$global:PORT}
-        if(($global:QUERYPORT = Read-Host "Input Server Query Port, Press enter to accept default value [27131]") -eq ''){$global:QUERYPORT="27131"}else{$global:QUERYPORT}
+        $global:process = "InsurgencyServer-Win64-Shipping"
+        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black 
+        if(($global:SCENARIO = Read-Host -Prompt (Write-Host "Input Server Scenario, Press enter to accept default value [Scenario_Outskirts_Checkpoint_Security]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SCENARIO="Scenario_Outskirts_Checkpoint_Security"}else{$global:SCENARIO}
+        if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [Compound]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="Compound"}else{$global:MAP}
+        if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [8]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="8"}else{$global:MAXPLAYERS}
+        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port, Press enter to accept default value [27102]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27102"}else{$global:PORT}
+        if(($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27131]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:QUERYPORT="27131"}else{$global:QUERYPORT}
         #$global:SERVERPASSWORD = Read-host -Prompt 'Input server password'
-        if(($global:SERVERPASSWORD = Read-Host "Input Server Password, Press enter to accept default value []") -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
-        $global:HOSTNAME = Read-host -Prompt 'Input server hostname'
+        if(($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
+        Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
+        $global:HOSTNAME = Read-host
         Write-Host "***  Creating Launch script  ***" -ForegroundColor Cyan -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
