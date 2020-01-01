@@ -10,7 +10,7 @@ Function New-LaunchScriptInssserverPS
         #$global:SERVERPASSWORD = Read-host -Prompt 'Input server password'
         if(($global:SERVERPASSWORD = Read-Host "Input Server Password, Press enter to accept default value []") -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
         $global:HOSTNAME = Read-host -Prompt 'Input server hostname'
-        Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
+        Write-Host "***  Creating Launch script  ***" -ForegroundColor Cyan -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
@@ -34,9 +34,9 @@ Function New-LaunchScriptInssserverPS
         mkdir $global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer   >$null 2>&1
         $GamePath = "$global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer"
 
+        Write-Host "***  Creating Mapcycle.txt  ***" -ForegroundColor Cyan -BackgroundColor Black
         New-Item $MapCyclePath\Mapcycle.txt -Force
-        New-Item $GamePath\Game.ini -Force
-        New-Item $MapCyclePath\Admins.txt -Force
+
         # - - - - - - MAPCYCLE.TXT - - - - - - # EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Ministry_Checkpoint_Security
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Outskirts_Checkpoint_Security
@@ -56,7 +56,11 @@ Function New-LaunchScriptInssserverPS
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Hideout_Checkpoint_Insurgents
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Ministry_Checkpoint_Insurgents
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Hillside_Checkpoint_Insurgents
+        
+        
         # - - - - - - GAME.INI - - - -##  EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
+        Write-Host "***  Creating Game.ini  ***" -ForegroundColor Cyan -BackgroundColor Black
+        New-Item $GamePath\Game.ini -Force
         Add-Content   $GamePath\Game.ini [Rcon]
         Add-Content   $GamePath\Game.ini bEnabled=False
         Add-Content   $GamePath\Game.ini Password=
@@ -119,7 +123,8 @@ Function New-LaunchScriptInssserverPS
         Add-Content   $GamePath\Game.ini RoundTime=480
 
         $steamID64= Read-Host "Enter Admin Steam ID64  for admins.txt"
-        
+        Write-Host "***  Creating Admins.txt  ***" -ForegroundColor Cyan -BackgroundColor Black
+        New-Item $MapCyclePath\Admins.txt -Force
         Add-Content  $MapCyclePath\Admins.txt $steamID64
 
     
