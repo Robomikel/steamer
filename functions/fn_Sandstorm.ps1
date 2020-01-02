@@ -124,7 +124,8 @@ Function New-LaunchScriptInssserverPS
         Add-Content   $GamePath\Game.ini bCounterAttackReinforce=False
         Add-Content   $GamePath\Game.ini RoundTime=480
 
-        $steamID64= Read-Host "Enter Admin Steam ID64  for admins.txt"
+        Write-Host "Enter Admin Steam ID64  for admins.txt: " -ForegroundColor Cyan -BackgroundColor Black
+        $steamID64= Read-Host
         Write-Host "***  Creating Admins.txt  ***" -ForegroundColor Cyan -BackgroundColor Black
         New-Item $MapCyclePath\Admins.txt -Force
         Add-Content  $MapCyclePath\Admins.txt $steamID64
