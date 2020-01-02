@@ -1,5 +1,5 @@
 #:::::::::::::   CREATE LAUNCH SCRIPT FOR SERVER :::::::::::::::::::::::::
-
+# check other functions for other Games
 
 Function New-LaunchScriptArma3serverPS
 {
