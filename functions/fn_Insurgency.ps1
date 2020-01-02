@@ -7,11 +7,8 @@ Function New-LaunchScriptInsserverPS
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
     (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
     $global:process = "srcds"
-    #Write-Host "Select an option or type" -ForegroundColor Cyan -NoNewline
     Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-    #Write-Host "to exit: " -NoNewline
     ${global:IP} = Read-Host
-    #${global:IP} = Read-host -Prompt 'Input Server local IP' -ForegroundColor Cyan -BackgroundColor -Black
     if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
     if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [buhriz_coop checkpoint]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="buhriz_coop checkpoint"}else{$global:MAP}
     Write-Host 'Input maxplayers (lobby size [24-48]): ' -ForegroundColor Cyan -NoNewline
@@ -26,20 +23,15 @@ Function New-LaunchScriptInsserverPS
     if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
     ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
     ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSORD") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
-    #((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "SERVERNAME","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
     Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\insurgency\subscribed_file_ids.txt -Force
     Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\insurgency\motd.txt -Force
-    #Add-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Value "hostname '$global:HOSTNAME'"
-    #Add-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Value "rcon_password '$global:RCONPASSORD'"
-    #Add-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Value "mapcyclefile 'mapcycle_checkpoint.txt'"
     Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-    #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -ip ${global:IP} -port $global:PORT +maxplayers $global:MAXPLAYERS +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:workshop $global:sv_pure"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
@@ -61,7 +53,6 @@ Function New-LaunchScriptInsserverPS
 } else {
     Write-Host 'Entered N'
     Get-Gamemode
-    #Select-Steamer
 }
 
 }
@@ -72,7 +63,6 @@ Write-Host '*** Downloading Meta Mod *****' -ForegroundColor Magenta -Background
 (New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
 Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
 Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
-#Move-Item -Path $global:currentdir\metamod\* -Destination
 Write-Host '*** Copying/installing Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
 Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\insurgency -Force -Recurse
 
@@ -85,8 +75,7 @@ Write-Host '*** Copying/installing SourceMod *****' -ForegroundColor Magenta -Ba
 Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\insurgency -Force -Recurse
 
 }
-  #  https://sm.alliedmods.net/smdrop/1.11/sourcemod-1.11.0-git6478-windows.zip
-  #  https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1128-windows.zip
+
 Function Get-Playlist {
     Write-Host "Checking playlist" -ForegroundColor Yellow
     if($global:playlist -eq "comp") {
@@ -98,7 +87,6 @@ Function Get-Playlist {
     }elseif($global:playlist -eq "coop_elite") {
                 Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
                 ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
-                #Add-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Value "//edited by steamer"
     }elseif($global:playlist -eq "coop_hardcore"){
                     Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
                     ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
@@ -113,7 +101,6 @@ Function Get-Playlist {
                                 ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_conquer.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
     }elseif($null -eq $global:playlist) {
                                     Write-Host "entered blank or null" -ForegroundColor Red
-                                    #
     }
 }
                 
@@ -147,12 +134,10 @@ Function Get-Gamemode {
 
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     if ($decision -eq 0) {
-        #Get-SourceMetaMod
         Set-Gamemode
         Write-Host 'Entered Y'
         } else {
         Write-Host 'Entered N'
-        #Select-Steamer
     }
 
 
