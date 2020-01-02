@@ -14,7 +14,6 @@ Function Set-SteamInfoAppID
         Write-Host 'Entered Y'
     } else {
         Write-Host 'Entered N'
-        #Select-Steamer
     }
 }
 Function Read-AppID     
@@ -42,10 +41,6 @@ Function Read-AppID
         $global:game="rust"
         Set-Console  >$null 2>&1
         New-LaunchScriptRustPS
-        #} elseif($null -eq $global:AppID){
-        ##Write-Host "you entered Null or blank"
-        #} elseif($global:AppID -eq ""){
-        #    Write-Host "space?"
         } else {
         Write-Host "No Launch Script Found for this server"
         exit
