@@ -56,7 +56,6 @@ $global:command=$($args[0])
 $global:server=$($args[1])     
 Set-Console  >$null 2>&1
 
-#Select-Steamer $global:command
 Function Set-Steamer {
 If ($null -eq $global:command){
 Select-Steamer 
