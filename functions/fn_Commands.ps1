@@ -8,9 +8,6 @@ function Select-Steamer
              [string[]]
              [Parameter(Mandatory = $false, Position=1)]
              $global:server)
-             #[string[]]
-             #[Parameter(Position=1, ValueFromRemainingArguments)]
-             #$Remaining)
             Set-Console  >$null 2>&1
             If (($global:command -eq "install") -and ($null -eq $global:server)){
                 Get-logo
@@ -21,13 +18,11 @@ function Select-Steamer
                 Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -ForegroundColor Cyan -NoNewline 
                 $global:Branch = Read-host
                 Get-Steam
-                #Test-output 
                 Set-SteamInfo
                 Set-SteamInfoAppID
                 New-CreateVariables
                 Set-CreateMonitorScript
                 New-DiscordScript
-                #Select-Steamer
             }elseif($global:command -eq "install"){
                 Get-logo
                 Write-Host 'Input Steam Server App ID: ' -ForegroundColor Cyan -NoNewline 
@@ -36,7 +31,6 @@ function Select-Steamer
                 $global:Branch = Read-host
                 New-ServerFolder
                 Get-Steam
-                #Test-output 
                 Set-SteamInfo
                 Set-SteamInfoAppID
                 New-CreateVariables
@@ -133,7 +127,6 @@ function Select-Steamer
                     exit
                     }
                 Get-GamedigServer
-                #Select-Steamer
             }elseif($global:command -eq "gamedig"){
                 Get-logo
                 Get-NodeJS
@@ -143,7 +136,6 @@ function Select-Steamer
                     exit
                     }
                 Get-GamedigServer
-                #Select-Steamer
             }elseif(($global:command -eq "gamedigPrivate") -and ($null -eq $global:server)){
                 Get-logo
                 Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
@@ -155,7 +147,6 @@ function Select-Steamer
                     exit
                     }
                 Get-GamedigServerPrivate
-                #Select-Steamer
             }elseif($global:command -eq "gamedigPrivate"){
                 Get-logo
                 Get-NodeJS
@@ -165,10 +156,8 @@ function Select-Steamer
                     exit
                     }
                 Get-GamedigServerPrivate
-                #Select-Steamer
             }elseif($global:command -eq "exit"){
                 exit
-            }elseif($global:command -eq "x"){
             }elseif(($global:command -eq "steamer") -and ($global:server -eq "update")){
                 Get-logo
                 Get-UpdateSteamer
@@ -190,6 +179,5 @@ function Select-Steamer
                 Write-Host "gamedigPrivate"
                 Write-Host "monitor"
                 Write-Host "steamer update"
-                #Select-Steamer
         }
     }
