@@ -32,10 +32,8 @@ Function New-LaunchScriptRustPS
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\RustDedicated.exe -batchmode +server.ip ${global:IP}  +server.port $global:PORT +server.tickrate $global:TICKRATE +server.hostname \"$global:HOSTNAME\" +server.identity \"${selfname}\" ${conditionalseed} ${conditionalsalt} +server.maxplayers ${maxplayers} +server.worldsize ${worldsize} +server.saveinterval ${saveinterval} +rcon.web ${rconweb} +rcon.ip ${ip} +rcon.port ${rconport} +rcon.password \"${rconpassword}\" -logfile \"${gamelogdate}\""
         ${gamedirname}="Rust"
         ${config1}="server.cfg"
-        #{config2}="network.cfg"
         Write-Host "***  Downloading Default server.cfg  ***" -ForegroundColor Cyan -BackgroundColor Black
         (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg")
-        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config2}", "$global:currentdir\$global:server\network.cfg")
 
 
         $title    = 'Download Oxide'
@@ -50,7 +48,6 @@ Function New-LaunchScriptRustPS
                 Write-Host 'Entered Y'
             } else {
         Write-Host 'Entered N'
-        #Select-Steamer
     }
     
     }
@@ -65,9 +62,6 @@ Function New-LaunchScriptRustPS
         Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
         Write-Host '***Copying Oxide *****' -ForegroundColor Cyan -BackgroundColor Black
         Copy-Item -Path $global:currentdir\oxide\RustDedicated_Data\* -Destination $global:currentdir\$global:server\RustDedicated_Data\ -Force -Recurse
-        #oxiderustlatestlink="https://umod.org/games/rust/download/develop" # fix for linux build 06.09.2019
-        #oxidehurtworldlatestlink=$(curl -sL https://api.github.com/repos/OxideMod/Oxide.Hurtworld/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep "Oxide.Hurtworld.zip")
-        #oxidesdtdlatestlink=$(curl -sL https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest | grep browser_download_url | cut -d '"' -f 4)    
     }
   
     
