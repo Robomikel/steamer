@@ -1,3 +1,18 @@
+Function Get-ChecktaskUnreg {
+    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
+    if ($?) {
+    Write-Host '*** Unregistering scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
+    Unregister-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
+    Set-MonitorJob
+    }
+    #Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
+
+    if (!$?) {
+    Write-Host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black
+    Set-MonitorJob
+    }
+}
+
 
 Function Get-ChecktaskDisable {
     Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
