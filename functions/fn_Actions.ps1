@@ -18,7 +18,6 @@ Function Get-StopServer {
 Function Get-ValidateServer {
     
     Get-StopServer
-    #Get-ChecktaskDisable
     Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Validate-$global:server.txt
@@ -78,10 +77,8 @@ Write-Progress -Id 1 -Activity $Message -Status "Completed" -PercentComplete 100
 
 Function Get-RestartsServer {
     Get-StopServer
-    #Start-Sleep -Seconds 15
     Clear-host
     Start-Countdown -Seconds 10 -Message "Restarting server"
     & "$global:currentdir\$global:server\Launch-*.ps1"
     Set-Location $global:currentdir
-    #Select-Steamer
 }
