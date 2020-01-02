@@ -43,6 +43,5 @@ Function Set-MonitorJob
     } else {
         Write-Host 'Entered N'
         New-MontiorJob
-        #Select-Steamer
     }
 }    
