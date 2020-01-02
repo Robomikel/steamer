@@ -5,7 +5,6 @@
 
 Function Get-NodeJS
     {
-        #Set-Console
         $path = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64"
         $patha = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64\node.exe"
         $pathb = "node-v$global:nodeversion-win-x64.zip"
@@ -48,7 +47,6 @@ Function New-TryagainN {
 
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     if ($decision -eq 0) {
-        #Get-SourceMetaMod
         Write-Host 'Entered Y'
         add-nodejs} 
     else {
