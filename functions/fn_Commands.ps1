@@ -111,11 +111,13 @@ function Select-Steamer
             }elseif(($global:command -eq "monitor") -and ($null -eq $global:server)){
                 Get-logo
                 Write-Host 'Server FolderName for monitor: ' -ForegroundColor Cyan -NoNewline
-                $global:server = Read-host 
-                Set-MonitorJob
+                $global:server = Read-host
+                Get-ChecktaskUnreg 
+                #Set-MonitorJob
             }elseif($global:command -eq "monitor"){
                 Get-logo
-                Set-MonitorJob
+                Get-ChecktaskUnreg
+                #Set-MonitorJob
             }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
                 Get-logo
                 Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
