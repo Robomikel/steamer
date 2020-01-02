@@ -2,23 +2,19 @@
 Function Get-ChecktaskDisable {
     Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
     if ($?) {
-    #write-host "True, last operation succeeded"
     Write-Host '*** disabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
     Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
 
     if (!$?) {
-    #write-host "Not True, last operation failed"
     Write-Host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black}
 }
 
 Function Get-ChecktaskEnable {
     Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
 if ($?) {
-    #write-host "True, last operation succeeded"
     Write-Host '*** Enabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
     Enable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
 if (!$?) {
-    #write-host "Not True, last operation failed"
     write-host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black}
 }
 Function New-BackupFolder {
@@ -31,7 +27,6 @@ Function New-BackupFolder {
 }
 
 Function New-BackupServer {
-    #Set-Console  >$null 2>&1
     $BackupDate = get-date -Format yyyyMMdd
     Get-StopServer
     Get-ChecktaskDisable 
@@ -44,7 +39,6 @@ Function New-BackupServer {
     Write-Host '*** Server Backup is Done! *****' -ForegroundColor Yellow -BackgroundColor Black
     .\backup.log
     Set-Location $global:currentdir
-    #Set-Steamer
 }
 
 Function Get-SevenZip {
@@ -85,7 +79,6 @@ Function New-Tryagain {
 
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     if ($decision -eq 0) {
-        #Get-SourceMetaMod
         Write-Host 'Entered Y'
         add-sevenzip} 
     else {
