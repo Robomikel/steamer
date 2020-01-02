@@ -8,7 +8,6 @@ Function New-LaunchScriptInssserverPS
         if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [8]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="8"}else{$global:MAXPLAYERS}
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port, Press enter to accept default value [27102]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27102"}else{$global:PORT}
         if(($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27131]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:QUERYPORT="27131"}else{$global:QUERYPORT}
-        #$global:SERVERPASSWORD = Read-host -Prompt 'Input server password'
         if(($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
         Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
@@ -17,19 +16,13 @@ Function New-LaunchScriptInssserverPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\InsurgencyServer.exe $global:MAP`?Scenario=$global:SCENARIO`?MaxPlayers=$global:MAXPLAYERS`?password=$global:SERVERPASSWORD -Port=$global:PORT -QueryPort=$global:QUERYPORT -log -hostname='$global:HOSTNAME'"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
-        #if(($global:SERVERPASSWORD = Read-Host "Input Server Password, Press enter to accept default value []") -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
         If ($global:SERVERPASSWORD -eq ""){((Get-Content -path $global:currentdir\$global:server\Launch-$global:server.ps1 -Raw) -replace "\?password=","") | Set-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1}
-        #Get-Content $global:currentdir\$global:server\Launch-$global:server.ps1  | ForEach-Object {$_ -replace '\?password=', ""}  | Set-Content "$global:currentdir\$global:server\Launch-$global:server.ps1"
-   
-  #     New-Item -Path "$global:currentdir\inssserver\Insurgency\Config\Server" -Name "logfiles" -ItemType "directory"
-  #      New-Item -Path "$global:currentdir\inssserver\Insurgency\Saved\Config\WindowsServer" -Name "logfiles" -ItemType "directory"
-  #      mkdir $global:currentdir\inssserver
+
         mkdir $global:currentdir\$global:server\Insurgency\Config\Server   >$null 2>&1
         $MapCyclePath = "$global:currentdir\$global:server\Insurgency\Config\Server"
         
