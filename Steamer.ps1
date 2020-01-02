@@ -39,7 +39,7 @@ $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
 .$global:currentdir\functions\fn_CreateMonitor.ps1
 .$global:currentdir\functions\fn_CreateMonitorJob.ps1
 .$global:currentdir\functions\fn_CreateServerFolder.ps1
-.$global:currentdir\functions\fn_CreateVaribles.ps1
+.$global:currentdir\functions\fn_CreateVariables.ps1
 .$global:currentdir\functions\fn_InstallNodejs.ps1
 .$global:currentdir\functions\fn_InstallServer.ps1
 .$global:currentdir\functions\fn_InstallSteam.ps1
