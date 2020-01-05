@@ -56,6 +56,10 @@ Install steam server ```>_./steamer install misserver```
  * Monitor * monitor script in server folder as scheduled task to check process and start if needed, Send Discord Alert
  * Discord Alert * Discord script in server folder. requires Discord webhook
  
+ # Mod
+ * Insurgency - option for sourcemod and Meta Mod install
+ * Rust - option for Oxide install
+ 
  
 
 - - - -
