@@ -44,7 +44,7 @@ Function New-BackupFolder {
 Function New-BackupServer {
     $BackupDate = get-date -Format yyyyMMdd
     Get-StopServer
-    Get-ChecktaskDisable 
+    #Get-ChecktaskDisable 
     New-BackupFolder
     Write-Host '*** Server Backup Started! *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
