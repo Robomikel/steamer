@@ -42,7 +42,7 @@ Install steam server ```>_./steamer install misserver```
    * update steamer PS scripts from github  
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
- - ```Stops <serverFolder>``` - ```>_./steamer stops misserver``` - stop process for miscreated server
+ - ```Stop <serverFolder>``` - ```>_./steamer stop misserver``` - stop process for miscreated server
  - ```restart <serverFolder>``` - ```>_./steamer restart misserver``` - stops and starts process for miscreated server]
  - ```validate <serverFolder>``` - ```>_./steamer validate misserver``` - Validate App ID files
  - ```check <serverFolder>``` - ```>_./steamer check misserver``` - checks process for miscreated server
