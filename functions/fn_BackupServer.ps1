@@ -79,7 +79,7 @@ Function add-sevenzip {
     if ($?) {write-host "*** 7Zip  Download succeeded ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host '***  Extracting 7ZIP *****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\7za920.zip" "$global:currentdir\7za920\" -Force
-    if (!$?) {write-host "*** 7Zip files did not Failed  ****" -ForegroundColor Yellow -BackgroundColor Black
+    if (!$?) {write-host "*** 7Zip files did not Extract  ****" -ForegroundColor Yellow -BackgroundColor Black
     New-Tryagain}
     if ($?) {write-host "*** 7Zip Extract succeeded ****" -ForegroundColor Yellow -BackgroundColor Black}
 }
