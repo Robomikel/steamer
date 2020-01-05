@@ -10,7 +10,7 @@ Function New-LaunchScriptMiscreatedPS
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [64090]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="64090"}else{$global:PORT}
         Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
-        Write-Host '*** Creating Launch Script *****' -ForegroundColor Cyan -BackgroundColor Black  
+        Write-Host '*** Creating Launch Script *****' -ForegroundColor Magenta -BackgroundColor Black  
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
@@ -21,7 +21,7 @@ Function New-LaunchScriptMiscreatedPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
         Write-Host 'Input http_password (RCON)' -ForegroundColor Cyan -NoNewline
         $global:RCONPASSORD = Read-host
-        Write-Host '*** Creating HOSTING.CFG *****' -ForegroundColor Cyan -BackgroundColor Black 
+        Write-Host '*** Creating HOSTING.CFG *****' -ForegroundColor Magenta -BackgroundColor Black 
         New-Item $global:currentdir\$global:server\HOSTING.CFG -Force
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "sv_servername=`"$global:HOSTNAME`""
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "http_password=$global:RCONPASSORD"
