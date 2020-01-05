@@ -82,3 +82,22 @@ Function Get-RestartsServer {
     & "$global:currentdir\$global:server\Launch-*.ps1"
     Set-Location $global:currentdir
 }
+
+function Get-TestInterger {
+    if( $global:AppID -match '^[0-9]+$') { 
+    }else{ 
+    Write-Host "Input Valid Numbers only! " -ForegroundColor Red -BackgroundColor Black
+    pause
+    exit
+    }
+}
+
+function Get-TestString {
+    
+    if( $global:server -match "[a-z,A-Z]") { 
+    }else{
+    Write-Host "Input Alpha Characters only! " -ForegroundColor Red -BackgroundColor Black
+    pause
+    exit
+    }
+}
