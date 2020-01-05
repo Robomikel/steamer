@@ -32,9 +32,12 @@ Function New-LaunchScriptRustPS
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\RustDedicated.exe -batchmode +server.ip ${global:IP}  +server.port $global:PORT +server.tickrate $global:TICKRATE +server.hostname \"$global:HOSTNAME\" +server.identity \"${selfname}\" ${conditionalseed} ${conditionalsalt} +server.maxplayers ${maxplayers} +server.worldsize ${worldsize} +server.saveinterval ${saveinterval} +rcon.web ${rconweb} +rcon.ip ${ip} +rcon.port ${rconport} +rcon.password \"${rconpassword}\" -logfile \"${gamelogdate}\""
         ${gamedirname}="Rust"
         ${config1}="server.cfg"
-        Write-Host "***  Downloading Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg")
-
+        Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg")
+        $RustWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
+        $RustWebResponse=$RustWebResponse.content    
+        New-Item $global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg -Force
+        Add-Content $global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg $RustWebResponse
 
         $title    = 'Download Oxide'
         $question = 'Download Oxide and install?'
