@@ -4,17 +4,21 @@ function Select-Steamer
          param(
             [string]
              [Parameter(Mandatory=$true,Position=0,HelpMessage=" CTL + C and ./steamer ?   ")]
+             #[ValidatePattern('^[a-z,A-Z]$')]
              $global:command,
              [string[]]
              [Parameter(Mandatory = $false, Position=1)]
+             #[ValidatePattern('^[a-z,A-Z]$')]
              $global:server)
             Set-Console  >$null 2>&1
             If (($global:command -eq "install") -and ($null -eq $global:server)){
                 Get-logo
                 Write-Host 'Input Server Folder Name make unique to instance [i.e. sdtdserver (No Spaces!)]: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
+                Get-TestString
                 Write-Host 'Input Steam Server App ID: ' -ForegroundColor Cyan -NoNewline 
                 $global:AppID = Read-host
+                Get-TestInterger
                 Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -ForegroundColor Cyan -NoNewline 
                 $global:Branch = Read-host
                 Get-Steam
@@ -25,8 +29,10 @@ function Select-Steamer
                 New-DiscordScript
             }elseif($global:command -eq "install"){
                 Get-logo
+                Get-TestString
                 Write-Host 'Input Steam Server App ID: ' -ForegroundColor Cyan -NoNewline 
                 $global:AppID = Read-host
+                Get-TestInterger
                 Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -ForegroundColor Cyan -NoNewline 
                 $global:Branch = Read-host
                 New-ServerFolder
