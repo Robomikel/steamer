@@ -11,7 +11,7 @@ Function New-LaunchScriptInssserverPS
         if(($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
         Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
-        Write-Host "***  Creating Launch script  ***" -ForegroundColor Cyan -BackgroundColor Black
+        Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
@@ -29,7 +29,7 @@ Function New-LaunchScriptInssserverPS
         mkdir $global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer   >$null 2>&1
         $GamePath = "$global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer"
 
-        Write-Host "***  Creating Mapcycle.txt  ***" -ForegroundColor Cyan -BackgroundColor Black
+        Write-Host "***  Creating Mapcycle.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $MapCyclePath\Mapcycle.txt -Force
 
         # - - - - - - MAPCYCLE.TXT - - - - - - # EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
@@ -54,7 +54,7 @@ Function New-LaunchScriptInssserverPS
         
         
         # - - - - - - GAME.INI - - - -##  EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
-        Write-Host "***  Creating Game.ini  ***" -ForegroundColor Cyan -BackgroundColor Black
+        Write-Host "***  Creating Game.ini  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $GamePath\Game.ini -Force
         Add-Content   $GamePath\Game.ini [Rcon]
         Add-Content   $GamePath\Game.ini bEnabled=False
@@ -119,7 +119,7 @@ Function New-LaunchScriptInssserverPS
 
         Write-Host "Enter Admin Steam ID64  for admins.txt: " -ForegroundColor Cyan -BackgroundColor Black
         $steamID64= Read-Host
-        Write-Host "***  Creating Admins.txt  ***" -ForegroundColor Cyan -BackgroundColor Black
+        Write-Host "***  Creating Admins.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $MapCyclePath\Admins.txt -Force
         Add-Content  $MapCyclePath\Admins.txt $steamID64
 
