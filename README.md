@@ -13,7 +13,7 @@ Steamer accepts 1 or 2 parameters. first param specifies steamer command and the
 ```>_./steamer <command> <serverFolder>```
           
 Install steam server ```>_./steamer install misserver```
- - Creates Server Folder Named <serverFolder> and starts install
+ - Creates Server Folder Named ```<serverFolder>``` and starts install
  - Downloads and extract steamcmd
  - Asks and uses Steaminfo.db App ID -
  - uses anon or steam login for install         
