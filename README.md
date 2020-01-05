@@ -13,12 +13,12 @@ Steamer accepts 1 or 2 parameters. first param specifies steamer command and the
 ```>_./steamer <command> <serverFolder>```
           
 Install steam server ```>_./steamer install misserver```
- - Creates Server Folder Named misserver and starts install
+ - Creates Server Folder Named ```<serverFolder>``` and starts install
  - Downloads and extract steamcmd
  - Asks and uses Steaminfo.db App ID -
  - uses anon or steam login for install         
  - Creates Launch Script - per App ID, if exists.
- - Creates custom default config for server- if available by steamer 
+ - Creates custom default config for server- if available 
    * Miscreated Server (302200) - "misserver" (optional server folder name) 
    * 7 Days to Die server (294420) - "sdtdserver" (optional server folder name)  
    * Insurgency Server (237410) - "insserver" (optional server folder name) 
@@ -42,7 +42,7 @@ Install steam server ```>_./steamer install misserver```
    * update steamer PS scripts from github  
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
- - ```Stops <serverFolder>``` - ```>_./steamer stops misserver``` - stop process for miscreated server
+ - ```Stop <serverFolder>``` - ```>_./steamer stop misserver``` - stop process for miscreated server
  - ```restart <serverFolder>``` - ```>_./steamer restart misserver``` - stops and starts process for miscreated server]
  - ```validate <serverFolder>``` - ```>_./steamer validate misserver``` - Validate App ID files
  - ```check <serverFolder>``` - ```>_./steamer check misserver``` - checks process for miscreated server
@@ -55,6 +55,10 @@ Install steam server ```>_./steamer install misserver```
 # Other Functions:
  * Monitor * monitor script in server folder as scheduled task to check process and start if needed, Send Discord Alert
  * Discord Alert * Discord script in server folder. requires Discord webhook
+ 
+ # Mod
+ * Insurgency - option for sourcemod and Meta Mod install
+ * Rust - option for Oxide install
  
  
 
