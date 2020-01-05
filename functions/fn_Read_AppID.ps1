@@ -45,6 +45,10 @@ Function Read-AppID
         $global:game="arkse"
         Set-Console  >$null 2>&1
         New-LaunchScriptArkPS
+    } elseif($global:AppID -eq 462310){
+        $global:game="doi"
+        Set-Console  >$null 2>&1
+        New-LaunchScriptdoiserverPS
         } else {
         Write-Host "No Launch Script Found for this server"
         exit
