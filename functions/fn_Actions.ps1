@@ -80,6 +80,7 @@ Function Get-RestartsServer {
     Clear-host
     Start-Countdown -Seconds 10 -Message "Restarting server"
     & "$global:currentdir\$global:server\Launch-*.ps1"
+    Get-ChecktaskEnable
     Set-Location $global:currentdir
 }
 
