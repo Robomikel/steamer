@@ -26,6 +26,7 @@ Install steam server ```>_./steamer install misserver```
    * Rust server (258550) - "rustserver" (optional server folder name) 
    * Arma3 Server (233780)- “arma3server" (optional server folder name)
    * ARK: Survival Evolved Dedicated Server (376030)- “arkserver" (optional server folder name)
+   * Day of Infamy Dedicated Server (462310)- “doiserver" (optional server folder name)
  - Creates Launch, Monitor, per serverfolder/instance variables, and Discord PS scripts.
  - Manage Steam server with features
    * install steam server
