@@ -107,9 +107,9 @@ Function Get-Playlistdoi {
     }elseif($global:playlist -eq "mp_casual_with_bots"){
                     Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
                     ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_battles.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
-    }elseif($global:playlist -eq "mp_first_deployment"){
-                        Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                        ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+    #}elseif($global:playlist -eq "mp_first_deployment"){
+    #                    Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
+    #                    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
     }elseif($global:playlist -eq "mp_special_assignments"){
                             Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
                             ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_special_assignments.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
@@ -140,15 +140,17 @@ Function Set-Gamemodedoi
         Write-Host "coop" -ForegroundColor Yellow
         Write-Host "mp_battles" -ForegroundColor Yellow
         Write-Host "mp_casual_with_bots" -ForegroundColor Yellow
-        Write-Host "mp_first_deployment" -ForegroundColor Yellow
+        #Write-Host "mp_first_deployment" -ForegroundColor Yellow
         Write-Host "mp_special_assignments" -ForegroundColor Yellow
         #Write-Host "conquer" -ForegroundColor Yellow
         $global:playlist = Read-Host "Enter mode, Will add Mapcycle per mode"
-        if(($global:playlist -eq "coop_commando") -or ($global:playlist -eq "coop") -or ($global:playlist -eq "mp_battles") -or ($global:playlist -eq "mp_casual_with_bots") -or ($global:playlist -eq "mp_first_deployment") -or ($global:playlist -eq "mp_special_assignments")) {
+        if(($global:playlist -eq "coop_commando") -or ($global:playlist -eq "coop") -or ($global:playlist -eq "mp_battles") -or ($global:playlist -eq "mp_casual_with_bots") -or ($global:playlist -eq "mp_special_assignments")) {
         Write-Host "Editing nwi/$global:playlist playlist in server.cfg" -ForegroundColor Magenta
         ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "`"sv_playlist`" 		  `"nwi/coop`"","sv_playlist `"nwi/$global:playlist`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
-        Get-Playlistdoi
-    }
+        Get-Playlistdoi}else{
+            Write-Host " listed modes does not exist" -ForegroundColor Yellow
+            Set-Gamemodedoi 
+        }
 }
 Function Get-Gamemodedoi {
     
