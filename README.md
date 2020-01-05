@@ -18,7 +18,7 @@ Install steam server ```>_./steamer install misserver```
  - Asks and uses Steaminfo.db App ID -
  - uses anon or steam login for install         
  - Creates Launch Script - per App ID, if exists.
- - Creates custom default config for server- if available by steamer 
+ - Creates custom default config for server- if available 
    * Miscreated Server (302200) - "misserver" (optional server folder name) 
    * 7 Days to Die server (294420) - "sdtdserver" (optional server folder name)  
    * Insurgency Server (237410) - "insserver" (optional server folder name) 
