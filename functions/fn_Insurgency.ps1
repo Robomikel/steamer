@@ -3,9 +3,16 @@ Function New-LaunchScriptInsserverPS
     #----------   Insurgency Server CFG    -------------------
     ${gamedirname}="Insurgency"
     ${config1}="server.cfg"
-    Write-Host "***  Downloading Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+    #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
+    $insWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
+    $insWebResponse=$insWebResponse.content
+    New-Item $global:currentdir\$global:server\insurgency\cfg\server.cfg -Force
+    Add-Content $global:currentdir\$global:server\insurgency\cfg\server.cfg $insWebResponse
+    
+    
+    
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-    (New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
     $global:process = "srcds"
     Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
     ${global:IP} = Read-Host
