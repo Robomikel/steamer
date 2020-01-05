@@ -32,6 +32,7 @@ $global:steamoutput="steamcmd.zip"
 # Steamer url
 $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
 .$global:currentdir\functions\fn_Actions.ps1
+.$global:currentdir\functions\fn_Ark.ps1
 .$global:currentdir\functions\fn_BackupServer.ps1
 .$global:currentdir\functions\fn_Commands.ps1
 .$global:currentdir\functions\fn_CreateDiscord.ps1
