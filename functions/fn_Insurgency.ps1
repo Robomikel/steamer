@@ -126,8 +126,11 @@ Function Set-Gamemode
         if(($global:playlist -eq "comp") -or ($global:playlist -eq "coop") -or ($global:playlist -eq "coop_elite") -or ($global:playlist -eq "coop_hardcore") -or ($global:playlist -eq "pvp_sustained") -or ($global:playlist -eq "pvp_tactical")-or ($global:playlist -eq "conquer")) {
         Write-Host "Editing nwi/$global:playlist playlist in server.cfg" -ForegroundColor Magenta
         ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "sv_playlist `"nwi/coop`"","sv_playlist `"nwi/$global:playlist`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
-        Get-Playlist
-    }
+        Get-Playlist}
+        else{
+        Write-Host " listed modes does not exist" -ForegroundColor Yellow
+        Set-Gamemode 
+        }
 }
 Function Get-Gamemode {
     
