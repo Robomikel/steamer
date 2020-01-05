@@ -10,7 +10,7 @@ Function New-LaunchScriptdoiserverPS
     $insWebResponse=$insWebResponse.content
     New-Item $global:currentdir\$global:server\doi\cfg\server.cfg -Force
     Add-Content $global:currentdir\$global:server\doi\cfg\server.cfg $insWebResponse
-    Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcdse.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
     Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\doi.exe" >$null 2>&1
 
     
@@ -20,12 +20,12 @@ Function New-LaunchScriptdoiserverPS
     Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
     ${global:IP} = Read-Host
     if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
-    if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [bastogne offensive]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="bastogne offensive"}else{$global:MAP}
+    if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [bastogne stronghold]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="bastogne stronghold"}else{$global:MAP}
     if(($global:SV_LAN = Read-Host -Prompt (Write-Host "Input SV_LAN,Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:SV_LAN="0"}else{$global:SV_LAN}
     Write-Host 'Input maxplayers (lobby size [24-48]): ' -ForegroundColor Cyan -NoNewline
     $global:MAXPLAYERS = Read-host 
-    #Write-Host 'Input players  (mp_coop_lobbysize [1-8]): ' -ForegroundColor Cyan -NoNewline  
-    #$global:PLAYERS = Read-host
+    Write-Host 'Input players  (mp_coop_lobbysize [1-8]): ' -ForegroundColor Cyan -NoNewline  
+    $global:PLAYERS = Read-host
     Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
     $global:HOSTNAME = Read-host
     Write-Host 'Input rcon_password: ' -ForegroundColor Cyan -NoNewline
@@ -44,7 +44,7 @@ Function New-LaunchScriptdoiserverPS
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\doi.exe -ip ${global:IP} -usercon -port $global:PORT +maxplayers $global:MAXPLAYERS +sv_lan $global:SV_LAN +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:workshop $global:sv_pure"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\doi.exe -ip ${global:IP} -usercon -port $global:PORT +maxplayers $global:MAXPLAYERS +sv_lan $global:SV_LAN +maxplayers $global:MAXPLAYERS +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:workshop $global:sv_pure"
                                                                                                                            #start srcds.exe -usercon +maxplayers 24 +sv_lan 0 +map "bastogne offensive"              
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
