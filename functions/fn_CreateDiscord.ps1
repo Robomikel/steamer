@@ -1,5 +1,5 @@
 Function New-DiscordScript {
-Write-Host '*** Creating Discord Script *****' -ForegroundColor Yellow -BackgroundColor Black 
+Write-Host '*** Creating Discord Script *****' -ForegroundColor Magenta -BackgroundColor Black 
 New-Item $global:currentdir\$global:server\Discord-$global:server.ps1 -Force
 Add-Content -Path $global:currentdir\$global:server\Discord-$global:server.ps1 -Value "`$webHookUrl = '<WEBHOOK>'"
 #Create embed array
