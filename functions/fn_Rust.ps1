@@ -23,7 +23,7 @@ Function New-LaunchScriptRustPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\ "
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process 'cmd'  '/c start RustDedicated.exe -batchmode +server.ip ${global:IP}  +server.port $global:PORT +server.tickrate $global:TICKRATE +server.hostname `"$global:HOSTNAME`" +server.maxplayers $global:MAXPLAYERS +server.worldsize $global:WORLDSIZE +server.saveinterval $global:SAVEINTERVAL +rcon.web $global:RCONWEB +rcon.ip 0.0.0.0 +rcon.port $global:RCONPORT +rcon.password `"$global:RCONPASSWORD`" -logfile `"Serverlog.log`"'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process 'cmd'  '/c start RustDedicated.exe -batchmode +server.ip ${global:IP}  +server.port $global:PORT +server.tickrate $global:TICKRATE +server.hostname `"$global:HOSTNAME`" +server.maxplayers $global:MAXPLAYERS +server.worldsize $global:WORLDSIZE +server.saveinterval $global:SAVEINTERVAL +rcon.web $global:RCONWEB +rcon.ip 0.0.0.0 +rcon.port $global:RCONPORT +rcon.password `"$global:RCONPASSWORD`" -logfile `"$global:currentdir\$global:server\Serverlog.log`"'"
 
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
@@ -57,10 +57,12 @@ Function New-LaunchScriptRustPS
     
     
     Function Get-Oxide {
+        $start_time = Get-Date
         Write-Host '*** Downloading Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
+        #(New-Object Net.WebClient).DownloadFile("$global:oxiderustlatestlink", "$global:currentdir\oxide.zip")
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
         Invoke-WebRequest -Uri $global:oxiderustlatestlink -OutFile $global:currentdir\oxide.zip 
-        #(New-Object Net.WebClient).DownloadFile("$global:oxiderustlatestlink", "$global:currentdir\oxide.zip")
+        Write-Host "Download Time: $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
         Write-Host '***Extracting Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
         Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
         Write-Host '***Copying Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
