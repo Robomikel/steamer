@@ -72,8 +72,12 @@ Function Get-SevenZip {
 
 
 Function add-sevenzip {
+    $start_time = Get-Date
     Write-Host '*** Downloading 7ZIP *****' -ForegroundColor Magenta -BackgroundColor Black 
-    (New-Object Net.WebClient).DownloadFile("$global:sevenzip", "$global:currentdir\7za920.zip")
+    #(New-Object Net.WebClient).DownloadFile("$global:sevenzip", "$global:currentdir\7za920.zip")
+    #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+    Invoke-WebRequest -Uri $global:sevenzip -OutFile $global:currentdir\7za920.zip
+    Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     if (!$?) {write-host "*** 7Zip Download Failed ****" -ForegroundColor Yellow -BackgroundColor Black 
     New-Tryagain}
     if ($?) {write-host "*** 7Zip  Download succeeded ****" -ForegroundColor Yellow -BackgroundColor Black}
