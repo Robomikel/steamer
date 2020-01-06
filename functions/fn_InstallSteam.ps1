@@ -14,9 +14,10 @@ Function Get-Steam
     Else 
     {  
         #(New-Object Net.WebClient).DownloadFile("$global:steamurl", "steamcmd.zip")
-        Write-Host '*** Downloading SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black  
+        Write-Host '*** Downloading SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black
+        #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;  
         Invoke-WebRequest -Uri $global:steamurl -OutFile $global:steamoutput
-        Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+        Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
         Write-Host '***  Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black 
         Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\"
     }
