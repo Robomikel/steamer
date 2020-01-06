@@ -321,7 +321,7 @@ Function new-mapcycles {
        # mp_casual_with_bots.playlist
        Write-Host "***  Mapcycle_mp_casual_with_bots.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
        New-Item   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt -Force 
-       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt 
+       #Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt 
        Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "bastogne			frontline"
        Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "comacchio			frontline"
        Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "crete				frontline"
