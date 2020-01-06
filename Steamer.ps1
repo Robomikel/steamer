@@ -4,6 +4,8 @@
 #   '''    $    $$      $$""""  c$$$cc$$$c $$$$$$$$"$$$ $$""""   $$$$$$c    
 #  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
 #   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
+$global:command=$($args[0])
+$global:server=$($args[1])
 $global:currentdir=Get-Location
 $global:serverdir="$global:currentdir\$global:server"
 ${global:EXTIP}=(Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
@@ -54,8 +56,7 @@ $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
 .$global:currentdir\functions\fn_SetConsole.ps1
 .$global:currentdir\functions\fn_SteamInfo.ps1
 .$global:currentdir\functions\fn_UpdateSteamer.ps1
-$global:command=$($args[0])
-$global:server=$($args[1])     
+     
 Set-Console  >$null 2>&1
 
 Function Set-Steamer {
