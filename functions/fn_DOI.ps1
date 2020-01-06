@@ -157,7 +157,7 @@ Function Set-Gamemodedoi
         Write-Host "Editing nwi/$global:playlist playlist in server.cfg" -ForegroundColor Magenta
         ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "`"sv_playlist`" 		  `"nwi/coop`"","sv_playlist `"nwi/$global:playlist`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
         Get-Playlistdoi}else{
-            Write-Host " listed modes does not exist" -ForegroundColor Yellow
+            Write-Host " mode does not exist" -ForegroundColor Yellow
             Set-Gamemodedoi 
         }
 }
@@ -319,6 +319,8 @@ Function new-mapcycles {
        Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "breville		intel"
        Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "brittany		intel"
        # mp_casual_with_bots.playlist
+       Write-Host "***  Mapcycle_mp_casual_with_bots.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
+       New-Item   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt -Force 
        Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt 
        Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "bastogne			frontline"
        Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "comacchio			frontline"
