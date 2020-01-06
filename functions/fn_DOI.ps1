@@ -12,7 +12,7 @@ Function New-LaunchScriptdoiserverPS
     Add-Content $global:currentdir\$global:server\doi\cfg\server.cfg $insWebResponse
     Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
     Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\doi.exe" >$null 2>&1
-
+    Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\doi_x64.exe" >$null 2>&1
     
     
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -22,8 +22,9 @@ Function New-LaunchScriptdoiserverPS
     if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
     if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [bastogne stronghold]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="bastogne stronghold"}else{$global:MAP}
     if(($global:SV_LAN = Read-Host -Prompt (Write-Host "Input SV_LAN,Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:SV_LAN="0"}else{$global:SV_LAN}
-    Write-Host 'Input maxplayers (lobby size [24-48]): ' -ForegroundColor Cyan -NoNewline
-    $global:MAXPLAYERS = Read-host 
+    if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input maxplayers (lobby size 24-48) Press enter to accept default value [32]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="32"}else{$global:MAXPLAYERS}
+#    Write-Host 'Input maxplayers (lobby size [24-48]): ' -ForegroundColor Cyan -NoNewline
+ #   $global:MAXPLAYERS = Read-host 
     Write-Host 'Input players  (mp_coop_lobbysize [1-16]): ' -ForegroundColor Cyan -NoNewline  
     $global:PLAYERS = Read-host
     Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
@@ -113,7 +114,7 @@ Function Get-Playlistdoi {
                 ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_battles.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
     }elseif($global:playlist -eq "mp_casual_with_bots"){
                     Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_battles.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+                    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_casual_with_bots.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
     #}elseif($global:playlist -eq "mp_first_deployment"){
     #                    Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
     #                    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
@@ -289,32 +290,46 @@ Function new-mapcycles {
        # mp_special_assignments.playlist
        Write-Host "***  Creating Mapcycle_mp_special_assignments.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
        New-Item   $MapCyclePath\Mapcycle_mp_special_assignments.txt -Force 
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "bastogne              firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "comacchio				firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "crete					firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "foy					firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "ortona				firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "reichswald            firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "saint_lo              firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "salerno				firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "sicily				firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "rhineland				firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "breville				firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "brittany				firefight"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "ortona				sabotage"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "comacchio				sabotage"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "reichswald            sabotage"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "saint_lo              sabotage"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "salerno               sabotage"	
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "sicily                sabotage"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "foy                   sabotage"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "rhineland             sabotage"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "breville				sabotage"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "ortona                intel"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "reichswald            intel"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "salerno               intel"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "saint_lo              intel"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "rhineland				intel"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "breville				intel"
-       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "brittany				intel"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "bastogne    firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "comacchio	firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "crete		firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "foy			firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "ortona		firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "reichswald   firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "saint_lo     firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "salerno		firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "sicily		firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "rhineland	firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "breville	firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "brittany	firefight"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "ortona		sabotage"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "comacchio	sabotage"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "reichswald  sabotage"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "saint_lo     sabotage"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "salerno       sabotage"	
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "sicily         sabotage"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "foy           sabotage"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "rhineland     sabotage"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "breville		sabotage"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "ortona           intel"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "reichswald     intel"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "salerno         intel"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "saint_lo        intel"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "rhineland		intel"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "breville		intel"
+       Add-Content   $MapCyclePath\Mapcycle_mp_special_assignments.txt "brittany		intel"
+       # mp_casual_with_bots.playlist
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt 
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "bastogne			frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "comacchio			frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "crete				frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "dog_red			invasion"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "foy                frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "ortona				frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "reichswald			frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "saint_lo           frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "salerno			frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "sicily				frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "breville			frontline"
+       Add-Content   $MapCyclePath\Mapcycle_mp_casual_with_bots.txt "rhineland          frontline"
 }
