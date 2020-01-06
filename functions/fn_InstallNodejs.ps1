@@ -19,8 +19,12 @@ Function Get-NodeJS
 }
 
 Function add-nodejs {
+    $start_time = Get-Date
 Write-Host '*** Downloading  Nodejs *****' -ForegroundColor Magenta -BackgroundColor Black  
-(New-Object Net.WebClient).DownloadFile("$global:nodejsurl", "$global:currentdir\node-v$global:nodeversion-win-x64.zip")
+#(New-Object Net.WebClient).DownloadFile("$global:nodejsurl", "$global:currentdir\node-v$global:nodeversion-win-x64.zip")
+#[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+Invoke-WebRequest -Uri $global:nodejsurl -OutFile $global:currentdir\node-v$global:nodeversion-win-x64.zip
+Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
 if (!$?) {write-host "Downloading  Nodejs Failed" -ForegroundColor Red -BackgroundColor Black 
 New-TryagainN}
 if ($?) {write-host "Downloading  Nodejs succeeded" -ForegroundColor Yellow -BackgroundColor Black}
