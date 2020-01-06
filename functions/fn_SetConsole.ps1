@@ -5,5 +5,5 @@ Function Set-Console
         [console]::ForegroundColor="Green"
         [console]::BackgroundColor="Black"
         $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(160,5000)
-    
+        Get-logo
     }
