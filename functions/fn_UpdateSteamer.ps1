@@ -1,10 +1,11 @@
 
 Function Get-UpdateSteamer {
-
+    $start_time = Get-Date
     Write-Host '*** Downloading Steamer github files *****' -ForegroundColor Magenta -BackgroundColor Black 
     #(New-Object Net.WebClient).DownloadFile("$global:steamerurl", "$global:currentdir\steamer.zip")
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-    Invoke-WebRequest -Uri $global:steamerurl -OutFile $global:currentdir\steamer.zip 
+    Invoke-WebRequest -Uri $global:steamerurl -OutFile $global:currentdir\steamer.zip
+    Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black 
     Expand-Archive "$global:currentdir\steamer.zip" "$global:currentdir\steamer" -Force
     Copy-Item -Path "$global:currentdir\steamer\steamer-master\*" -Destination "$global:currentdir\" -Recurse -Force
     Write-Host '*** Steamer github files Updated *****' -ForegroundColor Yellow -BackgroundColor Black
