@@ -11,8 +11,7 @@ function Select-Steamer
              #[ValidatePattern('^[a-z,A-Z]$')]
              $global:server)
             Set-Console  >$null 2>&1
-            If (($global:command -eq "install") -and ($null -eq $global:server)){
-                Get-logo
+            If (($global:command -eq "install") -and ($null -eq $global:server)){       
                 Write-Host 'Input Server Folder Name make unique to instance [i.e. sdtdserver (No Spaces!)]: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-TestString
@@ -28,7 +27,6 @@ function Select-Steamer
                 Set-CreateMonitorScript
                 New-DiscordScript
             }elseif($global:command -eq "install"){
-                Get-logo
                 Get-TestString
                 Write-Host 'Input Steam Server App ID: ' -ForegroundColor Cyan -NoNewline 
                 $global:AppID = Read-host
@@ -42,80 +40,67 @@ function Select-Steamer
                 New-CreateVariables
                 Set-CreateMonitorScript
                 New-DiscordScript
-            }elseif(($global:command -eq "update") -and ($null -eq $global:server)){
-                Get-logo
+            }elseif(($global:command -eq "update") -and ($null -eq $global:server)){   
                 Write-Host 'Server FolderName for server updates: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
                 Get-createdvaribles
                 Get-UpdateServer
             }elseif($global:command -eq "update"){
-                Get-logo
                 Get-FolderNames
                 Get-createdvaribles
                 Get-UpdateServer
             }elseif(($global:command -eq "validate") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for server validate: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
                 Get-createdvaribles
                 Get-ValidateServer
             }elseif($global:command -eq "validate"){
-                Get-logo
                 Get-FolderNames
                 Get-createdvaribles
                 Get-ValidateServer
             }elseif(($global:command -eq "start") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for server launch, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
                 Select-launchServer
                 Get-ChecktaskEnable
             }elseif($global:command -eq "start"){
-                Get-logo
                 Get-FolderNames
                 Select-launchServer
                 Get-ChecktaskEnable
             }elseif(($global:command -eq "stop") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for server stop, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
                 Get-createdvaribles
                 Get-StopServer
             }elseif($global:command -eq "stop"){
-                Get-logo
                 Get-FolderNames
                 Get-createdvaribles
                 Get-StopServer
             }elseif(($global:command -eq "restart") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for server restart, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
                 Get-createdvaribles
                 Get-RestartsServer
             }elseif($global:command -eq "restart"){
-                Get-logo
                 Get-FolderNames
                 Get-createdvaribles
                 Get-RestartsServer   
             }elseif(($global:command -eq "check") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for server check: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
                 Get-createdvaribles
                 Get-CheckServer
             }elseif($global:command -eq "check"){
-                Get-logo
                 Get-FolderNames
                 Get-createdvaribles
                 Get-CheckServer
             }elseif(($global:command -eq "backup") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for server backup: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
@@ -123,25 +108,21 @@ function Select-Steamer
                 Get-createdvaribles
                 New-BackupServer
             }elseif($global:command -eq "backup"){
-                Get-logo
                 Get-FolderNames
                 Get-SevenZip
                 Get-createdvaribles
                 New-BackupServer  
             }elseif(($global:command -eq "monitor") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for monitor: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames
                 Get-ChecktaskUnreg 
                 #Set-MonitorJob
             }elseif($global:command -eq "monitor"){
-                Get-logo
                 Get-FolderNames
                 Get-ChecktaskUnreg
                 #Set-MonitorJob
             }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
@@ -153,7 +134,6 @@ function Select-Steamer
                     }
                 Get-GamedigServer
             }elseif($global:command -eq "gamedig"){
-                Get-logo
                 Get-NodeJS
                 Get-FolderNames
                 Get-createdvaribles
@@ -163,7 +143,6 @@ function Select-Steamer
                     }
                 Get-GamedigServer
             }elseif(($global:command -eq "gamedigPrivate") -and ($null -eq $global:server)){
-                Get-logo
                 Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames
@@ -175,7 +154,6 @@ function Select-Steamer
                     }
                 Get-GamedigServerPrivate
             }elseif($global:command -eq "gamedigPrivate"){
-                Get-logo
                 Get-NodeJS
                 Get-FolderNames
                 Get-createdvaribles
@@ -187,10 +165,8 @@ function Select-Steamer
             }elseif($global:command -eq "exit"){
                 exit
             }elseif(($global:command -eq "steamer") -and ($global:server -eq "update")){
-                Get-logo
                 Get-UpdateSteamer
             } else {
-                Get-logo
                 Write-Host "Format:  ./steamer <Command> <serverFolderName>" -ForegroundColor Yellow -BackgroundColor Black
                 Write-Host "IE:      ./steamer install  insserver" -ForegroundColor Yellow -BackgroundColor Black
                 Write-Host "Command not found! Available Commands" -ForegroundColor Red -BackgroundColor Black
