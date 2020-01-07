@@ -27,6 +27,10 @@ Install steam server ```>_./steamer install misserver```
    * Arma3 Server (233780)- “arma3server" (optional server folder name)
    * ARK: Survival Evolved Dedicated Server (376030)- “arkserver" (optional server folder name)
    * Day of Infamy Dedicated Server (462310)- “doiserver" (optional server folder name)
+# untested Branch
+   * Empyrion - Galactic Survival Dedicated Server (530870)
+   * Conan Exiles Dedicated Server (443030)
+   * Counter-Strike Global Offensive - Dedicated Server (740)
  - Creates Launch, Monitor, per serverfolder/instance variables, and Discord PS scripts.
  - Manage Steam server with features
    * install steam server
