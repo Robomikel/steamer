@@ -64,7 +64,7 @@ Install steam server ```>_./steamer install misserver```
 # use with Existing Servers
 * make a backup of your current server (copy)
 * place steamer just outside of root server folder
-* When installing make sure to have root server name
+* When installing make sure to have root server folder name
 * when installing make sure to have correct steam APP ID
 * may overwrite some configuration files (server.cfg etc...)
 * Will create .ps1 scripts per instance.
