@@ -45,10 +45,23 @@ Function Read-AppID
         $global:game="arkse"
         Set-Console  >$null 2>&1
         New-LaunchScriptArkPS
-    } elseif($global:AppID -eq 462310){
+        } elseif($global:AppID -eq 462310){
         $global:game="doi"
         Set-Console  >$null 2>&1
         New-LaunchScriptdoiserverPS
+        } elseif($global:AppID -eq 740){
+        $global:game="csgo"
+        Set-Console  >$null 2>&1
+        New-LaunchScriptcsgoserverPS
+    } elseif($global:AppID -eq 530870){
+        $global:game="empyrion"
+        Set-Console  >$null 2>&1
+        #New-LaunchScriptempserverPS
+    } elseif($global:AppID -eq 443030){
+        $global:game="conanexiles"
+        Set-Console  >$null 2>&1
+        #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
+        #New-LaunchScriptceserverPS
         } else {
         Write-Host "No Launch Script Found for this server"
         exit
