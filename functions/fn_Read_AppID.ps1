@@ -56,7 +56,7 @@ Function Read-AppID
     } elseif($global:AppID -eq 530870){
         $global:game="empyrion"
         Set-Console  >$null 2>&1
-        #New-LaunchScriptempserverPS
+        New-LaunchScriptempserverPS
     } elseif($global:AppID -eq 443030){
         $global:game="conanexiles"
         Set-Console  >$null 2>&1
