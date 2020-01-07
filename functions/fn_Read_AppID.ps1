@@ -60,8 +60,7 @@ Function Read-AppID
     } elseif($global:AppID -eq 443030){
         $global:game="conanexiles"
         Set-Console  >$null 2>&1
-        #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
-        #New-LaunchScriptceserverPS
+        New-LaunchScriptceserverPS
         } else {
         Write-Host "No Launch Script Found for this server"
         exit
