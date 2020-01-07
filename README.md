@@ -31,6 +31,7 @@ Install steam server ```>_./steamer install misserver```
    * Empyrion - Galactic Survival Dedicated Server (530870)
    * Conan Exiles Dedicated Server (443030)
    * Counter-Strike Global Offensive - Dedicated Server (740)
+   -----
  - Creates Launch, Monitor, per serverfolder/instance variables, and Discord PS scripts.
  - Manage Steam server with features
    * install steam server
