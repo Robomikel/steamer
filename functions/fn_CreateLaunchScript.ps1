@@ -184,7 +184,7 @@ Function New-LaunchScriptArma3serverPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Binaries\Win64"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --galaxy-name avorion_galaxy --admin avorion_admin'"
+        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --galaxy-name avorion_galaxy --admin avorion_admin'"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./KFGameSteamServer.bin.x86_64 $global:MAP?Game=$global:GAMEMODE?Difficulty=$global:DIFF? -Port=$global:PORT -QueryPort=$global:QUERYPORT"
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "..\Binaries\Win64\KFGame.exe Server KF-DieSector?Game=KFGameContent.KFGameInfo_Endless"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
@@ -220,10 +220,8 @@ Function New-LaunchScriptArma3serverPS
 # servercfgfullpath="${servercfgdir}/${servercfg}"
     }
 
-    Function New-LaunchScriptLFD2serverPS {
 
-    }
-
+    
     
     Function New-LaunchScriptboundelserverPS {
         $global:process = "world"
