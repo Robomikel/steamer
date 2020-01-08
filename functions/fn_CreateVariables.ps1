@@ -6,5 +6,6 @@ Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`${global:QUERYPORT}=`"${global:QUERYPORT}`""
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`${global:PORT}=`"${global:PORT}`""
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:game=`"$global:game`""
+Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:saves=`"$global:saves`""
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`${global:IP}=`"${global:IP}`""
 }
