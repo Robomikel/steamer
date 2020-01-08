@@ -139,3 +139,19 @@ Function New-LaunchScriptArma3serverPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
     }
+
+    Function  New-LaunchScriptavserverPS{
+        $global:process = "AvorionServer"
+
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
+        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --galaxy-name avorion_galaxy --admin avorion_admin'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
+
+    }

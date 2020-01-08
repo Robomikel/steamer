@@ -61,6 +61,11 @@ Function Read-AppID
         $global:game="conanexiles"
         Set-Console  >$null 2>&1
         New-LaunchScriptceserverPS
+    } elseif($global:AppID -eq 565060){
+        # Avorion Dedicated Server
+        $global:game="protocol-valve"
+        Set-Console  >$null 2>&1
+        New-LaunchScriptavserverPS
         } else {
         Write-Host "No Launch Script Found for this server"
         exit
