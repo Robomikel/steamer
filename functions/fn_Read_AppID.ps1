@@ -23,6 +23,7 @@ Function Read-AppID
         New-LaunchScriptMiscreatedPS
         } elseif($global:AppID -eq 294420){
         $global:game="7d2d"
+        $global:saves="7DaysToDie"
         Set-Console  >$null 2>&1
         New-LaunchScriptSdtdserverPS
         } elseif($global:AppID -eq 237410){
@@ -64,6 +65,7 @@ Function Read-AppID
     } elseif($global:AppID -eq 565060){
         # Avorion Dedicated Server
         $global:game="protocol-valve"
+        $global:saves="Avorion"
         Set-Console  >$null 2>&1
         New-LaunchScriptavserverPS
     } elseif($global:AppID -eq 232130){
@@ -77,7 +79,7 @@ Function Read-AppID
         Set-Console  >$null 2>&1
         New-LaunchScriptLFD2serverPS
     } elseif($global:AppID -eq 454070){
-        # Left 4 Dead 2 Server
+        # Boundel Server
         $global:game="world"
         Set-Console  >$null 2>&1
         New-LaunchScriptboundelserverPS
