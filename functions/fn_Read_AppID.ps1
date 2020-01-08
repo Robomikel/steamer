@@ -66,8 +66,23 @@ Function Read-AppID
         $global:game="protocol-valve"
         Set-Console  >$null 2>&1
         New-LaunchScriptavserverPS
+    } elseif($global:AppID -eq 232130){
+        # Killing Floor 2 Server
+        $global:game="killingfloor2"
+        Set-Console  >$null 2>&1
+        New-LaunchScriptKF2serverPS
+    } elseif($global:AppID -eq 222860){
+        # Left 4 Dead 2 Server
+        $global:game="left4dead2"
+        Set-Console  >$null 2>&1
+        New-LaunchScriptLFD2serverPS
+    } elseif($global:AppID -eq 454070){
+        # Left 4 Dead 2 Server
+        $global:game="world"
+        Set-Console  >$null 2>&1
+        New-LaunchScriptboundelserverPS
         } else {
-        Write-Host "No Launch Script Found for this server"
+        Write-Host "No Launch Script Found for this server" -ForegroundColor Yellow -BackgroundColor Black
         exit
     }
 }
