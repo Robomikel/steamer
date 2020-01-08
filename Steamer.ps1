@@ -51,6 +51,7 @@ $global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
 .$global:currentdir\functions\fn_InstallSteam.ps1
 .$global:currentdir\functions\fn_Insurgency.ps1
 .$global:currentdir\functions\fn_LaunchServer.ps1
+.$global:currentdir\functions\fn_Left4Dead2.ps1
 .$global:currentdir\functions\fn_Miscreated.ps1
 .$global:currentdir\functions\fn_Rust.ps1
 .$global:currentdir\functions\fn_Read_AppID.ps1
