@@ -5,7 +5,6 @@ Function Get-ChecktaskUnreg {
     Unregister-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
     Set-MonitorJob
     }
-    #Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
 
     if (!$?) {
     Write-Host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black
@@ -44,14 +43,16 @@ Function New-BackupFolder {
 Function New-BackupServer {
     $BackupDate = get-date -Format yyyyMMdd
     Get-StopServer
-    #Get-ChecktaskDisable 
     New-BackupFolder
     Write-Host '*** Server Backup Started! *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
     #./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* -an > backup.log
     ./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* > backup.log
-    Get-ChecktaskEnable
+    
     Write-Host '*** Server Backup is Done! *****' -ForegroundColor Yellow -BackgroundColor Black
+    write-host "*** Checking for alternate Save location (appData) ****" -ForegroundColor Yellow -BackgroundColor Black
+    Get-savelocation
+    Get-ChecktaskEnable
     .\backup.log
     Set-Location $global:currentdir
 }
@@ -100,6 +101,42 @@ Function New-Tryagain {
     if ($decision -eq 0) {
         Write-Host 'Entered Y'
         add-sevenzip} 
+    else {
+        Write-Host 'Entered N'
+        exit}
+}
+
+Function New-backupAppdata {
+    $BackupDate = get-date -Format yyyyMMdd
+    Write-Host '*** Server App Data Backup Started! *****' -ForegroundColor Magenta -BackgroundColor Black
+    Set-Location $global:currentdir\7za920\ 
+    ./7za a $global:currentdir\backups\AppDataBackup_$global:server-$BackupDate.zip $env:APPDATA\$global:saves\* > AppDatabackup.log
+    Write-Host '*** Server App Data Backup is Done! *****' -ForegroundColor Yellow -BackgroundColor Black
+    .\AppDatabackup.log
+
+}
+
+Function Get-savelocation {
+    if("" -eq $global:saves){
+        Write-Host "No saves located in App Data"  
+    }else{
+        New-AppDataSave
+    }
+}
+
+Function New-AppDataSave {
+    $title    = 'Game has Saves located in AppData'
+    $question = 'Backup Appdata for server?'
+
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+        Write-Host 'Entered Y'
+        New-backupAppdata
+    } 
     else {
         Write-Host 'Entered N'
         exit}
