@@ -1,5 +1,6 @@
 Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
+        $global:game="csgo"
         ${gamedirname}="CounterStrikeGlobalOffensive"
         ${config1}="server.cfg"
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
