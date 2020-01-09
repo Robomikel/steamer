@@ -33,6 +33,7 @@ $global:steamurl="https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $global:steamoutput="steamcmd.zip"
 # Steamer url
 $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
+#$global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
 .$global:currentdir\functions\fn_Actions.ps1
 .$global:currentdir\functions\fn_Ark.ps1
 .$global:currentdir\functions\fn_BackupServer.ps1
@@ -43,12 +44,15 @@ $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
 .$global:currentdir\functions\fn_CreateMonitorJob.ps1
 .$global:currentdir\functions\fn_CreateServerFolder.ps1
 .$global:currentdir\functions\fn_CreateVariables.ps1
+#.$global:currentdir\functions\fn_CSGO.ps1
 .$global:currentdir\functions\fn_DOI.ps1
 .$global:currentdir\functions\fn_InstallNodejs.ps1
 .$global:currentdir\functions\fn_InstallServer.ps1
 .$global:currentdir\functions\fn_InstallSteam.ps1
 .$global:currentdir\functions\fn_Insurgency.ps1
+.$global:currentdir\functions\fn_KF2Server.ps1
 .$global:currentdir\functions\fn_LaunchServer.ps1
+#.$global:currentdir\functions\fn_Left4Dead2.ps1
 .$global:currentdir\functions\fn_Miscreated.ps1
 .$global:currentdir\functions\fn_Rust.ps1
 .$global:currentdir\functions\fn_Read_AppID.ps1
