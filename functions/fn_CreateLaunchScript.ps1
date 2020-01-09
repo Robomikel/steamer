@@ -5,7 +5,8 @@ Function New-LaunchScriptArma3serverPS
 {
         #----------   Arma3 Ask for input for server cfg  -------------------
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x
-        ${gamedirname}="Arma3"
+        $global:game = "arma3"
+        ${gamedirname} = "Arma3"
         ${config1}="server.cfg"
         ${config2}="network.cfg"
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -51,6 +52,8 @@ Function New-LaunchScriptArma3serverPS
     Function New-LaunchScriptSdtdserverPS
     {
         #----------   7Days2Die Ask for input for server cfg    -------------------
+        $global:game = "7d2d"
+        $global:saves = "7DaysToDie"
         $global:process = "7daystodieserver"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [26900]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="26900"}else{$global:PORT}
@@ -72,6 +75,7 @@ Function New-LaunchScriptArma3serverPS
     }
 
     Function New-LaunchScriptempserverPS {
+        $global:game = "empyrion"
         $global:process = "EmpyrionDedicated"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [30000]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="30000"}else{$global:PORT}
@@ -102,7 +106,7 @@ Function New-LaunchScriptArma3serverPS
 
     Function New-LaunchScriptceserverPS {
             #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
-
+        $global:game = "conanexiles"
         $global:process = "ConanSandboxServer-Win64-Test"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host '*** N+1 PORTS 7777,27015 - 7778,27016 - etc.. *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -141,7 +145,19 @@ Function New-LaunchScriptArma3serverPS
     }
 
     Function  New-LaunchScriptavserverPS{
+                # Avorion Dedicated Server
+                $global:game = "protocol-valve"
+                $global:saves = "Avorion"
+        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         $global:process = "AvorionServer"
+        Write-Host 'Input server name: ' -ForegroundColor Cyan -NoNewline 
+        $global:HOSTNAME = Read-host
+        Write-Host 'Input galaxy name: ' -ForegroundColor Cyan -NoNewline 
+        $global:GALAXYNAME = Read-host
+        Write-Host "Enter Admin Steam ID64  for admin: " -ForegroundColor Cyan -BackgroundColor Black
+        $global:steamID64= Read-Host
+        if(($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (-3 - 3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:DIFF="0"}else{$global:DIFF}
+        if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [10]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="10"}else{$global:MAXPLAYERS}
 
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
@@ -149,81 +165,21 @@ Function New-LaunchScriptArma3serverPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --galaxy-name avorion_galaxy --admin avorion_admin'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --server-name $global:HOSTNAME --galaxy-name $global:GALAXYNAME --admin $global:steamID64 --difficulty $global:DIFF --max-players $global:MAXPLAYERS'"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
 
     }
 
-    Function New-LaunchScriptKF2serverPS {
-        #${gamedirname}="KillingFloor2"
-        #${config1}="server.cfg"
-        #Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
-        #$csgoWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        #$csgoWebResponse=$csgoWebResponse.content
-        #New-Item $global:currentdir\$global:server\csgo\cfg\server.cfg -Force
-        #Add-Content $global:currentdir\$global:server\csgo\cfg\server.cfg $insWebResponse
-
-
-        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-        $global:process = ""
-        #Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-        #${global:IP} = Read-Host
-        Write-Host "Changing the Port will change the query Port. N+? if not sure keep default" -ForegroundColor Yellow -NoNewline
-        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7787]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="7787"}else{$global:PORT}
-        if(($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:QUERYPORT="27015"}else{$global:QUERYPORT}
-        if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [KF-BioticsLab]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="KF-BioticsLab"}else{$global:MAP}
-        if(($global:GAMEMODE = Read-Host -Prompt (Write-Host "Input gamemode, Press enter to accept default value [KFGameContent.KFGameInfo_Endless]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMEMODE="KFGameContent.KFGameInfo_Endless"}else{$global:GAMEMODE}
-        if(($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (0-3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:DIFF="0"}else{$global:DIFF}
-
-        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
-        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Binaries\Win64"
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --galaxy-name avorion_galaxy --admin avorion_admin'"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./KFGameSteamServer.bin.x86_64 $global:MAP?Game=$global:GAMEMODE?Difficulty=$global:DIFF? -Port=$global:PORT -QueryPort=$global:QUERYPORT"
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "..\Binaries\Win64\KFGame.exe Server KF-DieSector?Game=KFGameContent.KFGameInfo_Endless"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
-
-
-
-        #The PCServer-KFGame.ini file can be found under \KFGame\Config\
-        #AdminPassword
-        #GamePassword
-
-        #To enable webadmin: Open KFWeb.ini. In the [IpDrv.WebServer] section set
-        #bEnabled=true
-        #ListenPort=8080
-
-        ## Server Start Settings | https://docs.linuxgsm.com/configuration/start-parameters
-# ip="0.0.0.0"
-# queryport="27015"
-# defaultmap="KF-BioticsLab"
-# gamemode="KFGameContent.KFGameInfo_VersusSurvival"
-
-## Server Start Command | https://docs.linuxgsm.com/configuration/start-parameters#additional-parameters
-# fn_parms(){
-# parms="\"${defaultmap}?Game=${gamemode}?ConfigSubDir=${selfname} -QueryPort=${queryport}\""
-# }
-# systemdir="${serverfiles}"
-# executabledir="${systemdir}/Binaries/Win64"
-# executable="./KFGameSteamServer.bin.x86_64"
-# servercfgdir="${systemdir}/KFGame/Config/${selfname}"
-# servercfg="LinuxServer-KFGame.ini"
-# servercfgdefault="LinuxServer-KFGame.ini"
-# servercfgfullpath="${servercfgdir}/${servercfg}"
-    }
+   
 
 
     
     
     Function New-LaunchScriptboundelserverPS {
+                # Boundel Server
+        #$global:game = "world"
         $global:process = "world"
         # 454070
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
