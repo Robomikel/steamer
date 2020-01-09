@@ -1,4 +1,5 @@
 Function New-LaunchScriptArkPS {
+    $global:game="arkse"
     $global:process = "ShooterGameServer"
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
     Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
