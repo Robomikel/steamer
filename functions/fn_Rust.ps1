@@ -1,6 +1,7 @@
 Function New-LaunchScriptRustPS
     {
         #----------   Rust server CDF  -------------------
+        $global:game="rust"
         $global:process = "RustDedicated"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline

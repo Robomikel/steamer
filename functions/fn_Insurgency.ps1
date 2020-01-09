@@ -1,6 +1,7 @@
 Function New-LaunchScriptInsserverPS
 {
     #----------   Insurgency Server CFG    -------------------
+    $global:game="insurgency"
     ${gamedirname}="Insurgency"
     ${config1}="server.cfg"
     Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
