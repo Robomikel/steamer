@@ -31,7 +31,7 @@ Install steam server ```>_./steamer install misserver```
    * Empyrion - Galactic Survival Dedicated Server (530870)
    * Conan Exiles Dedicated Server (443030)
    * Counter-Strike Global Offensive - Dedicated Server (740)
-   * Avorion Dedicated Server - (565060)
+   * Avorion - Dedicated Server (565060)
    * Boundel - Dedicated Server (454070)
    * Left 4 Dead 2 - Dedicated Server (222860)
    * Killing Floor 2 - Dedicated Server (232130)
