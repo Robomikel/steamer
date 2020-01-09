@@ -1,6 +1,7 @@
 Function New-LaunchScriptdoiserverPS
 {
     #----------   doi Server CFG    -------------------
+    $global:game="doi"
     ${gamedirname}="DayOfInfamy"
     ${config1}="server.cfg"
     Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
