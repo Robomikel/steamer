@@ -78,7 +78,7 @@ Function New-LaunchScriptKF2serverPS {
     ((Get-Content -path $global:currentdir\$global:server\KFGame\Config\PCServer-KFGame.ini -Raw) -replace "AdminPassword=","AdminPassword=$global:ADMINPASSWORD") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFGame.ini
     Write-Host "***  Enabling Webmin in KFWeb.ini ***" -ForegroundColor Magenta -BackgroundColor Black
     ((Get-Content -path $global:currentdir\$global:server\KFGame\Config\KFWeb.ini -Raw) -replace "\bbEnabled=false\b","bEnabled=true") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\KFWeb.ini
-    Write-Host "***  Disabling Hostle Takeover PCServer-KFEngine.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host "***  Disabling Takeover PCServer-KFEngine.ini ***" -ForegroundColor Magenta -BackgroundColor Black
     ((Get-Content -path $global:currentdir\$global:server\KFGame\Config\PCServer-KFEngine.ini -Raw) -replace "\bbUsedForTakeover=TRUE\b","bUsedForTakeover=FALSE") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFEngine.ini
 
 }
