@@ -1,5 +1,7 @@
 Function New-LaunchScriptLFD2serverPS {
     #----------   left4dead2 Server CFG    -------------------
+            # Left 4 Dead 2 Server
+            $global:game="left4dead2"
     ${gamedirname}="Left4Dead2"
     ${config1}="server.cfg"
     Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
