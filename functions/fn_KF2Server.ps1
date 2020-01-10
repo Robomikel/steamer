@@ -68,7 +68,7 @@ Function New-LaunchScriptKF2serverPS {
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
 
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
-    Start-Job Select-launchServer
+    Select-launchServer
     timeout 5
     Write-Host "***  stopping Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
     Get-StopServer
