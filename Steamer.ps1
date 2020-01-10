@@ -32,8 +32,8 @@ $global:sevenzip="https://www.7-zip.org/a/7za920.zip"
 $global:steamurl="https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $global:steamoutput="steamcmd.zip"
 # Steamer url
-$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
-#$global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
+#$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
+$global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
 .$global:currentdir\functions\fn_Actions.ps1
 .$global:currentdir\functions\fn_Ark.ps1
 .$global:currentdir\functions\fn_BackupServer.ps1
