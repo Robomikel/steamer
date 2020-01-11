@@ -14,9 +14,9 @@ Function New-RestartJob {
 Function New-RestartJobBG {
         $UserName = "$env:COMPUTERNAME\$env:UserName"
         Write-Host "Run Task Whether user is logged on or not"
-        Write-Host "Username: $env:COMPUTERNAME\$env:UserName"
         Write-Host "Input AutoRestart Time. ie 3am: " -ForegroundColor Cyan -NoNewline
         $restartTime = Read-Host
+        Write-Host "Username: $env:COMPUTERNAME\$env:UserName"
         $SecurePassword = $password = Read-Host "Password:" -AsSecureString
         $Credentials = New-Object System.Management.Automation.PSCredential -ArgumentList $UserName, $SecurePassword
         $Password = $Credentials.GetNetworkCredential().Password 
