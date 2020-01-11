@@ -63,6 +63,9 @@ Function Read-AppID
     } elseif($global:AppID -eq 454070){
     Set-Console  >$null 2>&1
     New-LaunchScriptboundelserverPS
+    } elseif($global:AppID -eq 556450){
+    Set-Console  >$null 2>&1
+    New-LaunchScriptforestserverPS
     } else {
     Write-Host "No Launch Script Found for this server" -ForegroundColor Yellow -BackgroundColor Black
     exit
