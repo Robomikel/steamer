@@ -1,7 +1,7 @@
 
 Function New-RestartJob {
     Write-Host "Run Task only when user is logged on"
-    Write-Host "Input AutoRestart Time. ie 3am" -ForegroundColor Cyan -NoNewline
+    Write-Host "Input AutoRestart Time. ie 3am: " -ForegroundColor Cyan -NoNewline
     $restartTime = Read-Host
     $Action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "$global:currentdir\steamer.ps1 restart $global:server" -WorkingDirectory "$global:currentdir"
     #$Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).Date -RepetitionInterval (New-TimeSpan -Hours $restartTime)
@@ -15,7 +15,7 @@ Function New-RestartJobBG {
         $UserName = "$env:COMPUTERNAME\$env:UserName"
         Write-Host "Run Task Whether user is logged on or not"
         Write-Host "Username: $env:COMPUTERNAME\$env:UserName"
-        Write-Host "Input AutoRestart Time. ie 3am" -ForegroundColor Cyan -NoNewline
+        Write-Host "Input AutoRestart Time. ie 3am: " -ForegroundColor Cyan -NoNewline
         $restartTime = Read-Host
         $SecurePassword = $password = Read-Host "Password:" -AsSecureString
         $Credentials = New-Object System.Management.Automation.PSCredential -ArgumentList $UserName, $SecurePassword
