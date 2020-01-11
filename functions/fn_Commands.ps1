@@ -116,12 +116,22 @@ function Select-Steamer
                 Write-Host 'Server FolderName for monitor: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames
-                Get-ChecktaskUnreg 
-                #Set-MonitorJob
+                #Get-ChecktaskUnreg 
+                Set-MonitorJob
             }elseif($global:command -eq "monitor"){
                 Get-FolderNames
-                Get-ChecktaskUnreg
-                #Set-MonitorJob
+                #Get-ChecktaskUnreg
+                Set-MonitorJob
+            }elseif(($global:command -eq "AutoRestart") -and ($null -eq $global:server)){
+                Write-Host 'Server FolderName for AutoRestart: ' -ForegroundColor Cyan -NoNewline
+                $global:server = Read-host
+                Get-FolderNames
+                #Get-ChecktaskUnreg 
+                Set-RestartJob
+            }elseif($global:command -eq "AutoRestart"){
+                Get-FolderNames
+                #Get-ChecktaskUnreg
+                Set-RestartJob
             }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
                 Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
