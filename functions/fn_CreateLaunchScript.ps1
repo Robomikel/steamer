@@ -192,3 +192,47 @@ Function New-LaunchScriptArma3serverPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
     }
+    Function New-LaunchScriptboundelserverPS {
+                # Boundel Server
+        #$global:game = "world"
+        $global:process = "world"
+        # 454070
+        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Datcha_Server"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./world.exe -batchmode"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
+    }
+
+    Function New-LaunchScriptforestserverPS {
+        # The forest dedciated Server
+        $global:game = "forrest"
+        $global:process = "TheForestDedicatedServer"
+        # 556450
+        $global:IP = ${global:IP}
+        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+        ${global:IP} = Read-Host
+        Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
+        $global:HOSTNAME = Read-host
+        #if((${global:IP} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [$global:IP]: "-ForegroundColor Cyan -NoNewline)) -eq ''){${global:IP}="$global:IP"}else{$global:IP}
+        if(($global:STEAMPORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [8766]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:STEAMPORT="8766"}else{$global:STEAMPORT}
+        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
+        if(($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27016]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:QUERYPORT="27016"}else{$global:QUERYPORT}
+        if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [8]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="8"}else{$global:MAXPLAYERS}
+
+
+        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\TheForestDedicatedServer.exe -serverip $global:IP -serversteamport $global:STEAMPORT -servergameport $global:PORT -serverqueryport $global:QUERYPORT -servername '$global:HOSTNAME' -serverplayers $global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics" # -nosteamclient"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
+    #-serverip xxx.xxx.xxx.xxx -serversteamport 8766 -servergameport 27015 -serverqueryport 27016 -servername TheForestGameDS -serverplayers 8 -difficulty Normal -inittype Continue -slot 1
+}
