@@ -192,6 +192,7 @@ function Select-Steamer
                 Write-Host "gamedig"
                 Write-Host "gamedigPrivate"
                 Write-Host "monitor"
+                Write-Host "AutoRestart"
                 Write-Host "steamer update"
         }
     }
