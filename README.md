@@ -77,11 +77,7 @@ Install steam server ```>_./steamer install misserver```
   # MCRcon
  * MCRcon Download and Install
  * Use with supported Servers
-  - Ark S.E.
-  - Conan Exiles
-  - Insurgency: Sandstorm
  
-
 - - - -
  When creating a Schedule task to run Monitor script.
 - If using a user windows account. Will need to add user to the "log on as batch job" to run the task under that account
