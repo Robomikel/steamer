@@ -30,6 +30,7 @@ Function New-RestartJobBG {
         Register-ScheduledTask -TaskName "$global:server AutoRestart" -InputObject $Task -User "$UserName" -Password "$Password"
 }
 Function New-MontiorJob {
+
     Write-Host "Run Task only when user is logged on"
     $Action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-windowstyle hidden -file $global:currentdir\$global:server\Monitor-$global:server.ps1" -WorkingDirectory "$global:currentdir\$global:server"
     $Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).Date -RepetitionInterval (New-TimeSpan -Minutes 5) 

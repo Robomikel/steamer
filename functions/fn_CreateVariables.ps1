@@ -12,3 +12,4 @@ Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:RCONPORT=`"$global:RCONPORT`""
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:RCONPASSWORD=`"$global:RCONPASSWORD`""
 }
+    

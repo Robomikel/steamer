@@ -1,19 +1,19 @@
 
 Function Set-SteamInfoAppID 
-    {
-        $title    = 'Launch Script create'
-        $question = 'Create Launch Script?'
-    
-        $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-        $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-        $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    
-        $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-        if ($decision -eq 0) {
-        Read-AppID
-        Write-Host 'Entered Y'
+{
+    $title    = 'Launch Script create'
+    $question = 'Create Launch Script?'
+
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+    Read-AppID
+    Write-Host 'Entered Y'
     } else {
-        Write-Host 'Entered N'
+    Write-Host 'Entered N'
     }
 }
 Function Read-AppID     
@@ -45,29 +45,29 @@ Function Read-AppID
         } elseif($global:AppID -eq 740){
         Set-Console  >$null 2>&1
         New-LaunchScriptcsgoserverPS
-    } elseif($global:AppID -eq 530870){
+        } elseif($global:AppID -eq 530870){
         Set-Console  >$null 2>&1
         New-LaunchScriptempserverPS
-    } elseif($global:AppID -eq 443030){
+        } elseif($global:AppID -eq 443030){
         Set-Console  >$null 2>&1
         New-LaunchScriptceserverPS
-    } elseif($global:AppID -eq 565060){
+        } elseif($global:AppID -eq 565060){
         Set-Console  >$null 2>&1
         New-LaunchScriptavserverPS
-    } elseif($global:AppID -eq 232130){
+        } elseif($global:AppID -eq 232130){
         Set-Console  >$null 2>&1
         New-LaunchScriptKF2serverPS
-    } elseif($global:AppID -eq 222860){
+        } elseif($global:AppID -eq 222860){
         Set-Console  >$null 2>&1
         New-LaunchScriptLFD2serverPS
-    } elseif($global:AppID -eq 454070){
+        } elseif($global:AppID -eq 454070){
         Set-Console  >$null 2>&1
         New-LaunchScriptboundelserverPS
-    } elseif($global:AppID -eq 556450){
+        } elseif($global:AppID -eq 556450){
         Set-Console  >$null 2>&1
         New-LaunchScriptforestserverPS
         } else {
         Write-Host "No Launch Script Found for this server" -ForegroundColor Yellow -BackgroundColor Black
         exit
-    }
+        }
 }
