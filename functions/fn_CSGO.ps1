@@ -1,6 +1,5 @@
 Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
-        $GSLT=""
 
         $global:githuburl="https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master"
 
@@ -16,13 +15,19 @@ Function New-LaunchScriptcsgoserverPS {
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         $global:process = "csgo"
-        Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
+        Write-Host "Get an auth token from this website and replace “YOUR AUTH TOKEN” in Launch-$global:server.ps1 with it:
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        https://steamcommunity.com/dev/managegameservers
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Note: Use App ID 730" -ForegroundColor Yellow -NoNewline
+                #Write-Host "Input Game Server Token (required for public servers): " -ForegroundColor Cyan -NoNewline
+                #$GSLT = Read-Host
+        if(($GSLT = Read-Host -Prompt (Write-Host "Input Game Server Token (required for public servers)Enter for Default:  [YOUR AUTH TOKEN]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$GSLT="YOUR AUTH TOKEN"}else{$GSLT}
+        
+        Write-Host "***  Renaming srcds.exe to csgo.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\csgo.exe" >$null 2>&1
         #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\csgo_x64.exe" >$null 2>&1
     
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
-
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
