@@ -88,8 +88,8 @@ Install steam server ```>_./steamer install misserver```
  
  Does not Forward ports or open ports on firewall
  
- #MCRCON
+ # MCRCON
 https://github.com/Tiiffi/mcrcon
-#GameDig
+# GameDig
 https://github.com/sonicsnes/node-gamedig
 
