@@ -71,7 +71,12 @@ Install steam server ```>_./steamer install misserver```
  # Mod
  * Insurgency - option for sourcemod and Meta Mod install
  * Rust - option for Oxide install
- 
+ # MCRcon
+ * MCRcon Download and Install
+ * Use with supported Servers
+  - Ark S.E.
+  - Conan Exiles
+  - Insurgency: Sandstorm
 # use with Existing Servers
 * make a backup of your current server (copy)
 * place steamer just outside of root server folder
