@@ -129,3 +129,55 @@ Function New-ServerFolderq {
         exit}
 }
 
+Function set-connectMCRcon {
+    if(("" -eq $global:AppID) -or ("" -eq $global:RCONPORT) -or ("" -eq $global:RANDOMPASSWORD)){
+        Write-Host "Missing Vars" -ForegroundColor Red -BackgroundColor Black
+        Write-Host "Try Running install again" -ForegroundColor Yellow -BackgroundColor Black
+    }else{
+    #$global:RCONPASSWORDencrypted = Get-Content $global:currentdir\$global:server\encrypted_password.txt | ConvertTo-SecureString
+    set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
+    .\mcrcon.exe -t -H $global:EXTIP -P $global:RCONPORT -p $global:RCONPASSWORD
+    #Start-Process powershell { .\mcrcon.exe -t -H $global:EXTIP -P $global:RCONPORT -p $global:RCONPASSWORD }
+    set-location $global:currentdir
+    }
+}
+
+Function Get-MCRcon 
+{
+    $start_time = Get-Date
+    $path = "$global:currentdir\mcrcon\"
+    $patha = "$global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32\mcrcon.exe" 
+    If((Test-Path $path) -and (Test-Path $patha)) 
+    { 
+    Write-Host 'mcrcon already downloaded!' -ForegroundColor Yellow -BackgroundColor Black
+    } 
+    Else 
+    {  
+    $start_time = Get-Date
+    Write-Host '*** Downloading MCRCon from github *****' -ForegroundColor Magenta -BackgroundColor Black 
+    #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
+    #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+    Invoke-WebRequest -Uri $global:mcrconurl -OutFile $global:currentdir\mcrcon.zip
+    Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Extracting MCRCon from github *****' -ForegroundColor Magenta -BackgroundColor Black
+    Expand-Archive "$global:currentdir\mcrcon.zip" "$global:currentdir\mcrcon\" -Force
+    }
+}
+
+#function new-enablercon {
+#    $title    = 'Enable rcon for McRcon'
+#    $question = 'Enable rcon and Download McRcon and install?'
+#    
+#    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+#    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+#    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+#    
+#    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+#    if ($decision -eq 0) {
+#    Write-Host 'Entered Y'
+#    Get-MCRcon
+#    } else {
+#    Write-Host 'Entered N'
+#    
+#    }
+#    }
