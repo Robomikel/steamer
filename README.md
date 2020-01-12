@@ -47,7 +47,9 @@ Install steam server ```>_./steamer install misserver```
    * update server
    * validate server files 
    * backup server files 
-   * monitor server process 
+   * monitor server process
+   * Rcon to server 
+   * Daily AutoRestart server process 
    * send discord alert 
    * run gamedig on hosted server 
    * update steamer PS scripts from github  
