@@ -7,7 +7,7 @@ Function New-LaunchScriptcsgoserverPS {
         ${gamedirname}="CounterStrikeGlobalOffensive"
         ${config1}="server.cfg"
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
+        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\csgo\cfg\server.cfg")
         $csgoWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
         #$csgoWebResponse=$csgoWebResponse.content
         New-Item $global:currentdir\$global:server\csgo\cfg\server.cfg -Force
@@ -40,6 +40,12 @@ Function New-LaunchScriptcsgoserverPS {
         #Write-Host 'Input maxplayers (lobby size [16-?]): ' -ForegroundColor Cyan -NoNewline
         #$global:MAXPLAYERS = Read-host
         if(($global:MAXPLAYERS= Read-Host -Prompt (Write-Host "Input maxplayers, Press enter to accept default value [16]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="16"}else{$global:MAXPLAYERS} 
+        Write-Host "
+        * Deathmatch: +game_type 1 +game_mode 2
+        * Demolition: +game_type 1 +game_mode 1
+        * Arms Race: +game_type 1 +game_mode 0
+        * Classic Competitive: +game_type 0 +game_mode 1
+        * Classic Casual: +game_type 0 +game_mode 0" -ForegroundColor Yellow
         if(($global:GAMETYPE= Read-Host -Prompt (Write-Host "Input gametype, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMETYPE="0"}else{$global:GAMETYPE}
         if(($global:GAMEMODE = Read-Host -Prompt (Write-Host "Input gamemode, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMEMODE="0"}else{$global:GAMEMODE}
         if(($global:MAPGROUP = Read-Host -Prompt (Write-Host "Input mapgroup, Press enter to accept default value [mg_active]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAPGROUP="mg_active"}else{$global:MAPGROUP}
@@ -61,8 +67,49 @@ Function New-LaunchScriptcsgoserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
 
+        $title    = 'Download MetaMod and SourceMod'
+        $question = 'Download MetaMod, SourceMod and install?'
+    
+        $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+        $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+        $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+    
+        $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+        if ($decision -eq 0) {
+        Get-SourceMetaModcs
+        Write-Host 'Entered Y'
+        #Get-Gamemode
+    } else {
+        Write-Host 'Entered N'
+        #Get-Gamemode
+    }
+    
 }
 
+Function Get-SourceMetaModcs {
+        $start_time = Get-Date
+        Write-Host '*** Downloading Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
+        #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
+        #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+        Invoke-WebRequest -Uri $global:metamodurl -OutFile $global:currentdir\metamod.zip
+        Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
+        Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
+        Write-Host '*** Copying/installing Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
+        Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\csgo -Force -Recurse
+        
+        $start_time = Get-Date
+        Write-Host '*** Downloading SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
+        #(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
+        #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+        Invoke-WebRequest -Uri $global:sourcemodurl -OutFile $global:currentdir\sourcemod.zip
+        Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host '*** Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black 
+        Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
+        Write-Host '*** Copying/installing SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
+        Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\csgo -Force -Recurse
+        
+        }
 # gametype="0"
 # gamemode="0"
 # mapgroup="mg_active"
@@ -73,25 +120,31 @@ Function New-LaunchScriptcsgoserverPS {
 #    }
 # Edit the batch file and type in one of the following lines
 
-# Classic Casual:
+# Classic Casual: +game_type 0 +game_mode 0
 
 # srcds -game csgo -console -usercon +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 
-# Classic Competitive:
+# Classic Competitive: +game_type 0 +game_mode 1
 
 # srcds -game csgo -console -usercon +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
 
-# Arms Race:
+# Arms Race: +game_type 1 +game_mode 0
 
 # srcds -game csgo -console -usercon +game_type 1 +game_mode 0 +mapgroup mg_armsrace +map ar_shoots
 
-# Demolition:
+# Demolition: +game_type 1 +game_mode 1
 
 # srcds -game csgo -console -usercon +game_type 1 +game_mode 1 +mapgroup mg_demolition +map de_lake
 
-# Deathmatch:
+# Deathmatch: +game_type 1 +game_mode 2
 
 # srcds -game csgo -console -usercon +game_type 1 +game_mode 2 +mapgroup mg_allclassic +map de_dust
 
 # The batch file is the "launch options" of the server, if you want your server to be public (not lan)
 # add "+net_public_adr xxx.xxx.xxx.xxx" to the end of the "launch options"
+
+# Deathmatch: +game_type 1 +game_mode 2
+# Demolition: +game_type 1 +game_mode 1
+# Arms Race: +game_type 1 +game_mode 0
+# Classic Competitive: +game_type 0 +game_mode 1
+# Classic Casual: +game_type 0 +game_mode 0
