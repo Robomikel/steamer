@@ -2,6 +2,7 @@ Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
         $GSLT=""
 
+        $global:githuburl="https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master"
 
         $global:game="csgo"
         ${gamedirname}="CounterStrikeGlobalOffensive"
@@ -9,7 +10,7 @@ Function New-LaunchScriptcsgoserverPS {
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
         $csgoWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        $csgoWebResponse=$csgoWebResponse.content
+        $csgoWebResponse=$csgoWebResponse
         New-Item $global:currentdir\$global:server\csgo\cfg\server.cfg -Force
         Add-Content $global:currentdir\$global:server\csgo\cfg\server.cfg $insWebResponse
 
