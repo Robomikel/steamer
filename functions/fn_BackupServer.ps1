@@ -1,14 +1,11 @@
 Function Get-ChecktaskUnreg {
-    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
+    Get-ScheduledTask -TaskName "$global:server $global:command" >$null 2>&1
     if ($?) {
     Write-Host '*** Unregistering scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
-    Unregister-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
-    Set-MonitorJob
+    Unregister-ScheduledTask -TaskName "$global:server $global:command" >$null 2>&1
     }
-
     if (!$?) {
     Write-Host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black
-    Set-MonitorJob
     }
 }
 
@@ -18,26 +15,25 @@ Function Get-ChecktaskDisable {
     if ($?) {
     Write-Host '*** disabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
     Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
-
     if (!$?) {
     Write-Host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black}
 }
 
 Function Get-ChecktaskEnable {
     Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
-if ($?) {
+    if ($?) {
     Write-Host '*** Enabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
     Enable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
-if (!$?) {
+    if (!$?) {
     write-host "Scheduled Task does not exist" -ForegroundColor Yellow -BackgroundColor Black}
 }
 Function New-BackupFolder {
-        $path = "$global:currentdir\backups" 
+    $path = "$global:currentdir\backups" 
     If(Test-Path $path) { 
-        Write-Host '***  Backup folder exists! ***' -ForegroundColor Yellow -BackgroundColor Black} 
+    Write-Host '***  Backup folder exists! ***' -ForegroundColor Yellow -BackgroundColor Black} 
     Else {  
-        Write-Host '*** Creating backup folder *****' -ForegroundColor Magenta -BackgroundColor Black
-        New-Item -Path "$global:currentdir\" -Name "backups" -ItemType "directory"}
+    Write-Host '*** Creating backup folder *****' -ForegroundColor Magenta -BackgroundColor Black
+    New-Item -Path "$global:currentdir\" -Name "backups" -ItemType "directory"}
 }
 
 Function New-BackupServer {
@@ -62,13 +58,12 @@ Function Get-SevenZip {
         $patha = "$global:currentdir\7za920\7za.exe"
         $pathb = "$global:currentdir\7za920.zip"
         Write-Host '*** Checking for 7ZIP *****' -ForegroundColor Yellow -BackgroundColor Black   
-    If((Test-Path $path) -and (Test-Path $patha) -and (Test-Path $pathb)) { 
-            Write-Host '*** 7Zip already downloaded! ****' -ForegroundColor Yellow -BackgroundColor Black}
+        If((Test-Path $path) -and (Test-Path $patha) -and (Test-Path $pathb)) { 
+        Write-Host '*** 7Zip already downloaded! ****' -ForegroundColor Yellow -BackgroundColor Black}
         else {
-            write-host "*** 7Zip not found!  ****" -ForegroundColor Yellow -BackgroundColor Black
-            add-sevenzip
-    }
-    
+        write-host "*** 7Zip not found!  ****" -ForegroundColor Yellow -BackgroundColor Black
+        add-sevenzip
+        }  
 }
 
 
