@@ -31,8 +31,8 @@ Install steam server ```>_./steamer install misserver```
    * Empyrion - Galactic Survival Dedicated Server (530870)
    * Conan Exiles Dedicated Server (443030)
    * The Forest Dedicated Server (556450)
-   # untested
    * Counter-Strike Global Offensive - Dedicated Server (740)
+   # untested
    * Avorion - Dedicated Server (565060)
    * Boundel - Dedicated Server (454070)
    * Left 4 Dead 2 - Dedicated Server (222860)
@@ -64,6 +64,7 @@ Install steam server ```>_./steamer install misserver```
  - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task with monitor and Discord scripts
  - ```AutoRestart <serverFolder>``` - ```>_./steamer AutoRestart misserver``` - Creates Scheduled Task for Daily Auto Restart
  - ```MCRcon <serverFolder>``` - ```>_./steamer mcrcon inssserver``` - Uses MCRcon. Rcon to server (Downloads MCRcon)
+  - ```MCRconPrivate <serverFolder>``` - ```>_./steamer mcrconPrivate inssserver``` - Uses MCRcon. Rcon to server via Private IP (Downloads MCRcon)
  - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```gamedigPrivate <serverFolder>``` - ```>_./steamer gamedigPrivate sdtdserver``` * Uses Private IP. not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
