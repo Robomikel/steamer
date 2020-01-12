@@ -17,8 +17,8 @@ Function New-LaunchScriptcsgoserverPS {
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         Write-Host 'Input rcon_password: ' -ForegroundColor Cyan -NoNewline
-        $global:RCONPASSORD = Read-host
-
+        $global:RCONPASSWORD = Read-host
+        $global:RCONPORT="$global:PORT"
 
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
@@ -35,7 +35,7 @@ Function New-LaunchScriptcsgoserverPS {
 
         Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
-        ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSORD") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
+        ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
 
 
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force

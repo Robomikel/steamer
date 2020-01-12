@@ -181,23 +181,23 @@ function Select-Steamer
                 $global:server = Read-host
                 Get-FolderNames
                 Get-createdvaribles
-                if(( $global:AppID -eq 581330) -or ( $global:AppID -eq 443030) -or ( $global:AppID -eq 376030)) {  
+                #if(( $global:AppID -eq 581330) -or ( $global:AppID -eq 443030) -or ( $global:AppID -eq 376030)) {  
                     Get-MCRcon 
                     set-connectMCRcon
-                    exit
-                    }
-                Write-Host "MCRcon not supported by this App ID" -ForegroundColor Red -BackgroundColor Black
-                Write-Host "Try Running Install again for supported servers." -ForegroundColor Yellow -BackgroundColor Black
+                #    exit
+                #    }
+                #Write-Host "MCRcon not supported by this App ID" -ForegroundColor Red -BackgroundColor Black
+                #Write-Host "Try Running Install again for supported servers." -ForegroundColor Yellow -BackgroundColor Black
             }elseif($global:command -eq "mcrcon"){
                 Get-FolderNames
                 Get-createdvaribles
-                if(( $global:AppID -eq 581330) -or ( $global:AppID -eq 443030) -or ( $global:AppID -eq 376030)) {  
+                #if(( $global:AppID -eq 581330) -or ( $global:AppID -eq 443030) -or ( $global:AppID -eq 376030) -or ( $global:AppID -eq 237410)) {  
                     Get-MCRcon
                     set-connectMCRcon 
-                    exit
-                    }
-                Write-Host "MCRcon not supported by this App ID" -ForegroundColor Red -BackgroundColor Black
-                Write-Host "Try Running Install again for supported servers." -ForegroundColor Yellow -BackgroundColor Black
+                #  exit
+                #   }
+                #Write-Host "MCRcon not supported by this App ID" -ForegroundColor Red -BackgroundColor Black
+                #Write-Host "Try Running Install again for supported servers." -ForegroundColor Yellow -BackgroundColor Black
             } else {
                 Write-Host "Format:  ./steamer <Command> <serverFolderName>" -ForegroundColor Yellow -BackgroundColor Black
                 Write-Host "IE:      ./steamer install  insserver" -ForegroundColor Yellow -BackgroundColor Black
