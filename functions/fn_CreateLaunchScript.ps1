@@ -119,18 +119,16 @@ Function New-LaunchScriptArma3serverPS
         $global:SERVERPASSWORD = Read-host
         Write-Host 'Input ADMIN PASSWORD: ' -ForegroundColor Cyan -NoNewline 
         $global:ADMINPASSWORD = Read-host
+        if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [27103]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="27103"}else{$global:RCONPORT}
+        $global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
+        if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
 
         Write-Host "***  Editing Default Engine.ini   ***" -ForegroundColor Magenta -BackgroundColor Black
-        #((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
-        #((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSORD") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
-        #New-Item $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\Engine.ini -Force
         Add-Content -Path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\Engine.ini -Value "ServerPassword=$global:SERVERPASSWORD"
         Add-Content -Path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\Engine.ini -Value "ServerName=$global:HOSTNAME"
         
         Write-Host "***  Editing Default ServerSettings.ini   ***" -ForegroundColor Magenta -BackgroundColor Black
-        #New-Item $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\ServerSettings.ini -Force
         Add-Content -Path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\ServerSettings.ini -Value "AdminPassword=$global:ADMINPASSWORD"
-        #((Get-Content -path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\ServerSettings.ini -Raw) -replace "\bServerPassword=\b","ServerPassword=") | Set-Content -Path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\ServerSettings.ini
 
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
@@ -138,7 +136,7 @@ Function New-LaunchScriptArma3serverPS
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\ConanSandboxServer.exe -log  -MaxPlayers=$global:MAXPLAYERS -Port=$global:PORT -QueryPort=$global:QUERYPORT"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\ConanSandboxServer.exe -log  -MaxPlayers=$global:MAXPLAYERS -Port=$global:PORT -QueryPort=$global:QUERYPORT -RconEnabled=1 -RconPassword=$global:RCONPASSWORD -RconPort=$global:RCONPORT"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"

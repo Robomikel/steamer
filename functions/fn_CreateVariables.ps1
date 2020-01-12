@@ -8,4 +8,7 @@ Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:game=`"$global:game`""
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:saves=`"$global:saves`""
 Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`${global:IP}=`"${global:IP}`""
+Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:AppID=`"$global:AppID`""
+Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:RCONPORT=`"$global:RCONPORT`""
+Add-Content -Path $global:currentdir\$global:server\Varibles-$global:server.ps1 -Value "`$global:RCONPASSWORD=`"$global:RCONPASSWORD`""
 }
