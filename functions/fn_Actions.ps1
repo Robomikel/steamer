@@ -134,10 +134,19 @@ Function set-connectMCRcon {
         Write-Host "Missing Vars" -ForegroundColor Red -BackgroundColor Black
         Write-Host "Try install again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
     }else{
-    #$global:RCONPASSWORDencrypted = Get-Content $global:currentdir\$global:server\encrypted_password.txt | ConvertTo-SecureString
     set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
     .\mcrcon.exe -t -H $global:EXTIP -P $global:RCONPORT -p $global:RCONPASSWORD
-    #Start-Process powershell { .\mcrcon.exe -t -H $global:EXTIP -P $global:RCONPORT -p $global:RCONPASSWORD }
+    set-location $global:currentdir
+    }
+}
+
+Function set-connectMCRconP {
+    if(("" -eq $global:AppID) -or ("" -eq $global:RCONPORT) -or ("" -eq $global:RANDOMPASSWORD)){
+        Write-Host "Missing Vars" -ForegroundColor Red -BackgroundColor Black
+        Write-Host "Try install again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
+    }else{
+    set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
+    .\mcrcon.exe -t -H $global:IP -P $global:RCONPORT -p $global:RCONPASSWORD
     set-location $global:currentdir
     }
 }
