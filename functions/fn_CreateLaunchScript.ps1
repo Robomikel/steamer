@@ -26,12 +26,16 @@ Function New-LaunchScriptArma3serverPS
         
         $global:process = "arma3Server"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-        ${global:IP} = Read-host -Prompt 'Input Server local IP'
-        $global:MAXPLAYERS = Read-host -Prompt 'Input maxplayers'
+        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+        ${global:IP} = Read-Host
+        Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
+        $global:MAXPLAYERS = Read-host
         if(($global:PORT = Read-Host "Input Server Port,Press enter to accept default value [2302]") -eq ''){$global:PORT="2302"}else{$global:PORT}
-        $global:HOSTNAME = Read-host -Prompt 'Input Server name'
-        $global:SERVERPASSWORD = Read-host -Prompt 'Input server password'
-        $global:SERVERADMINPASSWORD = Read-host -Prompt 'Input server Adminpassword'
+        Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
+        $global:HOSTNAME = Read-host
+        if(($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
+        Write-Host  'Input server Adminpassword: ' -ForegroundColor Cyan -NoNewline 
+        $global:SERVERADMINPASSWORD = Read-host
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\server.cfg
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace '\b32\b',"$global:MAXPLAYERS") | Set-Content -Path $global:currentdir\$global:server\server.cfg  
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace "\barma3pass\b","$global:SERVERPASSWORD") | Set-Content -Path $global:currentdir\$global:server\server.cfg
