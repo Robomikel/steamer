@@ -132,7 +132,7 @@ Function New-ServerFolderq {
 Function set-connectMCRcon {
     if(("" -eq $global:AppID) -or ("" -eq $global:RCONPORT) -or ("" -eq $global:RANDOMPASSWORD)){
         Write-Host "Missing Vars" -ForegroundColor Red -BackgroundColor Black
-        Write-Host "Try Running install again" -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host "Try adding Rcon vars to Varibles-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
     }else{
     #$global:RCONPASSWORDencrypted = Get-Content $global:currentdir\$global:server\encrypted_password.txt | ConvertTo-SecureString
     set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
@@ -163,21 +163,3 @@ Function Get-MCRcon
     Expand-Archive "$global:currentdir\mcrcon.zip" "$global:currentdir\mcrcon\" -Force
     }
 }
-
-#function new-enablercon {
-#    $title    = 'Enable rcon for McRcon'
-#    $question = 'Enable rcon and Download McRcon and install?'
-#    
-#    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-#    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-#    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-#    
-#    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-#    if ($decision -eq 0) {
-#    Write-Host 'Entered Y'
-#    Get-MCRcon
-#    } else {
-#    Write-Host 'Entered N'
-#    
-#    }
-#    }
