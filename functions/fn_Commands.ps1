@@ -215,6 +215,7 @@ function Select-Steamer
                 Write-Host "gamedigPrivate"
                 Write-Host "monitor"
                 Write-Host "mcrcon"
+                Write-Host "AutoRestart"
                 Write-Host "steamer update"
         }
     }
