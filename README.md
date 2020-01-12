@@ -63,7 +63,7 @@ Install steam server ```>_./steamer install misserver```
  - ```backup <serverFolder>``` - ```>_./steamer backup misserver``` - Creates zip folder of server files in backups folder (Downloads portable 7Zip)
  - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task with monitor and Discord scripts
  - ```AutoRestart <serverFolder>``` - ```>_./steamer AutoRestart misserver``` - Creates Scheduled Task for Daily Auto Restart
- - ```MCRcon <serverFolder>``` - ```>_./steamer mcrcon misserver``` - Uses MCRcon. Rcon to server (Downloads MCRcon)
+ - ```MCRcon <serverFolder>``` - ```>_./steamer mcrcon inssserver``` - Uses MCRcon. Rcon to server (Downloads MCRcon)
  - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```gamedigPrivate <serverFolder>``` - ```>_./steamer gamedigPrivate sdtdserver``` * Uses Private IP. not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
@@ -77,11 +77,7 @@ Install steam server ```>_./steamer install misserver```
   # MCRcon
  * MCRcon Download and Install
  * Use with supported Servers
-  - Ark S.E.
-  - Conan Exiles
-  - Insurgency: Sandstorm
  
-
 - - - -
  When creating a Schedule task to run Monitor script.
 - If using a user windows account. Will need to add user to the "log on as batch job" to run the task under that account
