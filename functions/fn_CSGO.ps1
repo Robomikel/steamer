@@ -17,7 +17,7 @@ Function New-LaunchScriptcsgoserverPS {
         $global:process = "csgo"
         Write-Host "Get an auth token from this website and replace “YOUR AUTH TOKEN” in Launch-$global:server.ps1 with it:
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        https://steamcommunity.com/dev/managegameservers
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Note: Use App ID 730" -ForegroundColor Yellow -NoNewline
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Note: Use App ID 730" -ForegroundColor Yellow
                 #Write-Host "Input Game Server Token (required for public servers): " -ForegroundColor Cyan -NoNewline
                 #$GSLT = Read-Host
         if(($GSLT = Read-Host -Prompt (Write-Host "Input Game Server Token (required for public servers)Enter for Default:  [YOUR AUTH TOKEN]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$GSLT="YOUR AUTH TOKEN"}else{$GSLT}
