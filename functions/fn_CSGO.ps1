@@ -12,7 +12,7 @@ Function New-LaunchScriptcsgoserverPS {
         $csgoWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
         #$csgoWebResponse=$csgoWebResponse.content
         New-Item $global:currentdir\$global:server\csgo\cfg\server.cfg -Force
-        Add-Content $global:currentdir\$global:server\csgo\cfg\server.cfg $insWebResponse
+        Add-Content $global:currentdir\$global:server\csgo\cfg\server.cfg $csgoWebResponse
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         $global:process = "csgo"
