@@ -158,8 +158,30 @@ Function Get-MCRcon
     #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:mcrconurl -OutFile $global:currentdir\mcrcon.zip
+    if (!$?) {write-host "Downloading  MCRCon Failed" -ForegroundColor Red -BackgroundColor Black 
+    New-TryagainMC}
+    if ($?) {write-host "Downloading  MCRCon succeeded" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '*** Extracting MCRCon from github *****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\mcrcon.zip" "$global:currentdir\mcrcon\" -Force
+    if (!$?) {write-host "Extracting MCRCon Failed" -ForegroundColor Yellow -BackgroundColor Black 
+    New-TryagainMC}
+    if ($?) {write-host "Extracting MCRCon succeeded" -ForegroundColor Yellow -BackgroundColor Black}
     }
+}
+Function New-TryagainMC {
+    $title    = 'Try again?'
+    $question = 'Download and Extract MCRCon?'
+
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+        Write-Host 'Entered Y'
+        Get-MCRcon} 
+    else {
+        Write-Host 'Entered N'
+        exit}
 }
