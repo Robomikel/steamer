@@ -16,11 +16,11 @@ Function New-LaunchScriptcsgoserverPS {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         $global:process = "csgo"
         Write-Host "Get Auth Token from this website and replace `"YOUR AUTH TOKEN`" in Launch-$global:server.ps1 with it
-                                https://steamcommunity.com/dev/managegameservers
-                                Note use App ID 730: " -ForegroundColor Yellow
+                        https://steamcommunity.com/dev/managegameservers
+                        Note use App ID 730: " -ForegroundColor Yellow
                 #Write-Host "Input Game Server Token (required for public servers): " -ForegroundColor Cyan -NoNewline
                 #$GSLT = Read-Host
-        if(($GSLT = Read-Host -Prompt (Write-Host "Input Game Server Token (required for public servers)Enter for Default:  [YOUR AUTH TOKEN]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$GSLT="YOUR AUTH TOKEN"}else{$GSLT}
+        if(($GSLT = Read-Host -Prompt (Write-Host "Input Game Server Token (required for public servers) Enter for Default:[YOUR AUTH TOKEN]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$GSLT="YOUR AUTH TOKEN"}else{$GSLT}
         
         Write-Host "***  Renaming srcds.exe to csgo.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\csgo.exe" >$null 2>&1
