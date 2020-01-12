@@ -7,7 +7,7 @@ Function New-LaunchScriptLFD2serverPS {
     Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
     #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
     $insWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-    $insWebResponse=$insWebResponse.content
+    #$insWebResponse=$insWebResponse.content
     New-Item $global:currentdir\$global:server\left4dead2\cfg\server.cfg -Force
     Add-Content $global:currentdir\$global:server\left4dead2\cfg\server.cfg $insWebResponse
     

@@ -12,7 +12,7 @@ Function New-LaunchScriptArma3serverPS
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         #(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server.cfg")
         $arma3WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        $arma3WebResponse=$arma3WebResponse.content    
+        #$arma3WebResponse=$arma3WebResponse.content    
         New-Item $global:currentdir\$global:server\server.cfg -Force
         Add-Content $global:currentdir\$global:server\server.cfg $arma3WebResponse
         
@@ -20,7 +20,7 @@ Function New-LaunchScriptArma3serverPS
         #(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config2}", "$global:currentdir\$global:server\network.cfg")
         
         $arma3nWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config2}"
-        $arma3nWebResponse=$arma3nWebResponse.content    
+        #$arma3nWebResponse=$arma3nWebResponse.content    
         New-Item $global:currentdir\$global:server\network.cfg -Force
         Add-Content $global:currentdir\$global:server\network.cfg $arma3nWebResponse
         

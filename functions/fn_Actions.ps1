@@ -1,6 +1,6 @@
 Function Get-createdvaribles {
-    Write-Host "*** Getting Server Varibles *****" -ForegroundColor Yellow -BackgroundColor Black  
-    & "$global:currentdir\$global:server\Varibles-$global:server.ps1"
+    Write-Host "*** Getting Server Variables *****" -ForegroundColor Yellow -BackgroundColor Black  
+    & "$global:currentdir\$global:server\Variables-$global:server.ps1"
 }
 Function Get-CheckServer {
     Write-Host '*** Check  Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
@@ -132,7 +132,7 @@ Function New-ServerFolderq {
 Function set-connectMCRcon {
     if(("" -eq $global:AppID) -or ("" -eq $global:RCONPORT) -or ("" -eq $global:RANDOMPASSWORD)){
         Write-Host "Missing Vars" -ForegroundColor Red -BackgroundColor Black
-        Write-Host "Try install again or adding Rcon vars to Varibles-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host "Try install again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
     }else{
     #$global:RCONPASSWORDencrypted = Get-Content $global:currentdir\$global:server\encrypted_password.txt | ConvertTo-SecureString
     set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32

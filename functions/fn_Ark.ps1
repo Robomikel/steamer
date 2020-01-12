@@ -17,7 +17,7 @@ Function New-LaunchScriptArkPS {
     ${gamedirname}="ARKSurvivalEvolved"
     ${config1}="GameUserSettings.ini"
     $ArkWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-    $ArkWebResponse=$ArkWebResponse.content
+    #$ArkWebResponse=$ArkWebResponse.content
     Write-Host "***  Copying Default GameUserSettings.ini  ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\ShooterGame\Saved\Config\WindowsServer\GameUserSettings.ini -Force
     Add-Content $global:currentdir\$global:server\ShooterGame\Saved\Config\WindowsServer\GameUserSettings.ini $ArkWebResponse

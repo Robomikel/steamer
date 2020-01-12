@@ -8,7 +8,7 @@ Function New-LaunchScriptdoiserverPS
     #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\doi\cfg\server.cfg")
     #"https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master/DayOfInfamy/server.cfg"
     $insWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-    $insWebResponse=$insWebResponse.content
+    #$insWebResponse=$insWebResponse.content
     New-Item $global:currentdir\$global:server\doi\cfg\server.cfg -Force
     Add-Content $global:currentdir\$global:server\doi\cfg\server.cfg $insWebResponse
     Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black

@@ -8,31 +8,31 @@ Function New-LaunchScriptKF2serverPS {
     ${config5}="LinuxServer-KFSystemSettings.ini"
     Write-Host "***  Copying Default KFWeb.ini ***" -ForegroundColor Magenta -BackgroundColor Black
     $kf2WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-    $kf2WebResponse=$kf2WebResponse.content
+    #$kf2WebResponse=$kf2WebResponse.content
     New-Item $global:currentdir\$global:server\KFGame\Config\KFWeb.ini -Force
     Add-Content $global:currentdir\$global:server\KFGame\Config\KFWeb.ini $kf2WebResponse
     
     Write-Host "***  Copying Default PCServer-KFEngine.ini ***" -ForegroundColor Magenta -BackgroundColor Black
     $kf2WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config2}"
-    $kf2WebResponse=$kf2WebResponse.content
+    #$kf2WebResponse=$kf2WebResponse.content
     New-Item $global:currentdir\$global:server\KFGame\Config\PCServer-KFEngine.ini -Force
     Add-Content $global:currentdir\$global:server\KFGame\Config\PCServer-KFEngine.ini $kf2WebResponse
     
     Write-Host "***  Copying Default PCServer-KFGame.ini ***" -ForegroundColor Magenta -BackgroundColor Black
     $kf2WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config3}"
-    $kf2WebResponse=$kf2WebResponse.content
+    #$kf2WebResponse=$kf2WebResponse.content
     New-Item $global:currentdir\$global:server\KFGame\Config\PCServer-KFGame.ini -Force
     Add-Content $global:currentdir\$global:server\KFGame\Config\PCServer-KFGame.ini $kf2WebResponse
     
     Write-Host "***  Copying Default PCServer-KFInput.ini ***" -ForegroundColor Magenta -BackgroundColor Black
     $kf2WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config4}"
-    $kf2WebResponse=$kf2WebResponse.content
+    #$kf2WebResponse=$kf2WebResponse.content
     New-Item $global:currentdir\$global:server\KFGame\Config\PCServer-KFInput.ini -Force
     Add-Content $global:currentdir\$global:server\KFGame\Config\PCServer-KFInput.ini $kf2WebResponse
     
     Write-Host "***  Copying Default PCServer-KFSystemSettings.ini  ***" -ForegroundColor Magenta -BackgroundColor Black
     $kf2WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config5}"
-    $kf2WebResponse=$kf2WebResponse.content
+    #$kf2WebResponse=$kf2WebResponse.content
     New-Item $global:currentdir\$global:server\KFGame\Config\PCServer-KFSystemSettings.ini -Force
     Add-Content $global:currentdir\$global:server\KFGame\Config\PCServer-KFSystemSettings.ini $kf2WebResponse
 

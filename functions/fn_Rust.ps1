@@ -36,7 +36,7 @@ Function New-LaunchScriptRustPS
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg")
         $RustWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        $RustWebResponse=$RustWebResponse.content    
+        #$RustWebResponse=$RustWebResponse.content    
         New-Item $global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg -Force
         Add-Content $global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg $RustWebResponse
 
