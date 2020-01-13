@@ -12,7 +12,7 @@ Function Get-StopServer {
     Get-ChecktaskDisable 
     Write-Host '*** Stopping Server Process *****' -ForegroundColor Magenta -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
-    Write-Host "Not Running" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:process" -Force}
+    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:process" -Force}
 }
 
 Function Get-ValidateServer {
