@@ -77,7 +77,7 @@ Install steam server ```>_./steamer install misserver```
  * Rust - option for Oxide install
   # MCRcon
  * MCRcon Download and Install
- * Use with supported Servers
+ * Use used to Rcon to servers.
  
 - - - -
  When creating a Schedule task to run Monitor script.
