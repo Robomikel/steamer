@@ -6,10 +6,10 @@ Function New-LaunchScriptLFD2serverPS {
     ${config1}="server.cfg"
     Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
     #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
-    $insWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-    #$insWebResponse=$insWebResponse.content
+    $lfdWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
+    #$lfdWebResponse=$lfdWebResponse.content
     New-Item $global:currentdir\$global:server\left4dead2\cfg\server.cfg -Force
-    Add-Content $global:currentdir\$global:server\left4dead2\cfg\server.cfg $insWebResponse
+    Add-Content $global:currentdir\$global:server\left4dead2\cfg\server.cfg $lfdWebResponse
     
     Write-Host "***  Renaming srcds.exe to l4d2.exe to avoid conflict with local source Engine (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
     Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\l4d2.exe" >$null 2>&1
