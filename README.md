@@ -95,6 +95,7 @@ https://github.com/Tiiffi/mcrcon
 # GameDig
 https://github.com/sonicsnes/node-gamedig
 # Game Server Managers (my inspiration)
+Game server configs from
 https://github.com/GameServerManagers
  "open source, open mind"
 
