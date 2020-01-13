@@ -80,6 +80,10 @@ Install steam server ```>_./steamer install misserver```
  * Use used to Rcon to servers.
  
 - - - -
+
+# Troubleshooting:
+If something stops working after a steamer update. please re-run the install command and re-enter vars. You do not need to re-install the server. As long as you keep the same server folder name and App ID. Always make a backup before updating. You can also delete all the .ps1's and download current version from here. The install command will recreate them. I have been making a lot of changes. I am starting to get content with features. I am hoping to get to the point were updates will only introduce new games. Enjoy.
+- - - - 
  When creating a Schedule task to run Monitor script.
 - If using a user windows account. Will need to add user to the "log on as batch job" to run the task under that account
 - - - - 
@@ -87,11 +91,12 @@ Install steam server ```>_./steamer install misserver```
  
  Does not Forward ports or open ports on firewall
 - - - - 
-# Troubleshooting:
-If something stops working after a steamer update. please re-run the install command and re-enter vars. You do not need to re-install the server. As long as you keep the same server folder name and App ID. Always make a backup before updating. You can also delete all the .ps1's and download current version from here. The install command will recreate them. I have been making a lot of changes. I am starting to get content with features. I am hoping to get to the point were updates will only introduce new games. Enjoy.
- 
  # MCRCON
 https://github.com/Tiiffi/mcrcon
 # GameDig
 https://github.com/sonicsnes/node-gamedig
+# Game Server Managers (my inspiration)
+Game server configs from
+https://github.com/GameServerManagers
+ "open source, open mind"
 
