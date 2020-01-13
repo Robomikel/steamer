@@ -138,7 +138,7 @@ function Select-Steamer
                 Get-FolderNames 
                 Get-NodeJS
                 Get-createdvaribles
-                if( $global:AppID -eq 581330) {  
+                if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
                     Get-GamedigServerQ
                     exit
                     }
@@ -147,7 +147,7 @@ function Select-Steamer
                 Get-NodeJS
                 Get-FolderNames
                 Get-createdvaribles
-                if( $global:AppID -eq 581330) {  
+                if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
                     Get-GamedigServerQ
                     exit
                     }
@@ -158,7 +158,7 @@ function Select-Steamer
                 Get-FolderNames
                 Get-NodeJS
                 Get-createdvaribles
-                if( $global:AppID -eq 581330) {  
+                if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
                     Get-GamedigServerQPrivate
                     exit
                     }
@@ -167,7 +167,7 @@ function Select-Steamer
                 Get-NodeJS
                 Get-FolderNames
                 Get-createdvaribles
-                if( $global:AppID -eq 581330) {  
+                if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
                     Get-GamedigServerQPrivate
                     exit
                     }
@@ -217,6 +217,7 @@ function Select-Steamer
                 Write-Host "gamedigPrivate"
                 Write-Host "monitor"
                 Write-Host "mcrcon"
+                Write-Host "mcrconPrivate"
                 Write-Host "AutoRestart"
                 Write-Host "steamer update"
         }
