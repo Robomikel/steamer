@@ -27,15 +27,15 @@ Install steam server ```>_./steamer install misserver```
    * Arma3 Server (233780)- “arma3server" (optional server folder name)
    * ARK: Survival Evolved Dedicated Server (376030)- “arkserver" (optional server folder name)
    * Day of Infamy Dedicated Server (462310)- “doiserver" (optional server folder name)
-   * Killing Floor 2 - Dedicated Server (232130)
-   * Empyrion - Galactic Survival Dedicated Server (530870)
-   * Conan Exiles Dedicated Server (443030)
-   * The Forest Dedicated Server (556450)
+   * Killing Floor 2 - Dedicated Server (232130) "kf2server"
+   * Empyrion - Galactic Survival Dedicated Server (530870) "empserver"
+   * Conan Exiles Dedicated Server (443030) "ceserver"
+   * The Forest Dedicated Server (556450) "forestserver"
+   * Counter-Strike Global Offensive - Dedicated Server (740) "csgoserver"
+   * Left 4 Dead 2 - Dedicated Server (222860) "lfd2server"
    # untested
-   * Counter-Strike Global Offensive - Dedicated Server (740)
    * Avorion - Dedicated Server (565060)
    * Boundel - Dedicated Server (454070)
-   * Left 4 Dead 2 - Dedicated Server (222860)
    -----
  - Creates Launch, Monitor, per serverfolder/instance variables, and Discord PS scripts.
  - Manage Steam server with features
@@ -64,6 +64,7 @@ Install steam server ```>_./steamer install misserver```
  - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task with monitor and Discord scripts
  - ```AutoRestart <serverFolder>``` - ```>_./steamer AutoRestart misserver``` - Creates Scheduled Task for Daily Auto Restart
  - ```MCRcon <serverFolder>``` - ```>_./steamer mcrcon inssserver``` - Uses MCRcon. Rcon to server (Downloads MCRcon)
+  - ```MCRconPrivate <serverFolder>``` - ```>_./steamer mcrconPrivate inssserver``` - Uses MCRcon. Rcon to server via Private IP (Downloads MCRcon)
  - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```gamedigPrivate <serverFolder>``` - ```>_./steamer gamedigPrivate sdtdserver``` * Uses Private IP. not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
@@ -76,7 +77,7 @@ Install steam server ```>_./steamer install misserver```
  * Rust - option for Oxide install
   # MCRcon
  * MCRcon Download and Install
- * Use with supported Servers
+ * Use used to Rcon to servers.
  
 - - - -
  When creating a Schedule task to run Monitor script.
@@ -85,6 +86,9 @@ Install steam server ```>_./steamer install misserver```
  Does not install Dependencies like Visual C++ Redistributable or Direct X
  
  Does not Forward ports or open ports on firewall
+- - - - 
+# Troubleshooting:
+If something stops working after a steamer update. please re-run the install command and re-enter vars. You do not need to re-install the server. As long as you keep the same server folder name and App ID. Always make a backup before updating. You can also delete all the .ps1's and download current version from here. The install command will recreate them. I have been making a lot of changes. I am starting to get content with features. I am hoping to get to the point were updates will only introduce new games. Enjoy.
  
  # MCRCON
 https://github.com/Tiiffi/mcrcon
