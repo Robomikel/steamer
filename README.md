@@ -86,6 +86,8 @@ Install steam server ```>_./steamer install misserver```
  Does not install Dependencies like Visual C++ Redistributable or Direct X
  
  Does not Forward ports or open ports on firewall
+- - - - 
+If something stops working after a steamer update. please re-run the install command and re-enter vars. You do not need to re-install the server. As long as you keep the same server folder name and App ID. Always make a backup before updating. You can also delete all the .ps1's and download current version from here. The install command will recreate them. I have been making a lot of changes. I am starting to get content with features. I am hoping to get to the point were updates will only introduce new games. Enjoy.
  
  # MCRCON
 https://github.com/Tiiffi/mcrcon
