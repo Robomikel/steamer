@@ -94,4 +94,7 @@ If something stops working after a steamer update. please re-run the install com
 https://github.com/Tiiffi/mcrcon
 # GameDig
 https://github.com/sonicsnes/node-gamedig
+# Game Server Managers (my inspiration)
+https://github.com/GameServerManagers
+ "open source, open mind"
 
