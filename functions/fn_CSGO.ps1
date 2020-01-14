@@ -36,7 +36,7 @@ Function New-LaunchScriptcsgoserverPS {
         $global:RCONPORT="$global:PORT"
         if(($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:CLIENTPORT="27005"}else{$global:CLIENTPORT}
         if(($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server TICKRATE, Press enter to accept default value [64]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:TICKRATE="64"}else{$global:TICKRATE}
-        if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [de_mirage]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="de_mirage"}else{$global:MAP}
+        if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [de_inferno]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="de_inferno"}else{$global:MAP}
         #Write-Host 'Input maxplayers (lobby size [16-?]): ' -ForegroundColor Cyan -NoNewline
         #$global:MAXPLAYERS = Read-host
         if(($global:MAXPLAYERS= Read-Host -Prompt (Write-Host "Input maxplayers, Press enter to accept default value [16]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="16"}else{$global:MAXPLAYERS} 
@@ -62,7 +62,7 @@ Function New-LaunchScriptcsgoserverPS {
         * mg_lowgravity                         * mg_op_op06            * mg_skirmish_heavyassaultsuit          * mg_reserves
         * mg_demolition                         * mg_op_op07            * mg_skirmish_armsrace                  * mg_hostage
         * mg_armsrace                           * mg_op_op08                                                                    " -ForegroundColor Yellow
-        if(($global:MAPGROUP = Read-Host -Prompt (Write-Host "Input mapgroup, Press enter to accept default value [de_inferno]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAPGROUP="de_inferno"}else{$global:MAPGROUP}
+        if(($global:MAPGROUP = Read-Host -Prompt (Write-Host "Input mapgroup, Press enter to accept default value [mg_active]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAPGROUP="mg_active"}else{$global:MAPGROUP}
 
         Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
@@ -156,7 +156,17 @@ Function Get-SourceMetaModcs {
 
 # The batch file is the "launch options" of the server, if you want your server to be public (not lan)
 # add "+net_public_adr xxx.xxx.xxx.xxx" to the end of the "launch options"
-
+#Game Mode	game_type	game_mode
+#Casual (default)	0	0
+#Competitive / Scrimmage	0	1
+#Wingman	        0	        2
+#Arms Race	1	        0
+#Demolition	1	        1
+#Deathmatch	1	        2
+#Custom	        3	        any (?)
+#Guardian	4	        0
+#Co-op Strike	4	        1
+#Danger Zone	6	        0
 # Deathmatch: +game_type 1 +game_mode 2
 # Demolition: +game_type 1 +game_mode 1
 # Arms Race: +game_type 1 +game_mode 0
