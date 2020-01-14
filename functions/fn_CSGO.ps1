@@ -54,7 +54,7 @@ Function New-LaunchScriptcsgoserverPS {
         * mg_skirmish_stabstabzap               * mg_op_op05            * mg_skirmish_huntergatherers           * mg_casualsigma
         * mg_lowgravity                         * mg_op_op06            * mg_skirmish_heavyassaultsuit          * mg_reserves
         * mg_demolition                         * mg_op_op07            * mg_skirmish_armsrace                  * mg_hostage
-        * mg_armsrace                           * mg_op_op08                                                                    "
+        * mg_armsrace                           * mg_op_op08                                                                    " -ForegroundColor Yellow
         if(($global:MAPGROUP = Read-Host -Prompt (Write-Host "Input mapgroup, Press enter to accept default value [mg_active]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAPGROUP="mg_active"}else{$global:MAPGROUP}
 
         Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
