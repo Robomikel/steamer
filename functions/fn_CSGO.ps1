@@ -41,13 +41,20 @@ Function New-LaunchScriptcsgoserverPS {
         #$global:MAXPLAYERS = Read-host
         if(($global:MAXPLAYERS= Read-Host -Prompt (Write-Host "Input maxplayers, Press enter to accept default value [16]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="16"}else{$global:MAXPLAYERS} 
         Write-Host "
-        * Deathmatch: +game_type 1 +game_mode 2
-        * Demolition: +game_type 1 +game_mode 1
-        * Arms Race: +game_type 1 +game_mode 0
-        * Classic Competitive: +game_type 0 +game_mode 1
-        * Classic Casual: +game_type 0 +game_mode 0" -ForegroundColor Yellow
+        * Competitive / Scrimmage: +game_type 0 +game_mode 1
+        * Wingman:              +game_type 0 +game_mode 2
+        * Custom:               +game_type 3 +game_mode any (?)
+        * Guardian:             +game_type 4 +game_mode 0
+        * Co-op Strike:         +game_type 4 +game_mode 1
+        * Danger Zone:          +game_type 6 +game_mode 0
+        * Deathmatch:           +game_type 1 +game_mode 2
+        * Demolition:           +game_type 1 +game_mode 1
+        * Arms Race:            +game_type 1 +game_mode 0
+        * Classic Competitive:  +game_type 0 +game_mode 1
+        * Classic Casual:       +game_type 0 +game_mode 0" -ForegroundColor Yellow
         if(($global:GAMETYPE= Read-Host -Prompt (Write-Host "Input gametype, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMETYPE="0"}else{$global:GAMETYPE}
         if(($global:GAMEMODE = Read-Host -Prompt (Write-Host "Input gamemode, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMEMODE="0"}else{$global:GAMEMODE}
+        Write-Host "View  \csgo\cfg\gamemodes.txt and  \csgo\cfg\gamemodes_server.txt.example for single Maps in Mapgroups " -ForegroundColor Yellow
         write-host "
         * mg_skirmish_demolition                * mg_deathmatch         * mg_skirmish_triggerdiscipline         * mg_active
         * mg_skirmish_flyingscoutsman           * mg_op_breakout        * mg_skirmish_headshots                 * mg_casualdelta
@@ -55,7 +62,7 @@ Function New-LaunchScriptcsgoserverPS {
         * mg_lowgravity                         * mg_op_op06            * mg_skirmish_heavyassaultsuit          * mg_reserves
         * mg_demolition                         * mg_op_op07            * mg_skirmish_armsrace                  * mg_hostage
         * mg_armsrace                           * mg_op_op08                                                                    " -ForegroundColor Yellow
-        if(($global:MAPGROUP = Read-Host -Prompt (Write-Host "Input mapgroup, Press enter to accept default value [mg_active]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAPGROUP="mg_active"}else{$global:MAPGROUP}
+        if(($global:MAPGROUP = Read-Host -Prompt (Write-Host "Input mapgroup, Press enter to accept default value [de_inferno]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAPGROUP="de_inferno"}else{$global:MAPGROUP}
 
         Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
