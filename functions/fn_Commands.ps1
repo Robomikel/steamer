@@ -26,7 +26,7 @@ function Select-Steamer
                 New-CreateVariables
                 Set-CreateMonitorScript
                 New-DiscordScript
-                Get-done
+                Get-Finished
             }elseif($global:command -eq "install"){
                 Get-TestString
                 Write-Host 'Input Steam Server App ID: ' -ForegroundColor Cyan -NoNewline 
@@ -41,7 +41,7 @@ function Select-Steamer
                 New-CreateVariables
                 Set-CreateMonitorScript
                 New-DiscordScript
-                Get-done
+                Get-Finished
             }elseif(($global:command -eq "update") -and ($null -eq $global:server)){   
                 Write-Host 'Server FolderName for server updates: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host

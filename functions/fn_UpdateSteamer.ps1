@@ -27,7 +27,7 @@ Function Get-logo {
 "
 }
 
-Function Get-done {
+Function Get-Finished {
     write-Host "Server " -ForegroundColor Yellow -NoNewline
     sleep 1
     write-Host "install " -ForegroundColor Yellow -NoNewline
