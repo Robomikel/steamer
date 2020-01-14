@@ -26,3 +26,15 @@ Function Get-logo {
           \/             \/      \/       \/      \/        
 "
 }
+
+Function Get-done {
+    write-Host "Server " -ForegroundColor Yellow -NoNewline
+    sleep 1
+    write-Host "install " -ForegroundColor Yellow -NoNewline
+    sleep 1
+    write-Host "is " -ForegroundColor Yellow -NoNewline
+    sleep 1
+    write-Host "done! ✔ "-ForegroundColor Green
+    
+    write-Host "./steamer start $global:server"-ForegroundColor Black -BackgroundColor White
+}
