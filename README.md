@@ -75,6 +75,8 @@ Install steam server ```>_./steamer install misserver```
  # Mod
  * Insurgency - option for sourcemod and Meta Mod install
  * Rust - option for Oxide install
+ * Counter-Strike Global Offensive - option for sourcemod and Meta Mod install
+ * Left 4 Dead 2 - Dedicated Server - option for sourcemod and Meta Mod install
   # MCRcon
  * MCRcon Download and Install
  * Use used to Rcon to servers.
