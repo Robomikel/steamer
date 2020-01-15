@@ -36,6 +36,18 @@ $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
 #$global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
 # mcrcon
 $global:mcrconurl="https://github.com/Tiiffi/mcrcon/releases/download/v0.7.1/mcrcon-0.7.1-windows-x86-32.zip"
+$global:SMILEY_WHITE = ([char]9786)
+$global:SMILEY_BLACK = ([char]9787)
+$global:GEAR = ([char]9788)
+$global:HEART = ([char]9829)
+$global:DIAMOND = ([char]9830)
+$global:CLUB = ([char]9827)
+$global:SPADE = ([char]9824)
+$global:CIRCLE = ([char]8226)
+$global:NOTE1 = ([char]9834)
+$global:NOTE2 = ([char]9835)
+$global:CHECKMARK = ([char]8730) 
+
 .$global:currentdir\functions\fn_Actions.ps1
 .$global:currentdir\functions\fn_Ark.ps1
 .$global:currentdir\functions\fn_BackupServer.ps1
@@ -62,7 +74,7 @@ $global:mcrconurl="https://github.com/Tiiffi/mcrcon/releases/download/v0.7.1/mcr
 .$global:currentdir\functions\fn_SetConsole.ps1
 .$global:currentdir\functions\fn_SteamInfo.ps1
 .$global:currentdir\functions\fn_UpdateSteamer.ps1
-     
+    
 Set-Console  >$null 2>&1
 
 Function Set-Steamer {
