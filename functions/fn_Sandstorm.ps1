@@ -131,16 +131,3 @@ Function New-LaunchScriptInssserverPS
     }
 
 
-
-
-#Function Set-MCRcon {
-#$global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
-#if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [27103]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="27103"}else{$global:RCONPORT}
-#if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input ADMIN password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
-#$global:RCONPASSWORD | ConvertFrom-SecureString | Set-Content $global:currentdir\$global:server\encrypted_password.txt
-#$global:RCONPASSWORDencrypted = Get-Content $global:currentdir\$global:server\encrypted_password.txt | ConvertTo-SecureString
-#((Get-Content -path $GamePath\Game.ini -Raw) -replace "\bListenPort=*\b","ListenPort=$global:RCONPORT") | Set-Content -Path $GamePath\Game.ini
-#((Get-Content -path $GamePath\Game.ini -Raw) -replace "\bPassword=*\b","Password=$global:RCONPASSWORD") | Set-Content -Path $GamePath\Game.ini
-#((Get-Content -path $GamePath\Game.ini -Raw) -replace "\bEnabled=*\b","Enabled=True") | Set-Content -Path $GamePath\Game.ini
-#}
-

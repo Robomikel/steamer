@@ -16,7 +16,6 @@ Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1
 Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAP=`"$global:MAP`""
 Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:CLIENTPORT=`"$global:CLIENTPORT`""
 Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR=`"$global:EXEDIR`""
-$global:EXEDIR
 # CSGO
 Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:TICKRATE=`"$global:TICKRATE`""
 Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMETYPE=`"$global:GAMETYPE`""

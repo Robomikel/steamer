@@ -82,36 +82,6 @@ Function New-LaunchScriptcsgoserverPS {
     
 }
 
-# gametype="0"
-# gamemode="0"
-# mapgroup="mg_active"
-
-
-# fn_parms(){
-#    parms="-game csgo -usercon -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers_override ${maxplayers} +mapgroup ${mapgroup} +game_type ${gametype} +game_mode ${gamemode} +host_workshop_collection ${wscollectionid} +workshop_start_map ${wsstartmap} -authkey ${wsapikey} -nobreakpad"
-#    }
-# Edit the batch file and type in one of the following lines
-
-# Classic Casual: +game_type 0 +game_mode 0
-
-# srcds -game csgo -console -usercon +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
-
-# Classic Competitive: +game_type 0 +game_mode 1
-
-# srcds -game csgo -console -usercon +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
-
-# Arms Race: +game_type 1 +game_mode 0
-
-# srcds -game csgo -console -usercon +game_type 1 +game_mode 0 +mapgroup mg_armsrace +map ar_shoots
-
-# Demolition: +game_type 1 +game_mode 1
-
-# srcds -game csgo -console -usercon +game_type 1 +game_mode 1 +mapgroup mg_demolition +map de_lake
-
-# Deathmatch: +game_type 1 +game_mode 2
-
-# srcds -game csgo -console -usercon +game_type 1 +game_mode 2 +mapgroup mg_allclassic +map de_dust
-
 # The batch file is the "launch options" of the server, if you want your server to be public (not lan)
 # add "+net_public_adr xxx.xxx.xxx.xxx" to the end of the "launch options"
 #Game Mode	game_type	game_mode
@@ -125,8 +95,4 @@ Function New-LaunchScriptcsgoserverPS {
 #Guardian	4	        0
 #Co-op Strike	4	        1
 #Danger Zone	6	        0
-# Deathmatch: +game_type 1 +game_mode 2
-# Demolition: +game_type 1 +game_mode 1
-# Arms Race: +game_type 1 +game_mode 0
-# Classic Competitive: +game_type 0 +game_mode 1
-# Classic Casual: +game_type 0 +game_mode 0
+

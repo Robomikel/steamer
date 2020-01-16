@@ -37,12 +37,7 @@ Function New-LaunchScriptLFD2serverPS {
     Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
     ((Get-Content -path $global:currentdir\$global:server\left4dead2\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\left4dead2\cfg\server.cfg
     ((Get-Content -path $global:currentdir\$global:server\left4dead2\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\left4dead2\cfg\server.cfg
-    #Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
-    #New-Item $global:currentdir\$global:server\insurgency\subscribed_file_ids.txt -Force
-    #Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
-    #New-Item $global:currentdir\$global:server\insurgency\motd.txt -Force
 
-    
     Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
