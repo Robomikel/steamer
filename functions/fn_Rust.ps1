@@ -5,6 +5,7 @@ Function New-LaunchScriptRustPS {
         $global:process = "RustDedicated"
         ${gamedirname}="Rust"
         ${config1}="server.cfg"
+        $global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
         #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg")
         $RustWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"  
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -12,7 +13,7 @@ Function New-LaunchScriptRustPS {
         ${global:IP} = Read-host
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [28015]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="28015"}else{$global:PORT}
         if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [28016]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="28016"}else{$global:RCONPORT}
-        if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [CHANGEME]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="CHANGEME"}else{$global:RCONPASSWORD}
+        if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
         if(($global:RCONWEB = Read-Host -Prompt (Write-Host "Input Server Rcon Web,Press enter to accept default value [1]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONWEB="1"}else{$global:RCONWEB}
         Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
