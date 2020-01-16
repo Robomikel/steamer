@@ -88,3 +88,29 @@ Function Set-RestartJob {
     Get-ChecktaskUnreg
     New-RestartJob}
 } 
+
+#Function New-MOTD {
+#
+#if(( "" -eq $global:RCONPORT) -or ( "" -eq $global:RANDOMPASSWORD)){
+#    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+#    Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+#    Write-Host "Try install command again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
+#    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+#    }else{
+#    set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
+#    .\mcrcon.exe -c -H $global:IP -P $global:RCONPORT -p $global:RCONPASSWORD "say Test MOTD Message"
+#    set-location $global:currentdir
+#}
+
+#Function New-MOTDJob {
+#    Write-Host "Run Task only when user is logged on"
+#    Write-Host "Input MOTD -Minutes: " -ForegroundColor Cyan -NoNewline
+#    $restartTime = Read-Host
+#    $Action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "`"$global:currentdir\steamer.ps1 New-MOTD `"" -WorkingDirectory "$global:currentdir"
+#    $Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).Date -RepetitionInterval (New-TimeSpan -Minutes $restartTime)
+#    [X] $Trigger = New-ScheduledTaskTrigger -Daily -At $restartTime 
+#    $Settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit '00:00:00'
+#    $Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Settings
+#    Write-Host "Creating Task........" -ForegroundColor Magenta -BackgroundColor Black
+#    Register-ScheduledTask -TaskName "$global:server monitor" -InputObject $Task
+#}

@@ -309,6 +309,120 @@ Function New-ServerFolder {
     New-Item -Path . -Name "$global:server" -ItemType "directory"}
 }
 
+
+Function Get-UpdateSteamer {
+    $start_time = Get-Date
+    Write-Host '*** Downloading Steamer github files *****' -ForegroundColor Magenta -BackgroundColor Black 
+    #(New-Object Net.WebClient).DownloadFile("$global:steamerurl", "$global:currentdir\steamer.zip")
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+    Invoke-WebRequest -Uri $global:steamerurl -OutFile $global:currentdir\steamer.zip
+    Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black 
+    Expand-Archive "$global:currentdir\steamer.zip" "$global:currentdir\steamer" -Force
+    #Copy-Item -Path "$global:currentdir\steamer\steamer-master\*" -Destination "$global:currentdir\" -Recurse -Force
+    Copy-Item -Path "$global:currentdir\steamer\steamer-*\*" -Destination "$global:currentdir\" -Recurse -Force
+    Write-Host '*** Steamer github files Updated *****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '*** Press Enter to Close this session *****' -ForegroundColor Yellow -BackgroundColor Black
+    Pause  
+    stop-process -Id $PID
+}
+
+
+Function Get-logo {
+    Write-Host " 
+    _________  __                                           
+   /   _____/_/  |_   ____  _____     _____    ____ _______ 
+   \_____  \ \   __\_/ __ \ \__  \   /     \ _/ __ \\_  __ \
+   /        \ |  |  \  ___/  / __ \_|  Y Y  \\  ___/ |  | \/
+  /_______  / |__|   \___  >(____  /|__|_|  / \___  >|__|   
+          \/             \/      \/       \/      \/        
+"
+}
+
+
+Function Get-NodeJS {
+    $path = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64"
+    $patha = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64\node.exe"
+    $pathb = "node-v$global:nodeversion-win-x64.zip"
+    write-host "*** Checking for Nodejs ****" -ForegroundColor Magenta -BackgroundColor Black     
+    If((Test-Path $path) -and (Test-Path $pathb) -and (Test-Path $patha)){ 
+    Write-Host 'NodeJS already downloaded!' -ForegroundColor Yellow -BackgroundColor Black
+    }else {
+    write-host "NodeJS not found" -ForegroundColor Yellow -BackgroundColor Black
+    add-nodejs}
+}
+
+Function add-nodejs {
+    $start_time = Get-Date
+    Write-Host '*** Downloading  Nodejs *****' -ForegroundColor Magenta -BackgroundColor Black  
+    #(New-Object Net.WebClient).DownloadFile("$global:nodejsurl", "$global:currentdir\node-v$global:nodeversion-win-x64.zip")
+    #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+    Invoke-WebRequest -Uri $global:nodejsurl -OutFile $global:currentdir\node-v$global:nodeversion-win-x64.zip
+    if (!$?) {write-host "Downloading  Nodejs Failed" -ForegroundColor Red -BackgroundColor Black 
+    New-TryagainN}
+    if ($?) {write-host "Downloading  Nodejs succeeded" -ForegroundColor Yellow -BackgroundColor Black}
+    Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '***  Extracting Nodejs *****' -ForegroundColor Magenta -BackgroundColor Black
+    Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64.zip" "$global:currentdir\node-v$global:nodeversion-win-x64\" -Force
+    if (!$?) {write-host "Extracting Nodejs Failed" -ForegroundColor Yellow -BackgroundColor Black 
+    New-TryagainN}
+    if ($?) {write-host "Extracting Nodejs succeeded" -ForegroundColor Yellow -BackgroundColor Black}
+    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+    Write-Host '*** Installing gamedig in Nodejs *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '*** Do not stop or cancel! Will need to delete nodejs files and start over! *****' -ForegroundColor Yellow -BackgroundColor Black  
+    .\npm install gamedig
+    .\npm install gamedig -g
+    Set-Location $global:currentdir
+}
+
+Function New-TryagainN {
+    $title    = 'Try again?'
+    $question = 'Download and Extract NodeJS?'
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+    Write-Host 'Entered Y'
+    add-nodejs} 
+    else {
+    Write-Host 'Entered N'
+    exit}
+}
+
+
+Function Get-Finished {
+    write-Host "*************************************" -ForegroundColor Yellow
+    write-Host "***  Server $global:command is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
+    write-Host "*************************************" -ForegroundColor Yellow
+    write-Host "  ./steamer start $global:server  "-ForegroundColor Black -BackgroundColor White
+}
+
+Function New-CreateVariables {
+    Write-Host '*** Creating Variables Script ****' -ForegroundColor Magenta -BackgroundColor Black 
+    New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value " # #  WEBHOOK HERE - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WEBHOOK = `"$global:WEBHOOK`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:process = `"$global:process`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:HOSTNAME = `"$global:HOSTNAME`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:QUERYPORT} = `"${global:QUERYPORT}`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:PORT} = `"${global:PORT}`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:game`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:saves = `"$global:saves`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:IP} = `"${global:IP}`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:AppID = `"$global:AppID`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPORT = `"$global:RCONPORT`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPASSWORD = `"$global:RCONPASSWORD`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAP = `"$global:MAP`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:CLIENTPORT = `"$global:CLIENTPORT`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR = `"$global:EXEDIR`""
+    # CSGO
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:TICKRATE = `"$global:TICKRATE`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMETYPE = `"$global:GAMETYPE`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMEMODE = `"$global:GAMEMODE`""
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAPGROUP = `"$global:MAPGROUP`""
+}
+
+
 Function Get-SourceMetMod {
     $title    = 'Download MetaMod and SourceMod'
     $question = 'Download MetaMod, SourceMod and install?'

@@ -36,8 +36,6 @@ Function New-BackupFolder {
 
 Function New-BackupServer {
     $BackupDate = get-date -Format yyyyMMdd
-    Get-StopServer
-    New-BackupFolder
     Write-Host '*** Server Backup Started! *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
     #./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* -an > backup.log
@@ -45,7 +43,6 @@ Function New-BackupServer {
     Write-Host '*** Server Backup is Done! *****' -ForegroundColor Yellow -BackgroundColor Black
     write-host "*** Checking for alternate Save location (appData) ****" -ForegroundColor Yellow -BackgroundColor Black
     Get-savelocation
-    Get-ChecktaskEnable
     .\backup.log
     Set-Location $global:currentdir
 }

@@ -43,34 +43,42 @@ Function Select-Steamer {
     Get-TestString
     Get-FolderNames
     Get-createdvaribles
-    Get-CheckForVars 
+    Get-CheckForVars
+    Get-ChecktaskDisable 
     Get-StopServer
     Get-UpdateServer
     Get-ChecktaskEnable
+    Get-Finished
     }elseif($global:command -eq "update"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
+    Get-ChecktaskDisable
     Get-StopServer
     Get-UpdateServer
     Get-ChecktaskEnable
+    Get-Finished
     }elseif(($global:command -eq "validate") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server validate: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
     Get-TestString
     Get-FolderNames
     Get-createdvaribles
-    Get-CheckForVars 
+    Get-CheckForVars
+    Get-ChecktaskDisable 
     Get-StopServer
     Get-ValidateServer
     Get-ChecktaskEnable
+    Get-Finished
     }elseif($global:command -eq "validate"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
+    Get-ChecktaskDisable
     Get-StopServer
     Get-ValidateServer
     Get-ChecktaskEnable
+    Get-Finished
     }elseif(($global:command -eq "start") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server launch, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -98,12 +106,14 @@ Function Select-Steamer {
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
+    Get-ChecktaskDisable
     Get-StopServer
     Get-ChecktaskDisable
     }elseif($global:command -eq "stop"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
+    Get-ChecktaskDisable
     Get-StopServer
     Get-ChecktaskDisable
     }elseif(($global:command -eq "restart") -and ($null -eq $global:server)){
@@ -112,7 +122,8 @@ Function Select-Steamer {
     Get-TestString
     Get-FolderNames
     Get-createdvaribles
-    Get-CheckForVars 
+    Get-CheckForVars
+    Get-ChecktaskDisable 
     Get-StopServer
     Get-RestartsServer
     Get-ChecktaskEnable
@@ -120,6 +131,7 @@ Function Select-Steamer {
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
+    Get-ChecktaskDisable
     Get-StopServer
     Get-RestartsServer
     Get-ChecktaskEnable   
@@ -144,13 +156,23 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars 
     Get-SevenZip
+    Get-ChecktaskDisable
+    Get-StopServer
+    New-BackupFolder
     New-BackupServer
+    Get-ChecktaskEnable
+    Get-Finished
     }elseif($global:command -eq "backup"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
-    Get-SevenZip  
-    New-BackupServer  
+    Get-SevenZip
+    Get-ChecktaskDisable
+    Get-StopServer
+    New-BackupFolder  
+    New-BackupServer
+    Get-ChecktaskEnable
+    Get-Finished  
     }elseif(($global:command -eq "monitor") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for monitor: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
