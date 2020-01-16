@@ -19,7 +19,8 @@ Function Install-Anonserver {
 }
 #--------- Install server as User  -----------------
 Function Install-Server {
-    $global:username = Read-host -Prompt 'Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd'
+    Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -ForegroundColor Cyan -BackgroundColor Black  
+    $global:username = Read-host
     Write-Host '*** Creating SteamCMD Run txt *****' -ForegroundColor Magenta -BackgroundColor Black 
     New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
