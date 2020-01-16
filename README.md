@@ -61,17 +61,14 @@ Install steam server ```>_./steamer install misserver```
  - ```check <serverFolder>``` - ```>_./steamer check misserver``` - checks process for miscreated server
  - ```update <serverFolder>``` - ```>_./steamer update misserver``` - updates App ID
  - ```backup <serverFolder>``` - ```>_./steamer backup misserver``` - Creates zip folder of server files in backups folder (Downloads portable 7Zip)
- - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task with monitor and Discord scripts
+ - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task to start server if off, with  Discord alert
+ - ```discord <serverFolder>``` - ```>_./steamer discord misserver``` -  * Discord Alert * -command will send test alert. requires Discord webhook
  - ```AutoRestart <serverFolder>``` - ```>_./steamer AutoRestart misserver``` - Creates Scheduled Task for Daily Auto Restart
  - ```MCRcon <serverFolder>``` - ```>_./steamer mcrcon inssserver``` - Uses MCRcon. Rcon to server (Downloads MCRcon)
   - ```MCRconPrivate <serverFolder>``` - ```>_./steamer mcrconPrivate inssserver``` - Uses MCRcon. Rcon to server via Private IP (Downloads MCRcon)
  - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```gamedigPrivate <serverFolder>``` - ```>_./steamer gamedigPrivate sdtdserver``` * Uses Private IP. not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
- - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
-# Other Functions:
- * Monitor * monitor script in server folder as scheduled task to check process and start if needed, Send Discord Alert
- * Discord Alert * Discord script in server folder. requires Discord webhook
- 
+ - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files 
  # Mod
  * Insurgency - option for sourcemod and Meta Mod install
  * Rust - option for Oxide install
