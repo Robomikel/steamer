@@ -8,6 +8,7 @@ Function Install-Anonserver {
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:AppID $global:Branch"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "exit"
+    New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login anonymous"
@@ -28,6 +29,7 @@ Function Install-Server {
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:AppID $global:Branch"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "exit"
+    New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login $global:username"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
