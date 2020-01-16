@@ -132,9 +132,9 @@ Function New-LaunchScriptArma3serverPS
     }
 
     Function  New-LaunchScriptavserverPS{
-                # Avorion Dedicated Server
-                $global:game = "protocol-valve"
-                $global:saves = "Avorion"
+        # Avorion Dedicated Server
+        $global:game = "protocol-valve"
+        $global:saves = "Avorion"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         $global:process = "AvorionServer"
         Write-Host 'Input server name: ' -ForegroundColor Cyan -NoNewline 
