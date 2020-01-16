@@ -1,8 +1,8 @@
 Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
-        $global:githuburl="https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master"
         $global:EXEDIR="csgo"
         $global:game="csgo"
+        $global:process = "csgo"
         ${gamedirname}="CounterStrikeGlobalOffensive"
         ${config1}="server.cfg"
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -11,13 +11,11 @@ Function New-LaunchScriptcsgoserverPS {
         New-Item $global:currentdir\$global:server\csgo\cfg\server.cfg -Force
         Add-Content $global:currentdir\$global:server\csgo\cfg\server.cfg $csgoWebResponse
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-        $global:process = "csgo"
         Write-Host "Get Auth Token from this website and can add later in Launch-$global:server.ps1
                         https://steamcommunity.com/dev/managegameservers
                         Note use App ID 730: " -ForegroundColor Yellow
         Write-Host "Input Game Server Token (required for public servers): " -ForegroundColor Cyan -NoNewline
         $GSLT = Read-Host
-        #if(($GSLT = Read-Host -Prompt (Write-Host "Input Game Server Token (required for public servers) Enter for Default:[]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$GSLT="YOUR AUTH TOKEN"}else{$GSLT}
         Write-Host "***  Renaming srcds.exe to csgo.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\csgo.exe" >$null 2>&1
         #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\csgo_x64.exe" >$null 2>&1
@@ -49,7 +47,7 @@ Function New-LaunchScriptcsgoserverPS {
         * Classic Casual:       +game_type 0 +game_mode 0" -ForegroundColor Yellow
         if(($global:GAMETYPE= Read-Host -Prompt (Write-Host "Input gametype, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMETYPE="0"}else{$global:GAMETYPE}
         if(($global:GAMEMODE = Read-Host -Prompt (Write-Host "Input gamemode, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMEMODE="0"}else{$global:GAMEMODE}
-        Write-Host "View  \csgo\cfg\gamemodes.txt and  \csgo\cfg\gamemodes_server.txt.example for single Maps in Mapgroups " -ForegroundColor Yellow
+        Write-Host "$global:CIRCLE View  \csgo\cfg\gamemodes.txt and  \csgo\cfg\gamemodes_server.txt.example for single Maps in Mapgroups $global:CIRCLE" -ForegroundColor Yellow
         write-host "
         * mg_skirmish_demolition                * mg_deathmatch         * mg_skirmish_triggerdiscipline         * mg_active
         * mg_skirmish_flyingscoutsman           * mg_op_breakout        * mg_skirmish_headshots                 * mg_casualdelta
