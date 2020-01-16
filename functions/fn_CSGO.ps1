@@ -1,6 +1,5 @@
 Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
-
         $global:githuburl="https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master"
         $global:EXEDIR="csgo"
         $global:game="csgo"
@@ -9,23 +8,19 @@ Function New-LaunchScriptcsgoserverPS {
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\csgo\cfg\server.cfg")
         $csgoWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        #$csgoWebResponse=$csgoWebResponse.content
         New-Item $global:currentdir\$global:server\csgo\cfg\server.cfg -Force
         Add-Content $global:currentdir\$global:server\csgo\cfg\server.cfg $csgoWebResponse
-
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         $global:process = "csgo"
         Write-Host "Get Auth Token from this website and can add later in Launch-$global:server.ps1
                         https://steamcommunity.com/dev/managegameservers
                         Note use App ID 730: " -ForegroundColor Yellow
-                Write-Host "Input Game Server Token (required for public servers): " -ForegroundColor Cyan -NoNewline
-                $GSLT = Read-Host
+        Write-Host "Input Game Server Token (required for public servers): " -ForegroundColor Cyan -NoNewline
+        $GSLT = Read-Host
         #if(($GSLT = Read-Host -Prompt (Write-Host "Input Game Server Token (required for public servers) Enter for Default:[]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$GSLT="YOUR AUTH TOKEN"}else{$GSLT}
-        
         Write-Host "***  Renaming srcds.exe to csgo.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\csgo.exe" >$null 2>&1
         #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\csgo_x64.exe" >$null 2>&1
-    
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
@@ -63,13 +58,9 @@ Function New-LaunchScriptcsgoserverPS {
         * mg_demolition                         * mg_op_op07            * mg_skirmish_armsrace                  * mg_hostage
         * mg_armsrace                           * mg_op_op08                                                                    " -ForegroundColor Yellow
         if(($global:MAPGROUP = Read-Host -Prompt (Write-Host "Input mapgroup, Press enter to accept default value [mg_active]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAPGROUP="mg_active"}else{$global:MAPGROUP}
-
         Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
         ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
-
-
-     
         Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
@@ -77,9 +68,7 @@ Function New-LaunchScriptcsgoserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\csgo.exe -game csgo -console -usercon -strictportbind -ip ${global:IP} -port $global:PORT +clientport $global:CLIENTPORT +sv_setsteamaccount '$GSLT' -tickrate $global:TICKRATE +map $global:MAP -maxplayers_override $global:MAXPLAYERS +mapgroup $global:MAPGROUP +game_type $global:GAMETYPE +game_mode $global:GAMEMODE -nobreakpad +net_public_adr ${global:EXTIP}"
         #+net_public_adr xxx.xxx.xxx.xxx
         # parms="-game csgo -usercon -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers_override ${maxplayers} +mapgroup ${mapgroup} +game_type ${gametype} +game_mode ${gamemode} +host_workshop_collection ${wscollectionid} +workshop_start_map ${wsstartmap} -authkey ${wsapikey} -nobreakpad"
-
         Get-SourceMetMod
-    
 }
 
 # The batch file is the "launch options" of the server, if you want your server to be public (not lan)

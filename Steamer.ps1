@@ -70,11 +70,10 @@ $global:CHECKMARK = ([char]8730)
 Set-Console  >$null 2>&1
 
 Function Set-Steamer {
-If ($null -eq $global:command){
+If($null -eq $global:command){
 Select-Steamer 
-} else {
-Select-Steamer $global:command $global:server
-}
+}else{
+Select-Steamer $global:command $global:server}
 }
 Set-Steamer
 ##########################################################################

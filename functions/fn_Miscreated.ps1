@@ -1,5 +1,4 @@
-Function New-LaunchScriptMiscreatedPS
-    {
+Function New-LaunchScriptMiscreatedPS {
         #----------   Miscreated Server CFG  -------------------
         $global:process = "MiscreatedServer"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -46,4 +45,4 @@ Function New-LaunchScriptMiscreatedPS
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "pcs_maxCorpses=20"
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "pcs_maxCorpseTime=1200"
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "steam_inventory_enable=1"
-    }
+}

@@ -1,5 +1,4 @@
-Function New-LaunchScriptInssserverPS 
-    {
+Function New-LaunchScriptInssserverPS {
         #----------   INS: Sandstorm Server CFG  -------------------
         $global:game="insurgencysandstorm"
         $global:process = "InsurgencyServer-Win64-Shipping"
@@ -12,30 +11,26 @@ Function New-LaunchScriptInssserverPS
         if(($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
         Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
-
         $global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
         if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [25575]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="25575"}else{$global:RCONPORT}
         if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
-
- 
-
         Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\InsurgencyServer.exe $global:MAP`?Scenario=$global:SCENARIO`?MaxPlayers=$global:MAXPLAYERS`?password=$global:SERVERPASSWORD -Port=$global:PORT -QueryPort=$global:QUERYPORT -log -hostname='$global:HOSTNAME'"
-
         If ($global:SERVERPASSWORD -eq ""){((Get-Content -path $global:currentdir\$global:server\Launch-$global:server.ps1 -Raw) -replace "\?password=","") | Set-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1}
-
         mkdir $global:currentdir\$global:server\Insurgency\Config\Server   >$null 2>&1
-        $MapCyclePath = "$global:currentdir\$global:server\Insurgency\Config\Server"
-        
+        $MapCyclePath = "$global:currentdir\$global:server\Insurgency\Config\Server"  
         mkdir $global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer   >$null 2>&1
         $GamePath = "$global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer"
-
+        Write-Host "Enter Admin Steam ID64  for admins.txt: " -ForegroundColor Cyan -BackgroundColor Black
+        $steamID64= Read-Host
+        Write-Host "***  Creating Admins.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
+        New-Item $MapCyclePath\Admins.txt -Force
+        Add-Content  $MapCyclePath\Admins.txt $steamID64
         Write-Host "***  Creating Mapcycle.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $MapCyclePath\Mapcycle.txt -Force
-
         # - - - - - - MAPCYCLE.TXT - - - - - - # EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Ministry_Checkpoint_Security
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Outskirts_Checkpoint_Security
@@ -55,8 +50,6 @@ Function New-LaunchScriptInssserverPS
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Hideout_Checkpoint_Insurgents
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Ministry_Checkpoint_Insurgents
         Add-Content   $MapCyclePath\Mapcycle.txt Scenario_Hillside_Checkpoint_Insurgents
-        
-        
         # - - - - - - GAME.INI - - - -##  EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
         Write-Host "***  Creating Game.ini  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $GamePath\Game.ini -Force
@@ -120,14 +113,6 @@ Function New-LaunchScriptInssserverPS
         Add-Content   $GamePath\Game.ini FinalCacheBotQuotaMultiplier=1.50
         Add-Content   $GamePath\Game.ini bCounterAttackReinforce=False
         Add-Content   $GamePath\Game.ini RoundTime=480
-
-        Write-Host "Enter Admin Steam ID64  for admins.txt: " -ForegroundColor Cyan -BackgroundColor Black
-        $steamID64= Read-Host
-        Write-Host "***  Creating Admins.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
-        New-Item $MapCyclePath\Admins.txt -Force
-        Add-Content  $MapCyclePath\Admins.txt $steamID64
-
-    
-    }
+}
 
 
