@@ -54,7 +54,6 @@ Function Get-CheckServer {
 }
 
 Function Get-StopServer {
-    Get-ChecktaskDisable 
     Write-Host '*** Stopping Server Process *****' -ForegroundColor Magenta -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
     Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:process" -Force}
@@ -64,7 +63,6 @@ Function Get-ValidateServer {
     Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Validate-$global:server.txt
-    Get-ChecktaskEnable
     Set-Location $global:currentdir
 }
 
@@ -117,8 +115,8 @@ Function Start-Countdown {
 Function Get-RestartsServer {
     Clear-host
     Start-Countdown -Seconds 10 -Message "Restarting server"
+    Get-logo
     & "$global:currentdir\$global:server\Launch-*.ps1"
-    Get-ChecktaskEnable
     Set-Location $global:currentdir
 }
 

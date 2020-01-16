@@ -46,12 +46,14 @@ Function Select-Steamer {
     Get-CheckForVars 
     Get-StopServer
     Get-UpdateServer
+    Get-ChecktaskEnable
     }elseif($global:command -eq "update"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Get-StopServer
     Get-UpdateServer
+    Get-ChecktaskEnable
     }elseif(($global:command -eq "validate") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server validate: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -61,12 +63,14 @@ Function Select-Steamer {
     Get-CheckForVars 
     Get-StopServer
     Get-ValidateServer
+    Get-ChecktaskEnable
     }elseif($global:command -eq "validate"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Get-StopServer
     Get-ValidateServer
+    Get-ChecktaskEnable
     }elseif(($global:command -eq "start") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server launch, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -95,11 +99,13 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars
     Get-StopServer
+    Get-ChecktaskDisable
     }elseif($global:command -eq "stop"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Get-StopServer
+    Get-ChecktaskDisable
     }elseif(($global:command -eq "restart") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server restart, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -109,12 +115,14 @@ Function Select-Steamer {
     Get-CheckForVars 
     Get-StopServer
     Get-RestartsServer
+    Get-ChecktaskEnable
     }elseif($global:command -eq "restart"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Get-StopServer
-    Get-RestartsServer   
+    Get-RestartsServer
+    Get-ChecktaskEnable   
     }elseif(($global:command -eq "check") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server check: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
