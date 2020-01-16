@@ -26,17 +26,9 @@ Function New-LaunchScriptArkPS {
 
     Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\ShooterGame\Binaries\Win64\"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\ShooterGame\Binaries\Win64\ShooterGameServer.exe $global:MAP`?AltSaveDirectoryName=$global:MAP`?listen`?MultiHome=${global:IP}`?MaxPlayers=$global:MAXPLAYERS`?QueryPort=$global:QUERYPORT`?RCONEnabled=True`?RCONPort=$global:RCONPORT`?ServerAdminPassword=$global:RCONPASSWORD`?Port=$global:PORT -automanagedmods"
 #    start ShooterGameServer "TheIsland?SessionName=GameServerSetup?QueryPort=27015?ServerPassword=MyPassword?ServerAdminPassword=MYPassword?Port=7777?listen?RCONEnabled=True?RCONPort=27020?ServerAdminPassword=123"
 #exit
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
-    
-    
-
 }

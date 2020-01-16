@@ -1,11 +1,58 @@
+#----------      Install server as Anon     ----------------------
+Function Install-Anonserver{
+    Write-Host '*** Creating SteamCMD Run txt *****' -ForegroundColor Magenta -BackgroundColor Black 
+    New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login anonymous"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:AppID $global:Branch"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "exit"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login anonymous"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:AppID $global:Branch validate"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "exit"
+    Get-UpdateServer
+    Set-Location $global:currentdir
+}
+#--------- Install server as User  -----------------
+Function Install-Server{
+    $global:username = Read-host -Prompt 'Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd'
+    Write-Host '*** Creating SteamCMD Run txt *****' -ForegroundColor Magenta -BackgroundColor Black 
+    New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
+    #Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login $global:username"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:AppID $global:Branch"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "exit"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
+    #Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login $global:username"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:AppID $global:Branch validate"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "exit"
+    Get-UpdateServer
+    Set-Location $global:currentdir     
+}
+
 Function Get-createdvaribles {
     Write-Host "*** Getting Server Variables *****" -ForegroundColor Yellow -BackgroundColor Black  
     & "$global:currentdir\$global:server\Variables-$global:server.ps1"
 }
+
+Function Select-launchServer {
+    Write-Host '*** Starting Launch script *****' -ForegroundColor Yellow -BackgroundColor Black  
+    & "$global:currentdir\$global:server\Launch-*.ps1"
+    Set-Location $global:currentdir
+}
+
 Function Get-CheckServer {
     Write-Host '*** Check  Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
-    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-Process "$global:process"}
+    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-Process "$global:process" ;; exit}
 }
 
 Function Get-StopServer {
@@ -17,7 +64,7 @@ Function Get-StopServer {
 
 Function Get-ValidateServer {
     
-    Get-StopServer
+    #Get-StopServer
     Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Validate-$global:server.txt
@@ -27,7 +74,7 @@ Function Get-ValidateServer {
 
 Function Get-UpdateServer {
     
-    Get-StopServer >$null 2>&1
+    #Get-StopServer >$null 2>&1
     Write-Host '*** Updating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
     .\steamcmd +runscript Updates-$global:server.txt
@@ -76,7 +123,7 @@ Write-Progress -Id 1 -Activity $Message -Status "Completed" -PercentComplete 100
 
 
 Function Get-RestartsServer {
-    Get-StopServer
+    #Get-StopServer
     Clear-host
     Start-Countdown -Seconds 10 -Message "Restarting server"
     & "$global:currentdir\$global:server\Launch-*.ps1"
@@ -194,3 +241,135 @@ Function New-TryagainMC {
         Write-Host 'Entered N'
         exit}
 }
+
+
+Function New-DiscordAlert {
+    $webHookUrl = "$global:WEBHOOK"
+    [System.Collections.ArrayList]$embedArray = @()
+    $title       = "$global:HOSTNAME"
+    $description = 'Server not Running, Starting Server!'
+    $color       = '16711680'
+    $embedObject = [PSCustomObject]@{
+        title       = $title       
+       description = $description  
+       color       = $color        
+    }                              
+    $embedArray.Add($embedObject) | Out-Null
+    $payload = [PSCustomObject]@{
+        embeds = $embedArray       
+    }                              
+    Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
+    }
+
+    Function Set-SteamInfo 
+    {
+        $title    = 'Install Steam server with Anonymous login'
+        $question = 'Use Anonymous Login?'
+    
+        $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+        $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+        $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    
+        $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
+        if ($decision -eq 1) {
+        Install-Anonserver
+        Write-Host 'Entered Y'
+    } else {
+        Install-Server
+        Write-Host 'Entered N'
+    }
+}
+
+Function Set-Console
+    {
+        clear-host
+        $host.ui.RawUi.WindowTitle = "-------- STEAMER ------------"
+        [console]::ForegroundColor="Green"
+        [console]::BackgroundColor="Black"
+        $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(160,5000)
+        Get-logo
+    }
+
+    Function Get-Steam 
+    {
+        $start_time = Get-Date
+        $path = "$global:currentdir\steamcmd\"
+        $patha = "$global:currentdir\steamcmd\steamcmd.exe" 
+    If((Test-Path $path) -and (Test-Path $patha)) 
+    { 
+        Write-Host 'steamCMD already downloaded!' -ForegroundColor Yellow -BackgroundColor Black
+    } 
+    Else 
+    {  
+        #(New-Object Net.WebClient).DownloadFile("$global:steamurl", "steamcmd.zip")
+        Write-Host '*** Downloading SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black
+        #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;  
+        Invoke-WebRequest -Uri $global:steamurl -OutFile $global:steamoutput
+        Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host '***  Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black 
+        Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\"
+    }
+}
+
+
+Function New-ServerFolder 
+    {   
+        ##-- Create Folder for Server -- In current folder
+        if((!$global:server) -or ($global:server -eq " ")){
+            Write-Host "*** You Entered a null or Empty ****" -ForegroundColor Red -BackgroundColor Black
+            Select-Steamer
+       }elseif (($global:AppID -eq "") -or ($global:AppID -eq " ")){
+            Write-Host "*** You Entered a space or Empty ****" -ForegroundColor Red -BackgroundColor Black
+            Select-Steamer
+        }elseif(Test-Path "$global:currentdir\$global:server\" ){
+            Write-Host '*** Server Folder Already Created! ****' -ForegroundColor Yellow -BackgroundColor Black
+        }else{
+            Write-Host '*** Creating Server Folder *****' -ForegroundColor Magenta -BackgroundColor Black 
+            New-Item -Path . -Name "$global:server" -ItemType "directory"
+        }
+    }
+
+    function Get-SourceMetMod {
+
+    $title    = 'Download MetaMod and SourceMod'
+    $question = 'Download MetaMod, SourceMod and install?'
+
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+    Get-SourceMetaMod
+    Write-Host 'Entered Y'
+
+} else {
+    Write-Host 'Entered N'
+ 
+}
+    }
+
+    Function Get-SourceMetaMod {
+        $start_time = Get-Date
+        Write-Host '*** Downloading Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
+        #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
+        #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+        Invoke-WebRequest -Uri $global:metamodurl -OutFile $global:currentdir\metamod.zip
+        Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
+        Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
+        Write-Host '*** Copying/installing Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
+        Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\$global:EXEDIR -Force -Recurse
+        
+        $start_time = Get-Date
+        Write-Host '*** Downloading SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
+        #(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
+        #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+        Invoke-WebRequest -Uri $global:sourcemodurl -OutFile $global:currentdir\sourcemod.zip
+        Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host '*** Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black 
+        Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
+        Write-Host '*** Copying/installing SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
+        Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\$global:EXEDIR -Force -Recurse
+        
+        }

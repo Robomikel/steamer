@@ -1,7 +1,8 @@
 Function New-LaunchScriptLFD2serverPS {
     #----------   left4dead2 Server CFG    -------------------
             # Left 4 Dead 2 Server
-            $global:game="left4dead2"
+    $global:EXEDIR="left4dead2"
+    $global:game="left4dead2"
     ${gamedirname}="Left4Dead2"
     ${config1}="server.cfg"
     Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -40,59 +41,17 @@ Function New-LaunchScriptLFD2serverPS {
     #New-Item $global:currentdir\$global:server\insurgency\subscribed_file_ids.txt -Force
     #Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
     #New-Item $global:currentdir\$global:server\insurgency\motd.txt -Force
+
+    
     Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\l4d2.exe -console -game left4dead2 -strictportbind -ip ${global:IP} +port $global:PORT +clientport $global:CLIENTPORT +hostip ${global:EXTIP} +maxplayers $global:MAXPLAYERS +map '$global:MAP'"# +sv_workshop_enabled $global:workshop $global:sv_pure
     #A:\L4D2\srcds.exe -console -game left4dead2 -ip 10.0.0.2 +port 27020 +hostip YOURDEDIIP +maxplayers 8 +exec server.cfg +map c2m1_highway
     # -game left4dead2 -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers ${maxplayers}
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
   
-    $title    = 'Download MetaMod and SourceMod'
-    $question = 'Download MetaMod, SourceMod and install?'
-  
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-  
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-    if ($decision -eq 0) {
-    Get-SourceMetaModl4d2
-    Write-Host 'Entered Y'
-    #Get-Gamemode
-  } else {
-    Write-Host 'Entered N'
-    #Get-Gamemode
-  }
+    Get-SourceMetMod
   
   }
   
-  Function Get-SourceMetaModl4d2 {
-  $start_time = Get-Date
-  Write-Host '*** Downloading Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
-  #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
-  #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-  Invoke-WebRequest -Uri $global:metamodurl -OutFile $global:currentdir\metamod.zip
-  Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-  Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
-  Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
-  Write-Host '*** Copying/installing Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
-  Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\left4dead2 -Force -Recurse
-  
-  $start_time = Get-Date
-  Write-Host '*** Downloading SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
-  #(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
-  #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-  Invoke-WebRequest -Uri $global:sourcemodurl -OutFile $global:currentdir\sourcemod.zip
-  Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-  Write-Host '*** Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black 
-  Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
-  Write-Host '*** Copying/installing SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
-  Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\left4dead2 -Force -Recurse
-  
-  }

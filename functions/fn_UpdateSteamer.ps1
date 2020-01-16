@@ -28,14 +28,8 @@ Function Get-logo {
 }
 
 Function Get-Finished {
-
-    write-Host "Server " -ForegroundColor Yellow -NoNewline
-    start-sleep 1
-    write-Host "install " -ForegroundColor Yellow -NoNewline
-    start-sleep 1
-    write-Host "is " -ForegroundColor Yellow -NoNewline
-    Start-sleep 1
-    write-Host "done!$global:CHECKMARK $global:CHECKMARK $global:CHECKMARK"-ForegroundColor Green
-    
-    write-Host "./steamer start $global:server"-ForegroundColor Black -BackgroundColor White
+    write-Host "*************************************" -ForegroundColor Yellow
+    write-Host "***  Server install is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
+    write-Host "*************************************" -ForegroundColor Yellow
+    write-Host "  ./steamer start $global:server  "-ForegroundColor Black -BackgroundColor White
 }

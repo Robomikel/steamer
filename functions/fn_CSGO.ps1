@@ -2,7 +2,7 @@ Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
 
         $global:githuburl="https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master"
-
+        $global:EXEDIR="csgo"
         $global:game="csgo"
         ${gamedirname}="CounterStrikeGlobalOffensive"
         ${config1}="server.cfg"
@@ -69,61 +69,19 @@ Function New-LaunchScriptcsgoserverPS {
         ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
 
 
+     
+        Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\csgo.exe -game csgo -console -usercon -strictportbind -ip ${global:IP} -port $global:PORT +clientport $global:CLIENTPORT +sv_setsteamaccount '$GSLT' -tickrate $global:TICKRATE +map $global:MAP -maxplayers_override $global:MAXPLAYERS +mapgroup $global:MAPGROUP +game_type $global:GAMETYPE +game_mode $global:GAMEMODE -nobreakpad +net_public_adr ${global:EXTIP}"
         #+net_public_adr xxx.xxx.xxx.xxx
-        #                                                                                                                               parms="-game csgo -usercon -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers_override ${maxplayers} +mapgroup ${mapgroup} +game_type ${gametype} +game_mode ${gamemode} +host_workshop_collection ${wscollectionid} +workshop_start_map ${wsstartmap} -authkey ${wsapikey} -nobreakpad"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
+        # parms="-game csgo -usercon -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers_override ${maxplayers} +mapgroup ${mapgroup} +game_type ${gametype} +game_mode ${gamemode} +host_workshop_collection ${wscollectionid} +workshop_start_map ${wsstartmap} -authkey ${wsapikey} -nobreakpad"
 
-        $title    = 'Download MetaMod and SourceMod'
-        $question = 'Download MetaMod, SourceMod and install?'
-    
-        $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-        $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-        $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    
-        $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-        if ($decision -eq 0) {
-        Get-SourceMetaModcs
-        Write-Host 'Entered Y'
-        #Get-Gamemode
-    } else {
-        Write-Host 'Entered N'
-        #Get-Gamemode
-    }
+        Get-SourceMetMod
     
 }
 
-Function Get-SourceMetaModcs {
-        $start_time = Get-Date
-        Write-Host '*** Downloading Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
-        #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
-        #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-        Invoke-WebRequest -Uri $global:metamodurl -OutFile $global:currentdir\metamod.zip
-        Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-        Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
-        Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
-        Write-Host '*** Copying/installing Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
-        Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\csgo -Force -Recurse
-        
-        $start_time = Get-Date
-        Write-Host '*** Downloading SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
-        #(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
-        #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-        Invoke-WebRequest -Uri $global:sourcemodurl -OutFile $global:currentdir\sourcemod.zip
-        Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-        Write-Host '*** Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black 
-        Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
-        Write-Host '*** Copying/installing SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
-        Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\csgo -Force -Recurse
-        
-        }
 # gametype="0"
 # gamemode="0"
 # mapgroup="mg_active"

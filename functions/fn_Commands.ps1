@@ -24,8 +24,6 @@ function Select-Steamer
                 Set-SteamInfo
                 Set-SteamInfoAppID
                 New-CreateVariables
-                Set-CreateMonitorScript
-                New-DiscordScript
                 Get-Finished
             }elseif($global:command -eq "install"){
                 Get-TestString
@@ -39,37 +37,46 @@ function Select-Steamer
                 Set-SteamInfo
                 Set-SteamInfoAppID
                 New-CreateVariables
-                Set-CreateMonitorScript
-                New-DiscordScript
                 Get-Finished
             }elseif(($global:command -eq "update") -and ($null -eq $global:server)){   
                 Write-Host 'Server FolderName for server updates: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
                 Get-createdvaribles
+                Get-StopServer
                 Get-UpdateServer
             }elseif($global:command -eq "update"){
                 Get-FolderNames
                 Get-createdvaribles
+                Get-StopServer
                 Get-UpdateServer
             }elseif(($global:command -eq "validate") -and ($null -eq $global:server)){
                 Write-Host 'Server FolderName for server validate: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames 
                 Get-createdvaribles
+                Get-StopServer
                 Get-ValidateServer
             }elseif($global:command -eq "validate"){
                 Get-FolderNames
                 Get-createdvaribles
+                Get-StopServer
                 Get-ValidateServer
             }elseif(($global:command -eq "start") -and ($null -eq $global:server)){
                 Write-Host 'Server FolderName for server launch, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
-                Get-FolderNames 
+                Get-FolderNames
+                Get-createdvaribles
+                Get-CheckServer
+                Get-StopServer
+                Get-UpdateServer 
                 Select-launchServer
                 Get-ChecktaskEnable
             }elseif($global:command -eq "start"){
                 Get-FolderNames
+                Get-createdvaribles
+                Get-CheckServer
+                Get-UpdateServer
                 Select-launchServer
                 Get-ChecktaskEnable
             }elseif(($global:command -eq "stop") -and ($null -eq $global:server)){
@@ -87,10 +94,12 @@ function Select-Steamer
                 $global:server = Read-host
                 Get-FolderNames 
                 Get-createdvaribles
+                Get-StopServer
                 Get-RestartsServer
             }elseif($global:command -eq "restart"){
                 Get-FolderNames
                 Get-createdvaribles
+                Get-StopServer
                 Get-RestartsServer   
             }elseif(($global:command -eq "check") -and ($null -eq $global:server)){
                 Write-Host 'Server FolderName for server check: ' -ForegroundColor Cyan -NoNewline
@@ -118,21 +127,17 @@ function Select-Steamer
                 Write-Host 'Server FolderName for monitor: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
                 Get-FolderNames
-                #Get-ChecktaskUnreg 
                 Set-MonitorJob
             }elseif($global:command -eq "monitor"){
                 Get-FolderNames
-                #Get-ChecktaskUnreg
                 Set-MonitorJob
             }elseif(($global:command -eq "AutoRestart") -and ($null -eq $global:server)){
                 Write-Host 'Server FolderName for AutoRestart: ' -ForegroundColor Cyan -NoNewline
                 $global:server = Read-host
-                Get-FolderNames
-                #Get-ChecktaskUnreg 
+                Get-FolderNames 
                 Set-RestartJob
             }elseif($global:command -eq "AutoRestart"){
                 Get-FolderNames
-                #Get-ChecktaskUnreg
                 Set-RestartJob
             }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
                 Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
@@ -201,7 +206,10 @@ function Select-Steamer
                     Get-FolderNames
                     Get-createdvaribles
                         Get-MCRcon
-                        set-connectMCRconP  
+                        set-connectMCRconP
+                    }elseif($global:command -eq "discord"){
+                        Get-createdvaribles
+                        New-DiscordAlert   
             } else {
                 Write-Host "Format:  ./steamer <Command> <serverFolderName>" -ForegroundColor Yellow -BackgroundColor Black
                 Write-Host "IE:      ./steamer install  insserver" -ForegroundColor Yellow -BackgroundColor Black

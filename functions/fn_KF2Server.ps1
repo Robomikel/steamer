@@ -58,14 +58,9 @@ Function New-LaunchScriptKF2serverPS {
 
     Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Binaries\Win64"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./KFServer.exe $global:MAP`?Game=$global:GAMEMODE`?Difficulty=$global:DIFF`? -Port=$global:PORT -QueryPort=$global:QUERYPORT"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
 
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
     Select-launchServer

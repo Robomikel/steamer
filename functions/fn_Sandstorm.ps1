@@ -21,14 +21,10 @@ Function New-LaunchScriptInssserverPS
 
         Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\InsurgencyServer.exe $global:MAP`?Scenario=$global:SCENARIO`?MaxPlayers=$global:MAXPLAYERS`?password=$global:SERVERPASSWORD -Port=$global:PORT -QueryPort=$global:QUERYPORT -log -hostname='$global:HOSTNAME'"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
+
         If ($global:SERVERPASSWORD -eq ""){((Get-Content -path $global:currentdir\$global:server\Launch-$global:server.ps1 -Raw) -replace "\?password=","") | Set-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1}
 
         mkdir $global:currentdir\$global:server\Insurgency\Config\Server   >$null 2>&1

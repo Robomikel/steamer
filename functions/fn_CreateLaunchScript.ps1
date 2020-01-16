@@ -40,17 +40,12 @@ Function New-LaunchScriptArma3serverPS
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace '\b32\b',"$global:MAXPLAYERS") | Set-Content -Path $global:currentdir\$global:server\server.cfg  
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace "\barma3pass\b","$global:SERVERPASSWORD") | Set-Content -Path $global:currentdir\$global:server\server.cfg
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace '\bADMINPASSWORD\b',"$global:SERVERADMINPASSWORD") | Set-Content -Path $global:currentdir\$global:server\server.cfg  
+        
+
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process $global:currentdir\$global:server\Launch-$global:server.bat"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process 'cmd'  '/c start $global:currentdir\$global:server\arma3server.exe -ip=${global:IP} -port=$global:PORT -cfg=$global:currentdir\$global:server\network.cfg -config=$global:currentdir\$global:server\server.cfg -mod= -servermod= -bepath= -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit'"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
-        Set-Location $global:currentdir
     }    
   
     Function New-LaunchScriptSdtdserverPS
@@ -66,16 +61,12 @@ Function New-LaunchScriptArma3serverPS
         ((Get-Content -path $global:currentdir\$global:server\serverconfig.xml -Raw) -replace "My Game Host","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\serverconfig.xml 
         ((Get-Content -path $global:currentdir\$global:server\serverconfig.xml -Raw) -replace '26900',"$global:PORT") | Set-Content -Path $global:currentdir\$global:server\serverconfig.xml 
         ((Get-Content -path $global:currentdir\$global:server\startdedicated.bat -Raw) -replace 'pause','exit') | Set-Content -Path $global:currentdir\$global:server\startdedicated.bat        
+ 
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process $global:currentdir\$global:server\startdedicated.bat"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
     }
 
     Function New-LaunchScriptempserverPS {
@@ -89,10 +80,10 @@ Function New-LaunchScriptArma3serverPS
         Write-Host "***  Editing Default dedicated.yaml  ***" -ForegroundColor Magenta -BackgroundColor Black
         ((Get-Content -path $global:currentdir\$global:server\dedicated.yaml -Raw) -replace "\bMy Server\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\dedicated.yaml
         ((Get-Content -path $global:currentdir\$global:server\dedicated.yaml -Raw) -replace "\b30000\b","$global:PORT") | Set-Content -Path $global:currentdir\$global:server\dedicated.yaml
+
+
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\EmpyrionLauncher -startDedi "
@@ -103,9 +94,6 @@ Function New-LaunchScriptArma3serverPS
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "timeout 10"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "set-location $global:currentdir\$global:server\DedicatedServer\EmpyrionAdminHelper\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\DedicatedServer\EmpyrionAdminHelper\EAHStart.bat"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
     }
 
     Function New-LaunchScriptceserverPS {
@@ -134,16 +122,13 @@ Function New-LaunchScriptArma3serverPS
         Write-Host "***  Editing Default ServerSettings.ini   ***" -ForegroundColor Magenta -BackgroundColor Black
         Add-Content -Path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\ServerSettings.ini -Value "AdminPassword=$global:ADMINPASSWORD"
 
+
+        
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\ConanSandboxServer.exe -log  -MaxPlayers=$global:MAXPLAYERS -Port=$global:PORT -QueryPort=$global:QUERYPORT -RconEnabled=1 -RconPassword=$global:RCONPASSWORD -RconPort=$global:RCONPORT"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
     }
 
     Function  New-LaunchScriptavserverPS{
@@ -161,16 +146,13 @@ Function New-LaunchScriptArma3serverPS
         if(($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (-3 - 3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:DIFF="0"}else{$global:DIFF}
         if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [10]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="10"}else{$global:MAXPLAYERS}
 
+
+
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --server-name $global:HOSTNAME --galaxy-name $global:GALAXYNAME --admin $global:steamID64 --difficulty $global:DIFF --max-players $global:MAXPLAYERS'"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
 
     }
 
@@ -184,30 +166,24 @@ Function New-LaunchScriptArma3serverPS
         #$global:game = "world"
         $global:process = "world"
         # 454070
+
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Datcha_Server"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./world.exe -batchmode"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
     }
     Function New-LaunchScriptboundelserverPS {
                 # Boundel Server
         #$global:game = "world"
         $global:process = "world"
         # 454070
+
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Datcha_Server"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./world.exe -batchmode"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
     }
 
     Function New-LaunchScriptforestserverPS {
@@ -226,15 +202,10 @@ Function New-LaunchScriptArma3serverPS
         if(($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27016]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:QUERYPORT="27016"}else{$global:QUERYPORT}
         if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [8]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="8"}else{$global:MAXPLAYERS}
 
-
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\TheForestDedicatedServer.exe -serverip $global:IP -serversteamport $global:STEAMPORT -servergameport $global:PORT -serverqueryport $global:QUERYPORT -servername '$global:HOSTNAME' -serverplayers $global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics" # -nosteamclient"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
     #-serverip xxx.xxx.xxx.xxx -serversteamport 8766 -servergameport 27015 -serverqueryport 27016 -servername TheForestGameDS -serverplayers 8 -difficulty Normal -inittype Continue -slot 1
 }

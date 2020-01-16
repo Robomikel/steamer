@@ -1,6 +1,7 @@
 Function New-LaunchScriptdoiserverPS
 {
     #----------   doi Server CFG    -------------------
+    $global:EXEDIR="doi"
     $global:game="doi"
     ${gamedirname}="DayOfInfamy"
     ${config1}="server.cfg"
@@ -33,8 +34,8 @@ Function New-LaunchScriptdoiserverPS
     Write-Host 'Input rcon_password: ' -ForegroundColor Cyan -NoNewline
     $global:RCONPASSWORD = Read-host
     $global:RCONPORT="$global:PORT"
-    if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
-    if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
+    if(($global:WORKSHOP = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:WORKSHOP="0"}else{$global:WORKSHOP}
+    if(($global:SV_PURE = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:SV_PURE}
     Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
     ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
     ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
@@ -42,61 +43,19 @@ Function New-LaunchScriptdoiserverPS
     New-Item $global:currentdir\$global:server\doi\subscribed_file_ids.txt -Force
     Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\doi\motd.txt -Force
+    
     Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "if(`$Null -eq (get-process `"$global:process`" -ea SilentlyContinue)){"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-UpdateServer"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\doi.exe -ip ${global:IP} -usercon -port $global:PORT +maxplayers $global:MAXPLAYERS +sv_lan $global:SV_LAN +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:workshop $global:sv_pure"
-                                                                                                                           #start srcds.exe -usercon +maxplayers 24 +sv_lan 0 +map "bastogne offensive"              
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "}else{"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"Server Running`""
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Get-Process `"$global:process`"}"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\doi.exe -ip ${global:IP} -usercon -port $global:PORT +maxplayers $global:MAXPLAYERS +sv_lan $global:SV_LAN +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:WORKSHOP $global:SV_PURE"
+ #start srcds.exe -usercon +maxplayers 24 +sv_lan 0 +map "bastogne offensive"              
 
-    $title    = 'Download MetaMod and SourceMod'
-    $question = 'Download MetaMod, SourceMod and install?'
-
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-    if ($decision -eq 0) {
-    Get-SourceMetaModdoi
-    Write-Host 'Entered Y'
-    Get-Gamemodedoi
-} else {
-    Write-Host 'Entered N'
-    Get-Gamemodedoi
+ Get-Gamemodedoi
+ Get-SourceMetMod
 }
 
-}
 
-Function Get-SourceMetaModdoi {
-$start_time = Get-Date
-Write-Host '*** Downloading Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
-#(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
-#[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-Invoke-WebRequest -Uri $global:metamodurl -OutFile $global:currentdir\metamod.zip 
-Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
-Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
-Write-Host '*** Copying/installing Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
-Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\doi -Force -Recurse
-
-$start_time = Get-Date
-Write-Host '*** Downloading SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
-#(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
-#[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-Invoke-WebRequest -Uri $global:sourcemodurl -OutFile $global:currentdir\sourcemod.zip 
-Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-Write-Host '*** Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black 
-Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
-Write-Host '*** Copying/installing SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
-Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\doi -Force -Recurse
-
-}
 # not used in DOI 
 #server.cfg		// this is your primary server config file containing global variables
 #default_server_<mode>.cfg		// default file which contains settings for specific mode
