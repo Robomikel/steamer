@@ -42,11 +42,13 @@ Function Install-Server {
 Function Get-createdvaribles {
     Write-Host "*** Getting Server Variables *****" -ForegroundColor Yellow -BackgroundColor Black  
     .$global:currentdir\$global:server\Variables-$global:server.ps1
+    Get-CheckForError
 }
 
 Function Select-launchServer {
     Write-Host '*** Starting Launch script *****' -ForegroundColor Yellow -BackgroundColor Black  
     & "$global:currentdir\$global:server\Launch-*.ps1"
+    Get-CheckForError
     Set-Location $global:currentdir
 }
 
@@ -120,6 +122,7 @@ Function Get-RestartsServer {
     Start-Countdown -Seconds 10 -Message "Restarting server"
     Get-logo
     & "$global:currentdir\$global:server\Launch-*.ps1"
+    Get-CheckForError
     Set-Location $global:currentdir
 }
 
@@ -161,6 +164,14 @@ Function New-ServerFolderq {
     exit}
 }
 
+Function Get-CheckForError {
+    if (!$?) {
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "      $global:DIAMOND $global:DIAMOND Command $global:command Failed! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "***        Try install command again          ****  " -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    Exit}
+}
 
 Function Get-CheckForVars {
     Write-Host "*** Checking for Vars ****" -ForegroundColor Yellow -BackgroundColor Black
