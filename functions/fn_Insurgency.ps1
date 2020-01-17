@@ -1,8 +1,8 @@
 Function New-LaunchScriptInsserverPS {
     #----------   Insurgency Server CFG    -------------------
     $global:EXEDIR="insurgency"
-    $global:game="insurgency"
-    $global:process = "srcds"
+    $global:GAME="insurgency"
+    $global:PROCESS = "srcds"
     
     ${gamedirname}="Insurgency"
     ${config1}="server.cfg"

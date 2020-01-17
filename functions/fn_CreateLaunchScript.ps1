@@ -4,8 +4,8 @@
 Function New-LaunchScriptArma3serverPS {
         #----------   Arma3 Ask for input for server cfg  -------------------
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x
-        $global:game = "arma3"
-        $global:process = "arma3Server"
+        $global:GAME = "arma3"
+        $global:PROCESS = "arma3Server"
 
         ${gamedirname} = "Arma3"
         ${config1}="server.cfg"
@@ -38,14 +38,14 @@ Function New-LaunchScriptArma3serverPS {
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process 'cmd'  '/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\network.cfg -config=$global:currentdir\$global:server\server.cfg -mod= -servermod= -bepath= -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-PROCESS 'cmd'  '/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\network.cfg -config=$global:currentdir\$global:server\server.cfg -mod= -servermod= -bepath= -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit'"
 }    
   
 Function New-LaunchScriptSdtdserverPS {
         #----------   7Days2Die Ask for input for server cfg    -------------------
-        $global:game = "7d2d"
-        $global:saves = "7DaysToDie"
-        $global:process = "7daystodieserver"
+        $global:GAME = "7d2d"
+        $global:SAVES = "7DaysToDie"
+        $global:PROCESS = "7daystodieserver"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [26900]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="26900"}else{$global:PORT}
         Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
@@ -57,12 +57,12 @@ Function New-LaunchScriptSdtdserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process $global:currentdir\$global:server\startdedicated.bat"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-PROCESS $global:currentdir\$global:server\startdedicated.bat"
 }
 
 Function New-LaunchScriptempserverPS {
-        $global:game = "empyrion"
-        $global:process = "EmpyrionDedicated"
+        $global:GAME = "empyrion"
+        $global:PROCESS = "EmpyrionDedicated"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [30000]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="30000"}else{$global:PORT}
         #if(($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27131]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:QUERYPORT="27131"}else{$global:QUERYPORT}
@@ -77,7 +77,7 @@ Function New-LaunchScriptempserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\EmpyrionLauncher -startDedi "
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "write-host `" `""
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "write-host `"Dedicated server was started as background process`" -ForegroundColor Yellow -BackgroundColor Black"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "write-host `"Dedicated server was started as background PROCESS`" -ForegroundColor Yellow -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "write-host `"Enable Telnet (default port 30004) via dedicated.yaml and connect to it locally`" -ForegroundColor Yellow -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "write-host `"for configuration of the server (type 'help' for console commands)`" -ForegroundColor Yellow -BackgroundColor Black"
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "timeout 10"
@@ -87,8 +87,8 @@ Function New-LaunchScriptempserverPS {
 
 Function New-LaunchScriptceserverPS {
         #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
-        $global:game = "conanexiles"
-        $global:process = "ConanSandboxServer-Win64-Test"
+        $global:GAME = "conanexiles"
+        $global:PROCESS = "ConanSandboxServer-Win64-Test"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host '*** N+1 PORTS 7777,27015 - 7778,27016 - etc.. *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="7777"}else{$global:PORT}
@@ -116,10 +116,10 @@ Function New-LaunchScriptceserverPS {
 
 Function  New-LaunchScriptavserverPS {
         # Avorion Dedicated Server
-        $global:game = "protocol-valve"
-        $global:saves = "Avorion"
+        $global:GAME = "protocol-valve"
+        $global:SAVES = "Avorion"
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-        $global:process = "AvorionServer"
+        $global:PROCESS = "AvorionServer"
         Write-Host 'Input server name: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         Write-Host 'Input galaxy name: ' -ForegroundColor Cyan -NoNewline 
@@ -132,14 +132,14 @@ Function  New-LaunchScriptavserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --server-name $global:HOSTNAME --galaxy-name $global:GALAXYNAME --admin $global:steamID64 --difficulty $global:DIFF --max-players $global:MAXPLAYERS'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-PROCESS 'cmd' '/c start bin\AvorionServer.exe --server-name $global:HOSTNAME --galaxy-name $global:GALAXYNAME --admin $global:steamID64 --difficulty $global:DIFF --max-players $global:MAXPLAYERS'"
 
 }
    
 Function New-LaunchScriptboundelserverPS {
         # Boundel Server
         #$global:game = "world"
-        $global:process = "world"
+        $global:PROCESS = "world"
         # 454070
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
@@ -151,8 +151,8 @@ Function New-LaunchScriptboundelserverPS {
 
 Function New-LaunchScriptforestserverPS {
         # The forest dedciated Server
-        $global:game = "forrest"
-        $global:process = "TheForestDedicatedServer"
+        $global:GAME = "forrest"
+        $global:PROCESS = "TheForestDedicatedServer"
         # 556450
         $global:IP = ${global:IP}
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline

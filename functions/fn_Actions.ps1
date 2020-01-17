@@ -6,14 +6,14 @@ Function Install-Anonserver {
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login anonymous"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:AppID $global:Branch"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:APPID $global:Branch"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "exit"
     New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login anonymous"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:AppID $global:Branch validate"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:APPID $global:Branch validate"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "exit"
     Get-UpdateServer
     Set-Location $global:currentdir
@@ -27,13 +27,13 @@ Function Install-Server {
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login $global:username"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:AppID $global:Branch"
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:APPID $global:Branch"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "exit"
     New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login $global:username"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:AppID $global:Branch validate"
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:APPID $global:Branch validate"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "exit"
     Get-UpdateServer
     Set-Location $global:currentdir     
@@ -45,6 +45,38 @@ Function Get-createdvaribles {
     Get-CheckForError
 }
 
+Function Get-ClearVars {
+    Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black 
+    #Remove-Variable * -ErrorAction SilentlyContinue
+    #Remove-Variable * -ErrorAction SilentlyContinue
+    Clear-Variable W* -ErrorAction SilentlyContinue
+    Clear-Variable E* -ErrorAction SilentlyContinue
+    Clear-Variable G* -ErrorAction SilentlyContinue
+    Clear-Variable P* -ErrorAction SilentlyContinue
+    Clear-Variable I* -ErrorAction SilentlyContinue
+    Clear-Variable S* -ErrorAction SilentlyContinue
+    Clear-Variable C* -ErrorAction SilentlyContinue
+    Clear-Variable M* -ErrorAction SilentlyContinue
+    Clear-Variable T* -ErrorAction SilentlyContinue
+    Clear-Variable H* -ErrorAction SilentlyContinue
+    Clear-Variable Q* -ErrorAction SilentlyContinue
+    Clear-Variable A* -ErrorAction SilentlyContinue
+    Clear-Variable R* -ErrorAction SilentlyContinue
+    
+    Remove-Variable W* -ErrorAction SilentlyContinue
+    Remove-Variable E* -ErrorAction SilentlyContinue
+    Remove-Variable G* -ErrorAction SilentlyContinue
+    Remove-Variable P* -ErrorAction SilentlyContinue
+    Remove-Variable I* -ErrorAction SilentlyContinue
+    Remove-Variable S* -ErrorAction SilentlyContinue
+    Remove-Variable C* -ErrorAction SilentlyContinue
+    Remove-Variable M* -ErrorAction SilentlyContinue
+    Remove-Variable T* -ErrorAction SilentlyContinue
+    Remove-Variable H* -ErrorAction SilentlyContinue
+    Remove-Variable Q* -ErrorAction SilentlyContinue
+    Remove-Variable A* -ErrorAction SilentlyContinue
+    Remove-Variable R* -ErrorAction SilentlyContinue
+}
 Function Select-launchServer {
     Write-Host '*** Starting Launch script *****' -ForegroundColor Yellow -BackgroundColor Black  
     & "$global:currentdir\$global:server\Launch-*.ps1"
@@ -53,16 +85,16 @@ Function Select-launchServer {
 }
 
 Function Get-CheckServer {
-    Write-Host '*** Check  Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
-    if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
-    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-Process "$global:process" ;; exit}
+    Write-Host '*** Check  Server PROCESS *****' -ForegroundColor Yellow -BackgroundColor Black 
+    if($Null -eq (get-PROCESS "$global:PROCESS" -ea SilentlyContinue)){
+    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-PROCESS "$global:PROCESS" ;; exit}
     Get-CheckForError
 }
 
 Function Get-StopServer {
-    Write-Host '*** Stopping Server Process *****' -ForegroundColor Magenta -BackgroundColor Black 
-    if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
-    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:process" -Force}
+    Write-Host '*** Stopping Server PROCESS *****' -ForegroundColor Magenta -BackgroundColor Black 
+    if($Null -eq (get-PROCESS "$global:PROCESS" -ea SilentlyContinue)){
+    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{stop-PROCESS -Name "$global:PROCESS" -Force}
     Get-CheckForError
 }
 
@@ -84,27 +116,27 @@ Function Get-UpdateServer {
 Function Get-GamedigServer {
     Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-    .\gamedig --type $global:game ${global:EXTIP}:${global:PORT} --pretty
+    .\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty
     Set-Location $global:currentdir
 }
 
 Function Get-GamedigServerQ {
     Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-    .\gamedig --type $global:game ${global:EXTIP}:${global:QUERYPORT} --pretty
+    .\gamedig --type $global:GAME ${global:EXTIP}:${global:QUERYPORT} --pretty
     Set-Location $global:currentdir
 }
 Function Get-GamedigServerPrivate {
     Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-    .\gamedig --type $global:game ${global:IP}:${global:PORT} --pretty
+    .\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty
     Set-Location $global:currentdir
 }
 
 Function Get-GamedigServerQPrivate {
     Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-    .\gamedig --type $global:game ${global:IP}:${global:QUERYPORT} --pretty
+    .\gamedig --type $global:GAME ${global:IP}:${global:QUERYPORT} --pretty
     Set-Location $global:currentdir
 }
 Function Start-Countdown {
@@ -129,7 +161,7 @@ Function Get-RestartsServer {
 }
 
 Function Get-TestInterger {
-    if( $global:AppID -match '^[0-9]+$') { 
+    if( $global:APPID -match '^[0-9]+$') { 
     }else{ 
     Write-Host "$global:DIAMOND $global:DIAMOND Input App ID Valid Numbers only! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
     pause
@@ -156,7 +188,7 @@ Function New-ServerFolderq {
     $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     if ($decision -eq 0) {
     Write-Host 'Entered Y'
     $global:command = "install"
@@ -177,7 +209,7 @@ Function Get-CheckForError {
 
 Function Get-CheckForVars {
     Write-Host "*** Checking for Vars ****" -ForegroundColor Yellow -BackgroundColor Black
-    if(( "" -eq $global:AppID) -or ( "" -eq $global:process)){
+    if(( "" -eq $global:APPID) -or ( "" -eq $global:PROCESS)){
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
     Write-Host "Try install command again or check vars in Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
@@ -314,7 +346,7 @@ Function New-ServerFolder {
     if((!$global:server) -or ($global:server -eq " ")){
     Write-Host "*** You Entered a null or Empty ****" -ForegroundColor Red -BackgroundColor Black
     Select-Steamer
-    }elseif (($null -eq $global:AppID ) -or ($global:AppID -eq " ")){
+    }elseif (($null -eq $global:APPID ) -or ($global:APPID -eq " ")){
     Write-Host "*** You Entered a space or Empty ****" -ForegroundColor Red -BackgroundColor Black
     Select-Steamer
     }elseif(Test-Path "$global:currentdir\$global:server\" ){
@@ -338,7 +370,7 @@ Function Get-UpdateSteamer {
     Write-Host '*** Steamer github files Updated *****' -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '*** Press Enter to Close this session *****' -ForegroundColor Yellow -BackgroundColor Black
     Pause  
-    stop-process -Id $PID
+    stop-PROCESS -Id $PID
 }
 
 
@@ -406,6 +438,7 @@ Function New-TryagainN {
 
 
 Function Get-Finished {
+    Get-ClearVars
     write-Host "*************************************" -ForegroundColor Yellow
     write-Host "***  Server $global:command is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
     write-Host "*************************************" -ForegroundColor Yellow
@@ -419,10 +452,10 @@ Function New-CreateVariables {
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WEBHOOK = `"$global:WEBHOOK`""
     if ($global:EXEDIR) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe dir - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR = `"$global:EXEDIR`""}
-    if ($global:game) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Game name used by Gamedig - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:game`""}
-    if ($global:process) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Process name - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:process = `"$global:process`""}
+    if ($global:GAME) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Game name used by Gamedig - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:GAME`""}
+    if ($global:PROCESS) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  PROCESS name - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:PROCESS = `"$global:PROCESS`""}
     if (${global:IP}) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server IP - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:IP} = `"${global:IP}`""}
     if (${global:PORT}) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server PORT - - \/  \/  \/"
@@ -445,10 +478,10 @@ Function New-CreateVariables {
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:HOSTNAME = `"$global:HOSTNAME`""}
     if (${global:QUERYPORT}) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  query port - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:QUERYPORT} = `"${global:QUERYPORT}`""}
-    if ($global:saves) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  local App Data Saves folder - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:saves = `"$global:saves`""}
-    if ($global:AppID) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  App ID  - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:AppID = `"$global:AppID`""}
+    if ($global:SAVES) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  local App Data SAVES folder - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SAVES = `"$global:SAVES`""}
+    if ($global:APPID) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  App ID  - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:APPID = `"$global:APPID`""}
     if ($global:RCONPORT) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Rcon Port  - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPORT = `"$global:RCONPORT`""}
     if ($global:RCONPASSWORD) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Rcon Password HERE - - \/  \/  \/"
@@ -463,12 +496,12 @@ Function New-CreateVariables {
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMEMODE = `"$global:GAMEMODE`""}
     if ($global:MAPGROUP) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO mapgroup   - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAPGROUP = `"$global:MAPGROUP`""}
-    if ($global:wscollectionid) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO wscollectionid   - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:wscollectionid = `"$global:wscollectionid`""}
-    if ($global:wsstartmap) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO wsstartmap   - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:wsstartmap = `"$global:wsstartmap`""}
-    if ($global:wsapikey) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO wsapikey   - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:wsapikey = `"$global:wsapikey`""}
+    if ($global:WSCOLLECTIONID) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSCOLLECTIONID   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSCOLLECTIONID = `"$global:WSCOLLECTIONID`""}
+    if ($global:WSSTARTMAP) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSSTARTMAP  - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSSTARTMAP= `"$global:WSSTARTMAP`""}
+    if ($global:WSAPIKEY) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSAPIKEY   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSAPIKEY = `"$global:WSAPIKEY`""}
 }
 
 

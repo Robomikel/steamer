@@ -1,8 +1,8 @@
 Function New-LaunchScriptKF2serverPS {
     # Killing Floor 2 Server
     $global:EXEDIR="Binaries\Win64"
-    $global:game = "killingfloor2"
-    $global:process = "KFserver"
+    $global:GAME = "killingfloor2"
+    $global:PROCESS = "KFserver"
     
     ${gamedirname}="KillingFloor2"
     ${config1}="KFWeb.ini"

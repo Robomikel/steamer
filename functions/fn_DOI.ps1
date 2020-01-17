@@ -1,8 +1,8 @@
 Function New-LaunchScriptdoiserverPS {
     #----------   doi Server CFG    -------------------
     $global:EXEDIR="doi"
-    $global:game="doi"
-    $global:process = "doi"
+    $global:GAME="doi"
+    $global:PROCESS = "doi"
     ${gamedirname}="DayOfInfamy"
     ${config1}="server.cfg"
   

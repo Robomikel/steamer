@@ -1,6 +1,6 @@
 Function New-LaunchScriptArkPS {
-    $global:game="arkse"
-    $global:process = "ShooterGameServer"
+    $global:GAME="arkse"
+    $global:PROCESS = "ShooterGameServer"
     ${gamedirname}="ARKSurvivalEvolved"
     ${config1}="GameUserSettings.ini"
     $ArkWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
