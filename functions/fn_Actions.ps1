@@ -180,6 +180,15 @@ Function Get-FolderNames {
     Write-Host "*** Checking Folder Names ****" -ForegroundColor Yellow -BackgroundColor Black
     if (Test-Path "$global:currentdir\$global:server\"){
     }else{
+        New-ServerFolderq
+   }
+}
+
+Function Get-FolderNamesN {
+    Write-Host "*** Checking Folder Names ****" -ForegroundColor Yellow -BackgroundColor Black
+    if (Test-Path "$global:currentdir\$global:server\"){
+    }else{
+        New-ServerFolderN
    }
 }
 Function New-ServerFolderq {
@@ -207,7 +216,7 @@ Function New-ServerFoldern {
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     if ($decision -eq 0) {
     Write-Host 'Entered Y'
-    New-ServerFoldern}
+    New-ServerFolder}
     else {
     Write-Host 'Entered N'
     exit}
