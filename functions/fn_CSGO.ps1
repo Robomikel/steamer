@@ -3,6 +3,7 @@ Function New-LaunchScriptcsgoserverPS {
         $global:EXEDIR="csgo"
         $global:game="csgo"
         $global:process = "csgo"
+        
         ${gamedirname}="CounterStrikeGlobalOffensive"
         ${config1}="server.cfg"
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -10,28 +11,29 @@ Function New-LaunchScriptcsgoserverPS {
         $csgoWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
         New-Item $global:currentdir\$global:server\csgo\cfg\server.cfg -Force
         Add-Content $global:currentdir\$global:server\csgo\cfg\server.cfg $csgoWebResponse
+        
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+        ${global:IP} = Read-Host
+        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
+        if(($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:CLIENTPORT="27005"}else{$global:CLIENTPORT}
+        if(($global:SOURCETVPORT = Read-Host -Prompt (Write-Host "Input Server Source TV Port, Press enter to accept default value [27020]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:SOURCETVPORT="27020"}else{$global:SOURCETVPORT}
+        if(($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server TICKRATE, Press enter to accept default value [64]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:TICKRATE="64"}else{$global:TICKRATE}
         Write-Host "Get Auth Token from this website and can add later in Launch-$global:server.ps1
                         https://steamcommunity.com/dev/managegameservers
                         Note use App ID 730: " -ForegroundColor Yellow
         Write-Host "Input Game Server Token (required for public servers): " -ForegroundColor Cyan -NoNewline
         $GSLT = Read-Host
+        if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [de_inferno]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="de_inferno"}else{$global:MAP}
+        if(($global:MAXPLAYERS= Read-Host -Prompt (Write-Host "Input maxplayers, Press enter to accept default value [16]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="16"}else{$global:MAXPLAYERS} 
+
         Write-Host "***  Renaming srcds.exe to csgo.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\csgo.exe" >$null 2>&1
         #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\csgo_x64.exe" >$null 2>&1
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
-        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-        ${global:IP} = Read-Host
-        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
         if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
         $global:RCONPORT="$global:PORT"
-        if(($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:CLIENTPORT="27005"}else{$global:CLIENTPORT}
-        if(($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server TICKRATE, Press enter to accept default value [64]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:TICKRATE="64"}else{$global:TICKRATE}
-        if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [de_inferno]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="de_inferno"}else{$global:MAP}
-        #Write-Host 'Input maxplayers (lobby size [16-?]): ' -ForegroundColor Cyan -NoNewline
-        #$global:MAXPLAYERS = Read-host
-        if(($global:MAXPLAYERS= Read-Host -Prompt (Write-Host "Input maxplayers, Press enter to accept default value [16]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="16"}else{$global:MAXPLAYERS} 
         Write-Host "
         * Competitive / Scrimmage: +game_type 0 +game_mode 1
         * Wingman:              +game_type 0 +game_mode 2
@@ -62,9 +64,9 @@ Function New-LaunchScriptcsgoserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\csgo.exe -game csgo -console -usercon -strictportbind -ip ${global:IP} -port $global:PORT +clientport $global:CLIENTPORT +sv_setsteamaccount '$GSLT' -tickrate $global:TICKRATE +map $global:MAP -maxplayers_override $global:MAXPLAYERS +mapgroup $global:MAPGROUP +game_type $global:GAMETYPE +game_mode $global:GAMEMODE -nobreakpad +net_public_adr ${global:EXTIP}"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\csgo.exe -game csgo -console -usercon -strictportbind -ip `${global:IP} -port `$global:PORT +clientport  `$global:CLIENTPORT +tv_port `$global:SOURCETVPORT +sv_setsteamaccount '`$GSLT' -tickrate `$global:TICKRATE +map `$global:MAP -maxplayers_override `$global:MAXPLAYERS +mapgroup `$global:MAPGROUP +game_type `$global:GAMETYPE +game_mode `$global:GAMEMODE +host_workshop_collection `${wscollectionid} +workshop_start_map `${wsstartmap} -authkey `${wsapikey} -nobreakpad +net_public_adr ${global:EXTIP}"
         #+net_public_adr xxx.xxx.xxx.xxx
-        # parms="-game csgo -usercon -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers_override ${maxplayers} +mapgroup ${mapgroup} +game_type ${gametype} +game_mode ${gamemode} +host_workshop_collection ${wscollectionid} +workshop_start_map ${wsstartmap} -authkey ${wsapikey} -nobreakpad"
+        # parms="                                                                                                                       -game csgo -console -usercon -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers_override ${maxplayers} +mapgroup ${mapgroup} +game_type ${gametype} +game_mode ${gamemode} +host_workshop_collection ${wscollectionid} +workshop_start_map ${wsstartmap} -authkey ${wsapikey} -nobreakpad"
         Get-SourceMetMod
 }
 

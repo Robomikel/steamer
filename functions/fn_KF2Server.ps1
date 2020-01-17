@@ -1,7 +1,9 @@
 Function New-LaunchScriptKF2serverPS {
     # Killing Floor 2 Server
+    $global:EXEDIR="Binaries\Win64"
     $global:game = "killingfloor2"
     $global:process = "KFserver"
+    
     ${gamedirname}="KillingFloor2"
     ${config1}="KFWeb.ini"
     ${config2}="LinuxServer-KFEngine.ini"
@@ -28,6 +30,7 @@ Function New-LaunchScriptKF2serverPS {
     $kf2WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config5}"
     New-Item $global:currentdir\$global:server\KFGame\Config\PCServer-KFSystemSettings.ini -Force
     Add-Content $global:currentdir\$global:server\KFGame\Config\PCServer-KFSystemSettings.ini $kf2WebResponse
+    
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
     #Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
     #${global:IP} = Read-Host
@@ -44,7 +47,7 @@ Function New-LaunchScriptKF2serverPS {
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Binaries\Win64"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./KFServer.exe $global:MAP`?Game=$global:GAMEMODE`?Difficulty=$global:DIFF`? -Port=$global:PORT -QueryPort=$global:QUERYPORT"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./KFServer.exe `$global:MAP`?Game=`$global:GAMEMODE`?Difficulty=`$global:DIFF`? -Port=`$global:PORT -QueryPort=`$global:QUERYPORT"
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
     Select-launchServer
     timeout 5

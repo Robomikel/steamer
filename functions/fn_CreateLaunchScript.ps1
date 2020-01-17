@@ -5,10 +5,11 @@ Function New-LaunchScriptArma3serverPS {
         #----------   Arma3 Ask for input for server cfg  -------------------
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x
         $global:game = "arma3"
+        $global:process = "arma3Server"
+
         ${gamedirname} = "Arma3"
         ${config1}="server.cfg"
         ${config2}="network.cfg"
-        $global:process = "arma3Server"
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         #(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server.cfg")
         $arma3WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
@@ -19,6 +20,7 @@ Function New-LaunchScriptArma3serverPS {
         $arma3nWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config2}"
         New-Item $global:currentdir\$global:server\network.cfg -Force
         Add-Content $global:currentdir\$global:server\network.cfg $arma3nWebResponse
+        
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
@@ -36,7 +38,7 @@ Function New-LaunchScriptArma3serverPS {
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process 'cmd'  '/c start $global:currentdir\$global:server\arma3server.exe -ip=${global:IP} -port=$global:PORT -cfg=$global:currentdir\$global:server\network.cfg -config=$global:currentdir\$global:server\server.cfg -mod= -servermod= -bepath= -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process 'cmd'  '/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\network.cfg -config=$global:currentdir\$global:server\server.cfg -mod= -servermod= -bepath= -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit'"
 }    
   
 Function New-LaunchScriptSdtdserverPS {
@@ -109,7 +111,7 @@ Function New-LaunchScriptceserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\ConanSandboxServer.exe -log  -MaxPlayers=$global:MAXPLAYERS -Port=$global:PORT -QueryPort=$global:QUERYPORT -RconEnabled=1 -RconPassword=$global:RCONPASSWORD -RconPort=$global:RCONPORT"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\ConanSandboxServer.exe -log  -MaxPlayers=`$global:MAXPLAYERS -Port=`$global:PORT -QueryPort=`$global:QUERYPORT -RconEnabled=1 -RconPassword=`$global:RCONPASSWORD -RconPort=`$global:RCONPORT"
 }
 
 Function  New-LaunchScriptavserverPS {
@@ -145,17 +147,7 @@ Function New-LaunchScriptboundelserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Datcha_Server"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./world.exe -batchmode"
 }
-Function New-LaunchScriptboundelserverPS {
-        # Boundel Server
-        #$global:game = "world"
-        $global:process = "world"
-        # 454070
-        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
-        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Datcha_Server"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./world.exe -batchmode"
-}
+
 
 Function New-LaunchScriptforestserverPS {
         # The forest dedciated Server
@@ -176,6 +168,6 @@ Function New-LaunchScriptforestserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\TheForestDedicatedServer.exe -serverip $global:IP -serversteamport $global:STEAMPORT -servergameport $global:PORT -serverqueryport $global:QUERYPORT -servername '$global:HOSTNAME' -serverplayers $global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics" # -nosteamclient"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\TheForestDedicatedServer.exe -serverip `$global:IP -serversteamport `$global:STEAMPORT -servergameport `$global:PORT -serverqueryport `$global:QUERYPORT -servername '`$global:HOSTNAME' -serverplayers `$global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics" # -nosteamclient"
     #-serverip xxx.xxx.xxx.xxx -serversteamport 8766 -servergameport 27015 -serverqueryport 27016 -servername TheForestGameDS -serverplayers 8 -difficulty Normal -inittype Continue -slot 1
 }

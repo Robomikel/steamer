@@ -1,18 +1,20 @@
 Function New-LaunchScriptMiscreatedPS {
         #----------   Miscreated Server CFG  -------------------
+        $global:game = "protocol-valve"
         $global:process = "MiscreatedServer"
+
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-host
+        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [64090]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="64090"}else{$global:PORT}
         Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
         $global:MAXPLAYERS = Read-host 
-        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [64090]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="64090"}else{$global:PORT}
         Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
         Write-Host '*** Creating Launch Script *****' -ForegroundColor Magenta -BackgroundColor Black  
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Bin64_dedicated\MiscreatedServer.exe  +sv_bind ${global:IP} +sv_maxplayers $global:MAXPLAYERS +map islands -sv_port $global:PORT +http_startserver -mis_gameserverid 100"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\Bin64_dedicated\MiscreatedServer.exe  +sv_bind `${global:IP} +sv_maxplayers `$global:MAXPLAYERS +map islands -sv_port `$global:PORT +http_startserver -mis_gameserverid 100"
         if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
         $global:RCONPORT="$global:PORT"
         Write-Host '*** Creating HOSTING.CFG *****' -ForegroundColor Magenta -BackgroundColor Black 
