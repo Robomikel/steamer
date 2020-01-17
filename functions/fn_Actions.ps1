@@ -116,16 +116,16 @@ Function Select-launchServer {
 }
 
 Function Get-CheckServer {
-    Write-Host '*** Check  Server PROCESS *****' -ForegroundColor Yellow -BackgroundColor Black 
-    if($Null -eq (get-PROCESS "$global:PROCESS" -ea SilentlyContinue)){
-    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-PROCESS "$global:PROCESS" ;; exit}
+    Write-Host '*** Check  Server process *****' -ForegroundColor Yellow -BackgroundColor Black 
+    if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
+    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-process "$global:PROCESS" ;; exit}
     Get-CheckForError
 }
 
 Function Get-StopServer {
-    Write-Host '*** Stopping Server PROCESS *****' -ForegroundColor Magenta -BackgroundColor Black 
-    if($Null -eq (get-PROCESS "$global:PROCESS" -ea SilentlyContinue)){
-    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{stop-PROCESS -Name "$global:PROCESS" -Force}
+    Write-Host '*** Stopping Server process *****' -ForegroundColor Magenta -BackgroundColor Black 
+    if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
+    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:PROCESS" -Force}
     Get-CheckForError
 }
 
@@ -288,7 +288,18 @@ Function set-connectMCRconP {
     .\mcrcon.exe -t -H $global:IP -P $global:RCONPORT -p $global:RCONPASSWORD
     set-location $global:currentdir}
 }
-
+Function Get-AdminCheck {
+    $user = "$env:COMPUTERNAME\$env:USERNAME"
+    $group = 'Administrators'
+    $isInGroup = (Get-LocalGroupMember $group).Name -contains $user
+    if($isInGroup -eq $true){
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "                 $global:DIAMOND $global:DIAMOND Do Not Run as an Admin account $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "***  Please Create a Non Admin Account to run script and game server  ******" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    }
+}
+Get-AdminCheck
 Function Get-MCRcon {
     $start_time = Get-Date
     $path = "$global:currentdir\mcrcon\"
@@ -369,6 +380,7 @@ Function Set-Console {
     [console]::ForegroundColor="Green"
     [console]::BackgroundColor="Black"
     $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(160,5000)
+    Get-AdminCheck
     Get-logo
 }
 
