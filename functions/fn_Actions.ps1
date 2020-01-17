@@ -49,33 +49,64 @@ Function Get-ClearVars {
     Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black 
     #Remove-Variable * -ErrorAction SilentlyContinue
     #Remove-Variable * -ErrorAction SilentlyContinue
-    Clear-Variable W* -ErrorAction SilentlyContinue
-    Clear-Variable E* -ErrorAction SilentlyContinue
-    Clear-Variable G* -ErrorAction SilentlyContinue
-    Clear-Variable P* -ErrorAction SilentlyContinue
-    Clear-Variable I* -ErrorAction SilentlyContinue
-    Clear-Variable S* -ErrorAction SilentlyContinue
-    Clear-Variable C* -ErrorAction SilentlyContinue
-    Clear-Variable M* -ErrorAction SilentlyContinue
-    Clear-Variable T* -ErrorAction SilentlyContinue
-    Clear-Variable H* -ErrorAction SilentlyContinue
-    Clear-Variable Q* -ErrorAction SilentlyContinue
-    Clear-Variable A* -ErrorAction SilentlyContinue
-    Clear-Variable R* -ErrorAction SilentlyContinue
-    
-    Remove-Variable W* -ErrorAction SilentlyContinue
-    Remove-Variable E* -ErrorAction SilentlyContinue
-    Remove-Variable G* -ErrorAction SilentlyContinue
-    Remove-Variable P* -ErrorAction SilentlyContinue
-    Remove-Variable I* -ErrorAction SilentlyContinue
-    Remove-Variable S* -ErrorAction SilentlyContinue
-    Remove-Variable C* -ErrorAction SilentlyContinue
-    Remove-Variable M* -ErrorAction SilentlyContinue
-    Remove-Variable T* -ErrorAction SilentlyContinue
-    Remove-Variable H* -ErrorAction SilentlyContinue
-    Remove-Variable Q* -ErrorAction SilentlyContinue
-    Remove-Variable A* -ErrorAction SilentlyContinue
-    Remove-Variable R* -ErrorAction SilentlyContinue
+    Remove-Variable WEBHOOK -ErrorAction SilentlyContinue
+    Remove-Variable EXEDIR -ErrorAction SilentlyContinue
+    Remove-Variable GAME -ErrorAction SilentlyContinue
+    # might have to change process name
+    Remove-Variable PROCESS -ErrorAction SilentlyContinue
+    Remove-Variable IP -ErrorAction SilentlyContinue
+    Remove-Variable PORT -ErrorAction SilentlyContinue
+    Remove-Variable SOURCETVPORT -ErrorAction SilentlyContinue
+    Remove-Variable CLIENTPORT -ErrorAction SilentlyContinue
+    Remove-Variable MAP -ErrorAction SilentlyContinue
+    Remove-Variable TICKRATE -ErrorAction SilentlyContinue
+    Remove-Variable GSLT -ErrorAction SilentlyContinue
+    Remove-Variable MAXPLAYERS -ErrorAction SilentlyContinue
+    Remove-Variable WORKSHOP -ErrorAction SilentlyContinue
+    Remove-Variable HOSTNAME -ErrorAction SilentlyContinue
+    Remove-Variable QUERYPORT -ErrorAction SilentlyContinue
+    Remove-Variable SAVES -ErrorAction SilentlyContinue
+    Remove-Variable APPID -ErrorAction SilentlyContinue
+    Remove-Variable RCONPORT -ErrorAction SilentlyContinue
+    Remove-Variable RCONPASSWORD -ErrorAction SilentlyContinue
+    Remove-Variable SV_PURE -ErrorAction SilentlyContinue
+    Remove-Variable SCENARIO -ErrorAction SilentlyContinue
+    Remove-Variable GAMETYPE -ErrorAction SilentlyContinue
+    Remove-Variable GAMEMODE -ErrorAction SilentlyContinue
+    Remove-Variable MAPGROUP -ErrorAction SilentlyContinue
+    Remove-Variable WSCOLLECTIONID -ErrorAction SilentlyContinue
+    Remove-Variable WSSTARTMAP -ErrorAction SilentlyContinue
+    Remove-Variable WSAPIKEY -ErrorAction SilentlyContinue
+    Remove-Variable WEBHOOK -ErrorAction SilentlyContinue
+    Remove-Variable EXEDIR -ErrorAction SilentlyContinue
+    Remove-Variable GAME -ErrorAction SilentlyContinue
+
+    # might have to change process name
+    Clear-Variable PROCESS -ErrorAction SilentlyContinue
+    Clear-Variable IP -ErrorAction SilentlyContinue
+    Clear-Variable PORT -ErrorAction SilentlyContinue
+    Clear-Variable SOURCETVPORT -ErrorAction SilentlyContinue
+    Clear-Variable CLIENTPORT -ErrorAction SilentlyContinue
+    Clear-Variable MAP -ErrorAction SilentlyContinue
+    Clear-Variable TICKRATE -ErrorAction SilentlyContinue
+    Clear-Variable GSLT -ErrorAction SilentlyContinue
+    Clear-Variable MAXPLAYERS -ErrorAction SilentlyContinue
+    Clear-Variable WORKSHOP -ErrorAction SilentlyContinue
+    Clear-Variable HOSTNAME -ErrorAction SilentlyContinue
+    Clear-Variable QUERYPORT -ErrorAction SilentlyContinue
+    Clear-Variable SAVES -ErrorAction SilentlyContinue
+    Clear-Variable APPID -ErrorAction SilentlyContinue
+    Clear-Variable RCONPORT -ErrorAction SilentlyContinue
+    Clear-Variable RCONPASSWORD -ErrorAction SilentlyContinue
+    Clear-Variable SV_PURE -ErrorAction SilentlyContinue
+    Clear-Variable SCENARIO -ErrorAction SilentlyContinue
+    Clear-Variable GAMETYPE -ErrorAction SilentlyContinue
+    Clear-Variable GAMEMODE -ErrorAction SilentlyContinue
+    Clear-Variable MAPGROUP -ErrorAction SilentlyContinue
+    Clear-Variable WSCOLLECTIONID -ErrorAction SilentlyContinue
+    Clear-Variable WSSTARTMAP -ErrorAction SilentlyContinue
+    Clear-Variable WSAPIKEY -ErrorAction SilentlyContinue
+
 }
 Function Select-launchServer {
     Write-Host '*** Starting Launch script *****' -ForegroundColor Yellow -BackgroundColor Black  
@@ -520,11 +551,11 @@ Function New-CreateVariables {
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMEMODE = `"$global:GAMEMODE`""}
     if ($global:MAPGROUP) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO mapgroup   - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAPGROUP = `"$global:MAPGROUP`""}
-    if ($global:WSCOLLECTIONID) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSCOLLECTIONID   - - \/  \/  \/"
+    if ($global:AppID -eq 740) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSCOLLECTIONID   - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSCOLLECTIONID = `"$global:WSCOLLECTIONID`""}
-    if ($global:WSSTARTMAP) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSSTARTMAP  - - \/  \/  \/"
+    if ($global:AppID -eq 740) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSSTARTMAP  - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSSTARTMAP= `"$global:WSSTARTMAP`""}
-    if ($global:WSAPIKEY) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSAPIKEY   - - \/  \/  \/"
+    if ($global:AppID -eq 740) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSAPIKEY   - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSAPIKEY = `"$global:WSAPIKEY`""}
 }
 
