@@ -47,65 +47,65 @@ Function Get-createdvaribles {
 
 Function Get-ClearVars {
     Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black 
-    #Remove-Variable * -ErrorAction SilentlyContinue
-    #Remove-Variable * -ErrorAction SilentlyContinue
-    Remove-Variable WEBHOOK -ErrorAction SilentlyContinue
-    Remove-Variable EXEDIR -ErrorAction SilentlyContinue
-    Remove-Variable GAME -ErrorAction SilentlyContinue
+    #Remove-Variable *  -Scope Global -ErrorAction SilentlyContinue
+    #Remove-Variable *  -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
     # might have to change process name
-    Remove-Variable PROCESS -ErrorAction SilentlyContinue
-    Remove-Variable IP -ErrorAction SilentlyContinue
-    Remove-Variable PORT -ErrorAction SilentlyContinue
-    Remove-Variable SOURCETVPORT -ErrorAction SilentlyContinue
-    Remove-Variable CLIENTPORT -ErrorAction SilentlyContinue
-    Remove-Variable MAP -ErrorAction SilentlyContinue
-    Remove-Variable TICKRATE -ErrorAction SilentlyContinue
-    Remove-Variable GSLT -ErrorAction SilentlyContinue
-    Remove-Variable MAXPLAYERS -ErrorAction SilentlyContinue
-    Remove-Variable WORKSHOP -ErrorAction SilentlyContinue
-    Remove-Variable HOSTNAME -ErrorAction SilentlyContinue
-    Remove-Variable QUERYPORT -ErrorAction SilentlyContinue
-    Remove-Variable SAVES -ErrorAction SilentlyContinue
-    Remove-Variable APPID -ErrorAction SilentlyContinue
-    Remove-Variable RCONPORT -ErrorAction SilentlyContinue
-    Remove-Variable RCONPASSWORD -ErrorAction SilentlyContinue
-    Remove-Variable SV_PURE -ErrorAction SilentlyContinue
-    Remove-Variable SCENARIO -ErrorAction SilentlyContinue
-    Remove-Variable GAMETYPE -ErrorAction SilentlyContinue
-    Remove-Variable GAMEMODE -ErrorAction SilentlyContinue
-    Remove-Variable MAPGROUP -ErrorAction SilentlyContinue
-    Remove-Variable WSCOLLECTIONID -ErrorAction SilentlyContinue
-    Remove-Variable WSSTARTMAP -ErrorAction SilentlyContinue
-    Remove-Variable WSAPIKEY -ErrorAction SilentlyContinue
-    Remove-Variable WEBHOOK -ErrorAction SilentlyContinue
-    Remove-Variable EXEDIR -ErrorAction SilentlyContinue
-    Remove-Variable GAME -ErrorAction SilentlyContinue
+    Remove-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable IP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable PORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SOURCETVPORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable CLIENTPORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MAP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable TICKRATE -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GSLT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MAXPLAYERS -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WORKSHOP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable HOSTNAME -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable QUERYPORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SAVES -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable APPID -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable RCONPORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable RCONPASSWORD -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SV_PURE -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SCENARIO -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GAMETYPE -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GAMEMODE -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MAPGROUP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WSCOLLECTIONID -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WSSTARTMAP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WSAPIKEY -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
 
     # might have to change process name
-    Clear-Variable PROCESS -ErrorAction SilentlyContinue
-    Clear-Variable IP -ErrorAction SilentlyContinue
-    Clear-Variable PORT -ErrorAction SilentlyContinue
-    Clear-Variable SOURCETVPORT -ErrorAction SilentlyContinue
-    Clear-Variable CLIENTPORT -ErrorAction SilentlyContinue
-    Clear-Variable MAP -ErrorAction SilentlyContinue
-    Clear-Variable TICKRATE -ErrorAction SilentlyContinue
-    Clear-Variable GSLT -ErrorAction SilentlyContinue
-    Clear-Variable MAXPLAYERS -ErrorAction SilentlyContinue
-    Clear-Variable WORKSHOP -ErrorAction SilentlyContinue
-    Clear-Variable HOSTNAME -ErrorAction SilentlyContinue
-    Clear-Variable QUERYPORT -ErrorAction SilentlyContinue
-    Clear-Variable SAVES -ErrorAction SilentlyContinue
-    Clear-Variable APPID -ErrorAction SilentlyContinue
-    Clear-Variable RCONPORT -ErrorAction SilentlyContinue
-    Clear-Variable RCONPASSWORD -ErrorAction SilentlyContinue
-    Clear-Variable SV_PURE -ErrorAction SilentlyContinue
-    Clear-Variable SCENARIO -ErrorAction SilentlyContinue
-    Clear-Variable GAMETYPE -ErrorAction SilentlyContinue
-    Clear-Variable GAMEMODE -ErrorAction SilentlyContinue
-    Clear-Variable MAPGROUP -ErrorAction SilentlyContinue
-    Clear-Variable WSCOLLECTIONID -ErrorAction SilentlyContinue
-    Clear-Variable WSSTARTMAP -ErrorAction SilentlyContinue
-    Clear-Variable WSAPIKEY -ErrorAction SilentlyContinue
+    Clear-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable IP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable PORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable SOURCETVPORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable CLIENTPORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable MAP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable TICKRATE -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable GSLT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable MAXPLAYERS -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable WORKSHOP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable HOSTNAME -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable QUERYPORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable SAVES -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable APPID -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable RCONPORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable RCONPASSWORD -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable SV_PURE -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable SCENARIO -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable GAMETYPE -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable GAMEMODE -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable MAPGROUP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable WSCOLLECTIONID -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable WSSTARTMAP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable WSAPIKEY -Scope Global -ErrorAction SilentlyContinue
 
 }
 Function Select-launchServer {
