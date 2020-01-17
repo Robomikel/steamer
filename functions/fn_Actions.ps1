@@ -56,12 +56,14 @@ Function Get-CheckServer {
     Write-Host '*** Check  Server Process *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
     Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "**** RUNNING ***" -ForegroundColor Green -BackgroundColor Black ;; Get-Process "$global:process" ;; exit}
+    Get-CheckForError
 }
 
 Function Get-StopServer {
     Write-Host '*** Stopping Server Process *****' -ForegroundColor Magenta -BackgroundColor Black 
     if($Null -eq (get-process "$global:process" -ea SilentlyContinue)){
     Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:process" -Force}
+    Get-CheckForError
 }
 
 Function Get-ValidateServer {
@@ -413,26 +415,60 @@ Function Get-Finished {
 Function New-CreateVariables {
     Write-Host '*** Creating Variables Script ****' -ForegroundColor Magenta -BackgroundColor Black 
     New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value " # #  WEBHOOK HERE - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# WEBHOOK HERE - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WEBHOOK = `"$global:WEBHOOK`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:process = `"$global:process`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:HOSTNAME = `"$global:HOSTNAME`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:QUERYPORT} = `"${global:QUERYPORT}`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:PORT} = `"${global:PORT}`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:game`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:saves = `"$global:saves`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:IP} = `"${global:IP}`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:AppID = `"$global:AppID`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPORT = `"$global:RCONPORT`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPASSWORD = `"$global:RCONPASSWORD`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAP = `"$global:MAP`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:CLIENTPORT = `"$global:CLIENTPORT`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR = `"$global:EXEDIR`""
-    # CSGO
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:TICKRATE = `"$global:TICKRATE`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMETYPE = `"$global:GAMETYPE`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMEMODE = `"$global:GAMEMODE`""
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAPGROUP = `"$global:MAPGROUP`""
+    if ($global:EXEDIR) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe dir - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR = `"$global:EXEDIR`""}
+    if ($global:game) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Game name used by Gamedig - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:game`""}
+    if ($global:process) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Process name - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:process = `"$global:process`""}
+    if (${global:IP}) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server IP - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:IP} = `"${global:IP}`""}
+    if (${global:PORT}) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server PORT - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:PORT} = `"${global:PORT}`""}
+    if ($global:SOURCETVPORT) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Source TV Port - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SOURCETVPORT = `"$global:SOURCETVPORT`""}
+    if ($global:CLIENTPORT) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server client port- - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:CLIENTPORT = `"$global:CLIENTPORT`""}
+    if ($global:MAP) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  default Map- - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAP = `"$global:MAP`""}
+    if ($global:TICKRATE) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server tick rate - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:TICKRATE = `"$global:TICKRATE`""} 
+    if ($global:GSLT) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Gamer Server token - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GSLT = `"$global:GSLT`""}
+    if ($global:MAXPLAYERS) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Max Players  - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAXPLAYERS = `"$global:MAXPLAYERS`""}
+    if ($global:WORKSHOP) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Workshop 1/0 HERE - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WORKSHOP = `"$global:WORKSHOP`""}
+    if ($global:HOSTNAME) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Name - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:HOSTNAME = `"$global:HOSTNAME`""}
+    if (${global:QUERYPORT}) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  query port - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:QUERYPORT} = `"${global:QUERYPORT}`""}
+    if ($global:saves) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  local App Data Saves folder - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:saves = `"$global:saves`""}
+    if ($global:AppID) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  App ID  - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:AppID = `"$global:AppID`""}
+    if ($global:RCONPORT) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Rcon Port  - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPORT = `"$global:RCONPORT`""}
+    if ($global:RCONPASSWORD) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Rcon Password HERE - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPASSWORD = `"$global:RCONPASSWORD`""}
+    if ($global:SV_PURE) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Extra Launch Parms - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SV_PURE = `"$global:SV_PURE`""}
+    if ($global:SCENARIO) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# Sandstorm SCENARIO   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SCENARIO = `"$global:SCENARIO`""}
+    if ($global:GAMETYPE) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO Gametype   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMETYPE = `"$global:GAMETYPE`""}
+    if ($global:GAMEMODE) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO Gamemode   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMEMODE = `"$global:GAMEMODE`""}
+    if ($global:MAPGROUP) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO mapgroup   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAPGROUP = `"$global:MAPGROUP`""}
+    if ($global:wscollectionid) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO wscollectionid   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:wscollectionid = `"$global:wscollectionid`""}
+    if ($global:wsstartmap) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO wsstartmap   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:wsstartmap = `"$global:wsstartmap`""}
+    if ($global:wsapikey) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO wsapikey   - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:wsapikey = `"$global:wsapikey`""}
 }
 
 
