@@ -20,6 +20,7 @@ Function Select-Steamer {
     Get-TestInterger
     Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -ForegroundColor Cyan -NoNewline 
     $global:Branch = Read-host
+    New-ServerFoldern
     Get-Steam
     Set-SteamInfo
     Set-SteamInfoAppID
@@ -33,7 +34,7 @@ Function Select-Steamer {
     Get-TestInterger
     Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -ForegroundColor Cyan -NoNewline 
     $global:Branch = Read-host
-    New-ServerFolder
+    New-ServerFoldern
     Get-Steam
     Set-SteamInfo
     Set-SteamInfoAppID

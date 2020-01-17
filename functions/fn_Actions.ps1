@@ -180,7 +180,7 @@ Function Get-FolderNames {
     Write-Host "*** Checking Folder Names ****" -ForegroundColor Yellow -BackgroundColor Black
     if (Test-Path "$global:currentdir\$global:server\"){
     }else{
-    New-ServerFolderq}
+   }
 }
 Function New-ServerFolderq {
     $title    = 'Server Folder Name does not exist!'
