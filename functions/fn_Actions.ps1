@@ -198,6 +198,21 @@ Function New-ServerFolderq {
     exit}
 }
 
+Function New-ServerFoldern {
+    $title    = 'Server Folder Name does not exist!'
+    $question = 'Would you like to to create new Server Folder Name?'
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+    Write-Host 'Entered Y'
+    New-ServerFoldern}
+    else {
+    Write-Host 'Entered N'
+    exit}
+}
+
 Function Get-CheckForError {
     if (!$?) {
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
