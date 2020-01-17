@@ -111,7 +111,6 @@ Function Select-Steamer {
     Get-CheckForVars
     Get-ChecktaskDisable
     Get-StopServer
-    Get-ChecktaskDisable
     Get-ClearVars
     }elseif($global:command -eq "stop"){
     Get-FolderNames
@@ -119,7 +118,6 @@ Function Select-Steamer {
     Get-CheckForVars
     Get-ChecktaskDisable
     Get-StopServer
-    Get-ChecktaskDisable
     Get-ClearVars
     }elseif(($global:command -eq "restart") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server restart, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
