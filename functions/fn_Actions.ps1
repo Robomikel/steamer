@@ -215,13 +215,6 @@ Function Get-FolderNames {
    }
 }
 
-Function Get-FolderNamesN {
-    Write-Host "*** Checking Folder Names ****" -ForegroundColor Yellow -BackgroundColor Black
-    if (Test-Path "$global:currentdir\$global:server\"){
-    }else{
-        New-ServerFolderN
-   }
-}
 Function New-ServerFolderq {
     $title    = 'Server Folder Name does not exist!'
     $question = 'Would you like to to create new Server Folder Name?'
@@ -238,19 +231,19 @@ Function New-ServerFolderq {
     exit}
 }
 
-Function New-ServerFoldern {
-    $title    = 'Server Folder Name does not exist!'
-    $question = 'Would you like to to create new Server Folder Name?'
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-    if ($decision -eq 0) {
-    Write-Host 'Entered Y'
-    New-ServerFolder}
-    else {
-    Write-Host 'Entered N'
-    exit}
+Function New-ServerFolder {   
+    ##-- Create Folder for Server -- In current folder
+   if((!$global:server) -or ($global:server -eq " ")){
+   Write-Host "*** You Entered a null or Empty ****" -ForegroundColor Red -BackgroundColor Black
+   Select-Steamer
+   }elseif (($null -eq $global:APPID ) -or ($global:APPID -eq " ")){
+   Write-Host "*** You Entered a space or Empty ****" -ForegroundColor Red -BackgroundColor Black
+   Select-Steamer
+   }elseif(Test-Path "$global:currentdir\$global:server\" ){
+   Write-Host '*** Server Folder Already Created! ****' -ForegroundColor Yellow -BackgroundColor Black
+   }else{
+   Write-Host '*** Creating Server Folder *****' -ForegroundColor Magenta -BackgroundColor Black 
+   New-Item -Path . -Name "$global:server" -ItemType "directory"}
 }
 
 Function Get-CheckForError {
@@ -396,20 +389,6 @@ Function Get-Steam {
 }
 
 
-Function New-ServerFolder {   
-     ##-- Create Folder for Server -- In current folder
-    if((!$global:server) -or ($global:server -eq " ")){
-    Write-Host "*** You Entered a null or Empty ****" -ForegroundColor Red -BackgroundColor Black
-    Select-Steamer
-    }elseif (($null -eq $global:APPID ) -or ($global:APPID -eq " ")){
-    Write-Host "*** You Entered a space or Empty ****" -ForegroundColor Red -BackgroundColor Black
-    Select-Steamer
-    }elseif(Test-Path "$global:currentdir\$global:server\" ){
-    Write-Host '*** Server Folder Already Created! ****' -ForegroundColor Yellow -BackgroundColor Black
-    }else{
-    Write-Host '*** Creating Server Folder *****' -ForegroundColor Magenta -BackgroundColor Black 
-    New-Item -Path . -Name "$global:server" -ItemType "directory"}
-}
 
 
 Function Get-UpdateSteamer {
