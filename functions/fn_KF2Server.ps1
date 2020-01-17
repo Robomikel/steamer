@@ -8,7 +8,6 @@ Function New-LaunchScriptKF2serverPS {
     ${config3}="LinuxServer-KFGame.ini"
     ${config4}="LinuxServer-KFInput.ini"
     ${config5}="LinuxServer-KFSystemSettings.ini"
-    $global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
     Write-Host "***  Copying Default KFWeb.ini ***" -ForegroundColor Magenta -BackgroundColor Black
     $kf2WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
     New-Item $global:currentdir\$global:server\KFGame\Config\KFWeb.ini -Force
@@ -40,8 +39,6 @@ Function New-LaunchScriptKF2serverPS {
     if(($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (0-3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:DIFF="0"}else{$global:DIFF}
     Write-Host 'Input Server Name: ' -ForegroundColor Cyan -NoNewline
     $global:HOSTNAME = Read-host
-    #Write-Host 'Input ADMIN PASSWORD (Alpha Numeric only): ' -ForegroundColor Cyan -NoNewline
-    #$global:ADMINPASSWORD = Read-host
     if(($global:ADMINPASSWORD = Read-Host -Prompt (Write-Host "Input ADMIN password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:ADMINPASSWORD="$global:RANDOMPASSWORD"}else{$global:ADMINPASSWORD}
     Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force

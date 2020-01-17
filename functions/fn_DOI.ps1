@@ -27,8 +27,7 @@ Function New-LaunchScriptdoiserverPS {
     $global:PLAYERS = Read-host
     Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
     $global:HOSTNAME = Read-host
-    Write-Host 'Input rcon_password: ' -ForegroundColor Cyan -NoNewline
-    $global:RCONPASSWORD = Read-host
+    if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
     $global:RCONPORT="$global:PORT"
     if(($global:WORKSHOP = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:WORKSHOP="0"}else{$global:WORKSHOP}
     if(($global:SV_PURE = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:SV_PURE}

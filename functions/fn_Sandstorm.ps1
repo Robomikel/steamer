@@ -11,7 +11,6 @@ Function New-LaunchScriptInssserverPS {
         if(($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
         Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
-        $global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
         if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [25575]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="25575"}else{$global:RCONPORT}
         if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
         Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black

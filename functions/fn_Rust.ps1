@@ -5,7 +5,6 @@ Function New-LaunchScriptRustPS {
         $global:process = "RustDedicated"
         ${gamedirname}="Rust"
         ${config1}="server.cfg"
-        $global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
         #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg")
         $RustWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"  
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black

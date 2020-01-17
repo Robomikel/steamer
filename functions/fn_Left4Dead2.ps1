@@ -22,12 +22,9 @@ Function New-LaunchScriptLFD2serverPS {
     if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [c1m1_hotel]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="c1m1_hotel"}else{$global:MAP}
     Write-Host 'Input maxplayers[1-8]: ' -ForegroundColor Cyan -NoNewline
     $global:MAXPLAYERS = Read-host 
-    #Write-Host 'Input players  (mp_coop_lobbysize [1-8]): ' -ForegroundColor Cyan -NoNewline  
-    #$global:PLAYERS = Read-host
     Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
     $global:HOSTNAME = Read-host
-    Write-Host 'Input rcon_password: ' -ForegroundColor Cyan -NoNewline
-    $global:RCONPASSWORD = Read-host
+    if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
     $global:RCONPORT="$global:PORT"
     #if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
     #if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
