@@ -36,6 +36,9 @@ $global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
 #$global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
 # mcrcon
 $global:mcrconurl="https://github.com/Tiiffi/mcrcon/releases/download/v0.7.1/mcrcon-0.7.1-windows-x86-32.zip"
+
+$global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
+
 $global:SMILEY_WHITE = ([char]9786)
 $global:SMILEY_BLACK = ([char]9787)
 $global:GEAR = ([char]9788)
