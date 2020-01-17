@@ -169,7 +169,6 @@ Function Select-Steamer {
     New-BackupServer
     Get-ChecktaskEnable
     Get-Finished
-    Get-ClearVars
     }elseif($global:command -eq "backup"){
     Get-FolderNames
     Get-createdvaribles
@@ -180,8 +179,7 @@ Function Select-Steamer {
     New-BackupFolder  
     New-BackupServer
     Get-ChecktaskEnable
-    Get-Finished
-    Get-ClearVars  
+    Get-Finished  
     }elseif(($global:command -eq "monitor") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for monitor: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
