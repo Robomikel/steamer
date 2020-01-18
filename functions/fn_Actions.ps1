@@ -21,6 +21,10 @@ Function Install-Anonserver {
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:APPID $global:Branch validate"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "exit"
+    New-Item -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Force
+    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_update 1"
+    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_print $global:APPID"
+    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "quit"
     Get-UpdateServer
     Set-Location $global:currentdir
 }
@@ -41,6 +45,10 @@ Function Install-Server {
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:APPID $global:Branch validate"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "exit"
+    New-Item -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Force
+    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_update 1"
+    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_print $global:APPID"
+    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "quit"
     Get-UpdateServer
     Set-Location $global:currentdir     
 }
@@ -150,11 +158,43 @@ Function Get-UpdateServer {
     .\steamcmd +runscript Updates-$global:server.txt
     Set-Location $global:currentdir
 }
+Function Get-ServerBuildCheck {
+    Get-Steam
+    Get-Steamtxt
+    Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
+    $search="buildid"
+    # public 
+    $remotebuild= .\steamcmd +runscript Buildcheck-$global:server.txt  | select-string $search | Select-Object  -Index 0
+#    # dev
+#    $remotebuild= .\steamcmd +runscript Buildcheck-$global:server.txt  | select-string $search | Select-Object  -Index 1
+#    # experimental
+#    $remotebuild= .\steamcmd +runscript Buildcheck-$global:server.txt  | select-string $search | Select-Object  -Index 2
+#    # hosting
+#    $remotebuild= .\steamcmd +runscript Buildcheck-$global:server.txt  | select-string $search | Select-Object  -Index 3
+     $remotebuild = $remotebuild -replace '\s',''
+#    #$remotebuild
+#  $search="buildid"
+    $localbuild= get-content $global:currentdir\$global:server\steamapps\appmanifest_$global:APPID.acf  | select-string $search
+    $localbuild = $localbuild -replace '\s',''
+    #$localbuild
+    IF (Compare-Object $remotebuild.ToString() $localbuild.ToString()){
+    Write-Host "*** Avaiable Updates Server *****" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "*** Removing appmanifest_$global:APPID.acf  *****" -ForegroundColor Magenta -BackgroundColor Black
+    remove-Item $global:currentdir\$global:server\steamapps\appmanifest_$global:APPID.acf -Force  >$null 2>&1
+    Write-Host "*** Removing Multiple appmanifest_$global:APPID.acf  *****" -ForegroundColor Magenta -BackgroundColor Black
+    Remove-Item $global:currentdir\$global:server\steamapps\appmanifest_*.acf -Force  >$null 2>&1
+    Get-StopServer
+    Get-UpdateServer  
+    }ELSE{
+    Write-Host "*** No $global:server Updates found ***" -ForegroundColor Yellow -BackgroundColor Black}
+    Set-Location $global:currentdir
+}
 Function Get-Steamtxt {
     Write-Host "*** Check $global:server Steam runscripts txt *****" -ForegroundColor Yellow -BackgroundColor Black
     $patha = "$global:currentdir\steamcmd\Validate-$global:server.txt"
-    $pathb = "$global:currentdir\steamcmd\Updates-$global:server.txt" 
-    If((Test-Path $patha) -and (Test-Path $pathb)){
+    $pathb = "$global:currentdir\steamcmd\Updates-$global:server.txt"
+    $pathc = "$global:currentdir\steamcmd\Buildcheck-$global:server.txt" 
+    If((Test-Path $patha) -and (Test-Path $pathb) -and (Test-Path $pathc)){
     Write-Host '*** steamCMD Runscripts .txt Exist ***' -ForegroundColor Yellow -BackgroundColor Black} 
     Else{  
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
@@ -293,16 +333,16 @@ Function set-connectMCRconP {
     .\mcrcon.exe -t -H $global:IP -P $global:RCONPORT -p $global:RCONPASSWORD
     set-location $global:currentdir}
 }
-#Function Get-AdminCheck {
-#    $user = "$env:COMPUTERNAME\$env:USERNAME"
-#    $group = 'Administrators'
-#    $isInGroup = (Get-LocalGroupMember $group).Name -contains $user
-#    if($isInGroup -eq $true){
-#    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-#    Write-Host "                 $global:DIAMOND $global:DIAMOND Do Not Run as an Admin account $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
-#    Write-Host "***  Please Create a Non Admin Account to run script and game server  ******" -ForegroundColor Yellow -BackgroundColor Black
-#    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black}
-#}
+Function Get-AdminCheck {
+    $user = "$env:COMPUTERNAME\$env:USERNAME"
+    $group = 'Administrators'
+    $isInGroup = (Get-LocalGroupMember $group).Name -contains $user
+    if($isInGroup -eq $true){
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "                 $global:DIAMOND $global:DIAMOND Do Not Run as an Admin account $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "***  Please Create a Non Admin Account to run script and game server  ******" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black}
+}
 Function Get-MCRcon {
     $start_time = Get-Date
     $path = "$global:currentdir\mcrcon\"
@@ -379,7 +419,7 @@ Function Set-Console {
     [console]::ForegroundColor="Green"
     [console]::BackgroundColor="Black"
     $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(200,5000)
-    #Get-AdminCheck
+    Get-AdminCheck
     Get-logo
 }
 Function Get-Steam {

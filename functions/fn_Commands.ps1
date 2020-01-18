@@ -46,8 +46,9 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars
     Get-ChecktaskDisable 
-    Get-StopServer
-    Get-UpdateServer
+    # Get-StopServer
+    # Get-UpdateServer 
+    Get-ServerBuildCheck
     Get-ChecktaskEnable
     Get-Finished
     }elseif($global:command -eq "update"){
@@ -55,8 +56,9 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars
     Get-ChecktaskDisable
-    Get-StopServer
-    Get-UpdateServer
+    # Get-StopServer
+    # Get-UpdateServer
+    Get-ServerBuildCheck
     Get-ChecktaskEnable
     Get-Finished
     }elseif(($global:command -eq "validate") -and ($null -eq $global:server)){
@@ -88,8 +90,9 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars    
     Get-CheckServer
-    Get-StopServer
-    Get-UpdateServer
+    # Get-StopServer
+    # Get-UpdateServer
+    Get-ServerBuildCheck
     Select-launchServer
     Get-ChecktaskEnable
     Get-ClearVars
@@ -98,7 +101,8 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars   
     Get-CheckServer
-    Get-UpdateServer
+    # Get-UpdateServer
+    Get-ServerBuildCheck
     Select-launchServer
     Get-ChecktaskEnable
     Get-ClearVars
@@ -128,7 +132,8 @@ Function Select-Steamer {
     Get-CheckForVars
     Get-ChecktaskDisable
     Get-StopServer
-    Get-UpdateServer
+    # Get-UpdateServer
+    Get-ServerBuildCheck
     Get-RestartsServer
     Get-ChecktaskEnable
     Get-ClearVars
@@ -138,7 +143,8 @@ Function Select-Steamer {
     Get-CheckForVars
     Get-ChecktaskDisable
     Get-StopServer
-    Get-UpdateServer
+    # Get-UpdateServer
+    Get-ServerBuildCheck
     Get-RestartsServer
     Get-ChecktaskEnable  
     Get-ClearVars
