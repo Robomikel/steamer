@@ -135,20 +135,34 @@ Function Get-StopServerInstall {
     stop-process -Name "$global:PROCESS" -Force}
 }
 Function Get-ValidateServer {
+    Get-Steam 
+    Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
+    Get-Steamtxt
     Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
-     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-    # Get-CheckForError 
     .\steamcmd +runscript Validate-$global:server.txt
-    #Get-CheckForError 
     Set-Location $global:currentdir
 }
 Function Get-UpdateServer {
+    Get-Steam
+    Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
+    Get-Steamtxt
     Write-Host '*** Updating Server *****' -ForegroundColor Magenta -BackgroundColor Black
-     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-     #Get-CheckForError 
     .\steamcmd +runscript Updates-$global:server.txt
-    #Get-CheckForError 
     Set-Location $global:currentdir
+}
+Function Get-Steamtxt {
+    Write-Host "*** Check $global:server Steam runscripts txt *****" -ForegroundColor Yellow -BackgroundColor Black
+    $patha = "$global:currentdir\steamcmd\Validate-$global:server.txt"
+    $pathb = "$global:currentdir\steamcmd\Updates-$global:server.txt" 
+    If((Test-Path $patha) -and (Test-Path $pathb)){
+    Write-Host '*** steamCMD Runscripts .txt Exist ***' -ForegroundColor Yellow -BackgroundColor Black} 
+    Else{  
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "      $global:DIAMOND $global:DIAMOND Command $global:command Failed! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "***        Try install command again          ****  " -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    Set-Location $global:currentdir
+    Exit}
 }
 Function Get-GamedigServer {
     Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
@@ -373,7 +387,7 @@ Function Get-Steam {
     $path = "$global:currentdir\steamcmd\"
     $patha = "$global:currentdir\steamcmd\steamcmd.exe" 
     If((Test-Path $path) -and (Test-Path $patha)) { 
-    Write-Host 'steamCMD already downloaded!' -ForegroundColor Yellow -BackgroundColor Black} 
+    Write-Host '*** steamCMD already downloaded! ***' -ForegroundColor Yellow -BackgroundColor Black} 
     Else{  
     #(New-Object Net.WebClient).DownloadFile("$global:steamurl", "steamcmd.zip")
     Write-Host '*** Downloading SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black
@@ -408,6 +422,8 @@ Function Get-logo {
           \/             \/      \/       \/      \/        
 "
 }
+
+
 Function Get-NodeJS {
     $path = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64"
     $patha = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64\node.exe"
@@ -782,7 +798,7 @@ Function New-backupAppdata {
     .\AppDatabackup.log
 }
 Function Get-savelocation {
-    if("" -eq $global:saves){
+    if(("" -eq $global:saves) -or ($null -eq $global:saves )){
     Write-Host "*** No saves located in App Data ***" -ForegroundColor Yellow -BackgroundColor Black 
     }else{
     New-AppDataSave}
