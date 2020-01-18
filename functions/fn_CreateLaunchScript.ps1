@@ -111,7 +111,7 @@ Function New-LaunchScriptceserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\ConanSandboxServer.exe -log  -MaxPlayers=`$global:MAXPLAYERS -Port=`$global:PORT -QueryPort=`$global:QUERYPORT -RconEnabled=1 -RconPassword=`$global:RCONPASSWORD -RconPort=`$global:RCONPORT"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\ConanSandboxServer.exe -log  -MaxPlayers=`"`$global:MAXPLAYERS`" -Port=`"`$global:PORT`" -QueryPort=`"`$global:QUERYPORT`" -RconEnabled=1 -RconPassword=`"`$global:RCONPASSWORD`" -RconPort=`"`$global:RCONPORT`""
 }
 
 Function  New-LaunchScriptavserverPS {
