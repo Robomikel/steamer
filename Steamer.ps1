@@ -53,10 +53,8 @@ $global:CHECKMARK = ([char]8730)
 
 .$global:currentdir\functions\fn_Actions.ps1
 .$global:currentdir\functions\fn_Ark.ps1
-.$global:currentdir\functions\fn_BackupServer.ps1
 .$global:currentdir\functions\fn_Commands.ps1
 .$global:currentdir\functions\fn_CreateLaunchScript.ps1
-.$global:currentdir\functions\fn_CreateMonitorJob.ps1
 .$global:currentdir\functions\fn_CSGO.ps1
 .$global:currentdir\functions\fn_DOI.ps1
 .$global:currentdir\functions\fn_Insurgency.ps1
@@ -64,9 +62,8 @@ $global:CHECKMARK = ([char]8730)
 .$global:currentdir\functions\fn_Left4Dead2.ps1
 .$global:currentdir\functions\fn_Miscreated.ps1
 .$global:currentdir\functions\fn_Rust.ps1
-.$global:currentdir\functions\fn_Read_AppID.ps1
 .$global:currentdir\functions\fn_Sandstorm.ps1
-    
+
 Set-Console  >$null 2>&1
 
 Function Set-Steamer {

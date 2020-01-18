@@ -89,7 +89,7 @@ Function Select-Steamer {
     Get-CheckForVars    
     Get-CheckServer
     Get-StopServer
-    Get-UpdateServer 
+    Get-UpdateServer
     Select-launchServer
     Get-ChecktaskEnable
     Get-ClearVars
@@ -126,8 +126,9 @@ Function Select-Steamer {
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
-    Get-ChecktaskDisable 
+    Get-ChecktaskDisable
     Get-StopServer
+    Get-UpdateServer
     Get-RestartsServer
     Get-ChecktaskEnable
     Get-ClearVars
@@ -137,8 +138,9 @@ Function Select-Steamer {
     Get-CheckForVars
     Get-ChecktaskDisable
     Get-StopServer
+    Get-UpdateServer
     Get-RestartsServer
-    Get-ChecktaskEnable   
+    Get-ChecktaskEnable  
     Get-ClearVars
     }elseif(($global:command -eq "check") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server check: ' -ForegroundColor Cyan -NoNewline

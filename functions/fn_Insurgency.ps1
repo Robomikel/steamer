@@ -28,7 +28,7 @@ Function New-LaunchScriptInsserverPS {
     Write-Host 'Input players  (mp_coop_lobbysize [1-8]): ' -ForegroundColor Cyan -NoNewline  
     $global:COOPPLAYERS = Read-host
     if(($global:WORKSHOP = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:WORKSHOP="0"}else{$global:WORKSHOP}
-    if(($global:SV_PURE = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:SV_PURE} 
+    if(($global:SV_PURE = Read-Host -Prompt (Write-Host "Input +sv_pure, Press enter to accept default value [1]: "-ForegroundColor Cyan -NoNewline)) -eq '1'){$global:SV_PURE="1"}else{$global:SV_PURE} 
     Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
     $global:HOSTNAME = Read-host
     if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
@@ -46,7 +46,7 @@ Function New-LaunchScriptInsserverPS {
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
     #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -ip ${global:IP} -port $global:PORT +maxplayers $global:MAXPLAYERS +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:WORKSHOP $global:SV_PURE"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -game insurgency -strictportbind -ip `${global:IP} -port `$global:PORT +clientport `$global:CLIENTPORT +tv_port `$global:SOURCETVPORT -tickrate `$global:TICKRATE +sv_setsteamaccount `$global:GSLT +map `$global:MAP -maxplayers `$global:MAXPLAYERS +mp_coop_lobbysize `$global:COOPPLAYERS +sv_workshop_enabled `$global:WORKSHOP `$global:SV_PURE -norestart"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -game insurgency -strictportbind -ip `${global:IP} -port `$global:PORT +clientport `$global:CLIENTPORT +tv_port `$global:SOURCETVPORT -tickrate `$global:TICKRATE +sv_setsteamaccount `$global:GSLT +map `$global:MAP -maxplayers `$global:MAXPLAYERS +mp_coop_lobbysize `$global:COOPPLAYERS +sv_workshop_enabled `$global:WORKSHOP `$global:SV_PURE -condebug -norestart"
     Get-SourceMetMod
     Get-Gamemode
 }
