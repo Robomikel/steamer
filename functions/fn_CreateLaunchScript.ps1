@@ -195,3 +195,28 @@ Function New-LaunchScriptforestserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\TheForestDedicatedServer.exe -serverip `$global:IP -serversteamport `$global:STEAMPORT -servergameport `$global:PORT -serverqueryport `$global:QUERYPORT -servername '`$global:HOSTNAME' -serverplayers `$global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics" # -nosteamclient"
     #-serverip xxx.xxx.xxx.xxx -serversteamport 8766 -servergameport 27015 -serverqueryport 27016 -servername TheForestGameDS -serverplayers 8 -difficulty Normal -inittype Continue -slot 1
 }
+
+Function New-LaunchScriptAoCserverPS {
+        # Age of Chivalry Dedicated Server
+        # 17515	
+        $global:GAME = "ageofchivalry"
+        $global:PROCESS = "aoc"
+        Get-StopServerInstall
+
+        Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
+        Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\aoc.exe" >$null 2>&1
+    #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\aoc_x64.exe" >$null 2>&1
+    if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map,Press enter to accept default value [aoc_siege]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="aoc_siege"}else{$global:MAP}
+    if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [32]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="32"}else{$global:MAXPLAYERS}
+    Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+    ${global:IP} = Read-Host
+    if((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
+    Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
+    New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\aoc.exe -console -game ageofchivalry -secure +map $global:MAP -autoupdate +log on +maxplayers $global:MAXPLAYERS -port $global:PORT +ip ${global:IP} +exec server.cfg"
+
+
+
+}

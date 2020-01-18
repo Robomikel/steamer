@@ -137,17 +137,17 @@ Function Get-StopServerInstall {
 Function Get-ValidateServer {
     Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-     Get-CheckForError 
+    # Get-CheckForError 
     .\steamcmd +runscript Validate-$global:server.txt
-    Get-CheckForError 
+    #Get-CheckForError 
     Set-Location $global:currentdir
 }
 Function Get-UpdateServer {
     Write-Host '*** Updating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-     Get-CheckForError 
+     #Get-CheckForError 
     .\steamcmd +runscript Updates-$global:server.txt
-    Get-CheckForError 
+    #Get-CheckForError 
     Set-Location $global:currentdir
 }
 Function Get-GamedigServer {
@@ -863,6 +863,9 @@ Function Read-AppID {
     } elseif($global:AppID -eq 556450){
     Set-Console  >$null 2>&1
     New-LaunchScriptforestserverPS
+    } elseif($global:AppID -eq 17515){
+    Set-Console  >$null 2>&1
+    New-LaunchScriptAoCserverPS
     } else {
     Write-Host "No Launch Script Found for this server" -ForegroundColor Yellow -BackgroundColor Black
     exit}
