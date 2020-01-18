@@ -3,6 +3,7 @@ Function New-LaunchScriptRustPS {
         $global:EXEDIR="RustDedicated_Data"
         $global:GAME="rust"
         $global:PROCESS = "RustDedicated"
+        Get-StopServerInstall
         
         ${gamedirname}="Rust"
         ${config1}="server.cfg"

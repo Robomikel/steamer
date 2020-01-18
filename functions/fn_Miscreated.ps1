@@ -2,6 +2,7 @@ Function New-LaunchScriptMiscreatedPS {
         #----------   Miscreated Server CFG  -------------------
         $global:GAME = "protocol-valve"
         $global:PROCESS = "MiscreatedServer"
+        Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline

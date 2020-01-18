@@ -3,6 +3,8 @@ Function New-LaunchScriptdoiserverPS {
     $global:EXEDIR="doi"
     $global:GAME="doi"
     $global:PROCESS = "doi"
+    Get-StopServerInstall
+    
     ${gamedirname}="DayOfInfamy"
     ${config1}="server.cfg"
   

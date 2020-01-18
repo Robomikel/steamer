@@ -6,7 +6,8 @@ Function New-LaunchScriptArma3serverPS {
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x
         $global:GAME = "arma3"
         $global:PROCESS = "arma3Server"
-
+        Get-StopServerInstall
+        
         ${gamedirname} = "Arma3"
         ${config1}="server.cfg"
         ${config2}="network.cfg"
@@ -24,13 +25,25 @@ Function New-LaunchScriptArma3serverPS {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
-        Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
-        $global:MAXPLAYERS = Read-host
+        Write-Host "       default reserved ports are 2302 - 2306
+                        gameports must be N+100
+                        ie 2402-2406  " -ForegroundColor Yellow
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port, Press enter to accept default value [2302]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="2302"}else{$global:PORT}
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
+        Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
+        $global:MAXPLAYERS = Read-host
         if(($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
         if(($global:ADMINPASSWORD = Read-Host -Prompt (Write-Host "Input ADMIN password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:ADMINPASSWORD="$global:RANDOMPASSWORD"}else{$global:ADMINPASSWORD}
+        if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [2301]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="2301"}else{$global:RCONPORT}
+        if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
+        Write-Host "***  Creating BEserver.cfg ***" -ForegroundColor Magenta -BackgroundColor Black
+        New-Item $global:currentdir\$global:server\battleye\BEServer.cfg -Force
+        Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "RConPassword $global:RCONPASSWORD"
+        Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "#Rcon Whitelist/connecting IP - - \/  \/  \/"
+        Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "RConIP 127.0.0.1"
+        Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "RConPort $global:RCONPORT"
+        Write-Host "***  Editing server.cfg ***" -ForegroundColor Magenta -BackgroundColor Black
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\server.cfg
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace '\b32\b',"$global:MAXPLAYERS") | Set-Content -Path $global:currentdir\$global:server\server.cfg  
         ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace "\barma3pass\b","$global:SERVERPASSWORD") | Set-Content -Path $global:currentdir\$global:server\server.cfg
@@ -38,7 +51,7 @@ Function New-LaunchScriptArma3serverPS {
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-process 'cmd'  '/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\network.cfg -config=$global:currentdir\$global:server\server.cfg -mod= -servermod= -bepath=$global:currentdir\$global:server\battleye\ -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-process `"cmd`"  `"/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\network.cfg -config=$global:currentdir\$global:server\server.cfg -mod= -servermod= -bepath=$global:currentdir\$global:server\battleye\ -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit`""
 }    
   
 Function New-LaunchScriptSdtdserverPS {
@@ -46,6 +59,8 @@ Function New-LaunchScriptSdtdserverPS {
         $global:GAME = "7d2d"
         $global:SAVES = "7DaysToDie"
         $global:process = "7daystodieserver"
+        Get-StopServerInstall
+
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [26900]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="26900"}else{$global:PORT}
         Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
@@ -63,6 +78,8 @@ Function New-LaunchScriptSdtdserverPS {
 Function New-LaunchScriptempserverPS {
         $global:GAME = "empyrion"
         $global:PROCESS = "EmpyrionDedicated"
+        Get-StopServerInstall
+
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [30000]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="30000"}else{$global:PORT}
         #if(($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27131]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:QUERYPORT="27131"}else{$global:QUERYPORT}
@@ -89,6 +106,8 @@ Function New-LaunchScriptceserverPS {
         #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
         $global:GAME = "conanexiles"
         $global:PROCESS = "ConanSandboxServer-Win64-Test"
+        Get-StopServerInstall
+
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host '*** N+1 PORTS 7777,27015 - 7778,27016 - etc.. *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="7777"}else{$global:PORT}
@@ -118,6 +137,8 @@ Function  New-LaunchScriptavserverPS {
         # Avorion Dedicated Server
         $global:GAME = "protocol-valve"
         $global:SAVES = "Avorion"
+        Get-StopServerInstall
+
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         $global:PROCESS = "AvorionServer"
         Write-Host 'Input server name: ' -ForegroundColor Cyan -NoNewline 
@@ -132,7 +153,7 @@ Function  New-LaunchScriptavserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process 'cmd' '/c start bin\AvorionServer.exe --server-name $global:HOSTNAME --galaxy-name $global:GALAXYNAME --admin $global:steamID64 --difficulty $global:DIFF --max-players $global:MAXPLAYERS'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process `"cmd`" `"/c start bin\AvorionServer.exe --server-name $global:HOSTNAME --galaxy-name $global:GALAXYNAME --admin $global:steamID64 --difficulty $global:DIFF --max-players $global:MAXPLAYERS`""
 
 }
    
@@ -140,6 +161,8 @@ Function New-LaunchScriptboundelserverPS {
         # Boundel Server
         #$global:game = "world"
         $global:PROCESS = "world"
+        Get-StopServerInstall
+
         # 454070
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
@@ -153,6 +176,8 @@ Function New-LaunchScriptforestserverPS {
         # The forest dedciated Server
         $global:GAME = "forrest"
         $global:PROCESS = "TheForestDedicatedServer"
+        Get-StopServerInstall
+        
         # 556450
         $global:IP = ${global:IP}
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline

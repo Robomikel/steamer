@@ -3,6 +3,7 @@ Function New-LaunchScriptcsgoserverPS {
         $global:EXEDIR="csgo"
         $global:GAME="csgo"
         $global:PROCESS = "csgo"
+        Get-StopServerInstall
         
         ${gamedirname}="CounterStrikeGlobalOffensive"
         ${config1}="server.cfg"

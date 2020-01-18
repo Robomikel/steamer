@@ -129,6 +129,14 @@ Function Get-StopServer {
     Get-CheckForError
 }
 
+Function Get-StopServerInstall {
+    Write-Host '*** Checking for Server process before install *****' -ForegroundColor Yellow -BackgroundColor Black 
+    if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
+    Write-Host "***** No Process found *****" -ForegroundColor Yellow -BackgroundColor Black}else{
+    Write-Host "**** Stopping Server Process *****" -ForegroundColor Magenta -BackgroundColor Black
+    stop-process -Name "$global:PROCESS" -Force}
+}
+
 Function Get-ValidateServer {
     Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\   
@@ -379,7 +387,7 @@ Function Set-Console {
     $host.ui.RawUi.WindowTitle = "-------- STEAMER ------------"
     [console]::ForegroundColor="Green"
     [console]::BackgroundColor="Black"
-    $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(160,5000)
+    $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(200,5000)
     Get-AdminCheck
     Get-logo
 }
