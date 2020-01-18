@@ -137,15 +137,17 @@ Function Get-StopServerInstall {
 Function Get-ValidateServer {
     Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-     Get-CheckForError   
+     Get-CheckForError 
     .\steamcmd +runscript Validate-$global:server.txt
+    Get-CheckForError 
     Set-Location $global:currentdir
 }
 Function Get-UpdateServer {
     Write-Host '*** Updating Server *****' -ForegroundColor Magenta -BackgroundColor Black
      Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-     Get-CheckForError   
+     Get-CheckForError 
     .\steamcmd +runscript Updates-$global:server.txt
+    Get-CheckForError 
     Set-Location $global:currentdir
 }
 Function Get-GamedigServer {
