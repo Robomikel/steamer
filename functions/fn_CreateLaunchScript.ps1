@@ -40,7 +40,6 @@ Function New-LaunchScriptArma3serverPS {
         Write-Host "***  Creating BEserver.cfg ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\battleye\BEServer.cfg -Force
         Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "RConPassword $global:RCONPASSWORD"
-        Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "#Rcon Whitelist/connecting IP - - \/  \/  \/"
         Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "RConIP 127.0.0.1"
         Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "RConPort $global:RCONPORT"
         Write-Host "***  Editing server.cfg ***" -ForegroundColor Magenta -BackgroundColor Black
