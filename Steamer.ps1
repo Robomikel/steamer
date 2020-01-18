@@ -63,7 +63,8 @@ $global:CHECKMARK = ([char]8730)
 .$global:currentdir\functions\fn_Miscreated.ps1
 .$global:currentdir\functions\fn_Rust.ps1
 .$global:currentdir\functions\fn_Sandstorm.ps1
-
+.$global:currentdir\functions\fn_Settings.ps1
+Set-SteamerSetting
 Set-Console  >$null 2>&1
 
 Function Set-Steamer {

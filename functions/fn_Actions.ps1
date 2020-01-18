@@ -179,6 +179,7 @@ Function Get-ServerBuildCheck {
     #$localbuild
     IF (Compare-Object $remotebuild.ToString() $localbuild.ToString()){
     Write-Host "*** Avaiable Updates Server *****" -ForegroundColor Yellow -BackgroundColor Black
+    if ($global:AutoUpdate  -eq "1") {Exit}
     Write-Host "*** Removing appmanifest_$global:APPID.acf  *****" -ForegroundColor Magenta -BackgroundColor Black
     remove-Item $global:currentdir\$global:server\steamapps\appmanifest_$global:APPID.acf -Force  >$null 2>&1
     Write-Host "*** Removing Multiple appmanifest_$global:APPID.acf  *****" -ForegroundColor Magenta -BackgroundColor Black
@@ -419,8 +420,11 @@ Function Set-Console {
     [console]::ForegroundColor="Green"
     [console]::BackgroundColor="Black"
     $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(200,5000)
-    Get-AdminCheck
-    Get-logo
+    if ($global:admincheckmessage -eq "1") {
+        Get-AdminCheck
+        Get-logo
+    }else{
+    Get-logo}
 }
 Function Get-Steam {
     $start_time = Get-Date
@@ -784,8 +788,8 @@ Function New-BackupServer {
     ./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* > backup.log
     Write-Host '*** Server Backup is Done! *****' -ForegroundColor Yellow -BackgroundColor Black
     write-host "*** Checking for alternate Save location (appData) ****" -ForegroundColor Yellow -BackgroundColor Black
-    Get-savelocation
-    .\backup.log
+    if ($global:appdatabackup   -eq "1") {Get-savelocation}
+    if ($global:backuplog   -eq "1") {.\backup.log}
     Set-Location $global:currentdir
 }
 Function Get-SevenZip {
@@ -835,7 +839,7 @@ Function New-backupAppdata {
     Set-Location $global:currentdir\7za920\ 
     ./7za a $global:currentdir\backups\AppDataBackup_$global:server-$BackupDate.zip $env:APPDATA\$global:saves\* > AppDatabackup.log
     Write-Host '*** Server App Data Backup is Done! *****' -ForegroundColor Yellow -BackgroundColor Black
-    .\AppDatabackup.log
+    if ($global:appdatabackuplog  -eq "1") {.\AppDatabackup.log}
 }
 Function Get-savelocation {
     if(("" -eq $global:saves) -or ($null -eq $global:saves )){
