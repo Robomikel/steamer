@@ -24,6 +24,7 @@ Function New-LaunchScriptInsserverPS {
     $global:GSLT = Read-Host
     if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [buhriz_coop checkpoint]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="buhriz_coop checkpoint"}else{$global:MAP}
     Write-Host 'Input maxplayers (lobby size [24-48]): ' -ForegroundColor Cyan -NoNewline
+    if(($global:SV_LAN = Read-Host -Prompt (Write-Host "Input SV_LAN,Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:SV_LAN="0"}else{$global:SV_LAN}
     $global:MAXPLAYERS = Read-host
     Write-Host 'Input players  (mp_coop_lobbysize [1-8]): ' -ForegroundColor Cyan -NoNewline  
     $global:COOPPLAYERS = Read-host
@@ -46,7 +47,7 @@ Function New-LaunchScriptInsserverPS {
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
     #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -ip ${global:IP} -port $global:PORT +maxplayers $global:MAXPLAYERS +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:WORKSHOP $global:SV_PURE"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -game insurgency -strictportbind -ip `${global:IP} -port `$global:PORT +clientport `$global:CLIENTPORT +tv_port `$global:SOURCETVPORT -tickrate `$global:TICKRATE +sv_setsteamaccount `$global:GSLT +map `$global:MAP -maxplayers `$global:MAXPLAYERS +mp_coop_lobbysize `$global:COOPPLAYERS +sv_workshop_enabled `$global:WORKSHOP +sv_pure `$global:SV_PURE -condebug -norestart"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -game insurgency -strictportbind -ip `${global:IP} -port `$global:PORT +clientport `$global:CLIENTPORT +tv_port `$global:SOURCETVPORT -tickrate `$global:TICKRATE +sv_setsteamaccount `$global:GSLT +map `$global:MAP -maxplayers `$global:MAXPLAYERS +sv_lan $global:SV_LAN +mp_coop_lobbysize `$global:COOPPLAYERS +sv_workshop_enabled `$global:WORKSHOP +sv_pure `$global:SV_PURE -condebug -norestart"
     Get-SourceMetMod
     Get-Gamemode
 }
