@@ -4,7 +4,7 @@
 Function New-LaunchScriptArma3serverPS {
         #----------   Arma3 Ask for input for server cfg  -------------------
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         $global:GAME = "arma3"
         $global:PROCESS = "arma3Server"
         #$global:servercfgdir=""
@@ -57,7 +57,7 @@ Function New-LaunchScriptArma3serverPS {
   
 Function New-LaunchScriptSdtdserverPS {
         #----------   7Days2Die Ask for input for server cfg    -------------------
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         $global:GAME = "7d2d"
         $global:SAVES = "7DaysToDie"
         $global:process = "7daystodieserver"
@@ -79,7 +79,7 @@ Function New-LaunchScriptSdtdserverPS {
 }
 
 Function New-LaunchScriptempserverPS {
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         $global:GAME = "empyrion"
         $global:PROCESS = "EmpyrionDedicated"
         #$global:servercfgdir=""
@@ -109,7 +109,7 @@ Function New-LaunchScriptempserverPS {
 
 Function New-LaunchScriptceserverPS {
         #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         $global:GAME = "conanexiles"
         $global:PROCESS = "ConanSandboxServer-Win64-Test"
         $global:servercfgdir="ConanSandbox\Saved\Config\WindowsServer"
@@ -142,7 +142,7 @@ Function New-LaunchScriptceserverPS {
 
 Function  New-LaunchScriptavserverPS {
         # Avorion Dedicated Server
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         $global:GAME = "protocol-valve"
         $global:SAVES = "Avorion"
         #$global:servercfgdir=""
@@ -168,7 +168,7 @@ Function  New-LaunchScriptavserverPS {
    
 Function New-LaunchScriptboundelserverPS {
         # Boundel Server
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         $global:GAME = "protocol-valve"
         $global:PROCESS = "world"
         #$global:servercfgdir=""
@@ -185,7 +185,7 @@ Function New-LaunchScriptboundelserverPS {
 
 Function New-LaunchScriptforestserverPS {
         # The forest dedciated Server
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         $global:GAME = "forrest"
         $global:PROCESS = "TheForestDedicatedServer"
         $global:servercfgdir="SKS\TheForestDedicatedServer\ds\"
@@ -213,7 +213,7 @@ Function New-LaunchScriptforestserverPS {
 Function New-LaunchScriptAoCserverPS {
         # Age of Chivalry Dedicated Server
         # 17515	
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         $global:GAME = "ageofchivalry"
         $global:PROCESS = "aoc"
         $global:servercfgdir = "ageofchivalry\cfg"
@@ -259,7 +259,7 @@ Function New-LaunchScriptacserverPS {
         # Assetto Corsa Dedicated Server
         # 	302550
         # https://www.assettocorsa.net/forum/index.php?faq/dedicated-server-manual.28/
-        #$global:EXEDIR="Assetto Corsa\Server"
+        #$global:MODDIR="Assetto Corsa\Server"
         $global:GAME = "protocol-valve"
         $global:PROCESS = "acServer"
         #$global:servercfgdir = "/cfg/server_cfg.ini"
@@ -277,7 +277,7 @@ Function New-LaunchScriptasserverPS {
         # Alien Swarm Dedicated Server
         #       635
         # https://developer.valvesoftware.com/wiki/Alien_Swarm_Dedicated_Server
-        #$global:EXEDIR="swarm"
+        #$global:MODDIR="swarm"
         $global:GAME="protocol-valve"
         $global:PROCESS = "asds"
         $global:servercfgdir = "swarm\cfg"
@@ -298,7 +298,7 @@ Function New-LaunchScriptasserverPS {
         # TEMPLATE Server
         #       ADD ID #
         # WIKI
-        #$global:EXEDIR=""
+        #$global:MODDIR=""
         #$global:GAME="protocol-valve"
         #$global:PROCESS = ""
         #$global:servercfgdir = ""

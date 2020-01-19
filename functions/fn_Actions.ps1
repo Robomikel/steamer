@@ -527,8 +527,8 @@ Function New-CreateVariables {
     New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# WEBHOOK HERE - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WEBHOOK = `"$global:WEBHOOK`""
-    if ($global:EXEDIR) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe dir - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR = `"$global:EXEDIR`""}
+    if ($global:MODDIR) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe dir - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MODDIR = `"$global:MODDIR`""}
     if ($global:GAME) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Game name used by Gamedig - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:GAME`""}
     if ($global:PROCESS) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  PROCESS name - - \/  \/  \/"
@@ -603,7 +603,7 @@ Function Get-SourceMetaMod {
     Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
     Write-Host '*** Copying/installing Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
-    Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\$global:EXEDIR -Force -Recurse
+    Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
     $start_time = Get-Date
     Write-Host '*** Downloading SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
     #(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
@@ -613,7 +613,7 @@ Function Get-SourceMetaMod {
     Write-Host '*** Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
     Write-Host '*** Copying/installing SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
-    Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\$global:EXEDIR -Force -Recurse
+    Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
 }
 Function Get-OxideQ {
     $title    = 'Download Oxide'
@@ -638,7 +638,7 @@ Function Get-Oxide {
     Write-Host '***Extracting Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
     Write-Host '***Copying Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
-    Copy-Item -Path $global:currentdir\oxide\$global:EXEDIR\* -Destination $global:currentdir\$global:server\$global:EXEDIR\ -Force -Recurse
+    Copy-Item -Path $global:currentdir\oxide\$global:MODDIR\* -Destination $global:currentdir\$global:server\$global:MODDIR\ -Force -Recurse
 }
 Function New-RestartJob {
     Write-Host "Run Task only when user is logged on"

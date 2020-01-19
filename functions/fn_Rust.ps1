@@ -1,5 +1,6 @@
 Function New-LaunchScriptRustPS {
         #----------   Rust server CDF  -------------------
+        $global:MODDIR="RustDedicated_Data"
         $global:GAME="rust"
         $global:PROCESS = "RustDedicated"
         Get-StopServerInstall

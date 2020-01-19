@@ -1,6 +1,6 @@
 Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
-        #$global:EXEDIR=""
+        $global:MODDIR="csgo"
         $global:GAME="csgo"
         $global:PROCESS = "csgo"
         Get-StopServerInstall
