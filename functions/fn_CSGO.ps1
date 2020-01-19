@@ -1,18 +1,17 @@
 Function New-LaunchScriptcsgoserverPS {
-        #----------   CSGO Server CFG    -------------------
+       #----------   CSGO Server CFG    -------------------
         $global:MODDIR="csgo"
-        $global:GAME="csgo"
+        $global:EXEDIR=""
+        $global:GAME = "csgo"
         $global:PROCESS = "csgo"
+        $global:SERVERCFGDIR = "csgo\cfg"
+        
         Get-StopServerInstall
-        
-        ${gamedirname}="CounterStrikeGlobalOffensive"
-        ${config1}="server.cfg"
-        Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\csgo\cfg\server.cfg")
-        $csgoWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        New-Item $global:currentdir\$global:server\csgo\cfg\server.cfg -Force
-        Add-Content $global:currentdir\$global:server\csgo\cfg\server.cfg $csgoWebResponse
-        
+        $global:gamedirname="CounterStrikeGlobalOffensive"
+        $global:config1="server.cfg"
+        Get-Servercfg
+        # - - - - - - - - - - - - -
+
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
@@ -24,7 +23,7 @@ Function New-LaunchScriptcsgoserverPS {
                         https://steamcommunity.com/dev/managegameservers
                         Note use App ID 730: " -ForegroundColor Yellow
         Write-Host "Input Game Server Token (required for public servers): " -ForegroundColor Cyan -NoNewline
-        $GSLT = Read-Host
+        $global:GSLT = Read-Host
         if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [de_inferno]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="de_inferno"}else{$global:MAP}
         if(($global:MAXPLAYERS= Read-Host -Prompt (Write-Host "Input maxplayers, Press enter to accept default value [16]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="16"}else{$global:MAXPLAYERS} 
 
@@ -49,7 +48,7 @@ Function New-LaunchScriptcsgoserverPS {
         * Classic Casual:       +game_type 0 +game_mode 0" -ForegroundColor Yellow
         if(($global:GAMETYPE= Read-Host -Prompt (Write-Host "Input gametype, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMETYPE="0"}else{$global:GAMETYPE}
         if(($global:GAMEMODE = Read-Host -Prompt (Write-Host "Input gamemode, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:GAMEMODE="0"}else{$global:GAMEMODE}
-        Write-Host "$global:CIRCLE View  \csgo\cfg\gamemodes.txt and  \csgo\cfg\gamemodes_server.txt.example for single Maps in Mapgroups $global:CIRCLE" -ForegroundColor Yellow
+        Write-Host "$global:CIRCLE View  \$global:SERVERCFGDIR\gamemodes.txt and  \$global:SERVERCFGDIR\gamemodes_server.txt.example for single Maps in Mapgroups $global:CIRCLE" -ForegroundColor Yellow
         write-host "
         * mg_skirmish_demolition                * mg_deathmatch         * mg_skirmish_triggerdiscipline         * mg_active
         * mg_skirmish_flyingscoutsman           * mg_op_breakout        * mg_skirmish_headshots                 * mg_casualdelta
@@ -59,13 +58,13 @@ Function New-LaunchScriptcsgoserverPS {
         * mg_armsrace                           * mg_op_op08                                                                    " -ForegroundColor Yellow
         if(($global:MAPGROUP = Read-Host -Prompt (Write-Host "Input mapgroup, Press enter to accept default value [mg_active]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAPGROUP="mg_active"}else{$global:MAPGROUP}
         Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
-        ((Get-Content -path $global:currentdir\$global:server\csgo\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\csgo\cfg\server.cfg
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
         Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\csgo.exe -game csgo -console -usercon -strictportbind -ip `${global:IP} -port `$global:PORT +clientport  `$global:CLIENTPORT +tv_port `$global:SOURCETVPORT +sv_setsteamaccount '`$GSLT' -tickrate `$global:TICKRATE +map `$global:MAP -maxplayers_override `$global:MAXPLAYERS +mapgroup `$global:MAPGROUP +game_type `$global:GAMETYPE +game_mode `$global:GAMEMODE +host_workshop_collection `${wscollectionid} +workshop_start_map `${WSSTARTMAP} -authkey `${WSAPIKEY} -nobreakpad +net_public_adr ${global:EXTIP} -condebug"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\csgo.exe -game csgo -console -usercon -strictportbind -ip `${global:IP} -port `$global:PORT +clientport  `$global:CLIENTPORT +tv_port `$global:SOURCETVPORT +sv_setsteamaccount `"`$GSLT`" -tickrate `$global:TICKRATE +map `$global:MAP -maxplayers_override `$global:MAXPLAYERS +mapgroup `$global:MAPGROUP +game_type `$global:GAMETYPE +game_mode `$global:GAMEMODE +host_workshop_collection `${wscollectionid} +workshop_start_map `${WSSTARTMAP} -authkey `${WSAPIKEY} -nobreakpad +net_public_adr ${global:EXTIP} -condebug"
         #+net_public_adr xxx.xxx.xxx.xxx
         # parms="                                                                                                                       -game csgo -console -usercon -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers_override ${maxplayers} +mapgroup ${mapgroup} +game_type ${gametype} +game_mode ${gamemode} +host_workshop_collection ${WSCOLLECTIONID} +workshop_start_map ${WSSTARTMAP} -authkey ${wsapikey} -nobreakpad"
         Get-SourceMetMod
@@ -84,4 +83,5 @@ Function New-LaunchScriptcsgoserverPS {
 #Guardian	4	        0
 #Co-op Strike	4	        1
 #Danger Zone	6	        0
-
+# Removing the IP command line option is a must if you want to host your server on LAN.
+# srcds -game csgo -console -usercon +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust 2 -maxplayers_override 32 +port 27016
