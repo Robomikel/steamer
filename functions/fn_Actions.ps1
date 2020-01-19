@@ -88,6 +88,14 @@ Function Get-ClearVars {
     Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SERVERCFGDIR -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable gamedirname -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config1 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config2 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config3 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config4 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config5 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MODDIR -Scope Global -ErrorAction SilentlyContinue
     # might have to change process name
     Remove-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable IP -Scope Global -ErrorAction SilentlyContinue
@@ -116,6 +124,14 @@ Function Get-ClearVars {
     Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SERVERCFGDIR -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable gamedirname -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config1 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config2 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config3 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config4 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config5 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MODDIR -Scope Global -ErrorAction SilentlyContinue
 }
 Function Select-launchServer {
     Write-Host '*** Starting Launch script *****' -ForegroundColor Yellow -BackgroundColor Black  
@@ -421,8 +437,8 @@ Function Set-Console {
     [console]::BackgroundColor="Black"
     $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(200,5000)
     if ($global:admincheckmessage -eq "1") {
-        Get-AdminCheck
-        Get-logo
+    Get-AdminCheck
+    Get-logo
     }else{
     Get-logo}
 }
@@ -466,8 +482,6 @@ Function Get-logo {
           \/             \/      \/       \/      \/        
 "
 }
-
-
 Function Get-NodeJS {
     $path = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64"
     $patha = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64\node.exe"
@@ -599,21 +613,27 @@ Function Get-SourceMetaMod {
     #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:metamodurl -OutFile $global:currentdir\metamod.zip
+    if (!$?) {write-host "*** Downloading Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit} 
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
+    if (!$?) {write-host "*** Extracting Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
     Write-Host '*** Copying/installing Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black 
     Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
+    if (!$?) {write-host "*** Copying Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
     $start_time = Get-Date
     Write-Host '*** Downloading SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
     #(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:sourcemodurl -OutFile $global:currentdir\sourcemod.zip
+    if (!$?) {write-host "*** Downloading SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit} 
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '*** Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
+    if (!$?) {write-host "*** Extracting SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
     Write-Host '*** Copying/installing SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black
     Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
+    if (!$?) {write-host "*** Copying SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
 }
 Function Get-OxideQ {
     $title    = 'Download Oxide'
@@ -633,12 +653,15 @@ Function Get-Oxide {
     Write-Host '*** Downloading Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
     #(New-Object Net.WebClient).DownloadFile("$global:oxiderustlatestlink", "$global:currentdir\oxide.zip")
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-    Invoke-WebRequest -Uri $global:oxiderustlatestlink -OutFile $global:currentdir\oxide.zip 
+    Invoke-WebRequest -Uri $global:oxiderustlatestlink -OutFile $global:currentdir\oxide.zip
+    if (!$?) {write-host "*** Downloading Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit} 
     Write-Host "Download Time: $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host '***Extracting Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '*** Extracting Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
-    Write-Host '***Copying Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
+    if (!$?) {write-host "*** Extracting Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
+    Write-Host '*** Copying Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
     Copy-Item -Path $global:currentdir\oxide\$global:MODDIR\* -Destination $global:currentdir\$global:server\$global:MODDIR\ -Force -Recurse
+    if (!$?) {write-host "*** Copying Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
 }
 Function New-RestartJob {
     Write-Host "Run Task only when user is logged on"
@@ -875,14 +898,20 @@ Function Set-SteamInfoAppID {
     Write-Host 'Entered N'}
 }
 Function Get-Servercfg {
+    Write-Host "*** Retrieve Default Config ***" -ForegroundColor Yellow -BackgroundColor Black
     #(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\csgo\cfg\server.cfg")
-    
-    $global:SERVERCFG = "$global:config1","$global:config2","$global:config3","$global:config4","$global:config5"
-    
-     foreach ($global:SERVERCFG in $global:SERVERCFG) {
-        $WebResponse=Invoke-WebRequest "$global:githuburl/$global:gamedirname/$global:SERVERCFG"
-        New-Item $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG -Force
-        Add-Content $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG $WebResponse}
+    if(("" -eq $global:SERVERCFGDIR) -or ("" -eq $global:config1)){Exit
+    }Elseif($null-eq $global:config2){$global:SERVERCFG = "$global:config1"
+    }Elseif($null-eq $global:config3){$global:SERVERCFG = "$global:config1","$global:config2"
+    }Elseif($null-eq $global:config4){$global:SERVERCFG = "$global:config1","$global:config2","$global:config3"
+    }Elseif($null-eq $global:config5){$global:SERVERCFG = "$global:config1","$global:config2","$global:config3","$global:config4"
+    }Else{$global:SERVERCFG = "$global:config1","$global:config2","$global:config3","$global:config4","$global:config5"}
+    foreach ($global:SERVERCFG in $global:SERVERCFG) {
+    write-host "***  Retrieve server config GSM ****" -ForegroundColor Magenta -BackgroundColor Black
+    $WebResponse=Invoke-WebRequest "$global:githuburl/$global:gamedirname/$global:SERVERCFG"
+    if (!$?) {write-host "*** Array Failed !! Did NOT Retrieve server config ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
+    New-Item $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG -Force
+    Add-Content $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG $WebResponse}
 }
 Function Read-AppID {
     if($global:AppID -eq 302200){
