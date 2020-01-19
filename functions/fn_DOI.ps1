@@ -1,6 +1,6 @@
 Function New-LaunchScriptdoiserverPS {
     #----------   doi Server CFG    -------------------
-    $global:EXEDIR="doi"
+    #$global:EXEDIR=""
     $global:GAME="doi"
     $global:PROCESS = "doi"
     Get-StopServerInstall
