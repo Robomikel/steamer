@@ -4,8 +4,10 @@
 Function New-LaunchScriptArma3serverPS {
         #----------   Arma3 Ask for input for server cfg  -------------------
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x
+        #$global:EXEDIR=""
         $global:GAME = "arma3"
         $global:PROCESS = "arma3Server"
+        #$global:servercfgdir=""
         Get-StopServerInstall
         
         ${gamedirname} = "Arma3"
@@ -55,9 +57,11 @@ Function New-LaunchScriptArma3serverPS {
   
 Function New-LaunchScriptSdtdserverPS {
         #----------   7Days2Die Ask for input for server cfg    -------------------
+        #$global:EXEDIR=""
         $global:GAME = "7d2d"
         $global:SAVES = "7DaysToDie"
         $global:process = "7daystodieserver"
+        #$global:servercfgdir=""
         Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -75,8 +79,10 @@ Function New-LaunchScriptSdtdserverPS {
 }
 
 Function New-LaunchScriptempserverPS {
+        #$global:EXEDIR=""
         $global:GAME = "empyrion"
         $global:PROCESS = "EmpyrionDedicated"
+        #$global:servercfgdir=""
         Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -103,8 +109,10 @@ Function New-LaunchScriptempserverPS {
 
 Function New-LaunchScriptceserverPS {
         #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
+        #$global:EXEDIR=""
         $global:GAME = "conanexiles"
         $global:PROCESS = "ConanSandboxServer-Win64-Test"
+        $global:servercfgdir="ConanSandbox\Saved\Config\WindowsServer"
         Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -134,8 +142,10 @@ Function New-LaunchScriptceserverPS {
 
 Function  New-LaunchScriptavserverPS {
         # Avorion Dedicated Server
+        #$global:EXEDIR=""
         $global:GAME = "protocol-valve"
         $global:SAVES = "Avorion"
+        #$global:servercfgdir=""
         Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -158,9 +168,10 @@ Function  New-LaunchScriptavserverPS {
    
 Function New-LaunchScriptboundelserverPS {
         # Boundel Server
-        #$global:game = "world"
+        #$global:EXEDIR=""
         $global:GAME = "protocol-valve"
         $global:PROCESS = "world"
+        #$global:servercfgdir=""
         Get-StopServerInstall
 
         # 454070
@@ -174,8 +185,10 @@ Function New-LaunchScriptboundelserverPS {
 
 Function New-LaunchScriptforestserverPS {
         # The forest dedciated Server
+        #$global:EXEDIR=""
         $global:GAME = "forrest"
         $global:PROCESS = "TheForestDedicatedServer"
+        $global:servercfgdir="SKS\TheForestDedicatedServer\ds\"
         Get-StopServerInstall
         
         # 556450
@@ -200,6 +213,7 @@ Function New-LaunchScriptforestserverPS {
 Function New-LaunchScriptAoCserverPS {
         # Age of Chivalry Dedicated Server
         # 17515	
+        #$global:EXEDIR=""
         $global:GAME = "ageofchivalry"
         $global:PROCESS = "aoc"
         $global:servercfgdir = "ageofchivalry\cfg"
@@ -245,8 +259,11 @@ Function New-LaunchScriptacserverPS {
         # Assetto Corsa Dedicated Server
         # 	302550
         # https://www.assettocorsa.net/forum/index.php?faq/dedicated-server-manual.28/
+        #$global:EXEDIR="Assetto Corsa\Server"
         $global:GAME = "protocol-valve"
         $global:PROCESS = "acServer"
+        #$global:servercfgdir = "/cfg/server_cfg.ini"
+        #$global:servercfgdir = "/cfg/entry_list.ini"
         Get-StopServerInstall
 
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -255,3 +272,60 @@ Function New-LaunchScriptacserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Assetto Corsa\Server"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\acServer.bat"
 }
+
+Function New-LaunchScriptasserverPS {
+        # Alien Swarm Dedicated Server
+        #       635
+        # https://developer.valvesoftware.com/wiki/Alien_Swarm_Dedicated_Server
+        #$global:EXEDIR="swarm"
+        $global:GAME="protocol-valve"
+        $global:PROCESS = "asds"
+        $global:servercfgdir = "swarm\cfg"
+        Get-StopServerInstall
+
+        Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
+        Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\asds.exe" >$null 2>&1
+        #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\asds_x64.exe" >$null 2>&1
+
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
+        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\asds.exe -console -game swarm +map lobby -maxplayers 4 -autoupdate"
+}
+
+#Function New-LaunchScriptTEMPLATEserverPS {
+        # TEMPLATE Server
+        #       ADD ID #
+        # WIKI
+        #$global:EXEDIR=""
+        #$global:GAME="protocol-valve"
+        #$global:PROCESS = ""
+        #$global:servercfgdir = ""
+        #$global:servercfg = "server.cfg"
+        
+        #Get-StopServerInstall
+        #${gamedirname} = "temp"
+        #${config1}="server.cfg"
+        #${config2}="network.cfg"
+        #Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+        ##(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\$global:servercfg")
+        #$Webresponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
+        #New-Item $global:currentdir\$global:server\$global:servercfgdir\$global:servercfg -Force
+        #Add-Content $global:currentdir\$global:server\$global:servercfgdir\$global:servercfg $Webresponse
+        #Write-Host "***  Copying Default network.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+        ##(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config2}", "$global:currentdir\$global:server\network.cfg")
+        #$Webresponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config2}"
+        #New-Item $global:currentdir\$global:server\$global:servercfgdir\network.cfg -Force
+        #Add-Content $global:currentdir\$global:server\$global:servercfgdir\network.cfg $Webresponse
+
+        #Write-Host "***  Renaming srcds.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
+        #Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\TEMP.exe" >$null 2>&1
+        #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe" >$null 2>&1
+
+        #Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
+        #New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+        #dd-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
+        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\TEMP.exe -console -game swarm +map lobby -maxplayers 4 -autoupdate"
+#}
