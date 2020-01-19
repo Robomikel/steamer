@@ -4,25 +4,18 @@
 Function New-LaunchScriptArma3serverPS {
         #----------   Arma3 Ask for input for server cfg  -------------------
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x
-        #$global:MODDIR=""
+        $global:MODDIR=""
+        $global:EXEDIR=""
         $global:GAME = "arma3"
         $global:PROCESS = "arma3Server"
-        #$global:servercfgdir=""
-        Get-StopServerInstall
+        $global:SERVERCFGDIR = "cfg"
         
-        ${gamedirname} = "Arma3"
-        ${config1}="server.cfg"
-        ${config2}="network.cfg"
-        Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        #(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server.cfg")
-        $arma3WebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        New-Item $global:currentdir\$global:server\server.cfg -Force
-        Add-Content $global:currentdir\$global:server\server.cfg $arma3WebResponse
-        Write-Host "***  Copying Default network.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        #(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config2}", "$global:currentdir\$global:server\network.cfg")
-        $arma3nWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config2}"
-        New-Item $global:currentdir\$global:server\network.cfg -Force
-        Add-Content $global:currentdir\$global:server\network.cfg $arma3nWebResponse
+        Get-StopServerInstall
+        $global:gamedirname="Arma3"
+        $global:config1="server.cfg"
+        $global:config2="network.cfg"
+        Get-Servercfg
+        # - - - - - - - - - - - - -
         
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
@@ -45,24 +38,31 @@ Function New-LaunchScriptArma3serverPS {
         Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "RConIP 127.0.0.1"
         Add-Content   $global:currentdir\$global:server\battleye\BEServer.cfg "RConPort $global:RCONPORT"
         Write-Host "***  Editing server.cfg ***" -ForegroundColor Magenta -BackgroundColor Black
-        ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\server.cfg
-        ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace '\b32\b',"$global:MAXPLAYERS") | Set-Content -Path $global:currentdir\$global:server\server.cfg  
-        ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace "\barma3pass\b","$global:SERVERPASSWORD") | Set-Content -Path $global:currentdir\$global:server\server.cfg
-        ((Get-Content -path $global:currentdir\$global:server\server.cfg -Raw) -replace '\bADMINPASSWORD\b',"$global:ADMINPASSWORD") | Set-Content -Path $global:currentdir\$global:server\server.cfg  
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace '\b32\b',"$global:MAXPLAYERS") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg  
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\barma3pass\b","$global:SERVERPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace '\bADMINPASSWORD\b',"$global:ADMINPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg  
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-process `"cmd`"  `"/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\network.cfg -config=$global:currentdir\$global:server\server.cfg -mod= -servermod= -bepath=$global:currentdir\$global:server\battleye\ -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit`""
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-process `"cmd`"  `"/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\$global:SERVERCFGDIR\network.cfg -config=$global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -mod= -servermod= -bepath=$global:currentdir\$global:server\battleye\ -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit`""
 }    
   
 Function New-LaunchScriptSdtdserverPS {
         #----------   7Days2Die Ask for input for server cfg    -------------------
-        #$global:MODDIR=""
+        $global:MODDIR=""
+        $global:EXEDIR=""
         $global:GAME = "7d2d"
         $global:SAVES = "7DaysToDie"
-        $global:process = "7daystodieserver"
-        #$global:servercfgdir=""
+        $global:PROCESS = "7daystodieserver"
+        $global:SERVERCFGDIR = ""
+        
         Get-StopServerInstall
+        $global:gamedirname=""
+        $global:config1="serverconfig.xml"
+        # Get-Servercfg
+        # - - - - - - - - - - - - -
+
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [26900]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="26900"}else{$global:PORT}
@@ -79,10 +79,10 @@ Function New-LaunchScriptSdtdserverPS {
 }
 
 Function New-LaunchScriptempserverPS {
-        #$global:MODDIR=""
+
         $global:GAME = "empyrion"
         $global:PROCESS = "EmpyrionDedicated"
-        #$global:servercfgdir=""
+
         Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -109,10 +109,11 @@ Function New-LaunchScriptempserverPS {
 
 Function New-LaunchScriptceserverPS {
         #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
-        #$global:MODDIR=""
+
         $global:GAME = "conanexiles"
         $global:PROCESS = "ConanSandboxServer-Win64-Test"
-        $global:servercfgdir="ConanSandbox\Saved\Config\WindowsServer"
+        $global:SERVERCFGDIR = "ConanSandbox\Saved\Config\WindowsServer"
+
         Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -129,10 +130,10 @@ Function New-LaunchScriptceserverPS {
         $global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
         if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
         Write-Host "***  Editing Default Engine.ini   ***" -ForegroundColor Magenta -BackgroundColor Black
-        Add-Content -Path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\Engine.ini -Value "ServerPassword=$global:SERVERPASSWORD"
-        Add-Content -Path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\Engine.ini -Value "ServerName=$global:HOSTNAME"
+        Add-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\Engine.ini -Value "ServerPassword=$global:SERVERPASSWORD"
+        Add-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\Engine.ini -Value "ServerName=$global:HOSTNAME"
         Write-Host "***  Editing Default ServerSettings.ini   ***" -ForegroundColor Magenta -BackgroundColor Black
-        Add-Content -Path $global:currentdir\$global:server\ConanSandbox\Saved\Config\WindowsServer\ServerSettings.ini -Value "AdminPassword=$global:ADMINPASSWORD"
+        Add-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\ServerSettings.ini -Value "AdminPassword=$global:ADMINPASSWORD"
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
@@ -142,10 +143,10 @@ Function New-LaunchScriptceserverPS {
 
 Function  New-LaunchScriptavserverPS {
         # Avorion Dedicated Server
-        #$global:MODDIR=""
+
         $global:GAME = "protocol-valve"
         $global:SAVES = "Avorion"
-        #$global:servercfgdir=""
+
         Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -168,10 +169,10 @@ Function  New-LaunchScriptavserverPS {
    
 Function New-LaunchScriptboundelserverPS {
         # Boundel Server
-        #$global:MODDIR=""
+
         $global:GAME = "protocol-valve"
         $global:PROCESS = "world"
-        #$global:servercfgdir=""
+
         Get-StopServerInstall
 
         # 454070
@@ -185,10 +186,11 @@ Function New-LaunchScriptboundelserverPS {
 
 Function New-LaunchScriptforestserverPS {
         # The forest dedciated Server
-        #$global:MODDIR=""
+
         $global:GAME = "forrest"
         $global:PROCESS = "TheForestDedicatedServer"
-        $global:servercfgdir="SKS\TheForestDedicatedServer\ds\"
+        $global:SERVERCFGDIR = "SKS\TheForestDedicatedServer\ds"
+
         Get-StopServerInstall
         
         # 556450
@@ -212,21 +214,20 @@ Function New-LaunchScriptforestserverPS {
 
 Function New-LaunchScriptAoCserverPS {
         # Age of Chivalry Dedicated Server
-        # 17515	
-        #$global:MODDIR=""
+        # 17515
+        $global:MODDIR=""
+        $global:EXEDIR=""
         $global:GAME = "ageofchivalry"
+        $global:SAVES = ""
         $global:PROCESS = "aoc"
-        $global:servercfgdir = "ageofchivalry\cfg"
-        ${gamedirname}="AgeOfChivalry"
-        ${config1}="server.cfg"
-
+        $global:SERVERCFGDIR = "ageofchivalry\cfg"
+        
         Get-StopServerInstall
+        $global:gamedirname="AgeOfChivalry"
+        $global:config1="server.cfg"
+        Get-Servercfg
+        # - - - - - - - - - - - - -	
 
-        Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\$global:servercfgdir\${config1}")
-        $aocWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        New-Item $global:currentdir\$global:server\$global:servercfgdir\${config1} -Force
-        Add-Content $global:currentdir\$global:server\$global:servercfgdir\${config1} $aocWebResponse
 
         if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map,Press enter to accept default value [aoc_siege]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="aoc_siege"}else{$global:MAP}
         if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [32]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="32"}else{$global:MAXPLAYERS}
@@ -240,10 +241,10 @@ Function New-LaunchScriptAoCserverPS {
         $global:RCONPORT="${global:PORT}"
 
         Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        ((Get-Content -path $global:currentdir\$global:server\$global:servercfgdir\${config1} -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:servercfgdir\${config1}
-        ((Get-Content -path $global:currentdir\$global:server\$global:servercfgdir\${config1} -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:servercfgdir\${config1}
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
 
-        Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
+        Write-Host "***  Renaming srcds.exe to avoid conflict with local Source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\aoc.exe" >$null 2>&1
         #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\aoc_x64.exe" >$null 2>&1
     
@@ -262,8 +263,7 @@ Function New-LaunchScriptacserverPS {
         #$global:MODDIR="Assetto Corsa\Server"
         $global:GAME = "protocol-valve"
         $global:PROCESS = "acServer"
-        #$global:servercfgdir = "/cfg/server_cfg.ini"
-        #$global:servercfgdir = "/cfg/entry_list.ini"
+
         Get-StopServerInstall
 
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -277,10 +277,10 @@ Function New-LaunchScriptasserverPS {
         # Alien Swarm Dedicated Server
         #       635
         # https://developer.valvesoftware.com/wiki/Alien_Swarm_Dedicated_Server
-        #$global:MODDIR="swarm"
         $global:GAME="protocol-valve"
         $global:PROCESS = "asds"
-        $global:servercfgdir = "swarm\cfg"
+        $global:SERVERCFGDIR = "swarm\cfg"
+
         Get-StopServerInstall
 
         Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -298,27 +298,19 @@ Function New-LaunchScriptasserverPS {
         # TEMPLATE Server
         #       ADD ID #
         # WIKI
-        #$global:MODDIR=""
-        #$global:GAME="protocol-valve"
-        #$global:PROCESS = ""
-        #$global:servercfgdir = ""
-        #$global:servercfg = "server.cfg"
+        # $global:MODDIR=""
+        # $global:EXEDIR=""
+        # $global:GAME = ""
+        # $global:SAVES = ""
+        # $global:PROCESS = ""
+        # $global:SERVERCFGDIR = ""
         
-        #Get-StopServerInstall
-        #${gamedirname} = "temp"
-        #${config1}="server.cfg"
-        #${config2}="network.cfg"
-        #Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        ##(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\$global:servercfg")
-        #$Webresponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-        #New-Item $global:currentdir\$global:server\$global:servercfgdir\$global:servercfg -Force
-        #Add-Content $global:currentdir\$global:server\$global:servercfgdir\$global:servercfg $Webresponse
-        #Write-Host "***  Copying Default network.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        ##(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config2}", "$global:currentdir\$global:server\network.cfg")
-        #$Webresponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config2}"
-        #New-Item $global:currentdir\$global:server\$global:servercfgdir\network.cfg -Force
-        #Add-Content $global:currentdir\$global:server\$global:servercfgdir\network.cfg $Webresponse
-
+        # Get-StopServerInstall
+        # $global:gamedirname=""
+        # $global:config1=""
+        # Get-Servercfg
+        # - - - - - - - - - - - - -
+        
         #Write-Host "***  Renaming srcds.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         #Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\TEMP.exe" >$null 2>&1
         #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe" >$null 2>&1
