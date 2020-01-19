@@ -1,15 +1,17 @@
 Function New-LaunchScriptRustPS {
         #----------   Rust server CDF  -------------------
         $global:MODDIR="RustDedicated_Data"
-        $global:GAME="rust"
+        $global:EXEDIR=""
+        $global:GAME = "rust"
         $global:PROCESS = "RustDedicated"
+        $global:SERVERCFGDIR = "server\my_server_identity\cfg"
+        
         Get-StopServerInstall
-        
-        ${gamedirname}="Rust"
-        ${config1}="server.cfg"
-        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg")
-        $RustWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"  
-        
+        $global:gamedirname="Rust"
+        $global:config1="server.cfg"
+        Get-Servercfg
+        # - - - - - - - - - - - - -
+
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-host
@@ -29,11 +31,9 @@ Function New-LaunchScriptRustPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\ "
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-PROCESS 'cmd'  '/c start RustDedicated.exe -batchmode +server.ip `${global:IP}  +server.port `$global:PORT +server.tickrate `$global:TICKRATE +server.hostname `"`$global:HOSTNAME`" +server.maxplayers `$global:MAXPLAYERS +server.worldsize `$global:WORLDSIZE +server.saveinterval `$global:SAVEINTERVAL +rcon.web `$global:RCONWEB +rcon.ip 0.0.0.0 +rcon.port `$global:RCONPORT +rcon.password `"`$global:RCONPASSWORD`" -logfile `"$global:currentdir\$global:server\Serverlog.log`"'"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "# add Backticks and quotes around hostname var after install for hostname with spaces."
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-PROCESS `"cmd`"  `"/c start RustDedicated.exe -batchmode +server.ip `${global:IP}  +server.port `$global:PORT +server.tickrate `$global:TICKRATE +server.hostname `$global:HOSTNAME +server.maxplayers `$global:MAXPLAYERS +server.worldsize `$global:WORLDSIZE +server.saveinterval `$global:SAVEINTERVAL +rcon.web `$global:RCONWEB +rcon.ip 0.0.0.0 +rcon.port `$global:RCONPORT +rcon.password `$global:RCONPASSWORD -logfile $global:currentdir\$global:server\Serverlog.log`""
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\RustDedicated.exe -batchmode +server.ip ${global:IP}  +server.port $global:PORT +server.tickrate $global:TICKRATE +server.hostname \"$global:HOSTNAME\" +server.identity \"${selfname}\" ${conditionalseed} ${conditionalsalt} +server.maxplayers ${maxplayers} +server.worldsize ${worldsize} +server.saveinterval ${saveinterval} +rcon.web ${rconweb} +rcon.ip ${ip} +rcon.port ${rconport} +rcon.password \"${rconpassword}\" -logfile \"${gamelogdate}\""
-        Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        New-Item $global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg -Force
-        Add-Content $global:currentdir\$global:server\server\my_server_identity\cfg\server.cfg $RustWebResponse
         Get-OxideQ
 }
     
