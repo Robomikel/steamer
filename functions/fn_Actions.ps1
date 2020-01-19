@@ -874,6 +874,16 @@ Function Set-SteamInfoAppID {
     } else {
     Write-Host 'Entered N'}
 }
+Function Get-Servercfg {
+    #(New-Object Net.WebClient).DownloadFile("$global:githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\csgo\cfg\server.cfg")
+    
+    $global:SERVERCFG = "$global:config1","$global:config2","$global:config3","$global:config4","$global:config5"
+    
+     foreach ($global:SERVERCFG in $global:SERVERCFG) {
+        $WebResponse=Invoke-WebRequest "$global:githuburl/$global:gamedirname/$global:SERVERCFG"
+        New-Item $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG -Force
+        Add-Content $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG $WebResponse}
+}
 Function Read-AppID {
     if($global:AppID -eq 302200){
     Set-Console  >$null 2>&1
