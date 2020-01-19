@@ -38,6 +38,7 @@ Install steam server ```>_./steamer install misserver```
    * Avorion - Dedicated Server (565060)
    * Boundel - Dedicated Server (454070)
    * Assetto Corsa Dedicated Server (302550)
+   * Alien Swarm Dedicated Server (17515)
    -----
  - Creates Launch, Monitor, per serverfolder/instance variables, and Discord PS scripts.
  - Manage Steam server with features
