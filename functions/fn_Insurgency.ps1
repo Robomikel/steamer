@@ -1,6 +1,6 @@
 Function New-LaunchScriptInsserverPS {
     #----------   Insurgency Server CFG    -------------------
-    $global:EXEDIR="insurgency"
+    #$global:EXEDIR=""
     $global:GAME="insurgency"
     $global:PROCESS = "srcds"
     Get-StopServerInstall
