@@ -1,18 +1,17 @@
 Function New-LaunchScriptInsserverPS {
     #----------   Insurgency Server CFG    -------------------
     $global:MODDIR="insurgency"
-    $global:GAME="insurgency"
+    $global:EXEDIR=""
+    $global:GAME = "insurgency"
     $global:PROCESS = "srcds"
+    $global:SERVERCFGDIR = "insurgency\cfg"
+    
     Get-StopServerInstall
-    
-    ${gamedirname}="Insurgency"
-    ${config1}="server.cfg"
-    Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-    #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\insurgency\cfg\server.cfg")
-    $insWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-    New-Item $global:currentdir\$global:server\insurgency\cfg\server.cfg -Force
-    Add-Content $global:currentdir\$global:server\insurgency\cfg\server.cfg $insWebResponse
-    
+    $global:gamedirname="Insurgency"
+    $global:config1="server.cfg"
+    Get-Servercfg
+    # - - - - - - - - - - - - -
+
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
     Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
     ${global:IP} = Read-Host
@@ -29,15 +28,15 @@ Function New-LaunchScriptInsserverPS {
     Write-Host 'Input players  (mp_coop_lobbysize [1-8]): ' -ForegroundColor Cyan -NoNewline  
     $global:COOPPLAYERS = Read-host
     if(($global:WORKSHOP = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:WORKSHOP="0"}else{$global:WORKSHOP}
-    if(($global:SV_PURE = Read-Host -Prompt (Write-Host "Input +sv_pure, Press enter to accept default value [1]: "-ForegroundColor Cyan -NoNewline)) -eq '1'){$global:SV_PURE="1"}else{$global:SV_PURE} 
+    if(($global:SV_PURE = Read-Host -Prompt (Write-Host "Input +sv_pure, Press enter to accept default value [1]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:SV_PURE="1"}else{$global:SV_PURE} 
     Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
     $global:HOSTNAME = Read-host
     if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
     $global:RCONPORT="${global:PORT}"
     
     Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-    ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
-    ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\insurgency\subscribed_file_ids.txt -Force
     Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -58,25 +57,25 @@ Function Get-Playlist {
     Write-Host "Checking playlist" -ForegroundColor Yellow
     if($global:playlist -eq "comp") {
         Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-        ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_comp.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_comp.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "coop") {
             Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-            ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+            ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "coop_elite") {
                 Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+                ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "coop_hardcore"){
                     Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                    ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+                    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_cooperative.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "pvp_sustained"){
                         Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                        ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_sustained_combat.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+                        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_sustained_combat.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "pvp_tactical"){
                             Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                            ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_tactical_operations.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+                            ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_tactical_operations.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "conquer"){
                                 Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                                ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_conquer.txt`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+                                ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_conquer.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($null -eq $global:playlist) {
                                     Write-Host "entered blank or null" -ForegroundColor Red
     }
@@ -95,7 +94,7 @@ Function Set-Gamemode {
     $global:playlist = Read-Host "Enter mode, Will add Mapcycle per mode"
     if(($global:playlist -eq "comp") -or ($global:playlist -eq "coop") -or ($global:playlist -eq "coop_elite") -or ($global:playlist -eq "coop_hardcore") -or ($global:playlist -eq "pvp_sustained") -or ($global:playlist -eq "pvp_tactical")-or ($global:playlist -eq "conquer")) {
     Write-Host "Editing nwi/$global:playlist playlist in server.cfg" -ForegroundColor Magenta
-    ((Get-Content -path $global:currentdir\$global:server\insurgency\cfg\server.cfg -Raw) -replace "sv_playlist `"nwi/coop`"","sv_playlist `"nwi/$global:playlist`"") | Set-Content -Path $global:currentdir\$global:server\insurgency\cfg\server.cfg
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "sv_playlist `"nwi/coop`"","sv_playlist `"nwi/$global:playlist`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     Get-Playlist}
     else{
     Write-Host " listed modes does not exist" -ForegroundColor Yellow
