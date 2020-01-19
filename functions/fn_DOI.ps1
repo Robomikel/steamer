@@ -1,19 +1,18 @@
 Function New-LaunchScriptdoiserverPS {
     #----------   doi Server CFG    -------------------
     $global:MODDIR="doi"
-    $global:GAME="doi"
+    $global:EXEDIR=""
+    $global:GAME = "doi"
     $global:PROCESS = "doi"
+    $global:SERVERCFGDIR = "doi\cfg"
+
     Get-StopServerInstall
+    $global:gamedirname="DayOfInfamy"
+    $global:config1="server.cfg"
+
+    Get-Servercfg
+    # - - - - - - - - - - - - -
     
-    ${gamedirname}="DayOfInfamy"
-    ${config1}="server.cfg"
-  
-    Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-    #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\doi\cfg\server.cfg")
-    #"https://raw.githubusercontent.com/GameServerManagers/Game-Server-Configs/master/DayOfInfamy/server.cfg"
-    $insWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
-    New-Item $global:currentdir\$global:server\doi\cfg\server.cfg -Force
-    Add-Content $global:currentdir\$global:server\doi\cfg\server.cfg $insWebResponse
     Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
     Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\doi.exe" >$null 2>&1
     Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\doi_x64.exe" >$null 2>&1
@@ -40,8 +39,8 @@ Function New-LaunchScriptdoiserverPS {
     $global:RCONPORT="$global:PORT"
     
     Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
-    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\doi\subscribed_file_ids.txt -Force
     Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -68,25 +67,25 @@ Function Get-Playlistdoi {
     Write-Host "Checking playlist" -ForegroundColor Yellow
     if($global:playlist -eq "coop_commando") {
         Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-        ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle_coop.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle_coop.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "coop") {
             Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-            ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle_coop.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+            ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle_coop.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "mp_battles") {
                 Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_battles.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+                ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_battles.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "mp_casual_with_bots"){
                     Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_casual_with_bots.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+                    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_casual_with_bots.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     #}elseif($global:playlist -eq "mp_first_deployment"){
     #                    Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-    #                    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+    #                    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"mapcycle.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     }elseif($global:playlist -eq "mp_special_assignments"){
                             Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-                            ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_special_assignments.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+                            ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "// Playlist","mapcyclefile `"Mapcycle_mp_special_assignments.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     #}elseif($global:playlist -eq "conquer"){
     #                            Write-Host "edit nwi/$global:playlist in server.cfg" -ForegroundColor Magenta
-    #                            ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_conquer.txt`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+    #                            ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "//mapcyclefile `"mapcycle.txt`"","mapcyclefile `"mapcycle_conquer.txt`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     #}elseif($null -eq $global:playlist) {
     #                                Write-Host "entered blank or null" -ForegroundColor Red
     }
@@ -115,7 +114,7 @@ Function Set-Gamemodedoi {
     $global:playlist = Read-Host 
     if(($global:playlist -eq "coop_commando") -or ($global:playlist -eq "coop") -or ($global:playlist -eq "mp_battles") -or ($global:playlist -eq "mp_casual_with_bots") -or ($global:playlist -eq "mp_special_assignments")) {
     Write-Host "Editing nwi/$global:playlist playlist in server.cfg" -ForegroundColor Magenta
-    ((Get-Content -path $global:currentdir\$global:server\doi\cfg\server.cfg -Raw) -replace "`"sv_playlist`" 		  `"nwi/coop`"","sv_playlist `"nwi/$global:playlist`"") | Set-Content -Path $global:currentdir\$global:server\doi\cfg\server.cfg
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "`"sv_playlist`" 		  `"nwi/coop`"","sv_playlist `"nwi/$global:playlist`"") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
     Get-Playlistdoi}else{
     Write-Host " mode does not exist" -ForegroundColor Yellow
     Set-Gamemodedoi }
