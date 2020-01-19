@@ -208,7 +208,7 @@ Function New-LaunchScriptforestserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\TheForestDedicatedServer.exe -serverip `$global:IP -serversteamport `$global:STEAMPORT -servergameport `$global:PORT -serverqueryport `$global:QUERYPORT -servername '`$global:HOSTNAME' -serverplayers `$global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics" # -nosteamclient"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\TheForestDedicatedServer.exe -serverip `$global:IP -serversteamport `$global:STEAMPORT -servergameport `$global:PORT -serverqueryport `$global:QUERYPORT -servername `"`$global:HOSTNAME`" -serverplayers `$global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics" # -nosteamclient"
     #-serverip xxx.xxx.xxx.xxx -serversteamport 8766 -servergameport 27015 -serverqueryport 27016 -servername TheForestGameDS -serverplayers 8 -difficulty Normal -inittype Continue -slot 1
 }
 
