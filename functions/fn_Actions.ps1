@@ -926,6 +926,9 @@ Function Read-AppID {
     } elseif($global:AppID -eq 17515){
     Set-Console  >$null 2>&1
     New-LaunchScriptAoCserverPS
+    } elseif($global:AppID -eq 302550){
+    Set-Console  >$null 2>&1
+    New-LaunchScriptacserverPS
     } else {
     Write-Host "No Launch Script Found for this server" -ForegroundColor Yellow -BackgroundColor Black
     exit}

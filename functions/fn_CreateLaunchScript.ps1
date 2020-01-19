@@ -159,6 +159,7 @@ Function  New-LaunchScriptavserverPS {
 Function New-LaunchScriptboundelserverPS {
         # Boundel Server
         #$global:game = "world"
+        $global:GAME = "protocol-valve"
         $global:PROCESS = "world"
         Get-StopServerInstall
 
@@ -204,7 +205,7 @@ Function New-LaunchScriptAoCserverPS {
         $global:servercfgdir = "ageofchivalry\cfg"
         ${gamedirname}="AgeOfChivalry"
         ${config1}="server.cfg"
-        
+
         Get-StopServerInstall
 
         Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -237,4 +238,20 @@ Function New-LaunchScriptAoCserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\aoc.exe -console -game ageofchivalry -secure +map `$global:MAP -autoupdate +log on +maxplayers `$global:MAXPLAYERS -port `$global:PORT +ip `${global:IP} +exec server.cfg"
+}
+
+
+Function New-LaunchScriptacserverPS {
+        # Assetto Corsa Dedicated Server
+        # 	302550
+        # https://www.assettocorsa.net/forum/index.php?faq/dedicated-server-manual.28/
+        $global:GAME = "protocol-valve"
+        $global:PROCESS = "acServer"
+        Get-StopServerInstall
+
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
+        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Assetto Corsa\Server"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\acServer.bat"
 }
