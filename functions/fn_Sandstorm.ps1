@@ -1,8 +1,14 @@
 Function New-LaunchScriptInssserverPS {
         #----------   INS: Sandstorm Server CFG  -------------------
-        $global:GAME="insurgencysandstorm"
+        # - - - - - - - - - - - -
+        $global:EXEDIR=""
+        $global:GAME = "insurgencysandstorm"
         $global:PROCESS = "InsurgencyServer-Win64-Shipping"
+        $global:SERVERCFGDIR = ""
+    
         Get-StopServerInstall
+        # - - - - - - - - - - - -
+
         
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black 
         if(($global:SCENARIO = Read-Host -Prompt (Write-Host "Input Server Scenario, Press enter to accept default value [Scenario_Outskirts_Checkpoint_Security]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SCENARIO="Scenario_Outskirts_Checkpoint_Security"}else{$global:SCENARIO}
