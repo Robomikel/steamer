@@ -1,11 +1,26 @@
 Function New-LaunchScriptArkPS {
-    $global:GAME="arkse"
+        # Ark: Survival Evolved Server
+    # - - - - - - - - - - - -
+    $global:EXEDIR="ShooterGame\Binaries\Win64"
+    $global:GAME = "arkse"
     $global:PROCESS = "ShooterGameServer"
+    $global:SERVERCFGDIR = "ShooterGame\Saved\Config\WindowsServer"
+    
     Get-StopServerInstall
     
-    ${gamedirname}="ARKSurvivalEvolved"
-    ${config1}="GameUserSettings.ini"
-    $ArkWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
+    $global:gamedirname="ARKSurvivalEvolved"
+    $global:config1="GameUserSettings.ini"
+    #$global:config2="LinuxServer-KFEngine.ini"
+    #$global:config3="LinuxServer-KFGame.ini"
+    #$global:config4="LinuxServer-KFInput.ini"
+    #$global:config5="LinuxServer-KFSystemSettings.ini"
+
+    #Remove-item $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-*.ini -Force  >$null 2>&1
+    Get-Servercfg
+    #Set-Location $global:currentdir\$global:server\$global:SERVERCFGDIR
+    #Get-ChildItem -Filter "LinuxServer-*.ini" -Recurse | Rename-Item -NewName {$_.name -replace 'LinuxServer','PCServer'} -Force
+    # - - - - - - - - - - - - -
+
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
     Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
     ${global:IP} = Read-host
@@ -17,11 +32,11 @@ Function New-LaunchScriptArkPS {
     if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [70]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="70"}else{$global:MAXPLAYERS}
     Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
     $global:HOSTNAME = Read-host
-    Write-Host "***  Copying Default GameUserSettings.ini  ***" -ForegroundColor Magenta -BackgroundColor Black
-    New-Item $global:currentdir\$global:server\ShooterGame\Saved\Config\WindowsServer\GameUserSettings.ini -Force
-    Add-Content $global:currentdir\$global:server\ShooterGame\Saved\Config\WindowsServer\GameUserSettings.ini $ArkWebResponse
+    #Write-Host "***  Copying Default GameUserSettings.ini  ***" -ForegroundColor Magenta -BackgroundColor Black
+    #New-Item $global:currentdir\$global:server\$global:SERVERCFGDIR\GameUserSettings.ini -Force
+    #Add-Content $global:currentdir\$global:server\$global:SERVERCFGDIR\GameUserSettings.ini $ArkWebResponse
     Write-Host "***  Adding Server Name to Default GameUserSettings.ini  ***" -ForegroundColor Magenta -BackgroundColor Black
-    ((Get-Content -path $global:currentdir\$global:server\ShooterGame\Saved\Config\WindowsServer\GameUserSettings.ini -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\ShooterGame\Saved\Config\WindowsServer\GameUserSettings.ini
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\GameUserSettings.ini -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\GameUserSettings.ini
     Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
