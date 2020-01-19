@@ -5,7 +5,6 @@ Function New-LaunchScriptKF2serverPS {
     $global:GAME = "killingfloor2"
     $global:PROCESS = "KFserver"
     $global:SERVERCFGDIR = "\KFGame\Config"
-    $global:EXIDIR=""
     #$global:SERVERCFG="server.cfg"
     
     Get-StopServerInstall
