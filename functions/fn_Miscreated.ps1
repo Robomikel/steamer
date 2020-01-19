@@ -1,8 +1,16 @@
 Function New-LaunchScriptMiscreatedPS {
         #----------   Miscreated Server CFG  -------------------
+        $global:MODDIR=""
+        $global:EXEDIR=""
         $global:GAME = "protocol-valve"
         $global:PROCESS = "MiscreatedServer"
+        $global:SERVERCFGDIR = ""
+        
         Get-StopServerInstall
+        $global:gamedirname=""
+        $global:config1=""
+        # Get-Servercfg
+        # - - - - - - - - - - - - -
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
