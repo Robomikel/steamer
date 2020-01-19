@@ -201,22 +201,40 @@ Function New-LaunchScriptAoCserverPS {
         # 17515	
         $global:GAME = "ageofchivalry"
         $global:PROCESS = "aoc"
+        $global:servercfgdir = "ageofchivalry\cfg"
+        ${gamedirname}="AgeOfChivalry"
+        ${config1}="server.cfg"
+        
         Get-StopServerInstall
+
+        Write-Host "***  Copying Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+        #(New-Object Net.WebClient).DownloadFile("$githuburl/${gamedirname}/${config1}", "$global:currentdir\$global:server\$global:servercfgdir\${config1}")
+        $aocWebResponse=Invoke-WebRequest "$githuburl/${gamedirname}/${config1}"
+        New-Item $global:currentdir\$global:server\$global:servercfgdir\${config1} -Force
+        Add-Content $global:currentdir\$global:server\$global:servercfgdir\${config1} $aocWebResponse
+
+        if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map,Press enter to accept default value [aoc_siege]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="aoc_siege"}else{$global:MAP}
+        if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [32]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="32"}else{$global:MAXPLAYERS}
+        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+        ${global:IP} = Read-Host
+        if((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
+
+        Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
+        $global:HOSTNAME = Read-host
+        if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
+        $global:RCONPORT="${global:PORT}"
+
+        Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:servercfgdir\${config1} -Raw) -replace "\bSERVERNAME\b","$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:servercfgdir\${config1}
+        ((Get-Content -path $global:currentdir\$global:server\$global:servercfgdir\${config1} -Raw) -replace "\bADMINPASSWORD\b","$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:servercfgdir\${config1}
 
         Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\aoc.exe" >$null 2>&1
-    #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\aoc_x64.exe" >$null 2>&1
-    if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map,Press enter to accept default value [aoc_siege]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="aoc_siege"}else{$global:MAP}
-    if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [32]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="32"}else{$global:MAXPLAYERS}
-    Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-    ${global:IP} = Read-Host
-    if((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27015"}else{$global:PORT}
-    Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
-    New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\aoc.exe -console -game ageofchivalry -secure +map $global:MAP -autoupdate +log on +maxplayers $global:MAXPLAYERS -port $global:PORT +ip ${global:IP} +exec server.cfg"
-
-
-
+        #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\aoc_x64.exe" >$null 2>&1
+    
+        Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
+        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\aoc.exe -console -game ageofchivalry -secure +map `$global:MAP -autoupdate +log on +maxplayers `$global:MAXPLAYERS -port `$global:PORT +ip `${global:IP} +exec server.cfg"
 }
