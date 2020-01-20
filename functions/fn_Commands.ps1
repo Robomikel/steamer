@@ -95,7 +95,8 @@ Function Select-Steamer {
     Get-ServerBuildCheck
     Select-launchServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "start"){
     Get-FolderNames
     Get-createdvaribles
@@ -105,7 +106,8 @@ Function Select-Steamer {
     Get-ServerBuildCheck
     Select-launchServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "stop") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server stop, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -115,14 +117,16 @@ Function Select-Steamer {
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
     Get-StopServer
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "stop"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
     Get-StopServer
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "restart") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server restart, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -136,7 +140,8 @@ Function Select-Steamer {
     Get-ServerBuildCheck
     Get-RestartsServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "restart"){
     Get-FolderNames
     Get-createdvaribles
@@ -147,7 +152,8 @@ Function Select-Steamer {
     Get-ServerBuildCheck
     Get-RestartsServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}  
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "check") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server check: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -156,13 +162,15 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars 
     Get-CheckServer
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "check"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Get-CheckServer
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "backup") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server backup: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -196,13 +204,15 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars
     Set-MonitorJob
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "monitor"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Set-MonitorJob
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "AutoRestart") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for AutoRestart: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -211,13 +221,15 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars 
     Set-RestartJob
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "AutoRestart"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Set-RestartJob
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "gamedig") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -228,10 +240,12 @@ Function Select-Steamer {
     Get-NodeJS
     if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
     Get-GamedigServerQ
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     exit}
     Get-GamedigServer
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "gamedig"){
     Get-NodeJS
     Get-FolderNames
@@ -239,10 +253,12 @@ Function Select-Steamer {
     Get-CheckForVars
     if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
     Get-GamedigServerQ
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     exit}
     Get-GamedigServer
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "gamedigPrivate") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -253,10 +269,12 @@ Function Select-Steamer {
     Get-NodeJS
     if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
     Get-GamedigServerQPrivate
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     exit}
     Get-GamedigServerPrivate
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "gamedigPrivate"){
     Get-FolderNames
     Get-createdvaribles
@@ -264,10 +282,12 @@ Function Select-Steamer {
     Get-NodeJS
     if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
     Get-GamedigServerQPrivate
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     exit}
     Get-GamedigServerPrivate
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "mcrcon") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for mcrcon: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -277,14 +297,16 @@ Function Select-Steamer {
     Get-CheckForVars
     Get-MCRcon 
     set-connectMCRcon
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "mcrcon"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Get-MCRcon
     set-connectMCRcon
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif(($global:command -eq "mcrconPrivate") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for mcrcon: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -294,20 +316,23 @@ Function Select-Steamer {
     Get-CheckForVars
     Get-MCRcon 
     set-connectMCRconP
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "mcrconPrivate"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Get-MCRcon
     set-connectMCRconP
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "discord"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     New-DiscordAlert
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     }elseif($global:command -eq "exit"){
     exit
     }elseif(($global:command -eq "steamer") -and ($global:server -eq "update")){

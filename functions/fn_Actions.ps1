@@ -57,6 +57,13 @@ Function Get-createdvaribles {
     .$global:currentdir\$global:server\Variables-$global:server.ps1
     Get-CheckForError
 }
+Function Get-ClearVariables {
+    Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black
+    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR"
+    Foreach($global:vars in $global:vars){
+    Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue}
+}
 Function Get-ClearVars {
     Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black 
     # might have to change process name
@@ -530,7 +537,8 @@ Function New-TryagainN {
     exit}
 }
 Function Get-Finished {
-    Get-ClearVars
+    Get-ClearVariables
+    #Get-ClearVars
     write-Host "*************************************" -ForegroundColor Yellow
     write-Host "***  Server $global:command is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
     write-Host "*************************************" -ForegroundColor Yellow
@@ -541,8 +549,10 @@ Function New-CreateVariables {
     New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# WEBHOOK HERE - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WEBHOOK = `"$global:WEBHOOK`""
-    if ($global:MODDIR) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe dir - - \/  \/  \/"
+    if ($global:MODDIR) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Mod dir - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MODDIR = `"$global:MODDIR`""}
+    if ($global:EXEDIR) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  exe dir - - \/  \/  \/"
+    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MODDIR = `"$global:EXEDIR`""}
     if ($global:GAME) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Game name used by Gamedig - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:GAME`""}
     if ($global:PROCESS) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  PROCESS name - - \/  \/  \/"
