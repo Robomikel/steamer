@@ -57,81 +57,11 @@ Function Get-createdvaribles {
     .$global:currentdir\$global:server\Variables-$global:server.ps1
     Get-CheckForError
 }
-Function Get-ClearVars {
-    Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black 
-    # might have to change process name
-    Clear-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable IP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable PORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable SOURCETVPORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable CLIENTPORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable MAP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable TICKRATE -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable GSLT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable MAXPLAYERS -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable WORKSHOP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable HOSTNAME -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable QUERYPORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable SAVES -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable APPID -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable RCONPORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable RCONPASSWORD -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable SV_PURE -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable SCENARIO -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable GAMETYPE -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable GAMEMODE -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable MAPGROUP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable WSCOLLECTIONID -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable WSSTARTMAP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable WSAPIKEY -Scope Global -ErrorAction SilentlyContinue
-    #Remove-Variable *  -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SERVERCFGDIR -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable gamedirname -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config1 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config2 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config3 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config4 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config5 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MODDIR -Scope Global -ErrorAction SilentlyContinue
-    # might have to change process name
-    Remove-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable IP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable PORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SOURCETVPORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable CLIENTPORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MAP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable TICKRATE -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GSLT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MAXPLAYERS -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WORKSHOP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable HOSTNAME -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable QUERYPORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SAVES -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable APPID -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable RCONPORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable RCONPASSWORD -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SV_PURE -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SCENARIO -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GAMETYPE -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GAMEMODE -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MAPGROUP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WSCOLLECTIONID -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WSSTARTMAP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WSAPIKEY -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SERVERCFGDIR -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable gamedirname -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config1 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config2 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config3 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config4 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config5 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MODDIR -Scope Global -ErrorAction SilentlyContinue
+Function Get-ClearVariables {
+    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR"
+    Foreach($global:vars in $global:vars){
+    Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue}
 }
 Function Select-launchServer {
     Write-Host '*** Starting Launch script *****' -ForegroundColor Yellow -BackgroundColor Black  
@@ -530,7 +460,7 @@ Function New-TryagainN {
     exit}
 }
 Function Get-Finished {
-    Get-ClearVars
+    Get-ClearVariables
     write-Host "*************************************" -ForegroundColor Yellow
     write-Host "***  Server $global:command is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
     write-Host "*************************************" -ForegroundColor Yellow
