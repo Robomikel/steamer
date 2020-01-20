@@ -283,7 +283,7 @@ Function New-LaunchScriptasserverPS {
 
         Get-StopServerInstall
 
-        Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
+        Write-Host "***  Renaming srcds.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\asds.exe" >$null 2>&1
         #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\asds_x64.exe" >$null 2>&1
 
@@ -293,7 +293,6 @@ Function New-LaunchScriptasserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\asds.exe -console -game swarm +map lobby -maxplayers 4 -autoupdate"
 }
-
 #Function New-LaunchScriptTEMPLATEserverPS {
         # TEMPLATE Server
         #       ADD ID #
@@ -321,3 +320,4 @@ Function New-LaunchScriptasserverPS {
         #dd-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\TEMP.exe -console -game swarm +map lobby -maxplayers 4 -autoupdate"
 #}
+
