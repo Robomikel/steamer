@@ -530,7 +530,8 @@ Function New-TryagainN {
     exit}
 }
 Function Get-Finished {
-    Get-ClearVars
+    #Get-ClearVars
+    Get-ClearVariables
     write-Host "*************************************" -ForegroundColor Yellow
     write-Host "***  Server $global:command is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
     write-Host "*************************************" -ForegroundColor Yellow
@@ -593,6 +594,12 @@ Function New-CreateVariables {
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSSTARTMAP= `"$global:WSSTARTMAP`""}
     if ($global:AppID -eq 740) {Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSAPIKEY   - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSAPIKEY = `"$global:WSAPIKEY`""}
+}
+Function Get-ClearVariables {
+    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR"
+    Foreach($global:vars in $global:vars){
+    Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue}
 }
 Function Get-SourceMetMod {
     $title    = 'Download MetaMod and SourceMod'
