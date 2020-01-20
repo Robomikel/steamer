@@ -18,6 +18,7 @@ Install steam server ```>_./steamer install misserver```
  - Asks and uses Steaminfo.db App ID -
  - uses anon or steam login for install         
  - Creates Launch Script - per App ID, if exists.
+ - Creates per instance variables
  - Creates custom default config for server- if available 
    * Miscreated Server (302200) - "misserver" (optional server folder name) 
    * 7 Days to Die server (294420) - "sdtdserver" (optional server folder name)  
@@ -27,17 +28,19 @@ Install steam server ```>_./steamer install misserver```
    * Arma3 Server (233780)- “arma3server" (optional server folder name)
    * ARK: Survival Evolved Dedicated Server (376030)- “arkserver" (optional server folder name)
    * Day of Infamy Dedicated Server (462310)- “doiserver" (optional server folder name)
-   * Killing Floor 2 - Dedicated Server (232130)
-   * Empyrion - Galactic Survival Dedicated Server (530870)
-   * Conan Exiles Dedicated Server (443030)
-   * The Forest Dedicated Server (556450)
-   # untested Branch
-   * Counter-Strike Global Offensive - Dedicated Server (740)
+   * Killing Floor 2 - Dedicated Server (232130) "kf2server" (optional server folder name)
+   * Empyrion - Galactic Survival Dedicated Server (530870) "empserver" (optional server folder name)
+   * Conan Exiles Dedicated Server (443030) "ceserver" (optional server folder name)
+   * The Forest Dedicated Server (556450) "forestserver" (optional server folder name)
+   * Counter-Strike Global Offensive - Dedicated Server (740) "csgoserver" (optional server folder name)
+   * Left 4 Dead 2 - Dedicated Server (222860) "lfd2server" (optional server folder name)
+   * Age of Chivalry Dedicated Server (17515)  "aocserver" (optional server folder name)
+   # untested
    * Avorion - Dedicated Server (565060)
    * Boundel - Dedicated Server (454070)
-   * Left 4 Dead 2 - Dedicated Server (222860)
+   * Assetto Corsa Dedicated Server (302550)
+   * Alien Swarm Dedicated Server (17515)
    -----
- - Creates Launch, Monitor, per serverfolder/instance variables, and Discord PS scripts.
  - Manage Steam server with features
    * install steam server
    * starting server 
@@ -47,7 +50,9 @@ Install steam server ```>_./steamer install misserver```
    * update server
    * validate server files 
    * backup server files 
-   * monitor server process 
+   * monitor server process
+   * Rcon to server 
+   * Daily AutoRestart server process 
    * send discord alert 
    * run gamedig on hosted server 
    * update steamer PS scripts from github  
@@ -59,30 +64,37 @@ Install steam server ```>_./steamer install misserver```
  - ```check <serverFolder>``` - ```>_./steamer check misserver``` - checks process for miscreated server
  - ```update <serverFolder>``` - ```>_./steamer update misserver``` - updates App ID
  - ```backup <serverFolder>``` - ```>_./steamer backup misserver``` - Creates zip folder of server files in backups folder (Downloads portable 7Zip)
- - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task with monitor and Discord scripts 
+ - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task to start server if off, with  Discord alert
+ - ```discord <serverFolder>``` - ```>_./steamer discord misserver``` -  * Discord Alert * -command will send test alert. requires Discord webhook
+ - ```AutoRestart <serverFolder>``` - ```>_./steamer AutoRestart misserver``` - Creates Scheduled Task for Daily Auto Restart
+ - ```MCRcon <serverFolder>``` - ```>_./steamer mcrcon inssserver``` - Uses MCRcon. Rcon to server (Downloads MCRcon)
+  - ```MCRconPrivate <serverFolder>``` - ```>_./steamer mcrconPrivate inssserver``` - Uses MCRcon. Rcon to server via Private IP (Downloads MCRcon)
  - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```gamedigPrivate <serverFolder>``` - ```>_./steamer gamedigPrivate sdtdserver``` * Uses Private IP. not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
- - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
-# Other Functions:
- * Monitor * monitor script in server folder as scheduled task to check process and start if needed, Send Discord Alert
- * Discord Alert * Discord script in server folder. requires Discord webhook
- 
+ - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files 
  # Mod
  * Insurgency - option for sourcemod and Meta Mod install
  * Rust - option for Oxide install
+ * Counter-Strike Global Offensive - option for sourcemod and Meta Mod install
+ * Left 4 Dead 2 - Dedicated Server - option for sourcemod and Meta Mod install
   # MCRcon
  * MCRcon Download and Install
- * Use with supported Servers
-  - Ark S.E.
-  - Conan Exiles
-  - Insurgency: Sandstorm
+ * Use used to Rcon to servers.
  
-
-- - - -
+- - - - 
  When creating a Schedule task to run Monitor script.
 - If using a user windows account. Will need to add user to the "log on as batch job" to run the task under that account
 - - - - 
  Does not install Dependencies like Visual C++ Redistributable or Direct X
  
  Does not Forward ports or open ports on firewall
+- - - - 
+ # MCRCON
+https://github.com/Tiiffi/mcrcon
+# GameDig
+https://github.com/sonicsnes/node-gamedig
+# Game Server Managers (my inspiration)
+Game server configs from
+https://github.com/GameServerManagers
+ "open source, open mind"
 

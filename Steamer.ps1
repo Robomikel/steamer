@@ -32,45 +32,46 @@ $global:sevenzip="https://www.7-zip.org/a/7za920.zip"
 $global:steamurl="https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $global:steamoutput="steamcmd.zip"
 # Steamer url
-#$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
-$global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
+$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
+#$global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
 # mcrcon
 $global:mcrconurl="https://github.com/Tiiffi/mcrcon/releases/download/v0.7.1/mcrcon-0.7.1-windows-x86-32.zip"
+
+$global:RANDOMPASSWORD = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 11 | ForEach-Object {[char]$_})
+
+$global:SMILEY_WHITE = ([char]9786)
+$global:SMILEY_BLACK = ([char]9787)
+$global:GEAR = ([char]9788)
+$global:HEART = ([char]9829)
+$global:DIAMOND = ([char]9830)
+$global:CLUB = ([char]9827)
+$global:SPADE = ([char]9824)
+$global:CIRCLE = ([char]8226)
+$global:NOTE1 = ([char]9834)
+$global:NOTE2 = ([char]9835)
+$global:CHECKMARK = ([char]8730) 
+
 .$global:currentdir\functions\fn_Actions.ps1
 .$global:currentdir\functions\fn_Ark.ps1
-.$global:currentdir\functions\fn_BackupServer.ps1
 .$global:currentdir\functions\fn_Commands.ps1
-.$global:currentdir\functions\fn_CreateDiscord.ps1
 .$global:currentdir\functions\fn_CreateLaunchScript.ps1
-.$global:currentdir\functions\fn_CreateMonitor.ps1
-.$global:currentdir\functions\fn_CreateMonitorJob.ps1
-.$global:currentdir\functions\fn_CreateServerFolder.ps1
-.$global:currentdir\functions\fn_CreateVariables.ps1
 .$global:currentdir\functions\fn_CSGO.ps1
 .$global:currentdir\functions\fn_DOI.ps1
-.$global:currentdir\functions\fn_InstallNodejs.ps1
-.$global:currentdir\functions\fn_InstallServer.ps1
-.$global:currentdir\functions\fn_InstallSteam.ps1
 .$global:currentdir\functions\fn_Insurgency.ps1
 .$global:currentdir\functions\fn_KF2Server.ps1
-.$global:currentdir\functions\fn_LaunchServer.ps1
 .$global:currentdir\functions\fn_Left4Dead2.ps1
 .$global:currentdir\functions\fn_Miscreated.ps1
 .$global:currentdir\functions\fn_Rust.ps1
-.$global:currentdir\functions\fn_Read_AppID.ps1
 .$global:currentdir\functions\fn_Sandstorm.ps1
-.$global:currentdir\functions\fn_SetConsole.ps1
-.$global:currentdir\functions\fn_SteamInfo.ps1
-.$global:currentdir\functions\fn_UpdateSteamer.ps1
-     
+.$global:currentdir\functions\fn_Settings.ps1
+Set-SteamerSetting
 Set-Console  >$null 2>&1
 
 Function Set-Steamer {
-If ($null -eq $global:command){
+If($null -eq $global:command){
 Select-Steamer 
-} else {
-Select-Steamer $global:command $global:server
-}
+}else{
+Select-Steamer $global:command $global:server}
 }
 Set-Steamer
 ##########################################################################
