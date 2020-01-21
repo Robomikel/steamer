@@ -218,7 +218,12 @@ Function Get-GamedigServerPrivatev2 {
 Function Get-details {
     $host.UI.RawUI.ForegroundColor = "Cyan"
     #$host.UI.RawUI.BackgroundColor = "Black"
-    $os = (Get-WMIObject win32_operatingsystem).name
+    $cpu = Get-WmiObject win32_processor
+    $CpuCores = (Get-WMIObject Win32_ComputerSystem).NumberOfLogicalProcessors
+    $avmem = (Get-WmiObject Win32_OperatingSystem | ForEach-Object {"{0:N2} GB" -f ($_.totalvisiblememorysize/ 1MB)})
+    $totalmem = "{0:N2} GB" -f ((get-process | Measure-Object Workingset -sum).Sum /1GB)
+    $mem = "{0:N2} GB" -f ((get-process $global:PROCESS | Measure-Object Workingset -sum).Sum /1GB)
+    $os = (Get-WMIObject win32_operatingsystem).caption
     $osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
     $bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
     $computername = (Get-WmiObject Win32_OperatingSystem).CSName
@@ -237,7 +242,6 @@ Function Get-details {
     $status = "**** RUNNING ***"}
     $backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
     $backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s).Sum /1GB)
-    #$backupssize =  (gci $global:currentdir\backups | measure Length -s).Sum /1GB
     $objectProperty = [ordered]@{
 
         "Server Name"       = $HOSTNAME
@@ -250,6 +254,11 @@ Function Get-details {
         "Webhook"           = $WEBHOOK
         "Process"           = $PROCESS
         "Process status"    = $status
+        "CPU Cores"         = $CpuCores
+        "CPU % Per"         = $cpu.loadpercentage
+        "Available Mem"     = $avmem
+        "Total Mem Usage"   = $totalmem
+        "Mem usage Process" = $mem
         "Backups"           = $backups.count
         "Backups size GB"   = $backupssize
         "Status"            = $stats
