@@ -55,7 +55,8 @@ Install steam server ```>_./steamer install misserver```
    * Daily AutoRestart server process 
    * send discord alert 
    * run gamedig on hosted server 
-   * update steamer PS scripts from github  
+   * update steamer PS scripts from github
+   * get details from host and server (untested branch)
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
  - ```Stop <serverFolder>``` - ```>_./steamer stop misserver``` - stop process for miscreated server
