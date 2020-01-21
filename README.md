@@ -55,7 +55,8 @@ Install steam server ```>_./steamer install misserver```
    * Daily AutoRestart server process 
    * send discord alert 
    * run gamedig on hosted server 
-   * update steamer PS scripts from github  
+   * update steamer PS scripts from github
+   * get details from host and server (untested branch)
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
  - ```Stop <serverFolder>``` - ```>_./steamer stop misserver``` - stop process for miscreated server
@@ -71,8 +72,8 @@ Install steam server ```>_./steamer install misserver```
   - ```MCRconPrivate <serverFolder>``` - ```>_./steamer mcrconPrivate inssserver``` - Uses MCRcon. Rcon to server via Private IP (Downloads MCRcon)
  - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```gamedigPrivate <serverFolder>``` - ```>_./steamer gamedigPrivate sdtdserver``` * Uses Private IP. not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
- - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files 
- # Mod
+ - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
+  - ```details <serverFolder>``` - ```>_./steamer details sdtdserver```  - outputs host and server details (untested branch).requires gamedig. 
  * Insurgency - option for sourcemod and Meta Mod install
  * Rust - option for Oxide install
  * Counter-Strike Global Offensive - option for sourcemod and Meta Mod install
