@@ -314,5 +314,6 @@ Function Select-Steamer {
     Write-Host "mcrconPrivate"
     Write-Host "AutoRestart"
     Write-Host "discord"
+    Write-Host "details"
     Write-Host "steamer update"}
 }

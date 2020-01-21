@@ -216,8 +216,17 @@ Function Get-GamedigServerPrivatev2 {
 #    Set-Location $global:currentdir
 #}
 Function Get-details {
+    $host.UI.RawUI.ForegroundColor = "Cyan"
+    #$host.UI.RawUI.BackgroundColor = "Black"
+    $os = (Get-WMIObject win32_operatingsystem).name
+    $osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
+    $bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
+    $computername = (Get-WmiObject Win32_OperatingSystem).CSName
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+    if($null -ne ${global:QUERYPORT}) {${global:PORT} = ${global:QUERYPORT}}
+    $gameresponse = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
     $stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
+    Get-createdvaribles
     if($Null -eq $stats){
     $stats =  "----Offline----"
     }else{
@@ -232,6 +241,7 @@ Function Get-details {
     $objectProperty = [ordered]@{
 
         "Server Name"       = $HOSTNAME
+        "Public IP"         = $EXTIP
         "IP"                = $IP
         'Port'              = $PORT
         "Query Port"        = $QUERYPORT
@@ -240,39 +250,36 @@ Function Get-details {
         "Webhook"           = $WEBHOOK
         "Process"           = $PROCESS
         "Process status"    = $status
-        "Public IP"         = $EXTIP
         "Backups"           = $backups.count
         "Backups size GB"   = $backupssize
         "Status"            = $stats
+        "game replied"      = $gameresponse
+        "OS"                = $os
+        "hostname"          = (Get-WmiObject Win32_OperatingSystem).CSName  
+
     }
     $details = New-Object -TypeName psobject -Property $objectProperty
     $details
+    #Get-WmiObject -Class Win32_Product -Filter "Name LIKE '%Visual C++ 2010%'"
 }
 function Get-DriveSpace {
-    $pc = "$env:COMPUTERNAME"
-
-    $disks = get-wmiobject -class "Win32_LogicalDisk" -namespace "root\CIMV2" -computername $pc
-    
-    $results = foreach ($disk in $disks)
-    {
-        if ($disk.Size -gt 0)
-        {
+    $disks = get-wmiobject -class "Win32_LogicalDisk" -namespace "root\CIMV2" -computername $env:COMPUTERNAME
+    $results = foreach ($disk in $disks){
+        if ($disk.Size -gt 0){
             $size = [math]::round($disk.Size/1GB, 0)
             $free = [math]::round($disk.FreeSpace/1GB, 0)
             [PSCustomObject]@{
                 Drive = $disk.Name
                 Name = $disk.VolumeName
                 "Total Disk Size GB" = $size
-                "Free Disk Size" = "{0:N0} ({1:P0})" -f $free, ($free/$size)
-            }
+                "Free Disk Size" = "{0:N0} ({1:P0})" -f $free, ($free/$size)}
         }
     }
-    # Sample outputs
     #$results | Out-GridView
     $results | Format-Table -AutoSize
     #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
     Set-Location $global:currentdir
-    }
+}
 Function Start-Countdown {
     Param(
     [Int32]$Seconds = 10,
