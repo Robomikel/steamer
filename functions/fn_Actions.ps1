@@ -59,7 +59,7 @@ Function Get-createdvaribles {
 }
 Function Get-ClearVariables {
     Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black
-    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR"
+    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR","status","CpuCores","cpu","avmem","totalmem","mem","backups","backupssize","stats","gameresponse","os","results,","disks","computername"
     Foreach($global:vars in $global:vars){
     Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue}
@@ -228,17 +228,56 @@ Function Get-Steamtxt {
     Set-Location $global:currentdir
     Exit}
 }
-Function Get-GamedigServer {
+Function Get-GamedigServerv2 {
     Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
+    if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {
+    Write-Host '*** Using QUERYPORT  *****' -ForegroundColor Yellow -BackgroundColor Black
+    # Executes when the Boolean expression 1 is true
+    if(($null -eq ${global:QUERYPORT} ) -or ("" -eq ${global:QUERYPORT} )){
+    Write-Host '*** Missing QUERYPORT Var! *****' -ForegroundColor Red -BackgroundColor Black
+    # Executes when the Boolean expression 2 is true
+    }Else{
+    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+    .\gamedig --type $global:GAME ${global:EXTIP}:${global:QUERYPORT} --pretty
+    Set-Location $global:currentdir}  
+    }ElseIf(($null -eq ${global:PORT}) -or ("" -eq ${global:PORT} )){
+    Write-Host '*** Missing PORT Var! *****' -ForegroundColor Red -BackgroundColor Black
+    }Else{
+    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+    .\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty
+    Set-Location $global:currentdir}
+     
+}
+
+Function Get-GamedigServer {
+   Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty
     Set-Location $global:currentdir
 }
 Function Get-GamedigServerQ {
     Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
-    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+   Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\gamedig --type $global:GAME ${global:EXTIP}:${global:QUERYPORT} --pretty
     Set-Location $global:currentdir
+}
+
+Function Get-GamedigServerPrivatev2 {
+    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
+    If (( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)){
+        Write-Host '*** Using QUERYPORT  *****' -ForegroundColor Yellow -BackgroundColor Black
+       if(($null -eq ${global:QUERYPORT} ) -or ("" -eq ${global:QUERYPORT} )){
+        Write-Host '*** Missing QUERYPORT Var! *****' -ForegroundColor Red -BackgroundColor Black
+       }Else{ 
+        Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
+           .\gamedig --type $global:GAME ${global:IP}:${global:QUERYPORT} --pretty
+           Set-Location $global:currentdir}
+    }ElseIf(($null -eq ${global:PORT}) -or ("" -eq ${global:PORT} )){
+        Write-Host '*** Missing PORT Var! *****' -ForegroundColor Red -BackgroundColor Black
+    }Else{
+    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
+    .\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty
+    Set-Location $global:currentdir}
 }
 Function Get-GamedigServerPrivate {
     Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
@@ -248,8 +287,82 @@ Function Get-GamedigServerPrivate {
 }
 Function Get-GamedigServerQPrivate {
     Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
-    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+   Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\gamedig --type $global:GAME ${global:IP}:${global:QUERYPORT} --pretty
+    Set-Location $global:currentdir
+}
+Function Get-details {
+    $host.UI.RawUI.ForegroundColor = "Cyan"
+    #$host.UI.RawUI.BackgroundColor = "Black"
+    $global:cpu = Get-WmiObject win32_processor
+    $global:CpuCores = (Get-WMIObject Win32_ComputerSystem).NumberOfLogicalProcessors
+    $global:avmem = (Get-WmiObject Win32_OperatingSystem | ForEach-Object {"{0:N2} GB" -f ($_.totalvisiblememorysize/ 1MB)})
+    $global:totalmem = "{0:N2} GB" -f ((get-process | Measure-Object Workingset -sum).Sum /1GB)
+    $global:mem = "{0:N2} GB" -f ((get-process $global:PROCESS | Measure-Object Workingset -sum).Sum /1GB)
+    $global:os = (Get-WMIObject win32_operatingsystem).caption
+    #$global:osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
+    #$global:bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
+    $global:computername = (Get-WmiObject Win32_OperatingSystem).CSName
+    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+    if($null -ne ${global:QUERYPORT}) {${global:PORT} = ${global:QUERYPORT}}
+    $global:gameresponse = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
+    $global:stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
+    Get-createdvaribles
+    if($Null -eq $global:stats){
+    $global:stats =  "----Offline----"
+    }else{
+    $global:stats = "**** Online ***"}
+    if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
+    $global:status =  "----NOT RUNNING----"
+    }else{
+    $global:status = "**** RUNNING ***"}
+    $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
+    $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s).Sum /1GB)
+    $objectProperty = [ordered]@{
+
+        "Server Name"       = $HOSTNAME
+        "Public IP"         = $EXTIP
+        "IP"                = $IP
+        'Port'              = $PORT
+        "Query Port"        = $QUERYPORT
+        "App ID"            = $APPID
+        "Game Dig"          = $GAME
+        "Webhook"           = $WEBHOOK
+        "Process"           = $PROCESS
+        "Process status"    = $status
+        "CPU Cores"         = $CpuCores
+        "CPU % Per"         = $cpu.loadpercentage
+        "Available Mem"     = $avmem
+        "Total Mem Usage"   = $totalmem
+        "Mem usage Process" = $mem
+        "Backups"           = $backups.count
+        "Backups size GB"   = $backupssize
+        "Status"            = $stats
+        "game replied"      = $gameresponse
+        "OS"                = $os
+        "hostname"          = $computername 
+
+    }
+    $global:details = New-Object -TypeName psobject -Property $objectProperty
+    $global:details
+    #Get-WmiObject -Class Win32_Product -Filter "Name LIKE '%Visual C++ 2010%'"
+}
+function Get-DriveSpace {
+    $global:disks = get-wmiobject -class "Win32_LogicalDisk" -namespace "root\CIMV2" -computername $env:COMPUTERNAME
+    $global:results = foreach ($disk in $disks){
+        if ($disk.Size -gt 0){
+            $size = [math]::round($disk.Size/1GB, 0)
+            $free = [math]::round($disk.FreeSpace/1GB, 0)
+            [PSCustomObject]@{
+                Drive = $disk.Name
+                Name = $disk.VolumeName
+                "Total Disk Size GB" = $size
+                "Free Disk Size" = "{0:N0} ({1:P0})" -f $free, ($free/$size)}
+        }
+    }
+    #$results | Out-GridView
+    $global:results | Format-Table -AutoSize
+    #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
     Set-Location $global:currentdir
 }
 Function Start-Countdown {
@@ -318,6 +431,18 @@ Function New-ServerFolder {
    Write-Host '*** Creating Server Folder *****' -ForegroundColor Magenta -BackgroundColor Black 
    New-Item -Path . -Name "$global:server" -ItemType "directory"}
 }
+Function Get-CheckForVars {
+    Write-Host "*** Checking for Vars ****" -ForegroundColor Yellow -BackgroundColor Black
+    $global:missingvars = ${global:QUERYPORT},${global:IP}
+    foreach($global:missingvars in $global:missingvars){
+    if ( "" -eq $global:missingvars){
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "Try install command again or check vars in Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    exit}
+    }
+}
 Function Get-CheckForError {
     if (!$?) {
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
@@ -336,7 +461,7 @@ Function Get-CheckForVars {
     exit}
 }
 Function set-connectMCRcon {
-    if(( "" -eq $global:RCONPORT) -or ( "" -eq $global:RANDOMPASSWORD)){
+    if(( "" -eq $global:RCONPORT) -or ( "" -eq $global:RCONPASSWORD)){
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
     Write-Host "Try install command again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
@@ -347,7 +472,7 @@ Function set-connectMCRcon {
     set-location $global:currentdir}
 }
 Function set-connectMCRconP {
-    if(( "" -eq $global:RCONPORT) -or ( "" -eq $global:RANDOMPASSWORD)){
+    if(( "" -eq $global:RCONPORT) -or ( "" -eq $global:RCONPASSWORD)){
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
     Write-Host "Try install command again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
@@ -442,7 +567,8 @@ Function Set-Console {
     $host.ui.RawUi.WindowTitle = "-------- STEAMER ------------"
     [console]::ForegroundColor="Green"
     [console]::BackgroundColor="Black"
-    $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(200,5000)
+    [console]::WindowWidth=150; [console]::WindowHeight=125; [console]::BufferWidth=[console]::WindowWidth
+    #$host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(200,5000)
     if ($global:admincheckmessage -eq "1") {
     Get-AdminCheck
     Get-logo
@@ -784,43 +910,43 @@ Function Set-RestartJob {
 Function Get-ChecktaskUnreg {
     Get-ScheduledTask -TaskName "$global:server $global:command" >$null 2>&1
     if ($?) {
-    Write-Host '*** Unregistering scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '**** Unregistering scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
     Unregister-ScheduledTask -TaskName "$global:server $global:command" >$null 2>&1}
     if (!$?) {
-    Write-Host "*** Scheduled Task does not exist ****" -ForegroundColor Yellow -BackgroundColor Black}
+    Write-Host "**** Scheduled Task does not exist ****" -ForegroundColor Yellow -BackgroundColor Black}
 }
 Function Get-ChecktaskDisable {
     Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
     if ($?) {
-    Write-Host '*** disabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '**** disabling scheduled task     *****' -ForegroundColor Magenta -BackgroundColor Black
     Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
     if (!$?) {
-    Write-Host "*** Scheduled Task does not exist ****" -ForegroundColor Yellow -BackgroundColor Black}
+    Write-Host "*** Scheduled Task does not exist  ****" -ForegroundColor Yellow -BackgroundColor Black}
 }
 Function Get-ChecktaskEnable {
     Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
     if ($?) {
-    Write-Host '*** Enabling scheduled task *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****    Enabling scheduled task   *****' -ForegroundColor Magenta -BackgroundColor Black
     Enable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
     if (!$?) {
-    write-host "*** Scheduled Task does not exist ****" -ForegroundColor Yellow -BackgroundColor Black}
+    write-host "**** Scheduled Task does not exist ****" -ForegroundColor Yellow -BackgroundColor Black}
 }
 Function New-BackupFolder {
     $path = "$global:currentdir\backups" 
     If(Test-Path $path) { 
-    Write-Host '***  Backup folder exists! ***' -ForegroundColor Yellow -BackgroundColor Black} 
+    Write-Host '****      Backup folder exists!     ***' -ForegroundColor Yellow -BackgroundColor Black} 
     Else {  
-    Write-Host '*** Creating backup folder *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****     Creating backup folder   *****' -ForegroundColor Magenta -BackgroundColor Black
     New-Item -Path "$global:currentdir\" -Name "backups" -ItemType "directory"}
 }
 Function New-BackupServer {
     $BackupDate = get-date -Format yyyyMMdd
-    Write-Host '*** Server Backup Started! *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****     Server Backup Started!   *****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
     #./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* -an > backup.log
     ./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* > backup.log
-    Write-Host '*** Server Backup is Done! *****' -ForegroundColor Yellow -BackgroundColor Black
-    write-host "*** Checking for alternate Save location (appData) ****" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '****     Server Backup is Done!    *****' -ForegroundColor Yellow -BackgroundColor Black
+    write-host "*** Checking Save location(appData) ****" -ForegroundColor Yellow -BackgroundColor Black
     if ($global:appdatabackup   -eq "1") {Get-savelocation}
     if ($global:backuplog   -eq "1") {.\backup.log}
     Set-Location $global:currentdir
@@ -829,28 +955,32 @@ Function Get-SevenZip {
     $path = "$global:currentdir\7za920\"
     $patha = "$global:currentdir\7za920\7za.exe"
     $pathb = "$global:currentdir\7za920.zip"
-    Write-Host '*** Checking for 7ZIP *****' -ForegroundColor Yellow -BackgroundColor Black   
+    Write-Host '****     Checking for 7ZIP        *****' -ForegroundColor Yellow -BackgroundColor Black   
     If((Test-Path $path) -and (Test-Path $patha) -and (Test-Path $pathb)) { 
-    Write-Host '*** 7Zip already downloaded! ****' -ForegroundColor Yellow -BackgroundColor Black}
+    Write-Host '****     7Zip already downloaded!  ****' -ForegroundColor Yellow -BackgroundColor Black}
     else {
-    write-host "*** 7Zip not found!  ****" -ForegroundColor Yellow -BackgroundColor Black
+    write-host "****       7Zip not found!         ****" -ForegroundColor Yellow -BackgroundColor Black
     add-sevenzip}  
 }
 Function add-sevenzip {
     $start_time = Get-Date
-    Write-Host '*** Downloading 7ZIP *****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '****     Downloading 7ZIP        *****' -ForegroundColor Magenta -BackgroundColor Black 
     #(New-Object Net.WebClient).DownloadFile("$global:sevenzip", "$global:currentdir\7za920.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:sevenzip -OutFile $global:currentdir\7za920.zip
-    if (!$?) {write-host "*** 7Zip Download Failed ****" -ForegroundColor Yellow -BackgroundColor Black 
+    if (!$?) {
+    write-host "****   7Zip Download Failed     *****" -ForegroundColor Yellow -BackgroundColor Black
     New-Tryagain}
-    if ($?) {write-host "*** 7Zip  Download succeeded ****" -ForegroundColor Yellow -BackgroundColor Black}
+    if ($?) {
+    write-host "****   7Zip  Download succeeded  ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host '***  Extracting 7ZIP *****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '****      Extracting 7ZIP      *****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\7za920.zip" "$global:currentdir\7za920\" -Force
-    if (!$?) {write-host "*** 7Zip files did not Extract  ****" -ForegroundColor Yellow -BackgroundColor Black
+    if (!$?) {
+    write-host "***  7Zip files did not Extract  ****" -ForegroundColor Yellow -BackgroundColor Black
     New-Tryagain}
-    if ($?) {write-host "*** 7Zip Extract succeeded ****" -ForegroundColor Yellow -BackgroundColor Black}
+    if ($?) {
+    write-host "****   7Zip Extract succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black}
 }
 Function New-Tryagain {
     $title    = 'Try again?'

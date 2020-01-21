@@ -333,6 +333,13 @@ Function Select-Steamer {
     New-DiscordAlert
     Get-ClearVariables
     #Get-ClearVars
+    }elseif($global:command -eq "details"){
+    Get-FolderNames
+    Get-createdvaribles
+    Get-CheckForVars
+    Get-details
+    Get-DriveSpace
+    Get-ClearVariables
     }elseif($global:command -eq "exit"){
     exit
     }elseif(($global:command -eq "steamer") -and ($global:server -eq "update")){
@@ -357,5 +364,6 @@ Function Select-Steamer {
     Write-Host "mcrconPrivate"
     Write-Host "AutoRestart"
     Write-Host "discord"
+    Write-Host "details"
     Write-Host "steamer update"}
 }
