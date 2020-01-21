@@ -46,9 +46,7 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
-    # Get-StopServer
      Get-UpdateServer 
-    #Get-ServerBuildCheck
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
     Get-Finished
     }elseif($global:command -eq "update"){
@@ -56,9 +54,7 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
-    # Get-StopServer
      Get-UpdateServer
-    #Get-ServerBuildCheck
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
     Get-Finished
     }elseif(($global:command -eq "validate") -and ($null -eq $global:server)){
@@ -90,8 +86,6 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars    
     Get-CheckServer
-    # Get-StopServer
-    # Get-UpdateServer
     Get-ServerBuildCheck
     Select-launchServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
@@ -101,7 +95,6 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars   
     Get-CheckServer
-    # Get-UpdateServer
     Get-ServerBuildCheck
     Select-launchServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
@@ -122,7 +115,7 @@ Function Select-Steamer {
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
     Get-StopServer
-    Get-ClearVariables
+    Get-ClearVariables 
     }elseif(($global:command -eq "restart") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for server restart, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
     $global:server = Read-host
@@ -132,7 +125,6 @@ Function Select-Steamer {
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
     Get-StopServer
-    # Get-UpdateServer
     Get-ServerBuildCheck
     Get-RestartsServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
@@ -143,7 +135,6 @@ Function Select-Steamer {
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
     Get-StopServer
-    # Get-UpdateServer
     Get-ServerBuildCheck
     Get-RestartsServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}  
@@ -226,22 +217,14 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars 
     Get-NodeJS
-    if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
-    Get-GamedigServerQ
-    Get-ClearVariables
-    exit}
-    Get-GamedigServer
+    Get-GamedigServerv2
     Get-ClearVariables
     }elseif($global:command -eq "gamedig"){
     Get-NodeJS
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
-    if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
-    Get-GamedigServerQ
-    Get-ClearVariables
-    exit}
-    Get-GamedigServer
+    Get-GamedigServerv2
     Get-ClearVariables
     }elseif(($global:command -eq "gamedigPrivate") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
@@ -251,22 +234,14 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars
     Get-NodeJS
-    if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
-    Get-GamedigServerQPrivate
-    Get-ClearVariables
-    exit}
-    Get-GamedigServerPrivate
+    Get-GamedigServerPrivatev2
     Get-ClearVariables
     }elseif($global:command -eq "gamedigPrivate"){
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
     Get-NodeJS
-    if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {  
-    Get-GamedigServerQPrivate
-    Get-ClearVariables
-    exit}
-    Get-GamedigServerPrivate
+    Get-GamedigServerPrivatev2
     Get-ClearVariables
     }elseif(($global:command -eq "mcrcon") -and ($null -eq $global:server)){
     Write-Host 'Server FolderName for mcrcon: ' -ForegroundColor Cyan -NoNewline
@@ -307,6 +282,13 @@ Function Select-Steamer {
     Get-createdvaribles
     Get-CheckForVars
     New-DiscordAlert
+    Get-ClearVariables
+    }elseif($global:command -eq "details"){
+    Get-FolderNames
+    Get-createdvaribles
+    Get-CheckForVars
+    Get-details
+    Get-DriveSpace
     Get-ClearVariables
     }elseif($global:command -eq "exit"){
     exit
