@@ -59,10 +59,86 @@ Function Get-createdvaribles {
 }
 Function Get-ClearVariables {
     Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black
-    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR"
+    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR"."status","CpuCores","cpu","avmem","totalmem","mem","backups","backupssize","stats","gameresponse","os","results,","disks"
     Foreach($global:vars in $global:vars){
     Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue}
+}
+Function Get-ClearVars {
+    Write-Host "*** Clearing Variables *****" -ForegroundColor Yellow -BackgroundColor Black 
+    # might have to change process name
+    Clear-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable IP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable PORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable SOURCETVPORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable CLIENTPORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable MAP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable TICKRATE -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable GSLT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable MAXPLAYERS -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable WORKSHOP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable HOSTNAME -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable QUERYPORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable SAVES -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable APPID -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable RCONPORT -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable RCONPASSWORD -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable SV_PURE -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable SCENARIO -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable GAMETYPE -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable GAMEMODE -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable MAPGROUP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable WSCOLLECTIONID -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable WSSTARTMAP -Scope Global -ErrorAction SilentlyContinue
+    Clear-Variable WSAPIKEY -Scope Global -ErrorAction SilentlyContinue
+    #Remove-Variable *  -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SERVERCFGDIR -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable gamedirname -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config1 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config2 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config3 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config4 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config5 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MODDIR -Scope Global -ErrorAction SilentlyContinue
+    # might have to change process name
+    Remove-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable IP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable PORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SOURCETVPORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable CLIENTPORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MAP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable TICKRATE -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GSLT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MAXPLAYERS -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WORKSHOP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable HOSTNAME -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable QUERYPORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SAVES -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable APPID -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable RCONPORT -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable RCONPASSWORD -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SV_PURE -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SCENARIO -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GAMETYPE -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GAMEMODE -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MAPGROUP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WSCOLLECTIONID -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WSSTARTMAP -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WSAPIKEY -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable SERVERCFGDIR -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable gamedirname -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config1 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config2 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config3 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config4 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable config5 -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable MODDIR -Scope Global -ErrorAction SilentlyContinue
 }
 Function Select-launchServer {
     Write-Host '*** Starting Launch script *****' -ForegroundColor Yellow -BackgroundColor Black  
@@ -218,30 +294,30 @@ Function Get-GamedigServerPrivatev2 {
 Function Get-details {
     $host.UI.RawUI.ForegroundColor = "Cyan"
     #$host.UI.RawUI.BackgroundColor = "Black"
-    $cpu = Get-WmiObject win32_processor
-    $CpuCores = (Get-WMIObject Win32_ComputerSystem).NumberOfLogicalProcessors
-    $avmem = (Get-WmiObject Win32_OperatingSystem | ForEach-Object {"{0:N2} GB" -f ($_.totalvisiblememorysize/ 1MB)})
-    $totalmem = "{0:N2} GB" -f ((get-process | Measure-Object Workingset -sum).Sum /1GB)
-    $mem = "{0:N2} GB" -f ((get-process $global:PROCESS | Measure-Object Workingset -sum).Sum /1GB)
-    $os = (Get-WMIObject win32_operatingsystem).caption
-    $osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
-    $bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
-    $computername = (Get-WmiObject Win32_OperatingSystem).CSName
+    $global:cpu = Get-WmiObject win32_processor
+    $global:CpuCores = (Get-WMIObject Win32_ComputerSystem).NumberOfLogicalProcessors
+    $global:avmem = (Get-WmiObject Win32_OperatingSystem | ForEach-Object {"{0:N2} GB" -f ($_.totalvisiblememorysize/ 1MB)})
+    $global:totalmem = "{0:N2} GB" -f ((get-process | Measure-Object Workingset -sum).Sum /1GB)
+    $global:mem = "{0:N2} GB" -f ((get-process $global:PROCESS | Measure-Object Workingset -sum).Sum /1GB)
+    $global:os = (Get-WMIObject win32_operatingsystem).caption
+    $global:osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
+    $global:bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
+    $global:computername = (Get-WmiObject Win32_OperatingSystem).CSName
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     if($null -ne ${global:QUERYPORT}) {${global:PORT} = ${global:QUERYPORT}}
-    $gameresponse = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
-    $stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
+    $global:gameresponse = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
+    $global:stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
     Get-createdvaribles
-    if($Null -eq $stats){
-    $stats =  "----Offline----"
+    if($Null -eq $global:stats){
+    $global:stats =  "----Offline----"
     }else{
-    $stats = "**** Online ***"}
+    $global:stats = "**** Online ***"}
     if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
-    $status =  "----NOT RUNNING----"
+    $global:status =  "----NOT RUNNING----"
     }else{
-    $status = "**** RUNNING ***"}
-    $backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
-    $backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s).Sum /1GB)
+    $global:status = "**** RUNNING ***"}
+    $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
+    $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s).Sum /1GB)
     $objectProperty = [ordered]@{
 
         "Server Name"       = $HOSTNAME
@@ -267,13 +343,13 @@ Function Get-details {
         "hostname"          = (Get-WmiObject Win32_OperatingSystem).CSName  
 
     }
-    $details = New-Object -TypeName psobject -Property $objectProperty
-    $details
+    $global:details = New-Object -TypeName psobject -Property $objectProperty
+    $global:details
     #Get-WmiObject -Class Win32_Product -Filter "Name LIKE '%Visual C++ 2010%'"
 }
 function Get-DriveSpace {
-    $disks = get-wmiobject -class "Win32_LogicalDisk" -namespace "root\CIMV2" -computername $env:COMPUTERNAME
-    $results = foreach ($disk in $disks){
+    $global:disks = get-wmiobject -class "Win32_LogicalDisk" -namespace "root\CIMV2" -computername $env:COMPUTERNAME
+    $global:results = foreach ($disk in $disks){
         if ($disk.Size -gt 0){
             $size = [math]::round($disk.Size/1GB, 0)
             $free = [math]::round($disk.FreeSpace/1GB, 0)
@@ -285,7 +361,7 @@ function Get-DriveSpace {
         }
     }
     #$results | Out-GridView
-    $results | Format-Table -AutoSize
+    $global:results | Format-Table -AutoSize
     #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
     Set-Location $global:currentdir
 }
