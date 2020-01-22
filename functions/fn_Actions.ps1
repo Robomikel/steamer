@@ -298,7 +298,7 @@ Function Get-details {
     $global:CpuCores = (Get-WMIObject Win32_ComputerSystem).NumberOfLogicalProcessors
     $global:avmem = (Get-WmiObject Win32_OperatingSystem | ForEach-Object {"{0:N2} GB" -f ($_.totalvisiblememorysize/ 1MB)})
     $global:totalmem = "{0:N2} GB" -f ((get-process | Measure-Object Workingset -sum).Sum /1GB)
-    $global:mem = "{0:N2} GB" -f ((get-process $global:PROCESS | Measure-Object Workingset -sum).Sum /1GB)
+    $global:mem = "{0:N2} GB" -f ((get-process $global:PROCESS | Measure-Object Workingset -sum).Sum /1GB) >$null 2>&1
     $global:os = (Get-WMIObject win32_operatingsystem).caption
     #$global:osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
     #$global:bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
