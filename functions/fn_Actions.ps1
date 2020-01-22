@@ -292,16 +292,17 @@ Function Get-GamedigServerPrivatev2 {
 #    Set-Location $global:currentdir
 #}
 Function Get-details {
+    $global:Cpu = (Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select Average ).Average
     $host.UI.RawUI.ForegroundColor = "Cyan"
     #$host.UI.RawUI.BackgroundColor = "Black"
-    $global:cpu = Get-WmiObject win32_processor
+    #$global:cpu = Get-WmiObject win32_processor
     $global:CpuCores = (Get-WMIObject Win32_ComputerSystem).NumberOfLogicalProcessors
     $global:avmem = (Get-WmiObject Win32_OperatingSystem | ForEach-Object {"{0:N2} GB" -f ($_.totalvisiblememorysize/ 1MB)})
     $global:totalmem = "{0:N2} GB" -f ((get-process | Measure-Object Workingset -sum).Sum /1GB)
-    $global:mem = "{0:N2} GB" -f ((get-process $global:PROCESS | Measure-Object Workingset -sum).Sum /1GB)
+    $global:mem = "{0:N2} GB" -f ((get-process $global:PROCESS | Measure-Object Workingset -sum).Sum /1GB) >$null 2>&1
     $global:os = (Get-WMIObject win32_operatingsystem).caption
-    $global:osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
-    $global:bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
+    #$global:osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
+    #$global:bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
     $global:computername = (Get-WmiObject Win32_OperatingSystem).CSName
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     if($null -ne ${global:QUERYPORT}) {${global:PORT} = ${global:QUERYPORT}}
@@ -318,6 +319,7 @@ Function Get-details {
     $global:status = "**** RUNNING ***"}
     $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
     $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s).Sum /1GB)
+    if(($global:AppID -eq 302200)) {$gameresponse = Write-Host "Not supported"}
     $objectProperty = [ordered]@{
 
         "Server Name"       = $HOSTNAME
@@ -331,7 +333,7 @@ Function Get-details {
         "Process"           = $PROCESS
         "Process status"    = $status
         "CPU Cores"         = $CpuCores
-        "CPU % Per"         = $cpu.loadpercentage
+        "CPU % "            = $cpu
         "Available Mem"     = $avmem
         "Total Mem Usage"   = $totalmem
         "Mem usage Process" = $mem
