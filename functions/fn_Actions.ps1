@@ -319,7 +319,8 @@ Function Get-details {
     }else{
     $global:status = "**** RUNNING ***"}
     $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
-    $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s).Sum /1GB)
+    #if($Null -ne (get-process "$global:PROCESS" -ea SilentlyContinue)){
+    $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s -ea silentlycontinue ).Sum /1GB) 
     if(($global:AppID -eq 302200)) {$gameresponse = Write-Host "Not supported"}
     $objectProperty = [ordered]@{
 
