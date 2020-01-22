@@ -292,9 +292,10 @@ Function Get-GamedigServerQPrivate {
     Set-Location $global:currentdir
 }
 Function Get-details {
+    $global:Cpu = (Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select Average ).Average
     $host.UI.RawUI.ForegroundColor = "Cyan"
     #$host.UI.RawUI.BackgroundColor = "Black"
-    $global:cpu = Get-WmiObject win32_processor
+    #$global:cpu = Get-WmiObject win32_processor | ForEach-Object {}
     $global:CpuCores = (Get-WMIObject Win32_ComputerSystem).NumberOfLogicalProcessors
     $global:avmem = (Get-WmiObject Win32_OperatingSystem | ForEach-Object {"{0:N2} GB" -f ($_.totalvisiblememorysize/ 1MB)})
     $global:totalmem = "{0:N2} GB" -f ((get-process | Measure-Object Workingset -sum).Sum /1GB)
@@ -331,7 +332,7 @@ Function Get-details {
         "Process"           = $PROCESS
         "Process status"    = $status
         "CPU Cores"         = $CpuCores
-        "CPU % Per"         = $cpu.loadpercentage
+        "CPU % "            = $cpu
         "Available Mem"     = $avmem
         "Total Mem Usage"   = $totalmem
         "Mem usage Process" = $mem
