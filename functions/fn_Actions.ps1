@@ -311,15 +311,15 @@ Function Get-details {
     $global:stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
     Get-createdvaribles
     if($Null -eq $global:stats){
-    $global:stats =  "----Offline----"
+        $global:stats =  Write-Host = "----Offline----" -ForegroundColor Red
     }else{
-    $global:stats = "**** Online ***"}
+    $global:stats = Write-host = "**** Online ***" -ForegroundColor Green}
     if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
-    $global:status =  "----NOT RUNNING----"
+        $global:status =  Write-host = "----NOT RUNNING----" -ForegroundColor Red
     }else{
-    $global:status = "**** RUNNING ***"}
+    $global:status = write-host = "**** RUNNING ***" -ForegroundColor Green}
     $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
-    $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s).Sum /1GB)
+    $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s -ea silentlycontinue ).Sum /1GB) 
     $objectProperty = [ordered]@{
 
         "Server Name"       = $HOSTNAME
