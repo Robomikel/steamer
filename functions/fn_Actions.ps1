@@ -292,7 +292,7 @@ Function Get-GamedigServerQPrivate {
     Set-Location $global:currentdir
 }
 Function Get-details {
-    $global:Cpu = (Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select Average ).Average
+    $global:Cpu = (Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select-object Average ).Average
     $host.UI.RawUI.ForegroundColor = "Cyan"
     #$host.UI.RawUI.BackgroundColor = "Black"
     #$global:cpu = Get-WmiObject win32_processor | ForEach-Object {}
