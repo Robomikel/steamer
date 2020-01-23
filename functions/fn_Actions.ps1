@@ -419,10 +419,11 @@ Function Get-details {
     $global:status =  "----NOT RUNNING----"
     }else{
     $global:status = "****   RUNNING   ****"}
+    New-BackupFolder
     $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
     #if($Null -ne (get-process "$global:PROCESS" -ea SilentlyContinue)){
     $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s -ea silentlycontinue ).Sum /1GB) 
-    if(($global:AppID -eq 302200)) {$gameresponse = Write-Host "Not supported"}
+    if(($global:AppID -eq 302200)) {$global:gameresponse = "Not supported"}
     $objectProperty = [ordered]@{
 
         "Server Name"       = $HOSTNAME
