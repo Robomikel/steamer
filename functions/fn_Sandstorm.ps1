@@ -22,7 +22,7 @@ Function New-LaunchScriptInssserverPS {
         if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [25575]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="25575"}else{$global:RCONPORT}
         if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
         Write-Host "Enter Admin Steam ID64  for admins.txt: " -ForegroundColor Cyan -BackgroundColor Black
-        $steamID64= Read-Host
+        $global:steamID64= Read-Host
         Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
@@ -36,7 +36,7 @@ Function New-LaunchScriptInssserverPS {
 
         Write-Host "***  Creating Admins.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $MapCyclePath\Admins.txt -Force
-        Add-Content  $MapCyclePath\Admins.txt $steamID64
+        Add-Content  $MapCyclePath\Admins.txt $global:steamID64
         Write-Host "***  Creating Mapcycle.txt  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $MapCyclePath\Mapcycle.txt -Force
         # - - - - - - MAPCYCLE.TXT - - - - - - # EDIT \/   \/   \/  \/  \/  \/ \/ \/ \/
@@ -64,8 +64,8 @@ Function New-LaunchScriptInssserverPS {
         Add-Content   $GamePath\Game.ini ";.........Start Game.ini..................................."
         Add-Content   $GamePath\Game.ini [Rcon]
         Add-Content   $GamePath\Game.ini bEnabled=True
-        Add-Content   $GamePath\Game.ini Password=password
-        Add-Content   $GamePath\Game.ini ListenPort=27015
+        Add-Content   $GamePath\Game.ini Password=$global:RCONPASSWORD
+        Add-Content   $GamePath\Game.ini ListenPort=$global:RCONPORT
         Add-Content   $GamePath\Game.ini bUseBroadcastAddress=True
         Add-Content   $GamePath\Game.ini ListenAddressOverride=0.0.0.0
         Add-Content   $GamePath\Game.ini bAllowConsoleCommands=True
@@ -150,7 +150,7 @@ Function New-LaunchScriptInssserverPS {
         Add-Content   $GamePath\Game.ini CaptureBonusWaves=1
         Add-Content   $GamePath\Game.ini " "
         Add-Content   $GamePath\Game.ini [/script/insurgency.insfirefightgamemode]
-        Add-Content   $GamePath\Game.ini ;none
+        Add-Content   $GamePath\Game.ini ";none"
         Add-Content   $GamePath\Game.ini " "
         Add-Content   $GamePath\Game.ini [/script/insurgency.inscoopmode]
         Add-Content   $GamePath\Game.ini AIDifficulty=0.5
@@ -185,7 +185,7 @@ Function New-LaunchScriptInssserverPS {
         Add-Content   $GamePath\Game.ini IdleVoteBanDuration=-1
         Add-Content   $GamePath\Game.ini DefaultVoteBanDuration=120
         Add-Content   $GamePath\Game.ini " "
-        Add-Content   $GamePath\Game.ini ;
+        Add-Content   $GamePath\Game.ini ";"
         Add-Content   $GamePath\Game.ini ";All Mutator settings go in Engine.ini"
         Add-Content   $GamePath\Game.ini ";(will bechanged to Game.ini in the future for consistency)."
         Add-Content   $GamePath\Game.ini [/script/insurgency.mutator_headshotonly]
