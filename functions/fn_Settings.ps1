@@ -18,6 +18,8 @@ $global:admincheckmessage   =   "1"
 $global:AutoUpdate          =   "0"
 #   disable  check Task 0
 $global:DisableChecktask    =   "1"
+# max backups   2
+$global:backupcount         =   "2"
 
 }
 
