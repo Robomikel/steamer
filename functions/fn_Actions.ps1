@@ -463,14 +463,15 @@ function Get-DriveSpace {
             [PSCustomObject]@{
                 Drive = $disk.Name
                 Name = $disk.VolumeName
-                "Total Disk Size GB" = $size
-                "Free Disk Size" = "{0:N0} ({1:P0})" -f $free, ($free/$size)}
+                "Total Disk GB" = $size
+                "Free Disk GB"  = "{0:N0} ({1:P0})" -f $free, ($free/$size)}
         }
     }
     #$results | Out-GridView
     $global:results | Format-Table -AutoSize
-    #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
     Set-Location $global:currentdir
+    #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
+    
 }
 
 Function Start-Countdown {
