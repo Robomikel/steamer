@@ -149,13 +149,13 @@ Function Select-launchServer {
 Function Get-CheckServer {
     Write-Host '****     Check  Server process    *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
-    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "****   RUNNING   ****" -ForegroundColor Green -BackgroundColor Black ;; Get-process "$global:PROCESS" ;; exit}
+    Write-Host "----   NOT RUNNING   ----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "****   RUNNING   ****" -ForegroundColor Green -BackgroundColor Black ;; Get-process "$global:PROCESS" ;; exit}
     Get-CheckForError
 }
 Function Get-StopServer {
     Write-Host '****   Stopping Server process   *****' -ForegroundColor Magenta -BackgroundColor Black 
     if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
-    Write-Host "----NOT RUNNING----" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:PROCESS" -Force}
+    Write-Host "----   NOT RUNNING   ----" -ForegroundColor Red -BackgroundColor Black}else{stop-process -Name "$global:PROCESS" -Force}
     Get-CheckForError
 }
 Function Get-StopServerInstall {
@@ -412,11 +412,11 @@ Function Get-details {
     $global:stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
     Get-createdvaribles
     if($Null -eq $global:stats){
-    $global:stats =  "----Offline----"
+    $global:stats =  "----Offline----" 
     }else{
     $global:stats = "**** Online ***"}
     if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
-    $global:status =  "----NOT RUNNING----"
+    $global:status =  "----   NOT RUNNING   ----"
     }else{
     $global:status = "****   RUNNING   ****"}
     New-BackupFolder
@@ -431,6 +431,7 @@ Function Get-details {
         "IP"                = $IP
         'Port'              = $PORT
         "Query Port"        = $QUERYPORT
+        "Rcon Port"         = $RCONPORT
         "App ID"            = $APPID
         "Game Dig"          = $GAME
         "Webhook"           = $WEBHOOK
@@ -471,6 +472,7 @@ function Get-DriveSpace {
     #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
     Set-Location $global:currentdir
 }
+
 Function Start-Countdown {
     Param(
     [Int32]$Seconds = 10,
