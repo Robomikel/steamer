@@ -66,6 +66,7 @@ Function Select-Steamer {
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
     Get-StopServer
+    Get-Steam
     Get-ValidateServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
     Get-Finished
@@ -75,6 +76,7 @@ Function Select-Steamer {
     Get-CheckForVars
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskDisable}
     Get-StopServer
+    Get-Steam
     Get-ValidateServer
     if ($global:DisableChecktask  -eq "1") {Get-ChecktaskEnable}
     Get-Finished

@@ -166,21 +166,109 @@ Function Get-StopServerInstall {
     stop-process -Name "$global:PROCESS" -Force}
 }
 Function Get-ValidateServer {
-    Get-Steam 
     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
     Get-Steamtxt
     Write-Host '*** Validating Server *****' -ForegroundColor Magenta -BackgroundColor Black
     .\steamcmd +runscript Validate-$global:server.txt
+    if ( !$? ){
+    Write-host "***** Validating Server Failed *****" -ForegroundColor Red
+    New-Tryagainsteamcmd
+    Set-Location $global:currentdir
+    }elseif($?){
+    write-Host "***** Validating Server succeeded *****" -ForegroundColor Yellow}
     Set-Location $global:currentdir
 }
 Function Get-UpdateServer {
-    Get-Steam
     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
     Get-Steamtxt
     Write-Host '*** Updating Server *****' -ForegroundColor Magenta -BackgroundColor Black
     .\steamcmd +runscript Updates-$global:server.txt
+    if ( !$?){
+    Write-host "***** Downloading  Install/update server Failed *****" -ForegroundColor Red
+    New-Tryagainsteamcmd
+    Set-Location $global:currentdir
+    }elseif($?){
+    write-Host "*** Downloading  Install/update server succeeded *****" -ForegroundColor Yellow}
     Set-Location $global:currentdir
 }
+Function Get-Steam {
+    $start_time = Get-Date
+    $path = "$global:currentdir\steamcmd\"
+    $patha = "$global:currentdir\steamcmd\steamcmd.exe" 
+    If((Test-Path $path) -and (Test-Path $patha)) { 
+    Write-Host '*** steamCMD already downloaded! ***' -ForegroundColor Yellow -BackgroundColor Black} 
+    Else{  
+    #(New-Object Net.WebClient).DownloadFile("$global:steamurl", "steamcmd.zip")
+    Write-Host '*** Downloading SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black
+    #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;  
+    Invoke-WebRequest -Uri $global:steamurl -OutFile $global:steamoutput
+    if (!$?) {write-host " ***** Downloading  SteamCMD Failed  *****" -ForegroundColor Red -BackgroundColor Black 
+    New-Tryagainsteamcmd}
+    if ($?) {write-host " ***** Downloading  SteamCMD succeeded  *****" -ForegroundColor Yellow -BackgroundColor Black}
+    Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '***  Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black 
+    Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\" -Force 
+    if (!$?) {write-host " ***** Extracting SteamCMD Failed  *****" -ForegroundColor Yellow -BackgroundColor Black 
+    New-Tryagainsteamcmd}
+    if ($?) {write-host " ***** Extracting SteamCMD succeeded  *****" -ForegroundColor Yellow -BackgroundColor Black}}
+
+}
+Function New-Tryagainsteamcmd {
+    $title    = 'Try again?'
+    $question = 'Download and Extract SteamCMD and Install server   ?'
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+    Write-Host 'Entered Y'
+    Get-Steam
+        if (($global:command -eq "Install") -or ($global:command -eq "update")) {
+        Get-UpdateServer
+        }else{ Get-ValidateServer}
+    }else{
+    Write-Host 'Entered N'
+    exit}
+}
+
+Function Get-RestartsServer {
+    Clear-host
+    Start-Countdown -Seconds 10 -Message "Restarting server"
+    Get-logo
+    & "$global:currentdir\$global:server\Launch-*.ps1"
+    Get-CheckForError
+    Set-Location $global:currentdir
+}
+Function Set-SteamInfo {
+    $title    = 'Install Steam server with Anonymous login'
+    $question = 'Use Anonymous Login?'
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
+    if ($decision -eq 1) {
+    Install-Anonserver
+    Write-Host 'Entered Y'
+    }else{
+    Install-Server
+    Write-Host 'Entered N'}
+}
+#Function New-TryagainNew {
+#    $title    = 'Try again?'
+#    $question = "$global:command $global:server?"
+#    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+#    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+#    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+#    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+#    if ($decision -eq 0) {
+#    Write-Host 'Entered Y'
+#    if (($global:command -eq "install") -or ($global:command -eq "update")){Get-UpdateServer}
+#    if ($global:command -eq "validate"){Get-ValidateServer}
+#            } 
+#    else {
+#    Write-Host 'Entered N'
+#    exit}
+#}
 Function Get-ServerBuildCheck {
     Get-Steam
     Get-Steamtxt
@@ -227,6 +315,19 @@ Function Get-Steamtxt {
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
     Set-Location $global:currentdir
     Exit}
+}
+Function Set-SteamInfoAppID {
+    $title    = 'Launch Script create'
+    $question = 'Create Launch Script?'
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+    Read-AppID
+    Write-Host 'Entered Y'
+    } else {
+    Write-Host 'Entered N'}
 }
 Function Get-GamedigServerv2 {
     Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
@@ -377,14 +478,6 @@ Function Start-Countdown {
     {Write-Progress -Id 1 -Activity $Message -Status "Waiting for $Seconds seconds, $($Seconds - $Count) left" -PercentComplete (($Count / $Seconds) * 100)
     Start-Sleep -Seconds 1}
     Write-Progress -Id 1 -Activity $Message -Status "Completed" -PercentComplete 100 -Completed
-}
-Function Get-RestartsServer {
-    Clear-host
-    Start-Countdown -Seconds 10 -Message "Restarting server"
-    Get-logo
-    & "$global:currentdir\$global:server\Launch-*.ps1"
-    Get-CheckForError
-    Set-Location $global:currentdir
 }
 Function Get-TestInterger {
     if( $global:APPID -match '^[0-9]+$') { 
@@ -552,20 +645,6 @@ Function New-DiscordAlert {
     embeds = $embedArray}                              
     Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'}
 }
-Function Set-SteamInfo {
-    $title    = 'Install Steam server with Anonymous login'
-    $question = 'Use Anonymous Login?'
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
-    if ($decision -eq 1) {
-    Install-Anonserver
-    Write-Host 'Entered Y'
-    }else{
-    Install-Server
-    Write-Host 'Entered N'}
-}
 Function Set-Console {
     clear-host
     $host.ui.RawUi.WindowTitle = "-------- STEAMER ------------"
@@ -579,21 +658,7 @@ Function Set-Console {
     }else{
     Get-logo}
 }
-Function Get-Steam {
-    $start_time = Get-Date
-    $path = "$global:currentdir\steamcmd\"
-    $patha = "$global:currentdir\steamcmd\steamcmd.exe" 
-    If((Test-Path $path) -and (Test-Path $patha)) { 
-    Write-Host '*** steamCMD already downloaded! ***' -ForegroundColor Yellow -BackgroundColor Black} 
-    Else{  
-    #(New-Object Net.WebClient).DownloadFile("$global:steamurl", "steamcmd.zip")
-    Write-Host '*** Downloading SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black
-    #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;  
-    Invoke-WebRequest -Uri $global:steamurl -OutFile $global:steamoutput
-    Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host '***  Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black 
-    Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\"}
-}
+
 Function Get-UpdateSteamer {
     $start_time = Get-Date
     Write-Host '*** Downloading Steamer github files *****' -ForegroundColor Magenta -BackgroundColor Black 
@@ -1029,19 +1094,6 @@ Function New-AppDataSave {
     else {
     Write-Host 'Entered N'
     exit}
-}
-Function Set-SteamInfoAppID {
-    $title    = 'Launch Script create'
-    $question = 'Create Launch Script?'
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-    if ($decision -eq 0) {
-    Read-AppID
-    Write-Host 'Entered Y'
-    } else {
-    Write-Host 'Entered N'}
 }
 Function Get-Servercfg {
     Write-Host "*** Retrieve Default Config ***" -ForegroundColor Yellow -BackgroundColor Black
