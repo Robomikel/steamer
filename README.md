@@ -60,7 +60,9 @@ Install steam server ```>_./steamer install misserver```
    * run gamedig on hosted server 
    * update steamer PS scripts from github
    * get details from host and server
+   
    ![](https://github.com/Robomikel/fn_steamer/blob/master/images/steamerdetails2.jpg)
+   
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
  - ```Stop <serverFolder>``` - ```>_./steamer stop misserver``` - stop process for miscreated server
