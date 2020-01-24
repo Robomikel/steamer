@@ -149,7 +149,7 @@ Function Select-launchServer {
 Function Get-CheckServer {
     Write-Host '****   Check  Server process    *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
-    Write-Host "----   NOT RUNNING   ----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "****   RUNNING   ****" -ForegroundColor Green -BackgroundColor Black ;; Get-process "$global:PROCESS" ;; exit}
+    Write-Host "----   NOT RUNNING   ----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "****   RUNNING   ****" -ForegroundColor Green -BackgroundColor Black ;; Get-process "$global:PROCESS" ;; Get-ClearVariables ;; exit}
     Get-CheckForError
 }
 Function Get-StopServer {
