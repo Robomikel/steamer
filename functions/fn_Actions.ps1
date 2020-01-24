@@ -655,8 +655,8 @@ Function Get-UpdateSteamer {
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:steamerurl -OutFile $global:currentdir\steamer.zip
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black 
+    Remove-Item -Path "$global:currentdir\steamer\*" -Recurse -Force -ea SilentlyContinue
     Expand-Archive "$global:currentdir\steamer.zip" "$global:currentdir\steamer" -Force
-    #Copy-Item -Path "$global:currentdir\steamer\steamer-master\*" -Destination "$global:currentdir\" -Recurse -Force
     Copy-Item -Path "$global:currentdir\steamer\steamer-*\*" -Destination "$global:currentdir\" -Recurse -Force
     Write-Host '****   Steamer github files Updated   ****' -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Press Enter to Close this session   ****' -ForegroundColor Yellow -BackgroundColor Black
