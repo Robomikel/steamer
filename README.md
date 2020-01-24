@@ -2,9 +2,12 @@
 PowerShell Steam Server Scripter
 - Install and Manage Steam Servers with Powershell.
 
+![](https://github.com/Robomikel/fn_steamer/blob/master/images/input.JPG)
 
 Install Any location:
 Download, Extract, and Open PowerShell and Change Directory to steamer.ps1
+
+![](https://github.com/Robomikel/fn_steamer/blob/master/images/sdtdps.JPG)
 
 Run: 
 open PowerShell as user NOT Admin
@@ -57,6 +60,7 @@ Install steam server ```>_./steamer install misserver```
    * run gamedig on hosted server 
    * update steamer PS scripts from github
    * get details from host and server
+   ![](https://github.com/Robomikel/fn_steamer/blob/master/images/steamerDetail.jpg)
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
  - ```Stop <serverFolder>``` - ```>_./steamer stop misserver``` - stop process for miscreated server
@@ -79,9 +83,11 @@ Install steam server ```>_./steamer install misserver```
  * Rust - option for Oxide install
  * Counter-Strike Global Offensive - option for sourcemod and Meta Mod install
  * Left 4 Dead 2 - Dedicated Server - option for sourcemod and Meta Mod install
+ ![](https://github.com/Robomikel/fn_steamer/blob/master/images/steamermod.jpg)
   # MCRcon
  * MCRcon Download and Install
  * Use used to Rcon to servers.
+ ![](https://github.com/Robomikel/fn_steamer/blob/master/images/inssserver%20rcon2.JPG)
  
 - - - - 
  When creating a Schedule task to run Monitor script.
