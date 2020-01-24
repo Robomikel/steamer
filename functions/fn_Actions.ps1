@@ -228,6 +228,7 @@ Function New-Tryagainsteamcmd {
         }else{ Get-ValidateServer}
     }else{
     Write-Host 'Entered N'
+    Set-Location $global:currentdir
     exit}
 }
 
