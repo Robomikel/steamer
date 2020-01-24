@@ -60,7 +60,7 @@ Install steam server ```>_./steamer install misserver```
    * run gamedig on hosted server 
    * update steamer PS scripts from github
    * get details from host and server
-   ![](https://github.com/Robomikel/fn_steamer/blob/master/images/steamerDetail.jpg)
+   ![](https://github.com/Robomikel/fn_steamer/blob/master/images/steamerdetails2.jpg)
  # Commands:  
  - ```Start <serverFolder>``` - ```>_./steamer start missesrver```  - Starts miscreated server process          
  - ```Stop <serverFolder>``` - ```>_./steamer stop misserver``` - stop process for miscreated server
@@ -84,10 +84,13 @@ Install steam server ```>_./steamer install misserver```
  * Counter-Strike Global Offensive - option for sourcemod and Meta Mod install
  * Left 4 Dead 2 - Dedicated Server - option for sourcemod and Meta Mod install
  ![](https://github.com/Robomikel/fn_steamer/blob/master/images/steamermod.jpg)
+ 
   # MCRcon
  * MCRcon Download and Install
  * Use used to Rcon to servers.
+ 
  ![](https://github.com/Robomikel/fn_steamer/blob/master/images/inssserver%20rcon2.JPG)
+ 
  
 - - - - 
  When creating a Schedule task to run Monitor script.
