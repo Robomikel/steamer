@@ -147,7 +147,7 @@ Function Select-launchServer {
     Set-Location $global:currentdir
 }
 Function Get-CheckServer {
-    Write-Host '****     Check  Server process    *****' -ForegroundColor Yellow -BackgroundColor Black 
+    Write-Host '****   Check  Server process    *****' -ForegroundColor Yellow -BackgroundColor Black 
     if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
     Write-Host "----   NOT RUNNING   ----" -ForegroundColor Red -BackgroundColor Black}else{Write-Host "****   RUNNING   ****" -ForegroundColor Green -BackgroundColor Black ;; Get-process "$global:PROCESS" ;; exit}
     Get-CheckForError
@@ -168,7 +168,7 @@ Function Get-StopServerInstall {
 Function Get-ValidateServer {
     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
     Get-Steamtxt
-    Write-Host '****  Validating Server   ****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Validating Server   ****' -ForegroundColor Magenta -BackgroundColor Black
     .\steamcmd +runscript Validate-$global:server.txt
     if ( !$? ){
     Write-host "****   Validating Server Failed   ****" -ForegroundColor Red
@@ -206,7 +206,7 @@ Function Get-Steam {
     New-Tryagainsteamcmd}
     if ($?) {write-host " ****   Downloading  SteamCMD succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host '***  Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '***   Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\" -Force 
     if (!$?) {write-host " ****   Extracting SteamCMD Failed    ****" -ForegroundColor Yellow -BackgroundColor Black 
     New-Tryagainsteamcmd}
@@ -289,9 +289,9 @@ Function Get-ServerBuildCheck {
     $localbuild = $localbuild -replace '\s',''
     #$localbuild
     IF (Compare-Object $remotebuild.ToString() $localbuild.ToString()){
-    Write-Host "****  Avaiable Updates Server   ****" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "****   Avaiable Updates Server   ****" -ForegroundColor Yellow -BackgroundColor Black
     if ($global:AutoUpdate  -eq "1") {Exit}
-    Write-Host "****  Removing appmanifest_$global:APPID.acf   ****" -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host "****   Removing appmanifest_$global:APPID.acf   ****" -ForegroundColor Magenta -BackgroundColor Black
     remove-Item $global:currentdir\$global:server\steamapps\appmanifest_$global:APPID.acf -Force  >$null 2>&1
     Write-Host "****   Removing Multiple appmanifest_$global:APPID.acf    ****" -ForegroundColor Magenta -BackgroundColor Black
     Remove-Item $global:currentdir\$global:server\steamapps\appmanifest_*.acf -Force  >$null 2>&1
@@ -332,7 +332,7 @@ Function Set-SteamInfoAppID {
 Function Get-GamedigServerv2 {
     Write-Host '****   Starting gamedig on Server   ****' -ForegroundColor Magenta -BackgroundColor Black
     if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {
-    Write-Host '****  Using QUERYPORT    ****' -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '****   Using QUERYPORT    ****' -ForegroundColor Yellow -BackgroundColor Black
     # Executes when the Boolean expression 1 is true
     if(($null -eq ${global:QUERYPORT} ) -or ("" -eq ${global:QUERYPORT} )){
     Write-Host '****   Missing QUERYPORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
@@ -518,7 +518,7 @@ Function New-ServerFolder {
    New-Item -Path . -Name "$global:server" -ItemType "directory"}
 }
 Function Get-CheckForVars {
-    Write-Host "****  Checking for Vars  ****" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "****   Checking for Vars   ****" -ForegroundColor Yellow -BackgroundColor Black
     $global:missingvars = ${global:QUERYPORT},${global:IP}
     foreach($global:missingvars in $global:missingvars){
     if ( "" -eq $global:missingvars){
@@ -586,13 +586,13 @@ Function Get-MCRcon {
     Write-Host 'mcrcon already downloaded!' -ForegroundColor Yellow -BackgroundColor Black} 
     Else{  
     $start_time = Get-Date
-    Write-Host '****  Downloading MCRCon from github   ****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '****   Downloading MCRCon from github   ****' -ForegroundColor Magenta -BackgroundColor Black 
     #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:mcrconurl -OutFile $global:currentdir\mcrcon.zip
-    if (!$?) {write-host "Downloading  MCRCon Failed" -ForegroundColor Red -BackgroundColor Black 
+    if (!$?) {write-host "****   Downloading  MCRCon Failed   ****" -ForegroundColor Red -BackgroundColor Black 
     New-TryagainMC}
-    if ($?) {write-host "Downloading  MCRCon succeeded" -ForegroundColor Yellow -BackgroundColor Black}
+    if ($?) {write-host "****   Downloading  MCRCon succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Extracting MCRCon from github   ****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\mcrcon.zip" "$global:currentdir\mcrcon\" -Force
@@ -686,22 +686,22 @@ Function Get-NodeJS {
 }
 Function add-nodejs {
     $start_time = Get-Date
-    Write-Host '*** Downloading  Nodejs *****' -ForegroundColor Magenta -BackgroundColor Black  
+    Write-Host '****   Downloading  Nodejs   ****' -ForegroundColor Magenta -BackgroundColor Black  
     #(New-Object Net.WebClient).DownloadFile("$global:nodejsurl", "$global:currentdir\node-v$global:nodeversion-win-x64.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:nodejsurl -OutFile $global:currentdir\node-v$global:nodeversion-win-x64.zip
     if (!$?) {write-host "****   Downloading  Nodejs Failed    ****" -ForegroundColor Red -BackgroundColor Black 
     New-TryagainN}
-    if ($?) {write-host "Downloading  Nodejs succeeded" -ForegroundColor Yellow -BackgroundColor Black}
+    if ($?) {write-host "****   Downloading  Nodejs succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host '****   Extracting Nodejs *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Extracting Nodejs   *****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64.zip" "$global:currentdir\node-v$global:nodeversion-win-x64\" -Force
     if (!$?) {write-host "****   Extracting Nodejs Failed   ****" -ForegroundColor Yellow -BackgroundColor Black 
     New-TryagainN}
     if ($?) {write-host "****   Extracting Nodejs succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-    Write-Host '****    Installing gamedig in Nodejs   *****' -ForegroundColor Magenta -BackgroundColor Black
-    Write-Host '****    Do not stop or cancel! Will need to delete nodejs files and start over!   *****' -ForegroundColor Yellow -BackgroundColor Black  
+    Write-Host '****   Installing gamedig in Nodejs   ****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Do not stop or cancel! Will need to delete nodejs files and start over!   ****' -ForegroundColor Yellow -BackgroundColor Black  
     .\npm install gamedig
     .\npm install gamedig -g
     Set-Location $global:currentdir
@@ -803,28 +803,28 @@ Function Get-SourceMetMod {
 }
 Function Get-SourceMetaMod {
     $start_time = Get-Date
-    Write-Host '***   Downloading Meta Mod   ****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '****   Downloading Meta Mod   ****' -ForegroundColor Magenta -BackgroundColor Black 
     #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:metamodurl -OutFile $global:currentdir\metamod.zip
     if (!$?) {write-host "****   Downloading Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit} 
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host '*** Extracting Meta Mod *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Extracting Meta Mod   ****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
     if (!$?) {write-host "****   Extracting Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
-    Write-Host '*** Copying/installing Meta Mod   ****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '****   Copying/installing Meta Mod   ****' -ForegroundColor Magenta -BackgroundColor Black 
     Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
     if (!$?) {write-host "****   Copying Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
     $start_time = Get-Date
-    Write-Host '****   Downloading SourceMod    ****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Downloading SourceMod   ****' -ForegroundColor Magenta -BackgroundColor Black
     #(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:sourcemodurl -OutFile $global:currentdir\sourcemod.zip
     if (!$?) {write-host "****   Downloading SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit} 
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host '****   Extracting SourceMod *****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '****   Extracting SourceMod   ****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
-    if (!$?) {write-host "*** Extracting SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
+    if (!$?) {write-host "****   Extracting SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
     Write-Host '****   Copying/installing SourceMod   ****' -ForegroundColor Magenta -BackgroundColor Black
     Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
     if (!$?) {write-host "****   Copying SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
@@ -852,7 +852,7 @@ Function Get-Oxide {
     Write-Host "Download Time: $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Extracting Oxide    ****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
-    if (!$?) {write-host "****  Extracting Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
+    if (!$?) {write-host "****   Extracting Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
     Write-Host '****   Copying Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
     Copy-Item -Path $global:currentdir\oxide\$global:MODDIR\* -Destination $global:currentdir\$global:server\$global:MODDIR\ -Force -Recurse
     if (!$?) {write-host "****   Copying Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ;; Exit}
@@ -968,7 +968,7 @@ Function Set-RestartJob {
 Function Get-ChecktaskUnreg {
     Get-ScheduledTask -TaskName "$global:server $global:command" >$null 2>&1
     if ($?) {
-    Write-Host '****   Unregistering scheduled task   *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Unregistering scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
     Unregister-ScheduledTask -TaskName "$global:server $global:command" >$null 2>&1}
     if (!$?) {
     Write-Host "****   Scheduled Task does not exist   ****" -ForegroundColor Yellow -BackgroundColor Black}
@@ -976,7 +976,7 @@ Function Get-ChecktaskUnreg {
 Function Get-ChecktaskDisable {
     Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
     if ($?) {
-    Write-Host '****   disabling scheduled task     *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   disabling scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
     Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
     if (!$?) {
     Write-Host "****   Scheduled Task does not exist   ****" -ForegroundColor Yellow -BackgroundColor Black}
@@ -984,29 +984,29 @@ Function Get-ChecktaskDisable {
 Function Get-ChecktaskEnable {
     Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
     if ($?) {
-    Write-Host '****    Enabling scheduled task   *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Enabling scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
     Enable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
     if (!$?) {
-    write-host "****  Scheduled Task does not exist   ****" -ForegroundColor Yellow -BackgroundColor Black}
+    write-host "****   Scheduled Task does not exist   ****" -ForegroundColor Yellow -BackgroundColor Black}
 }
 Function New-BackupFolder {
     $path = "$global:currentdir\backups" 
     If(Test-Path $path) { 
-    Write-Host '****      Backup folder exists!     ***' -ForegroundColor Yellow -BackgroundColor Black} 
+    Write-Host '****   Backup folder exists!   ****' -ForegroundColor Yellow -BackgroundColor Black} 
     Else {  
-    Write-Host '****     Creating backup folder   *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Creating backup folder   ****' -ForegroundColor Magenta -BackgroundColor Black
     New-Item -Path "$global:currentdir\" -Name "backups" -ItemType "directory"}
 }
 Function New-BackupServer {
     $BackupDate = get-date -Format yyyyMMdd
-    Write-Host '****     Server Backup Started!   *****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Server Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\
     Get-ChildItem $global:currentdir\backups\ -Recurse | where-object name -like Backup_$global:server-*.zip | Sort-Object CreationTime -desc | Select-Object -Skip $global:backupcount | Remove-Item -Force 
     #Get-ChildItem $global:currentdir\backups\ -Recurse | where-object {-like Backup_$global:server-*.zip}| Sort-Object CreationTime -desc | Select-Object -Skip $global:backupcount | Remove-Item -Force
     #./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* -an > backup.log
     ./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* > backup.log
-    Write-Host '****     Server Backup is Done!    *****' -ForegroundColor Yellow -BackgroundColor Black
-    write-host "****  Checking Save location(appData)  ****" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host '****   Server Backup is Done!   ****' -ForegroundColor Yellow -BackgroundColor Black
+    write-host "****   Checking Save location(appData)   ****" -ForegroundColor Yellow -BackgroundColor Black
     if ($global:appdatabackup   -eq "1") {Get-savelocation}
     if ($global:backuplog   -eq "1") {.\backup.log}
     Set-Location $global:currentdir
@@ -1015,32 +1015,32 @@ Function Get-SevenZip {
     $path = "$global:currentdir\7za920\"
     $patha = "$global:currentdir\7za920\7za.exe"
     $pathb = "$global:currentdir\7za920.zip"
-    Write-Host '****     Checking for 7ZIP        *****' -ForegroundColor Yellow -BackgroundColor Black   
+    Write-Host '****   Checking for 7ZIP   *****' -ForegroundColor Yellow -BackgroundColor Black   
     If((Test-Path $path) -and (Test-Path $patha) -and (Test-Path $pathb)) { 
-    Write-Host '****     7Zip already downloaded!  ****' -ForegroundColor Yellow -BackgroundColor Black}
+    Write-Host '****   7Zip already downloaded!   ****' -ForegroundColor Yellow -BackgroundColor Black}
     else {
-    write-host "****       7Zip not found!         ****" -ForegroundColor Yellow -BackgroundColor Black
+    write-host "****   7Zip not found!   ****" -ForegroundColor Yellow -BackgroundColor Black
     add-sevenzip}  
 }
 Function add-sevenzip {
     $start_time = Get-Date
-    Write-Host '****     Downloading 7ZIP        *****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '****   Downloading 7ZIP   ****' -ForegroundColor Magenta -BackgroundColor Black 
     #(New-Object Net.WebClient).DownloadFile("$global:sevenzip", "$global:currentdir\7za920.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:sevenzip -OutFile $global:currentdir\7za920.zip
     if (!$?) {
-    write-host "****   7Zip Download Failed     *****" -ForegroundColor Yellow -BackgroundColor Black
+    write-host "****   7Zip Download Failed   *****" -ForegroundColor Yellow -BackgroundColor Black
     New-Tryagain}
     if ($?) {
-    write-host "****   7Zip  Download succeeded  ****" -ForegroundColor Yellow -BackgroundColor Black}
+    write-host "****   7Zip  Download succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host '****      Extracting 7ZIP      *****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '****   Extracting 7ZIP   *****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\7za920.zip" "$global:currentdir\7za920\" -Force
     if (!$?) {
-    write-host "***  7Zip files did not Extract  ****" -ForegroundColor Yellow -BackgroundColor Black
+    write-host "****   7Zip files did not Extract   ****" -ForegroundColor Yellow -BackgroundColor Black
     New-Tryagain}
     if ($?) {
-    write-host "****   7Zip Extract succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black}
+    write-host "****   7Zip Extract succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
 }
 Function New-Tryagain {
     $title    = 'Try again?'
@@ -1058,7 +1058,7 @@ Function New-Tryagain {
 }
 Function New-backupAppdata {
     $BackupDate = get-date -Format yyyyMMdd
-    Write-Host '****  Server App Data Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host '****   Server App Data Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
     ./7za a $global:currentdir\backups\AppDataBackup_$global:server-$BackupDate.zip $env:APPDATA\$global:saves\* > AppDatabackup.log
     Write-Host '****   Server App Data Backup is Done!   ****' -ForegroundColor Yellow -BackgroundColor Black
