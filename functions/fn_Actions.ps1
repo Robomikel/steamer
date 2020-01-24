@@ -228,6 +228,7 @@ Function New-Tryagainsteamcmd {
         }else{ Get-ValidateServer}
     }else{
     Write-Host 'Entered N'
+    Set-Location $global:currentdir
     exit}
 }
 
@@ -252,7 +253,6 @@ Function Set-SteamInfo {
     }else{
     Install-Server
     Write-Host 'Entered N'
-    Set-Location $global:currentdir
     }
 }
 #Function New-TryagainNew {
