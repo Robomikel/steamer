@@ -539,7 +539,7 @@ Function Get-CheckForError {
     Exit}
 }
 Function Get-CheckForVars {
-    Write-Host "****  Checking for Vars   ****" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "****   Checking for Vars   ****" -ForegroundColor Yellow -BackgroundColor Black
     if(( "" -eq $global:APPID) -or ( "" -eq $global:PROCESS)){
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
