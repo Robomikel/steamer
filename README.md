@@ -74,7 +74,8 @@ Install steam server ```>_./steamer install misserver```
  - ```gamedigPrivate <serverFolder>``` - ```>_./steamer gamedigPrivate sdtdserver``` * Uses Private IP. not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
  - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
   - ```details <serverFolder>``` - ```>_./steamer details sdtdserver```  - outputs host and server details. requires gamedig. 
- * Insurgency - option for sourcemod and Meta Mod install
+# Mod
+* Insurgency - option for sourcemod and Meta Mod install
  * Rust - option for Oxide install
  * Counter-Strike Global Offensive - option for sourcemod and Meta Mod install
  * Left 4 Dead 2 - Dedicated Server - option for sourcemod and Meta Mod install
