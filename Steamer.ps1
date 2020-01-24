@@ -37,7 +37,6 @@ $global:steamurl="https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $global:steamoutput="steamcmd.zip"
 # Steamer url
 #$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
-#if (!$?) {$global:steamerurl="http://github.com/Robomikel/steamer/archive/master.zip"}
 $global:steamerurl="https://github.com/Robomikel/steamer/archive/untested.zip"
 # mcrcon
 $global:mcrconurl="https://github.com/Tiiffi/mcrcon/releases/download/v0.7.1/mcrcon-0.7.1-windows-x86-32.zip"

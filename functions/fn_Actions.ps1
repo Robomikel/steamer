@@ -411,48 +411,35 @@ Function Get-details {
     $global:gameresponse = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
     $global:stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
     Get-createdvaribles
-    if($Null -eq $global:stats){
-    $global:stats =  "----Offline----" 
-    }else{
-    $global:stats = "**** Online ***"}
-    if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){
-    $global:status =  "----   NOT RUNNING   ----"
-    }else{
-    $global:status = "****   RUNNING   ****"}
     New-BackupFolder
-    $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object)  
-    #if($Null -ne (get-process "$global:PROCESS" -ea SilentlyContinue)){
+    $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object) 
+    $global:backups = $backups.count 
     $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s -ea silentlycontinue ).Sum /1GB) 
     if(($global:AppID -eq 302200)) {$global:gameresponse = "Not supported"}
-    $objectProperty = [ordered]@{
-
-        "Server Name"       = $HOSTNAME
-        "Public IP"         = $EXTIP
-        "IP"                = $IP
-        'Port'              = $PORT
-        "Query Port"        = $QUERYPORT
-        "Rcon Port"         = $RCONPORT
-        "App ID"            = $APPID
-        "Game Dig"          = $GAME
-        "Webhook"           = $WEBHOOK
-        "Process"           = $PROCESS
-        "Process status"    = $status
-        "CPU Cores"         = $CpuCores
-        "CPU % "            = $cpu
-        "Available Mem"     = $avmem
-        "Total Mem Usage"   = $totalmem
-        "Mem usage Process" = $mem
-        "Backups"           = $backups.count
-        "Backups size GB"   = $backupssize
-        "Status"            = $stats
-        "game replied"      = $gameresponse
-        "OS"                = $os
-        "hostname"          = $computername 
-
-    }
-    $global:details = New-Object -TypeName psobject -Property $objectProperty
-    $global:details
     #Get-WmiObject -Class Win32_Product -Filter "Name LIKE '%Visual C++ 2010%'"
+    Write-host "                                "
+    Write-host "    Server Name       : $HOSTNAME"
+    Write-host "    Public IP         : $EXTIP"
+    Write-host "    IP                : $IP"
+    Write-host "    Port              : $PORT"
+    Write-host "    Query Port        : $QUERYPORT"
+    Write-host "    Rcon Port         : $RCONPORT"
+    Write-host "    App ID            : $APPID"
+    Write-host "    Game Dig          : $GAME"
+#    Write-host "    Webhook           : $WEBHOOK"
+    Write-host "    Process           : $PROCESS"
+    Write-host "    Process status    : "-NoNewline;;if($Null -eq (get-process "$global:PROCESS" -ea SilentlyContinue)){$global:status=" ----NOT RUNNING----";;Write-Host $status -F Red}else{$global:status=" **** RUNNING ****";;Write-Host $status -F Green}
+    Write-host "    CPU Cores         : $CpuCores"
+    Write-host "    CPU %             : $cpu"
+    Write-host "    Total RAM         : $avmem    "
+    Write-host "    Total RAM Usage   : $totalmem"
+    Write-host "    Process RAM Usage : $mem"
+    Write-host "    Backups           : $backups"
+    Write-host "    Backups size GB   : $backupssize"
+    Write-host "    Status            : "-NoNewline;;if($Null -eq $global:stats){$global:stats="----Offline----";;Write-Host $stats -F Red}else{$global:stats="**** Online ***";;Write-Host $stats -F Green}
+    Write-host "    game replied      : $gameresponse"
+    Write-host "    OS                : $os"
+    Write-host "    hostname          : $computername"
 }
 function Get-DriveSpace {
     $global:disks = get-wmiobject -class "Win32_LogicalDisk" -namespace "root\CIMV2" -computername $env:COMPUTERNAME
@@ -471,9 +458,7 @@ function Get-DriveSpace {
     $global:results | Format-Table -AutoSize
     Set-Location $global:currentdir
     #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
-    
 }
-
 Function Start-Countdown {
     Param(
     [Int32]$Seconds = 10,
