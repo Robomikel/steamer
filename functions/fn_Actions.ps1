@@ -251,7 +251,9 @@ Function Set-SteamInfo {
     Write-Host 'Entered Y'
     }else{
     Install-Server
-    Write-Host 'Entered N'}
+    Write-Host 'Entered N'
+    Set-Location $global:currentdir
+    }
 }
 #Function New-TryagainNew {
 #    $title    = 'Try again?'
