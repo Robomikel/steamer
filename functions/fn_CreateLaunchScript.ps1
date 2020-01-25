@@ -45,7 +45,7 @@ Function New-LaunchScriptArma3serverPS {
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-process `"cmd`"  `"/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\$global:SERVERCFGDIR\network.cfg -config=$global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -mod= -servermod= -bepath=$global:currentdir\$global:server\battleye\ -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit`""
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-process cmd  `"/c start $global:currentdir\$global:server\arma3server.exe -ip=`${global:IP} -port=`$global:PORT -cfg=$global:currentdir\$global:server\$global:SERVERCFGDIR\network.cfg -config=$global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -mod= -servermod= -bepath=$global:currentdir\$global:server\battleye\ -profiles=SC -name=SC -autoinit -loadmissiontomemory && exit`""
 }    
   
 Function New-LaunchScriptSdtdserverPS {
@@ -75,7 +75,7 @@ Function New-LaunchScriptSdtdserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process $global:currentdir\$global:server\startdedicated.bat"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process startdedicated.bat"
 }
 
 Function New-LaunchScriptempserverPS {
@@ -104,7 +104,7 @@ Function New-LaunchScriptempserverPS {
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "write-host `"for configuration of the server (type 'help' for console commands)`" -ForegroundColor Yellow -BackgroundColor Black"
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "timeout 10"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "set-location $global:currentdir\$global:server\DedicatedServer\EmpyrionAdminHelper\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\DedicatedServer\EmpyrionAdminHelper\EAHStart.bat"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process DedicatedServer\EmpyrionAdminHelper\EAHStart.bat"
 }
 
 Function New-LaunchScriptceserverPS {
@@ -138,7 +138,7 @@ Function New-LaunchScriptceserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\ConanSandboxServer.exe -log  -MaxPlayers=`"`$global:MAXPLAYERS`" -Port=`"`$global:PORT`" -QueryPort=`"`$global:QUERYPORT`" -RconEnabled=1 -RconPassword=`"`$global:RCONPASSWORD`" -RconPort=`"`$global:RCONPORT`""
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c ConanSandboxServer.exe -log  -MaxPlayers=`$global:MAXPLAYERS -Port=`$global:PORT -QueryPort=`$global:QUERYPORT -RconEnabled=1 -RconPassword=`$global:RCONPASSWORD -RconPort=`$global:RCONPORT`""
 }
 
 Function  New-LaunchScriptavserverPS {
@@ -208,7 +208,7 @@ Function New-LaunchScriptforestserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\TheForestDedicatedServer.exe -serverip `$global:IP -serversteamport `$global:STEAMPORT -servergameport `$global:PORT -serverqueryport `$global:QUERYPORT -servername `"`$global:HOSTNAME`" -serverplayers `$global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics" # -nosteamclient"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c TheForestDedicatedServer.exe -serverip `$global:IP -serversteamport `$global:STEAMPORT -servergameport `$global:PORT -serverqueryport `$global:QUERYPORT -servername `"`$global:HOSTNAME`" -serverplayers `$global:MAXPLAYERS -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics`"" # -nosteamclient"
     #-serverip xxx.xxx.xxx.xxx -serversteamport 8766 -servergameport 27015 -serverqueryport 27016 -servername TheForestGameDS -serverplayers 8 -difficulty Normal -inittype Continue -slot 1
 }
 
@@ -252,7 +252,7 @@ Function New-LaunchScriptAoCserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\aoc.exe -console -game ageofchivalry -secure +map `$global:MAP -autoupdate +log on +maxplayers `$global:MAXPLAYERS -port `$global:PORT +ip `${global:IP} +exec server.cfg"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c aoc.exe -console -game ageofchivalry -secure +map `$global:MAP -autoupdate +log on +maxplayers `$global:MAXPLAYERS -port `$global:PORT +ip `${global:IP} +exec server.cfg`""
 }
 
 
@@ -291,7 +291,7 @@ Function New-LaunchScriptasserverPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\asds.exe -console -game swarm +map lobby -maxplayers 4 -autoupdate"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c asds.exe -console -game swarm +map lobby -maxplayers 4 -autoupdate`""
 }
 #Function New-LaunchScriptTEMPLATEserverPS {
         # TEMPLATE Server
@@ -312,7 +312,7 @@ Function New-LaunchScriptasserverPS {
         
         #Write-Host "***  Renaming srcds.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
         #Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\TEMP.exe" >$null 2>&1
-        #Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe" >$null 2>&1
+        #Rename-Item -Path "start-process cmd `"/c srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe`"" >$null 2>&1
 
         #Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         #New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force

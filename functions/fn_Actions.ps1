@@ -5,19 +5,42 @@
 #  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
 #   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
 #----------      Install server as Anon     ----------------------
+Function Set-SteamInfo {
+    $title    = 'Install Steam server with Anonymous login'
+    $question = 'Use Anonymous Login?'
+    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
+    if ($decision -eq 1) {
+        $global:anon="yes"
+    Install-Anonserver
+    Write-Host 'Entered Y'
+    }else{
+        $global:anon="no"
+    #Install-Server
+    Install-Anonserver
+    Write-Host 'Entered N'}
+}
 Function Install-Anonserver {
+    if ($global:ANON-eq"no"){
+        Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -ForegroundColor Cyan -BackgroundColor Black  
+        $global:username = Read-host}Else{}
     Write-Host '****    Creating SteamCMD Run txt   *****' -ForegroundColor Magenta -BackgroundColor Black 
     New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login anonymous"
+    if ($global:ANON-eq"no"){}Else{Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"}
+    if ($global:ANON-eq"no"){Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login $global:username"}Else{
+    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login anonymous"}
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:APPID $global:Branch"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "exit"
+    
     New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login anonymous"
+    if ($global:ANON-eq"no"){}Else{Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1"}
+    if ($global:ANON-eq"no"){Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login $global:username"}Else{
+    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login anonymous"}
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:APPID $global:Branch validate"
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "exit"
@@ -28,30 +51,6 @@ Function Install-Anonserver {
     Get-UpdateServer
     Set-Location $global:currentdir
 }
-#--------- Install server as User  -----------------
-Function Install-Server {
-    Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -ForegroundColor Cyan -BackgroundColor Black  
-    $global:username = Read-host
-    Write-Host '****   Creating SteamCMD Run txt   *****' -ForegroundColor Magenta -BackgroundColor Black 
-    New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login $global:username"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:APPID $global:Branch"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "exit"
-    New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login $global:username"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:APPID $global:Branch validate"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "exit"
-    New-Item -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Force
-    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_update 1"
-    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_print $global:APPID"
-    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "quit"
-    Get-UpdateServer
-    Set-Location $global:currentdir     
-}
 Function Get-createdvaribles {
     Write-Host "****   Getting Server Variables   *****" -ForegroundColor Yellow -BackgroundColor Black  
     .$global:currentdir\$global:server\Variables-$global:server.ps1
@@ -59,86 +58,10 @@ Function Get-createdvaribles {
 }
 Function Get-ClearVariables {
     Write-Host "****   Clearing Variables   *****" -ForegroundColor Yellow -BackgroundColor Black
-    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR","status","CpuCores","cpu","avmem","totalmem","mem","backups","backupssize","stats","gameresponse","os","results,","disks","computername"
+    $global:vars = "PROCESS","IP","PORT","SOURCETVPORT","CLIENTPORT","MAP","TICKRATE","GSLT","MAXPLAYERS","WORKSHOP","HOSTNAME","QUERYPORT","SAVES","APPID","RCONPORT","RCONPASSWORD","SV_PURE","SCENARIO","GAMETYPE","GAMEMODE","MAPGROUP","WSCOLLECTIONID","WSSTARTMAP","WSAPIKEY","WEBHOOK","EXEDIR","GAME","SERVERCFGDIR","gamedirname","config1","config2","config3","config4","config5","MODDIR","status","CpuCores","cpu","avmem","totalmem","mem","backups","backupssize","stats","gameresponse","os","results,","disks","computername","ANON"
     Foreach($global:vars in $global:vars){
     Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue}
-}
-Function Get-ClearVars {
-    Write-Host "****   Clearing Variables   *****" -ForegroundColor Yellow -BackgroundColor Black 
-    # might have to change process name
-    Clear-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable IP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable PORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable SOURCETVPORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable CLIENTPORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable MAP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable TICKRATE -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable GSLT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable MAXPLAYERS -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable WORKSHOP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable HOSTNAME -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable QUERYPORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable SAVES -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable APPID -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable RCONPORT -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable RCONPASSWORD -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable SV_PURE -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable SCENARIO -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable GAMETYPE -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable GAMEMODE -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable MAPGROUP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable WSCOLLECTIONID -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable WSSTARTMAP -Scope Global -ErrorAction SilentlyContinue
-    Clear-Variable WSAPIKEY -Scope Global -ErrorAction SilentlyContinue
-    #Remove-Variable *  -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SERVERCFGDIR -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable gamedirname -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config1 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config2 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config3 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config4 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config5 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MODDIR -Scope Global -ErrorAction SilentlyContinue
-    # might have to change process name
-    Remove-Variable PROCESS -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable IP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable PORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SOURCETVPORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable CLIENTPORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MAP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable TICKRATE -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GSLT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MAXPLAYERS -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WORKSHOP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable HOSTNAME -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable QUERYPORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SAVES -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable APPID -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable RCONPORT -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable RCONPASSWORD -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SV_PURE -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SCENARIO -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GAMETYPE -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GAMEMODE -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MAPGROUP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WSCOLLECTIONID -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WSSTARTMAP -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WSAPIKEY -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable WEBHOOK -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable EXEDIR -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable GAME -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable SERVERCFGDIR -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable gamedirname -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config1 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config2 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config3 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config4 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable config5 -Scope Global -ErrorAction SilentlyContinue
-    Remove-Variable MODDIR -Scope Global -ErrorAction SilentlyContinue
 }
 Function Select-launchServer {
     Write-Host '****   Starting Launch script   *****' -ForegroundColor Yellow -BackgroundColor Black  
@@ -165,6 +88,51 @@ Function Get-StopServerInstall {
     Write-Host "****   Stopping Server Process   *****" -ForegroundColor Magenta -BackgroundColor Black
     stop-process -Name "$global:PROCESS" -Force}
 }
+Function Get-RestartsServer {
+    Clear-host
+    Start-Countdown -Seconds 10 -Message "Restarting server"
+    Get-logo
+    & "$global:currentdir\$global:server\Launch-*.ps1"
+    Get-CheckForError
+    Set-Location $global:currentdir
+}
+Function Start-Countdown {
+    Param(
+    [Int32]$Seconds = 10,
+    [string]$Message = "Restarting server in 10 seconds...")
+    ForEach ($Count in (1..$Seconds))
+    {Write-Progress -Id 1 -Activity $Message -Status "Waiting for $Seconds seconds, $($Seconds - $Count) left" -PercentComplete (($Count / $Seconds) * 100)
+    Start-Sleep -Seconds 1}
+    Write-Progress -Id 1 -Activity $Message -Status "Completed" -PercentComplete 100 -Completed
+}
+Function Get-Finished {
+    Get-ClearVariables
+    #Get-ClearVars
+    write-Host "*************************************" -ForegroundColor Yellow
+    write-Host "***  Server $global:command is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
+    write-Host "*************************************" -ForegroundColor Yellow
+    write-Host "  ./steamer start $global:server  "-ForegroundColor Black -BackgroundColor White
+}
+Function Get-TestInterger {
+    if( $global:APPID -match '^[0-9]+$') { 
+    }else{ 
+    Write-Host "$global:DIAMOND $global:DIAMOND Input App ID Valid Numbers only! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+    pause
+    exit}
+}
+Function Get-TestString {
+    if( $global:server -match "[a-z,A-Z]") { 
+    }else{
+    Write-Host "$global:DIAMOND $global:DIAMOND Input Alpha Characters only! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+    pause
+    exit}
+}
+Function Get-FolderNames {
+    Write-Host "****   Checking Folder Names   ****" -ForegroundColor Yellow -BackgroundColor Black
+    if (Test-Path "$global:currentdir\$global:server\"){
+    }else{
+    New-ServerFolderq}
+}
 Function Get-ValidateServer {
     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
     Get-Steamtxt
@@ -172,7 +140,8 @@ Function Get-ValidateServer {
     .\steamcmd +runscript Validate-$global:server.txt
     if ( !$? ){
     Write-host "****   Validating Server Failed   ****" -ForegroundColor Red
-    New-Tryagainsteamcmd
+    #New-Tryagainsteamcmd
+    New-TryagainNew 
     Set-Location $global:currentdir
     }elseif($?){
     write-Host "****   Validating Server succeeded   ****" -ForegroundColor Yellow}
@@ -185,7 +154,8 @@ Function Get-UpdateServer {
     .\steamcmd +runscript Updates-$global:server.txt
     if ( !$?){
     Write-host "****   Downloading  Install/update server Failed   ****" -ForegroundColor Red
-    New-Tryagainsteamcmd
+    #New-Tryagainsteamcmd
+    New-TryagainNew 
     Set-Location $global:currentdir
     }elseif($?){
     write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow}
@@ -203,73 +173,37 @@ Function Get-Steam {
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;  
     Invoke-WebRequest -Uri $global:steamurl -OutFile $global:steamoutput
     if (!$?) {write-host " ****   Downloading  SteamCMD Failed   ****" -ForegroundColor Red -BackgroundColor Black 
-    New-Tryagainsteamcmd}
+    #New-Tryagainsteamcmd
+    New-TryagainNew }
     if ($?) {write-host " ****   Downloading  SteamCMD succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '***   Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\" -Force 
     if (!$?) {write-host " ****   Extracting SteamCMD Failed    ****" -ForegroundColor Yellow -BackgroundColor Black 
-    New-Tryagainsteamcmd}
+    #New-Tryagainsteamcmd
+    New-TryagainNew 
+}
     if ($?) {write-host " ****   Extracting SteamCMD succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black}}
 
 }
-Function New-Tryagainsteamcmd {
+Function New-TryagainNew {
     $title    = 'Try again?'
-    $question = 'Download and Extract SteamCMD and Install server   ?'
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+    $question = "$global:command $global:server?"
+   $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+   $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+   $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     if ($decision -eq 0) {
-    Write-Host 'Entered Y'
-    Get-Steam
-        if (($global:command -eq "Install") -or ($global:command -eq "update")) {
-        Get-UpdateServer
-        }else{ Get-ValidateServer}
+        Write-Host 'Entered Y'
+        if (($global:command -eq "install") -or ($global:command -eq "update")){Get-UpdateServer}
+        elseif ($global:command -eq "validate"){Get-ValidateServer}
+        elseif($global:command -eq "gamedig"){add-nodejs}
+        elseif($global:command -eq "mcrcon"){Get-MCRcon}
+        elseif($global:command -eq "backup"){add-sevenzip}
     }else{
     Write-Host 'Entered N'
-    Set-Location $global:currentdir
-    exit}
+   exit}
 }
-
-Function Get-RestartsServer {
-    Clear-host
-    Start-Countdown -Seconds 10 -Message "Restarting server"
-    Get-logo
-    & "$global:currentdir\$global:server\Launch-*.ps1"
-    Get-CheckForError
-    Set-Location $global:currentdir
-}
-Function Set-SteamInfo {
-    $title    = 'Install Steam server with Anonymous login'
-    $question = 'Use Anonymous Login?'
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
-    if ($decision -eq 1) {
-    Install-Anonserver
-    Write-Host 'Entered Y'
-    }else{
-    Install-Server
-    Write-Host 'Entered N'}
-}
-#Function New-TryagainNew {
-#    $title    = 'Try again?'
-#    $question = "$global:command $global:server?"
-#    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-#    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-#    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-#    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-#    if ($decision -eq 0) {
-#    Write-Host 'Entered Y'
-#    if (($global:command -eq "install") -or ($global:command -eq "update")){Get-UpdateServer}
-#    if ($global:command -eq "validate"){Get-ValidateServer}
-#            } 
-#    else {
-#    Write-Host 'Entered N'
-#    exit}
-#}
 Function Get-ServerBuildCheck {
     Get-Steam
     Get-Steamtxt
@@ -333,66 +267,49 @@ Function Set-SteamInfoAppID {
 Function Get-GamedigServerv2 {
     Write-Host '****   Starting gamedig on Server   ****' -ForegroundColor Magenta -BackgroundColor Black
     if(( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {
-    Write-Host '****   Using QUERYPORT    ****' -ForegroundColor Yellow -BackgroundColor Black
-    # Executes when the Boolean expression 1 is true
-    if(($null -eq ${global:QUERYPORT} ) -or ("" -eq ${global:QUERYPORT} )){
-    Write-Host '****   Missing QUERYPORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
-    # Executes when the Boolean expression 2 is true
-    }Else{
-    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-    .\gamedig --type $global:GAME ${global:EXTIP}:${global:QUERYPORT} --pretty
-    Set-Location $global:currentdir}  
+        Write-Host '****   Using QUERYPORT    ****' -ForegroundColor Yellow -BackgroundColor Black
+        # Executes when the Boolean expression 1 is true
+        if(($null -eq ${global:QUERYPORT} ) -or ("" -eq ${global:QUERYPORT} )){
+            Write-Host '****   Missing QUERYPORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
+            # Executes when the Boolean expression 2 is true
+            }Elseif($global:command -eq "gamedig"){
+            Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+            .\gamedig --type $global:GAME ${global:EXTIP}:${global:QUERYPORT} --pretty
+            Set-Location $global:currentdir
+            }elseif($global:command -eq "gamedigprivate")  {
+            Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
+            .\gamedig --type $global:GAME ${global:IP}:${global:QUERYPORT} --pretty
+            Set-Location $global:currentdir}
     }ElseIf(($null -eq ${global:PORT}) -or ("" -eq ${global:PORT} )){
     Write-Host '****   Missing PORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
-    }Else{
+    }Elseif($global:command -eq "gamedigprivate"){
+    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
+    .\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty
+    Set-Location $global:currentdir
+    }else{
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     .\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty
     Set-Location $global:currentdir}
      
 }
-
-#Function Get-GamedigServer {
-#    Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
-#    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-#    .\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty
-#    Set-Location $global:currentdir
-#}
-#Function Get-GamedigServerQ {
-#    Write-Host '*** Starting gamedig on Server *****' -ForegroundColor Magenta -BackgroundColor Black
-#    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-#    .\gamedig --type $global:GAME ${global:EXTIP}:${global:QUERYPORT} --pretty
-#    Set-Location $global:currentdir
-#}
-
-Function Get-GamedigServerPrivatev2 {
-    Write-Host '****   Starting gamedig using private IP on Server   ****' -ForegroundColor Magenta -BackgroundColor Black
-    If (( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)){
-        Write-Host '****   Using QUERYPORT    ****' -ForegroundColor Yellow -BackgroundColor Black
-       if(($null -eq ${global:QUERYPORT} ) -or ("" -eq ${global:QUERYPORT} )){
-        Write-Host '****   Missing QUERYPORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
-       }Else{ 
-        Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
-           .\gamedig --type $global:GAME ${global:IP}:${global:QUERYPORT} --pretty
-           Set-Location $global:currentdir}
-    }ElseIf(($null -eq ${global:PORT}) -or ("" -eq ${global:PORT} )){
-        Write-Host '****   Missing PORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
-    }Else{
-    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
-    .\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty
-    Set-Location $global:currentdir}
-}
-#Function Get-GamedigServerPrivate {
-#    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
-#    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-#    .\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty
-#    Set-Location $global:currentdir
-#}
-#Function Get-GamedigServerQPrivate {
-#    Write-Host '*** Starting gamedig using private IP on Server *****' -ForegroundColor Magenta -BackgroundColor Black
-#   Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
+#Function Get-GamedigServerPrivatev2 {
+#    Write-Host '****   Starting gamedig using private IP on Server   ****' -ForegroundColor Magenta -BackgroundColor Black
+#    If (( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)){
+#    Write-Host '****   Using QUERYPORT    ****' -ForegroundColor Yellow -BackgroundColor Black
+#    if(($null -eq ${global:QUERYPORT} ) -or ("" -eq ${global:QUERYPORT} )){
+#    Write-Host '****   Missing QUERYPORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
+#    }Else{ 
+#    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
 #    .\gamedig --type $global:GAME ${global:IP}:${global:QUERYPORT} --pretty
-#    Set-Location $global:currentdir
+#    Set-Location $global:currentdir}
+#    }ElseIf(($null -eq ${global:PORT}) -or ("" -eq ${global:PORT} )){
+#    Write-Host '****   Missing PORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
+#    }Else{
+#    Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
+#    .\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty
+#    Set-Location $global:currentdir}
 #}
+
 Function Get-details {
     $global:Cpu = (Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select-object Average ).Average
     $host.UI.RawUI.ForegroundColor = "Cyan"
@@ -460,35 +377,6 @@ function Get-DriveSpace {
     Set-Location $global:currentdir
     #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
 }
-Function Start-Countdown {
-    Param(
-    [Int32]$Seconds = 10,
-    [string]$Message = "Restarting server in 10 seconds...")
-    ForEach ($Count in (1..$Seconds))
-    {Write-Progress -Id 1 -Activity $Message -Status "Waiting for $Seconds seconds, $($Seconds - $Count) left" -PercentComplete (($Count / $Seconds) * 100)
-    Start-Sleep -Seconds 1}
-    Write-Progress -Id 1 -Activity $Message -Status "Completed" -PercentComplete 100 -Completed
-}
-Function Get-TestInterger {
-    if( $global:APPID -match '^[0-9]+$') { 
-    }else{ 
-    Write-Host "$global:DIAMOND $global:DIAMOND Input App ID Valid Numbers only! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
-    pause
-    exit}
-}
-Function Get-TestString {
-    if( $global:server -match "[a-z,A-Z]") { 
-    }else{
-    Write-Host "$global:DIAMOND $global:DIAMOND Input Alpha Characters only! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
-    pause
-    exit}
-}
-Function Get-FolderNames {
-    Write-Host "****   Checking Folder Names   ****" -ForegroundColor Yellow -BackgroundColor Black
-    if (Test-Path "$global:currentdir\$global:server\"){
-    }else{
-    New-ServerFolderq}
-}
 Function New-ServerFolderq {
     $title    = 'Server Folder Name does not exist!'
     $question = 'Would you like to to create new Server Folder Name?'
@@ -520,7 +408,10 @@ Function New-ServerFolder {
 }
 Function Get-CheckForVars {
     Write-Host "****   Checking for Vars   ****" -ForegroundColor Yellow -BackgroundColor Black
-    $global:missingvars = ${global:QUERYPORT},${global:IP}
+    if(($global:command -eq "mcrcon") -or($global:command -eq "mcrconPrivate")){
+    $global:missingvars = $global:RCONPORT,$global:RCONPASSWORD
+    }else{
+    $global:missingvars = ${global:QUERYPORT},${global:IP},$global:APPID,$global:PROCESS}
     foreach($global:missingvars in $global:missingvars){
     if ( "" -eq $global:missingvars){
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
@@ -538,46 +429,16 @@ Function Get-CheckForError {
     Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
     Exit}
 }
-Function Get-CheckForVars {
-    Write-Host "****   Checking for Vars   ****" -ForegroundColor Yellow -BackgroundColor Black
-    if(( "" -eq $global:APPID) -or ( "" -eq $global:PROCESS)){
-    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
-    Write-Host "Try install command again or check vars in Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-    exit}
-}
+
 Function set-connectMCRcon {
-    if(( "" -eq $global:RCONPORT) -or ( "" -eq $global:RCONPASSWORD)){
-    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
-    Write-Host "Try install command again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-    }else{
     set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
     .\mcrcon.exe -t -H $global:EXTIP -P $global:RCONPORT -p $global:RCONPASSWORD
-    set-location $global:currentdir}
+    set-location $global:currentdir
 }
 Function set-connectMCRconP {
-    if(( "" -eq $global:RCONPORT) -or ( "" -eq $global:RCONPASSWORD)){
-    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
-    Write-Host "Try install command again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-    }else{
     set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
     .\mcrcon.exe -t -H $global:IP -P $global:RCONPORT -p $global:RCONPASSWORD
-    set-location $global:currentdir}
-}
-Function Get-AdminCheck {
-    $user = "$env:COMPUTERNAME\$env:USERNAME"
-    $group = 'Administrators'
-    $isInGroup = (Get-LocalGroupMember $group).Name -contains $user
-    if($isInGroup -eq $true){
-    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "                 $global:DIAMOND $global:DIAMOND Do Not Run as an Admin account $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
-    Write-Host "***  Please Create a Non Admin Account to run script and game server  ******" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black}
+    set-location $global:currentdir
 }
 Function Get-MCRcon {
     $start_time = Get-Date
@@ -592,47 +453,38 @@ Function Get-MCRcon {
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:mcrconurl -OutFile $global:currentdir\mcrcon.zip
     if (!$?) {write-host "****   Downloading  MCRCon Failed   ****" -ForegroundColor Red -BackgroundColor Black 
-    New-TryagainMC}
+    #New-TryagainMC
+    New-TryagainNew 
+    }
     if ($?) {write-host "****   Downloading  MCRCon succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Extracting MCRCon from github   ****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\mcrcon.zip" "$global:currentdir\mcrcon\" -Force
     if (!$?) {write-host "****   Extracting MCRCon Failed   ****" -ForegroundColor Yellow -BackgroundColor Black 
-    New-TryagainMC}
+    #New-TryagainMC
+    New-TryagainNew 
+}
     if ($?) {write-host "****   Extracting MCRCon succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}}
 }
-Function New-TryagainMC {
-    $title    = 'Try again?'
-    $question = 'Download and Extract MCRCon?'
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-    if ($decision -eq 0) {
-    Write-Host 'Entered Y'
-    Get-MCRcon} 
-    else {
-    Write-Host 'Entered N'
-    exit}
-}
+
 Function New-DiscordAlert {
     if ( "" -eq $global:WEBHOOK) {
     Write-Host "$global:DIAMOND $global:DIAMOND Missing WEBHOOK ! $global:DIAMOND $global:DIAMOND"-ForegroundColor Red -BackgroundColor Black
     Write-Host "****   Add Discord  WEBHOOK to $global:currentdir\$global:server\Variables-$global:server.ps1   ****" -ForegroundColor Yellow -BackgroundColor Black    
     }Else {
     Write-Host '****   Sending Discord Alert   ****' -ForegroundColor Magenta -BackgroundColor Black
-    $webHookUrl = "$global:WEBHOOK"
+    $webHookUrl     = "$global:WEBHOOK"
     [System.Collections.ArrayList]$embedArray = @()
-    $title       = "$global:HOSTNAME"
-    $description = 'Server not Running, Starting Server!'
-    $color       = '16711680'
-    $embedObject = [PSCustomObject]@{
-    title       = $title       
-    description = $description  
-    color       = $color}                              
+    $title          = "$global:HOSTNAME"
+    $description    = 'Server not Running, Starting Server!'
+    $color          = '16711680'
+    $embedObject    = [PSCustomObject]@{
+    title           = $title       
+    description     = $description  
+    color           = $color}                              
     $embedArray.Add($embedObject) | Out-Null
-    $payload = [PSCustomObject]@{
-    embeds = $embedArray}                              
+    $payload        = [PSCustomObject]@{
+    embeds          = $embedArray}                              
     Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'}
 }
 Function Set-Console {
@@ -648,7 +500,26 @@ Function Set-Console {
     }else{
     Get-logo}
 }
-
+Function Get-logo {
+    Write-Host " 
+    _________  __                                           
+   /   _____/_/  |_   ____  _____     _____    ____ _______ 
+   \_____  \ \   __\_/ __ \ \__  \   /     \ _/ __ \\_  __ \
+   /        \ |  |  \  ___/  / __ \_|  Y Y  \\  ___/ |  | \/
+  /_______  / |__|   \___  >(____  /|__|_|  / \___  >|__|   
+          \/             \/      \/       \/      \/        
+"
+}
+Function Get-AdminCheck {
+    $user = "$env:COMPUTERNAME\$env:USERNAME"
+    $group = 'Administrators'
+    $isInGroup = (Get-LocalGroupMember $group).Name -contains $user
+    if($isInGroup -eq $true){
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "                 $global:DIAMOND $global:DIAMOND Do Not Run as an Admin account $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "***  Please Create a Non Admin Account to run script and game server  ******" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black}
+}
 Function Get-UpdateSteamer {
     $start_time = Get-Date
     Write-Host '****   Downloading Steamer github files   ****' -ForegroundColor Magenta -BackgroundColor Black 
@@ -663,16 +534,6 @@ Function Get-UpdateSteamer {
     Write-Host '****   Press Enter to Close this session   ****' -ForegroundColor Yellow -BackgroundColor Black
     Pause  
     stop-PROCESS -Id $PID
-}
-Function Get-logo {
-    Write-Host " 
-    _________  __                                           
-   /   _____/_/  |_   ____  _____     _____    ____ _______ 
-   \_____  \ \   __\_/ __ \ \__  \   /     \ _/ __ \\_  __ \
-   /        \ |  |  \  ___/  / __ \_|  Y Y  \\  ___/ |  | \/
-  /_______  / |__|   \___  >(____  /|__|_|  / \___  >|__|   
-          \/             \/      \/       \/      \/        
-"
 }
 Function Get-NodeJS {
     $path = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64"
@@ -692,13 +553,15 @@ Function add-nodejs {
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:nodejsurl -OutFile $global:currentdir\node-v$global:nodeversion-win-x64.zip
     if (!$?) {write-host "****   Downloading  Nodejs Failed    ****" -ForegroundColor Red -BackgroundColor Black 
-    New-TryagainN}
+    #New-TryagainN
+    New-TryagainNew}
     if ($?) {write-host "****   Downloading  Nodejs succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Extracting Nodejs   *****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64.zip" "$global:currentdir\node-v$global:nodeversion-win-x64\" -Force
     if (!$?) {write-host "****   Extracting Nodejs Failed   ****" -ForegroundColor Yellow -BackgroundColor Black 
-    New-TryagainN}
+    #New-TryagainN
+    New-TryagainNew}
     if ($?) {write-host "****   Extracting Nodejs succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     Write-Host '****   Installing gamedig in Nodejs   ****' -ForegroundColor Magenta -BackgroundColor Black
@@ -706,28 +569,6 @@ Function add-nodejs {
     .\npm install gamedig
     .\npm install gamedig -g
     Set-Location $global:currentdir
-}
-Function New-TryagainN {
-    $title    = 'Try again?'
-    $question = 'Download and Extract NodeJS?'
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-    if ($decision -eq 0) {
-    Write-Host 'Entered Y'
-    add-nodejs} 
-    else {
-    Write-Host 'Entered N'
-    exit}
-}
-Function Get-Finished {
-    Get-ClearVariables
-    #Get-ClearVars
-    write-Host "*************************************" -ForegroundColor Yellow
-    write-Host "***  Server $global:command is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
-    write-Host "*************************************" -ForegroundColor Yellow
-    write-Host "  ./steamer start $global:server  "-ForegroundColor Black -BackgroundColor White
 }
 Function New-CreateVariables {
     Write-Host '*** Creating Variables Script ****' -ForegroundColor Magenta -BackgroundColor Black 
@@ -942,30 +783,6 @@ Function Set-RestartJob {
     Get-ChecktaskUnreg
     New-RestartJob}
 } 
-#Function New-MOTD {
-#
-#if(( "" -eq $global:RCONPORT) -or ( "" -eq $global:RANDOMPASSWORD)){
-#    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-#    Write-Host "$global:DIAMOND $global:DIAMOND Missing Vars ! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
-#    Write-Host "Try install command again or adding Rcon vars to Variables-$global:server.ps1" -ForegroundColor Yellow -BackgroundColor Black
-#    Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-#    }else{
-#    set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
-#    .\mcrcon.exe -c -H $global:IP -P $global:RCONPORT -p $global:RCONPASSWORD "say Test MOTD Message"
-#    set-location $global:currentdir
-#}
-#Function New-MOTDJob {
-#    Write-Host "Run Task only when user is logged on"
-#    Write-Host "Input MOTD -Minutes: " -ForegroundColor Cyan -NoNewline
-#    $restartTime = Read-Host
-#    $Action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "`"$global:currentdir\steamer.ps1 New-MOTD `"" -WorkingDirectory "$global:currentdir"
-#    $Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).Date -RepetitionInterval (New-TimeSpan -Minutes $restartTime)
-#    [X] $Trigger = New-ScheduledTaskTrigger -Daily -At $restartTime 
-#    $Settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit '00:00:00'
-#    $Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Settings
-#    Write-Host "Creating Task........" -ForegroundColor Magenta -BackgroundColor Black
-#    Register-ScheduledTask -TaskName "$global:server monitor" -InputObject $Task
-#}
 Function Get-ChecktaskUnreg {
     Get-ScheduledTask -TaskName "$global:server $global:command" >$null 2>&1
     if ($?) {
@@ -1031,7 +848,9 @@ Function add-sevenzip {
     Invoke-WebRequest -Uri $global:sevenzip -OutFile $global:currentdir\7za920.zip
     if (!$?) {
     write-host "****   7Zip Download Failed   *****" -ForegroundColor Yellow -BackgroundColor Black
-    New-Tryagain}
+    #New-Tryagain
+    New-TryagainNew 
+}
     if ($?) {
     write-host "****   7Zip  Download succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
@@ -1039,24 +858,13 @@ Function add-sevenzip {
     Expand-Archive "$global:currentdir\7za920.zip" "$global:currentdir\7za920\" -Force
     if (!$?) {
     write-host "****   7Zip files did not Extract   ****" -ForegroundColor Yellow -BackgroundColor Black
-    New-Tryagain}
+    #New-Tryagain
+    New-TryagainNew 
+}
     if ($?) {
     write-host "****   7Zip Extract succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black}
 }
-Function New-Tryagain {
-    $title    = 'Try again?'
-    $question = 'Download and Extract 7Zip?'
-    $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
-    $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
-    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
-    if ($decision -eq 0) {
-    Write-Host 'Entered Y'
-    add-sevenzip} 
-    else {
-    Write-Host 'Entered N'
-    exit}
-}
+
 Function New-backupAppdata {
     $BackupDate = get-date -Format yyyyMMdd
     Write-Host '****   Server App Data Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
