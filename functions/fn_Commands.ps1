@@ -289,6 +289,7 @@ Function Select-Steamer {
     Get-FolderNames
     Get-createdvaribles
     Get-CheckForVars
+    Get-NodeJS
     Get-details
     Get-DriveSpace
     Get-ClearVariables
