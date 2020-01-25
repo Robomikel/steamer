@@ -41,5 +41,5 @@ Function New-LaunchScriptArkPS {
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\ShooterGame\Binaries\Win64\"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c ShooterGameServer.exe `${global:MAP}`?AltSaveDirectoryName=`${global:MAP}`?listen`?MultiHome=`${global:IP}`?MaxPlayers=`${global:MAXPLAYERS}`?QueryPort=`${global:QUERYPORT}`?RCONEnabled=True`?RCONPort=`${global:RCONPORT}`?ServerAdminPassword=`${global:RCONPASSWORD}`?Port=`${global:PORT} -automanagedmods`"  -NoNewWindows"
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c ShooterGameServer.exe `${global:MAP}`?AltSaveDirectoryName=`${global:MAP}`?listen`?MultiHome=`${global:IP}`?MaxPlayers=`${global:MAXPLAYERS}`?QueryPort=`${global:QUERYPORT}`?RCONEnabled=True`?RCONPort=`${global:RCONPORT}`?ServerAdminPassword=`${global:RCONPASSWORD}`?Port=`${global:PORT} -automanagedmods`"  -NoNewWindow"
 }
