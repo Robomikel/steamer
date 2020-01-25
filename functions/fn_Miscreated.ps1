@@ -24,7 +24,7 @@ Function New-LaunchScriptMiscreatedPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Bin64_dedicated\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c MiscreatedServer.exe  +sv_bind `${global:IP} +sv_maxplayers `${global:MAXPLAYERS} +map islands -sv_port `${global:PORT} +http_startserver -mis_gameserverid 100`" -Wait -NoNewWindow"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c MiscreatedServer.exe  +sv_bind `${global:IP} +sv_maxplayers `${global:MAXPLAYERS} +map islands -sv_port `${global:PORT} +http_startserver -mis_gameserverid 100`"  -NoNewWindow"
         if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
         $global:RCONPORT="$global:PORT"
         Write-Host '*** Creating HOSTING.CFG *****' -ForegroundColor Magenta -BackgroundColor Black 
