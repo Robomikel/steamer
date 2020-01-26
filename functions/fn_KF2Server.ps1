@@ -36,7 +36,7 @@ Function New-LaunchScriptKF2serverPS {
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Binaries\Win64"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c KFServer.exe `$global:MAP?Game=`$global:GAMEMODE?Difficulty=`$global:DIFF? -Port=`$global:PORT -QueryPort=`$global:QUERYPORT`""
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c KFServer.exe `${global:MAP}?Game=`${global:GAMEMODE}?Difficulty=`${global:DIFF}? -Port=`${global:PORT} -QueryPort=`${global:QUERYPORT}`" -NoNewWindow"
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
     Select-launchServer
     timeout 5
