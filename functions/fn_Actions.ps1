@@ -65,7 +65,7 @@ Function Install-Anonserver {
     Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_print $global:APPID"
     Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "quit"
     Get-UpdateServer
-    Set-Location $global:currentdir
+    
 }
 Function Get-createdvaribles {
     Write-Host "****   Getting Server Variables   *****" -ForegroundColor Yellow -BackgroundColor Black  
@@ -84,7 +84,7 @@ Function Select-launchServer {
     Write-Host '****   Starting Launch script   *****' -ForegroundColor Yellow -BackgroundColor Black  
     & "$global:currentdir\$global:server\Launch-*.ps1"
     Get-CheckForError
-    Set-Location $global:currentdir
+    
 }
 Function Get-CheckServer {
     Write-Host '****   Check  Server process    *****' -ForegroundColor Yellow -BackgroundColor Black 
@@ -118,7 +118,7 @@ Function Get-RestartsServer {
     Get-logo
     & "$global:currentdir\$global:server\Launch-*.ps1"
     Get-CheckForError
-    Set-Location $global:currentdir
+    
 }
 Function Start-Countdown {
     Param(
@@ -173,7 +173,7 @@ Function Get-ValidateServer {
         Write-host "****   Validating Server Failed   ****" -ForegroundColor Red
         #New-Tryagainsteamcmd
         New-TryagainNew 
-        Set-Location $global:currentdir
+        
     }
     elseif ($?) {
         write-Host "****   Validating Server succeeded   ****" -ForegroundColor Yellow
@@ -189,7 +189,7 @@ Function Get-UpdateServer {
         Write-host "****   Downloading  Install/update server Failed   ****" -ForegroundColor Red
         #New-Tryagainsteamcmd
         New-TryagainNew 
-        Set-Location $global:currentdir
+        
     }
     elseif ($?) {
         write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
@@ -289,7 +289,7 @@ Function Get-Steamtxt {
         Write-Host "      $global:DIAMOND $global:DIAMOND Command $global:command Failed! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
         Write-Host "***        Try install command again          ****  " -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-        Set-Location $global:currentdir
+        
         Exit
     }
 }
@@ -396,6 +396,7 @@ Function Get-details {
     Write-host "    game replied      : $gameresponse"
     Write-host "    OS                : $os"
     Write-host "    hostname          : $computername"
+    Set-Location $global:currentdir
 }
 function Get-DriveSpace {
     $global:disks = get-wmiobject -class "Win32_LogicalDisk" -namespace "root\CIMV2" -computername $env:COMPUTERNAME
@@ -413,7 +414,6 @@ function Get-DriveSpace {
     }
     #$results | Out-GridView
     $global:results | Format-Table -AutoSize
-    Set-Location $global:currentdir
     #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
 }
 Function New-ServerFolderq {
@@ -1040,7 +1040,10 @@ Function New-backupAppdata {
     Set-Location $global:currentdir\7za920\ 
     ./7za a $global:currentdir\backups\AppDataBackup_$global:server-$global:Date.zip $env:APPDATA\$global:saves\* > AppDatabackup.log
     Write-Host '****   Server App Data Backup is Done!   ****' -ForegroundColor Yellow -BackgroundColor Black
-    if ($global:appdatabackuplog -eq "1") { .\AppDatabackup.log }
+    if ($global:appdatabackuplog -eq "1") { 
+        .\AppDatabackup.log 
+    }
+    Set-Location $global:currentdir
 }
 Function Get-savelocation {
     if (("" -eq $global:saves) -or ($null -eq $global:saves )) {
