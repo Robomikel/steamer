@@ -75,6 +75,7 @@ Function New-LaunchScriptInssserverPS {
         Add-Content   $GamePath\Game.ini IncorrectPasswordBanTime=30
         Add-Content   $GamePath\Game.ini " "
         Add-Content   $GamePath\Game.ini [/script/insurgency.insgamemode]
+        Add-Content   $GamePath\Game.ini ServerHostname=`"$global:HOSTNAME`"
         Add-Content   $GamePath\Game.ini bKillFeed=False
         Add-Content   $GamePath\Game.ini bKillFeedSpectator=True
         Add-Content   $GamePath\Game.ini bKillerInfo=True
