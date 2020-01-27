@@ -1,32 +1,32 @@
 Function New-LaunchScriptRustPS {
         #----------   Rust server CDF  -------------------
-        $global:MODDIR="RustDedicated_Data"
-        $global:EXEDIR=""
+        $global:MODDIR = "RustDedicated_Data"
+        $global:EXEDIR = ""
         $global:GAME = "rust"
         $global:PROCESS = "RustDedicated"
         $global:SERVERCFGDIR = "server\my_server_identity\cfg"
         Get-StopServerInstall
-        $global:gamedirname="Rust"
-        $global:config1="server.cfg"
+        $global:gamedirname = "Rust"
+        $global:config1 = "server.cfg"
         Get-Servercfg
-        $q="``"
+        $q = "``"
         # - - - - - - - - - - - - -
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-host
-        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [28015]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="28015"}else{$global:PORT}
-        if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [28016]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="28016"}else{$global:RCONPORT}
-        if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
-        if(($global:RCONWEB = Read-Host -Prompt (Write-Host "Input Server Rcon Web,Press enter to accept default value [1]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONWEB="1"}else{$global:RCONWEB}
+        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [28015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "28015" }else { $global:PORT }
+        if (($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [28016]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPORT = "28016" }else { $global:RCONPORT }
+        if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
+        if (($global:RCONWEB = Read-Host -Prompt (Write-Host "Input Server Rcon Web,Press enter to accept default value [1]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONWEB = "1" }else { $global:RCONWEB }
         Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
         Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
         $global:MAXPLAYERS = Read-host
-        if(($global:SEED = Read-Host -Prompt (Write-Host "Input Server seed,Press enter to accept default value [4125143]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SEED="4125143"}else{$global:SEED}
-        if(($global:WORLDSIZE = Read-Host -Prompt (Write-Host "Input Server WorldSize,Press enter to accept default value [3000]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:WORLDSIZE="3000"}else{$global:WORLDSIZE}
-        if(($global:SAVEINTERVAL = Read-Host -Prompt (Write-Host "Input Server Save Interval,Press enter to accept default value [300]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SAVEINTERVAL="300"}else{$global:SAVEINTERVAL}
-        if(($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server Tickrate,Press enter to accept default value [30]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:TICKRATE="30"}else{$global:TICKRATE}  
+        if (($global:SEED = Read-Host -Prompt (Write-Host "Input Server seed,Press enter to accept default value [4125143]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SEED = "4125143" }else { $global:SEED }
+        if (($global:WORLDSIZE = Read-Host -Prompt (Write-Host "Input Server WorldSize,Press enter to accept default value [3000]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:WORLDSIZE = "3000" }else { $global:WORLDSIZE }
+        if (($global:SAVEINTERVAL = Read-Host -Prompt (Write-Host "Input Server Save Interval,Press enter to accept default value [300]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SAVEINTERVAL = "300" }else { $global:SAVEINTERVAL }
+        if (($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server Tickrate,Press enter to accept default value [30]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:TICKRATE = "30" }else { $global:TICKRATE }  
         Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
