@@ -136,18 +136,14 @@ Function Get-Finished {
     Write-Host "  ./steamer start $global:server  "-ForegroundColor Black -BackgroundColor White
 }
 Function Get-TestInterger {
-    If ( $global:APPID -match '^[0-9]+$') { 
-    }
-    Else { 
+    If ( $global:APPID -notmatch '^[0-9]+$') { 
         Write-Host "$global:DIAMOND $global:DIAMOND Input App ID Valid Numbers only! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
         pause
         Exit
     }
 }
 Function Get-TestString {
-    If ( $global:server -match "[a-z,A-Z]") { 
-    }
-    Else {
+    If ( $global:server -notmatch "[a-z,A-Z]") { 
         Write-Host "$global:DIAMOND $global:DIAMOND Input Alpha Characters only! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
         pause
         Exit
