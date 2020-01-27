@@ -12,7 +12,7 @@ Function New-LaunchScriptRustPS {
         Get-Servercfg
         $q = "``"
         # - - - - - - - - - - - - -
-
+        $global:SEED = Get-Random -Minimum 1 -Maximum 2147483647
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-host
@@ -24,7 +24,7 @@ Function New-LaunchScriptRustPS {
         $global:HOSTNAME = Read-host
         Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
         $global:MAXPLAYERS = Read-host
-        if (($global:SEED = Read-Host -Prompt (Write-Host "Input Server seed,Press enter to accept default value [4125143]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SEED = "4125143" }else { $global:SEED }
+        if (($global:SEED = Read-Host -Prompt (Write-Host "Input Server seed,Press enter to accept default value [$global:SEED]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SEED = "$global:SEED" }else { $global:SEED }
         if (($global:WORLDSIZE = Read-Host -Prompt (Write-Host "Input Server WorldSize,Press enter to accept default value [3000]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:WORLDSIZE = "3000" }else { $global:WORLDSIZE }
         if (($global:SAVEINTERVAL = Read-Host -Prompt (Write-Host "Input Server Save Interval,Press enter to accept default value [300]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SAVEINTERVAL = "300" }else { $global:SAVEINTERVAL }
         if (($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server Tickrate,Press enter to accept default value [30]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:TICKRATE = "30" }else { $global:TICKRATE }  
@@ -32,8 +32,8 @@ Function New-LaunchScriptRustPS {
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\ "
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-PROCESS cmd `"/c RustDedicated.exe -batchmode +server.ip `${global:IP}  +server.port `${global:PORT} +server.tickrate `${global:TICKRATE} +server.hostname $q`"`${global:HOSTNAME}$q`" +server.maxplayers `${global:MAXPLAYERS} +server.worldsize `${global:WORLDSIZE} +server.saveinterval `${global:SAVEINTERVAL} +rcon.web `${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port `${global:RCONPORT} +rcon.password `${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog.log`" -NoNewWindow"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process -FilePath cmd -ArgumentList (`"/c RustDedicated.exe -batchmode +server.ip `${global:IP}  +server.port `${global:PORT} +server.tickrate `${global:TICKRATE} +server.maxplayers `${global:MAXPLAYERS} +server.worldsize `${global:WORLDSIZE} +server.saveinterval `${global:SAVEINTERVAL} +rcon.web `${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port `${global:RCONPORT} +rcon.password `${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog-$date.log`")"
+        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process cmd `"/c RustDedicated.exe -batchmode +server.ip `${global:IP}  +server.port `${global:PORT} +server.tickrate `${global:TICKRATE} +server.hostname $q`"`${global:HOSTNAME}$q`" +server.maxplayers `${global:MAXPLAYERS} +server.worldsize `${global:WORLDSIZE} +server.saveinterval `${global:SAVEINTERVAL} +rcon.web `${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port `${global:RCONPORT} +rcon.password `${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog-$date.log`""
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "If ( !$? ) {Start-Process -FilePath cmd -ArgumentList (`"/c RustDedicated.exe -batchmode +server.ip `${global:IP}  +server.port `${global:PORT} +server.tickrate `${global:TICKRATE} +server.maxplayers `${global:MAXPLAYERS} +server.worldsize `${global:WORLDSIZE} +server.saveinterval `${global:SAVEINTERVAL} +rcon.web `${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port `${global:RCONPORT} +rcon.password `${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog-$date.log`")"} 
         #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\RustDedicated.exe -batchmode +server.ip ${global:IP}  +server.port $global:PORT +server.tickrate $global:TICKRATE +server.hostname \"$global:HOSTNAME\" +server.identity \"${selfname}\" ${conditionalseed} ${conditionalsalt} +server.maxplayers ${maxplayers} +server.worldsize ${worldsize} +server.saveinterval ${saveinterval} +rcon.web ${rconweb} +rcon.ip ${ip} +rcon.port ${rconport} +rcon.password \"${rconpassword}\" -logfile \"${gamelogdate}\""
         # add to server.cfg                   server.hostname "server"
         Add-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Value "server.hostname `"$global:HOSTNAME`""
