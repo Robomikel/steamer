@@ -256,7 +256,8 @@ Function Get-ServerBuildCheck {
         Write-Host "****   Removing Multiple appmanifest_$global:APPID.acf    ****" -ForegroundColor Magenta -BackgroundColor Black
         Remove-Item $global:currentdir\$global:server\steamapps\appmanifest_*.acf -Force  >$null 2>&1
         Get-StopServer
-        Get-UpdateServer  
+        Get-UpdateServer
+        Set-Location $global:currentdir  
     }
     Else {
         Write-Host "****   No $global:server Updates found   ****" -ForegroundColor Yellow -BackgroundColor Black

@@ -80,11 +80,15 @@ Function New-LaunchScriptSdtdserverPS {
 }
 
 Function New-LaunchScriptempserverPS {
-
+        $global:MODDIR = ""
+        $global:EXEDIR = ""
         $global:GAME = "empyrion"
         $global:PROCESS = "EmpyrionDedicated"
-
+        $global:SERVERCFGDIR = ""
         Get-StopServerInstall
+        $global:gamedirname = ""
+        $global:config1 = "dedicated.yaml"
+        # Get-Servercfg
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [30000]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "30000" }else { $global:PORT }
@@ -144,14 +148,13 @@ Function New-LaunchScriptceserverPS {
 
 Function  New-LaunchScriptavserverPS {
         # Avorion Dedicated Server
-
+        $global:EXEDIR = "bin"
         $global:GAME = "protocol-valve"
         $global:SAVES = "Avorion"
-
+        $global:PROCESS = "AvorionServer"
         Get-StopServerInstall
 
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-        $global:PROCESS = "AvorionServer"
         Write-Host 'Input server name: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         Write-Host 'Input galaxy name: ' -ForegroundColor Cyan -NoNewline 
@@ -163,14 +166,14 @@ Function  New-LaunchScriptavserverPS {
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\bin"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process `"cmd`" `"/c AvorionServer.exe --server-name `${global:HOSTNAME} --galaxy-name `${global:GALAXYNAME} --admin `${global:steamID64} --difficulty `${global:DIFF} --max-players `${global:MAXPLAYERS}`" -NoNewWindow"
 
 }
    
 Function New-LaunchScriptboundelserverPS {
         # Boundel Server
-
+        $global:EXEDIR = "Datcha_Server"
         $global:GAME = "protocol-valve"
         $global:PROCESS = "world"
 
@@ -180,7 +183,7 @@ Function New-LaunchScriptboundelserverPS {
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Datcha_Server"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "./world.exe -batchmode"
 }
 
@@ -262,6 +265,7 @@ Function New-LaunchScriptacserverPS {
         # 	302550
         # https://www.assettocorsa.net/forum/index.php?faq/dedicated-server-manual.28/
         #$global:MODDIR="Assetto Corsa\Server"
+        $global:EXEDIR = "Assetto Corsa\Server"
         $global:GAME = "protocol-valve"
         $global:PROCESS = "acServer"
 
@@ -270,7 +274,7 @@ Function New-LaunchScriptacserverPS {
         Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
         New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Assetto Corsa\Server"
+        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
         Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value ".\acServer.bat"
 }
 
@@ -315,10 +319,14 @@ Function New-LaunchScriptasserverPS {
 #Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\TEMP.exe" >$null 2>&1
 #Rename-Item -Path "start-process cmd `"/c srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe`"" >$null 2>&1
 
+#Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+#((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+#((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+
 #Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
 #New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
 #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
 #dd-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-#Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\TEMP.exe -console -game swarm +map lobby -maxplayers 4 -autoupdate"
+#Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process -FilePath cmd.exe -ArgumentList (`"/c temp.exe -some launch params`") -NoNewWindow"
 #}
 
