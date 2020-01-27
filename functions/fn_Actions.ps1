@@ -207,10 +207,10 @@ Function Get-Steam {
     if ($?) {write-host " ****   Downloading  SteamCMD succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black}
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '***   Extracting SteamCMD *****' -ForegroundColor Magenta -BackgroundColor Black 
-    Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\" -Force 
+    Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\" -Force} 
     if (!$?) {write-host " ****   Extracting SteamCMD Failed    ****" -ForegroundColor Yellow -BackgroundColor Black 
     New-Tryagainsteamcmd}
-    if ($?) {write-host " ****   Extracting SteamCMD succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black}}
+    if ($?) {write-host " ****   Extracting SteamCMD succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black}
 
 }
 Function New-Tryagainsteamcmd {
