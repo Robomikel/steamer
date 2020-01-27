@@ -10,6 +10,7 @@ Function New-LaunchScriptLFD2serverPS {
     $global:gamedirname="Left4Dead2"
     $global:config1="server.cfg"
     Get-Servercfg
+    $q="``"
     # - - - - - - - - - - - - -
 
     Write-Host "***  Renaming srcds.exe to l4d2.exe to avoid conflict with local source Engine (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -37,7 +38,7 @@ Function New-LaunchScriptLFD2serverPS {
     New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
     Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c l4d2.exe -console -game left4dead2 -strictportbind -ip `${global:IP} +port `${global:PORT} +clientport `${global:CLIENTPORT} +hostip ${global:EXTIP} +maxplayers `${global:MAXPLAYERS} +map '`${global:MAP}' -condebug `"  -NoNewWindow"# +sv_workshop_enabled $global:workshop $global:sv_pure
+    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c l4d2.exe -console -game left4dead2 -strictportbind -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +hostip ${global:EXTIP} +maxplayers `${global:MAXPLAYERS} +map $q`"`${global:MAP}$q`" -condebug `" -NoNewWindow"# +sv_workshop_enabled $global:workshop $global:sv_pure
     #A:\L4D2\srcds.exe -console -game left4dead2 -ip 10.0.0.2 +port 27020 +hostip YOURDEDIIP +maxplayers 8 +exec server.cfg +map c2m1_highway
     # -game left4dead2 -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers ${maxplayers}
     Get-SourceMetMod
