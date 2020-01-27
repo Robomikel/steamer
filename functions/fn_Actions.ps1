@@ -798,13 +798,12 @@ Function New-BackupFolder {
     New-Item -Path "$global:currentdir\" -Name "backups" -ItemType "directory"}
 }
 Function New-BackupServer {
-    $BackupDate = get-date -Format yyyyMMdd
     Write-Host '****   Server Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\
     Get-ChildItem $global:currentdir\backups\ -Recurse | where-object name -like Backup_$global:server-*.zip | Sort-Object CreationTime -desc | Select-Object -Skip $global:backupcount | Remove-Item -Force 
     #Get-ChildItem $global:currentdir\backups\ -Recurse | where-object {-like Backup_$global:server-*.zip}| Sort-Object CreationTime -desc | Select-Object -Skip $global:backupcount | Remove-Item -Force
     #./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* -an > backup.log
-    ./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* > backup.log
+    ./7za a $global:currentdir\backups\Backup_$global:server-$global:Date.zip $global:currentdir\$global:server\* > backup.log
     Write-Host '****   Server Backup is Done!   ****' -ForegroundColor Yellow -BackgroundColor Black
     write-host "****   Checking Save location(appData)   ****" -ForegroundColor Yellow -BackgroundColor Black
     if ($global:appdatabackup   -eq "1") {Get-savelocation}
@@ -848,10 +847,9 @@ Function add-sevenzip {
 }
 
 Function New-backupAppdata {
-    $BackupDate = get-date -Format yyyyMMdd
     Write-Host '****   Server App Data Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
-    ./7za a $global:currentdir\backups\AppDataBackup_$global:server-$BackupDate.zip $env:APPDATA\$global:saves\* > AppDatabackup.log
+    ./7za a $global:currentdir\backups\AppDataBackup_$global:server-$global:Date.zip $env:APPDATA\$global:saves\* > AppDatabackup.log
     Write-Host '****   Server App Data Backup is Done!   ****' -ForegroundColor Yellow -BackgroundColor Black
     if ($global:appdatabackuplog  -eq "1") {.\AppDatabackup.log}
 }
