@@ -29,13 +29,16 @@ Function Install-Anonserver {
         Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -ForegroundColor Cyan -BackgroundColor Black  
         $global:username = Read-host
     }
-    Else { }
     Write-Host '****    Creating SteamCMD Run txt   *****' -ForegroundColor Magenta -BackgroundColor Black 
     New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
-    if ($global:ANON -eq "no") { }
-    Else { Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1" }
-    if ($global:ANON -eq "no") { Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login $global:username" }
+    if ($global:ANON -ne "no") {
+        Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"  
+    }
+ 
+    if ($global:ANON -eq "no") { 
+        Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login $global:username" 
+    }
     Else {
         Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login anonymous"
     }
@@ -45,9 +48,12 @@ Function Install-Anonserver {
     
     New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
-    if ($global:ANON -eq "no") { }
-    Else { Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1" }
-    if ($global:ANON -eq "no") { Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login $global:username" }
+    if ($global:ANON -ne "no") { 
+        Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1"
+    }
+    if ($global:ANON -eq "no") { 
+        Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login $global:username" 
+    }
     Else {
         Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login anonymous"
     }
@@ -353,7 +359,9 @@ Function Get-details {
     #$global:bit = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
     $global:computername = (Get-WmiObject Win32_OperatingSystem).CSName
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
-    if ($null -ne ${global:QUERYPORT}) { ${global:PORT} = ${global:QUERYPORT} }
+    if ($null -ne ${global:QUERYPORT}) { 
+        ${global:PORT} = ${global:QUERYPORT} 
+    }
     $global:gameresponse = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
     $global:stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
     Get-createdvaribles
@@ -361,7 +369,9 @@ Function Get-details {
     $global:backups = (get-childitem -Path $global:currentdir\backups -recurse | measure-Object) 
     $global:backups = $backups.count 
     $global:backupssize = "{0:N2} GB" -f ((Get-ChildItem $global:currentdir\backups | Measure-Object Length -s -ea silentlycontinue ).Sum / 1GB) 
-    if (($global:AppID -eq 302200)) { $global:gameresponse = "Not supported" }
+    if (($global:AppID -eq 302200)) { 
+        $global:gameresponse = "Not supported" 
+    }
     #Get-WmiObject -Class Win32_Product -Filter "Name LIKE '%Visual C++ 2010%'"
     Write-host "                                "
     Write-host "    Server Name       : $HOSTNAME"
@@ -497,7 +507,9 @@ Function Get-MCRcon {
             #New-TryagainMC
             New-TryagainNew 
         }
-        if ($?) { write-host "****   Downloading  MCRCon succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black }
+        if ($?) { 
+            write-host "****   Downloading  MCRCon succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black 
+        }
         Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
         Write-Host '****   Extracting MCRCon from github   ****' -ForegroundColor Magenta -BackgroundColor Black
         Expand-Archive "$global:currentdir\mcrcon.zip" "$global:currentdir\mcrcon\" -Force
@@ -506,7 +518,9 @@ Function Get-MCRcon {
             #New-TryagainMC
             New-TryagainNew 
         }
-        if ($?) { write-host "****   Extracting MCRCon succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black }
+        if ($?) { 
+            write-host "****   Extracting MCRCon succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black 
+        }
     }
 }
 
@@ -609,7 +623,9 @@ Function add-nodejs {
         #New-TryagainN
         New-TryagainNew
     }
-    if ($?) { write-host "****   Downloading  Nodejs succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black }
+    if ($?) { 
+        write-host "****   Downloading  Nodejs succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black 
+    }
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Extracting Nodejs   *****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64.zip" "$global:currentdir\node-v$global:nodeversion-win-x64\" -Force
@@ -618,7 +634,9 @@ Function add-nodejs {
         #New-TryagainN
         New-TryagainNew
     }
-    if ($?) { write-host "****   Extracting Nodejs succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black }
+    if ($?) { 
+        write-host "****   Extracting Nodejs succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black 
+    }
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     Write-Host '****   Installing gamedig in Nodejs   ****' -ForegroundColor Magenta -BackgroundColor Black
     Write-Host '****   Do not stop or cancel! Will need to delete nodejs files and start over!   ****' -ForegroundColor Yellow -BackgroundColor Black  
@@ -761,27 +779,39 @@ Function Get-SourceMetaMod {
     #(New-Object Net.WebClient).DownloadFile("$global:metamodurl", "$global:currentdir\metamod.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:metamodurl -OutFile $global:currentdir\metamod.zip
-    if (!$?) { write-host "****   Downloading Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit } 
+    if (!$?) { 
+        write-host "****   Downloading Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    } 
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Extracting Meta Mod   ****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\metamod.zip" "$global:currentdir\metamod\" -Force
-    if (!$?) { write-host "****   Extracting Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit }
+    if (!$?) { 
+        write-host "****   Extracting Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    }
     Write-Host '****   Copying/installing Meta Mod   ****' -ForegroundColor Magenta -BackgroundColor Black 
     Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
-    if (!$?) { write-host "****   Copying Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit }
+    if (!$?) { 
+        write-host "****   Copying Meta Mod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    }
     $start_time = Get-Date
     Write-Host '****   Downloading SourceMod   ****' -ForegroundColor Magenta -BackgroundColor Black
     #(New-Object Net.WebClient).DownloadFile("$global:sourcemodurl", "$global:currentdir\sourcemod.zip")
     #[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:sourcemodurl -OutFile $global:currentdir\sourcemod.zip
-    if (!$?) { write-host "****   Downloading SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit } 
+    if (!$?) { 
+        write-host "****   Downloading SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    } 
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Extracting SourceMod   ****' -ForegroundColor Magenta -BackgroundColor Black 
     Expand-Archive "$global:currentdir\sourcemod.zip" "$global:currentdir\sourcemod\" -Force
-    if (!$?) { write-host "****   Extracting SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit }
+    if (!$?) { 
+        write-host "****   Extracting SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    }
     Write-Host '****   Copying/installing SourceMod   ****' -ForegroundColor Magenta -BackgroundColor Black
     Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
-    if (!$?) { write-host "****   Copying SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit }
+    if (!$?) { 
+        write-host "****   Copying SourceMod Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    }
 }
 Function Get-OxideQ {
     $title = 'Download Oxide'
@@ -804,14 +834,21 @@ Function Get-Oxide {
     #(New-Object Net.WebClient).DownloadFile("$global:oxiderustlatestlink", "$global:currentdir\oxide.zip")
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:oxiderustlatestlink -OutFile $global:currentdir\oxide.zip
-    if (!$?) { write-host "****   Downloading Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit } 
+    if (!$?) { 
+        write-host "****   Downloading Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    } 
     Write-Host "Download Time: $((Get-Date).Subtract($start_time).Seconds) second(s)" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host '****   Extracting Oxide    ****' -ForegroundColor Magenta -BackgroundColor Black
     Expand-Archive "$global:currentdir\oxide.zip" "$global:currentdir\oxide\" -Force
-    if (!$?) { write-host "****   Extracting Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit }
+    if (!$?) { 
+        write-host "****   Extracting Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    }
+
     Write-Host '****   Copying Oxide *****' -ForegroundColor Magenta -BackgroundColor Black
     Copy-Item -Path $global:currentdir\oxide\$global:MODDIR\* -Destination $global:currentdir\$global:server\$global:MODDIR\ -Force -Recurse
-    if (!$?) { write-host "****   Copying Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit }
+    if (!$?) { 
+        write-host "****   Copying Oxide Failed !!   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+    }
 }
 Function New-RestartJob {
     Write-Host "Run Task only when user is logged on"
@@ -950,8 +987,12 @@ Function New-BackupServer {
     ./7za a $global:currentdir\backups\Backup_$global:server-$global:Date.zip $global:currentdir\$global:server\* > backup.log
     Write-Host '****   Server Backup is Done!   ****' -ForegroundColor Yellow -BackgroundColor Black
     write-host "****   Checking Save location(appData)   ****" -ForegroundColor Yellow -BackgroundColor Black
-    if ($global:appdatabackup -eq "1") { Get-savelocation }
-    if ($global:backuplog -eq "1") { .\backup.log }
+    if ($global:appdatabackup -eq "1") { 
+        Get-savelocation 
+    }
+    if ($global:backuplog -eq "1") { 
+        .\backup.log 
+    }
     Set-Location $global:currentdir
 }
 Function Get-SevenZip {
@@ -1047,7 +1088,9 @@ Function Get-Servercfg {
     foreach ($global:SERVERCFG in $global:SERVERCFG) {
         write-host "****   Retrieve server config GSM   ****" -ForegroundColor Magenta -BackgroundColor Black
         $WebResponse = Invoke-WebRequest "$global:githuburl/$global:gamedirname/$global:SERVERCFG"
-        if (!$?) { write-host "****   Array Failed !! Did NOT Retrieve server config   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit }
+        if (!$?) { 
+            write-host "****   Array Failed !! Did NOT Retrieve server config   ****" -ForegroundColor Red -BackgroundColor Black ; ; Exit 
+        }
         New-Item $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG -Force
         Add-Content $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG $WebResponse
     }
