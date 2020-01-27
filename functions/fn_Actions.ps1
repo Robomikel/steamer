@@ -13,12 +13,12 @@ Function Set-SteamInfo {
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
     If ($decision -eq 1) {
-        $global:anon = "yes"
+        $global:ANON = "yes"
         Install-Anonserver
         Write-Host 'Entered Y'
     }
     Else {
-        $global:anon = "no"
+        $global:ANON = "no"
         #Install-Server
         Install-Anonserver
         Write-Host 'Entered N'
@@ -132,7 +132,6 @@ Function Start-Countdown {
 }
 Function Get-Finished {
     Get-ClearVariables
-    #Get-ClearVars
     Write-Host "*************************************" -ForegroundColor Yellow
     Write-Host "***  Server $global:command is done!  $global:CHECKMARK ****" -ForegroundColor Yellow
     Write-Host "*************************************" -ForegroundColor Yellow
@@ -171,7 +170,6 @@ Function Get-ValidateServer {
     .\steamcmd +runscript Validate-$global:server.txt
     If ( !$? ) {
         Write-Host "****   Validating Server Failed   ****" -ForegroundColor Red
-        #New-Tryagainsteamcmd
         New-TryagainNew 
         
     }
@@ -187,7 +185,6 @@ Function Get-UpdateServer {
     .\steamcmd +runscript Updates-$global:server.txt
     If ( !$?) {
         Write-Host "****   Downloading  Install/update server Failed   ****" -ForegroundColor Red
-        #New-Tryagainsteamcmd
         New-TryagainNew 
         
     }
@@ -504,7 +501,6 @@ Function Get-MCRcon {
         Invoke-WebRequest -Uri $global:mcrconurl -OutFile $global:currentdir\mcrcon.zip
         If (!$?) {
             Write-Host "****   Downloading  MCRCon Failed   ****" -ForegroundColor Red -BackgroundColor Black 
-            #New-TryagainMC
             New-TryagainNew 
         }
         If ($?) { 
@@ -515,7 +511,6 @@ Function Get-MCRcon {
         Expand-Archive "$global:currentdir\mcrcon.zip" "$global:currentdir\mcrcon\" -Force
         If (!$?) {
             Write-Host "****   Extracting MCRCon Failed   ****" -ForegroundColor Yellow -BackgroundColor Black 
-            #New-TryagainMC
             New-TryagainNew 
         }
         If ($?) { 
@@ -620,7 +615,6 @@ Function Add-NodeJS {
     Invoke-WebRequest -Uri $global:nodejsurl -OutFile $global:currentdir\node-v$global:nodeversion-win-x64.zip
     If (!$?) {
         Write-Host "****   Downloading  Nodejs Failed    ****" -ForegroundColor Red -BackgroundColor Black 
-        #New-TryagainN
         New-TryagainNew
     }
     If ($?) { 
@@ -631,7 +625,6 @@ Function Add-NodeJS {
     Expand-Archive "$global:currentdir\node-v$global:nodeversion-win-x64.zip" "$global:currentdir\node-v$global:nodeversion-win-x64\" -Force
     If (!$?) {
         Write-Host "****   Extracting Nodejs Failed   ****" -ForegroundColor Yellow -BackgroundColor Black 
-        #New-TryagainN
         New-TryagainNew
     }
     If ($?) { 
@@ -1016,7 +1009,6 @@ Function Add-Sevenzip {
     Invoke-WebRequest -Uri $global:sevenzip -OutFile $global:currentdir\7za920.zip
     If (!$?) {
         Write-Host "****   7Zip Download Failed   *****" -ForegroundColor Yellow -BackgroundColor Black
-        #New-Tryagain
         New-TryagainNew 
     }
     If ($?) {
@@ -1027,7 +1019,6 @@ Function Add-Sevenzip {
     Expand-Archive "$global:currentdir\7za920.zip" "$global:currentdir\7za920\" -Force
     If (!$?) {
         Write-Host "****   7Zip files did not Extract   ****" -ForegroundColor Yellow -BackgroundColor Black
-        #New-Tryagain
         New-TryagainNew 
     }
     If ($?) {
