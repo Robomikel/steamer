@@ -194,12 +194,8 @@ Function New-TryagainNew {
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     if ($decision -eq 0) {
-        Write-Host 'Entered Y'
-        if (($global:command -eq "install") -or ($global:command -eq "update")){Get-UpdateServer}
-        elseif ($global:command -eq "validate"){Get-ValidateServer}
-        elseif($global:command -eq "gamedig"){add-nodejs}
-        elseif($global:command -eq "mcrcon"){Get-MCRcon}
-        elseif($global:command -eq "backup"){add-sevenzip}
+    Write-Host 'Entered Y'
+    Select-Steamer $global:command $global:server
     }else{
     Write-Host 'Entered N'
    exit}
