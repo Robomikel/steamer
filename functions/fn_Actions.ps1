@@ -83,7 +83,7 @@ Function Select-launchServer {
     Write-Host '****   Starting Launch script   *****' -ForegroundColor Yellow -BackgroundColor Black  
     & "$global:currentdir\$global:server\Launch-*.ps1"
     Get-CheckForError
-    
+    Set-Location $global:currentdir
 }
 Function Get-CheckServer {
     Write-Host '****   Check  Server process    *****' -ForegroundColor Yellow -BackgroundColor Black 
@@ -256,8 +256,7 @@ Function Get-ServerBuildCheck {
         Write-Host "****   Removing Multiple appmanifest_$global:APPID.acf    ****" -ForegroundColor Magenta -BackgroundColor Black
         Remove-Item $global:currentdir\$global:server\steamapps\appmanifest_*.acf -Force  >$null 2>&1
         Get-StopServer
-        Get-UpdateServer
-        Set-Location $global:currentdir  
+        Get-UpdateServer  
     }
     Else {
         Write-Host "****   No $global:server Updates found   ****" -ForegroundColor Yellow -BackgroundColor Black
