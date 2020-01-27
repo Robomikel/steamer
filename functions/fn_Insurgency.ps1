@@ -1,3 +1,4 @@
+# Version 2.0
 Function New-LaunchScriptInsserverPS {
     #----------   Insurgency Server CFG    -------------------
     $global:MODDIR = "insurgency"

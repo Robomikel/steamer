@@ -1,3 +1,4 @@
+# Version 2.0
 Function New-LaunchScriptKF2serverPS {
     # Killing Floor 2 Server
     # - - - - - - - - - - - -

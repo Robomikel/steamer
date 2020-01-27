@@ -1,3 +1,4 @@
+# Version 2.0
 Function New-LaunchScriptdoiserverPS {
     #----------   doi Server CFG    -------------------
     $global:MODDIR = "doi"

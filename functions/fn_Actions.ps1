@@ -1,10 +1,11 @@
+# Version 2.0
 # .::::::.::::::::::::.,::::::   :::.     .        :  .,:::::: :::::::..   
 # ;;;`    `;;;;;;;;'''';;;;''''   ;;`;;    ;;,.    ;;; ;;;;'''' ;;;;``;;;;  
 # '[==/[[[[,    [[      [[cccc   ,[[ '[[,  [[[[, ,[[[[, [[cccc   [[[,/[[['  
 #   '''    $    $$      $$""""  c$$$cc$$$c $$$$$$$$"$$$ $$""""   $$$$$$c    
 #  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
 #   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
-#----------      Install server as Anon     ----------------------
+#----------      Install server    ----------------------
 Function Set-SteamInfo {
     $title = 'Install Steam server with Anonymous login'
     $question = 'Use Anonymous Login?'
@@ -19,7 +20,6 @@ Function Set-SteamInfo {
     }
     Else {
         $global:ANON = "no"
-        #Install-Server
         Install-Anonserver
         Write-Host 'Entered N'
     }
@@ -45,7 +45,6 @@ Function Install-Anonserver {
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:APPID $global:Branch"
     Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "Exit"
-    
     New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
     Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
     If ($global:ANON -ne "no") { 
@@ -118,7 +117,6 @@ Function Get-RestartsServer {
     Get-Logo
     & "$global:currentdir\$global:server\Launch-*.ps1"
     Get-CheckForError
-    
 }
 Function Start-Countdown {
     Param(
@@ -170,8 +168,7 @@ Function Get-ValidateServer {
     .\steamcmd +runscript Validate-$global:server.txt
     If ( !$? ) {
         Write-Host "****   Validating Server Failed   ****" -ForegroundColor Red
-        New-TryagainNew 
-        
+        New-TryagainNew   
     }
     ElseIf ($?) {
         Write-Host "****   Validating Server succeeded   ****" -ForegroundColor Yellow
@@ -186,7 +183,6 @@ Function Get-UpdateServer {
     If ( !$?) {
         Write-Host "****   Downloading  Install/update server Failed   ****" -ForegroundColor Red
         New-TryagainNew 
-        
     }
     ElseIf ($?) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
@@ -207,7 +203,6 @@ Function Get-Steam {
         Invoke-WebRequest -Uri $global:steamurl -OutFile $global:steamoutput
         If (!$?) {
             Write-Host " ****   Downloading  SteamCMD Failed   ****" -ForegroundColor Red -BackgroundColor Black 
-            #New-Tryagainsteamcmd
             New-TryagainNew 
         }
         If ($?) { Write-Host " ****   Downloading  SteamCMD succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black }
@@ -216,7 +211,6 @@ Function Get-Steam {
         Expand-Archive "$global:currentdir\steamcmd.zip" "$global:currentdir\steamcmd\" -Force 
         If (!$?) {
             Write-Host " ****   Extracting SteamCMD Failed    ****" -ForegroundColor Yellow -BackgroundColor Black 
-            #New-Tryagainsteamcmd
             New-TryagainNew 
         }
         If ($?) { Write-Host " ****   Extracting SteamCMD succeeded    ****" -ForegroundColor Yellow -BackgroundColor Black }
@@ -286,7 +280,6 @@ Function Get-Steamtxt {
         Write-Host "      $global:DIAMOND $global:DIAMOND Command $global:command Failed! $global:DIAMOND $global:DIAMOND" -ForegroundColor Red -BackgroundColor Black
         Write-Host "***        Try install command again          ****  " -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "----------------------------------------------------------------------------" -ForegroundColor Yellow -BackgroundColor Black
-        
         Exit
     }
 }
@@ -309,10 +302,8 @@ Function Get-GamedigServerv2 {
     Write-Host '****   Starting gamedig on Server   ****' -ForegroundColor Magenta -BackgroundColor Black
     If (( $global:AppID -eq 581330) -or ($global:AppID -eq 376030) -or ($global:AppID -eq 443030)) {
         Write-Host '****   Using QUERYPORT    ****' -ForegroundColor Yellow -BackgroundColor Black
-        # Executes when the Boolean expression 1 is true
         If (($null -eq ${global:QUERYPORT} ) -or ("" -eq ${global:QUERYPORT} )) {
             Write-Host '****   Missing QUERYPORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
-            # Executes when the Boolean expression 2 is true
         }
         ElseIf ($global:command -eq "gamedig") {
             Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
@@ -344,7 +335,6 @@ Function Get-Details {
     $global:Cpu = (Get-WMIObject win32_processor | Measure-Object -property LoadPercentage -Average | Select-Object Average ).Average
     $host.UI.RawUI.ForegroundColor = "Cyan"
     #$host.UI.RawUI.BackgroundColor = "Black"
-    #$global:cpu = Get-WMIObject win32_processor
     $global:CpuCores = (Get-WMIObject Win32_ComputerSystem).NumberOfLogicalProcessors
     $global:avmem = (Get-WMIObject Win32_OperatingSystem | Foreach-Object { "{0:N2} GB" -f ($_.totalvisiblememorysize / 1MB) })
     $global:totalmem = "{0:N2} GB" -f ((Get-Process | Measure-Object Workingset -sum).Sum / 1GB)
@@ -352,8 +342,6 @@ Function Get-Details {
         $global:mem = "{0:N2} GB" -f ((Get-Process $global:PROCESS | Measure-Object Workingset -sum).Sum / 1GB) 
     }
     $global:os = (Get-WMIObject win32_operatingsystem).caption
-    #$global:osInfo = Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, ServicePackMajorVersion, OSArchitecture, CSName, WindowsDirectory
-    #$global:bit = (Get-WMIObject Win32_OperatingSystem).OSArchitecture
     $global:computername = (Get-WMIObject Win32_OperatingSystem).CSName
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     If ($null -ne ${global:QUERYPORT}) { 

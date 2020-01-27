@@ -1,3 +1,4 @@
+# Version 2.0
 Function New-LaunchScriptArkPS {
     # Ark: Survival Evolved Server
     # - - - - - - - - - - - -

@@ -1,3 +1,4 @@
+# Version 2.0
 Function New-LaunchScriptRustPS {
         #----------   Rust server CDF  -------------------
         $global:MODDIR = "RustDedicated_Data"

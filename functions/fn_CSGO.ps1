@@ -1,3 +1,4 @@
+# Version 2.0
 Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
         $global:MODDIR = "csgo"

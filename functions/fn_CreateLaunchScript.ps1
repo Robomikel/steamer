@@ -1,6 +1,6 @@
+# Version 2.0
 #:::::::::::::   CREATE LAUNCH SCRIPT FOR SERVER :::::::::::::::::::::::::
 # check other Functions for other Games
-
 Function New-LaunchScriptArma3serverPS {
         #----------   Arma3 Ask for input for server cfg  -------------------
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x

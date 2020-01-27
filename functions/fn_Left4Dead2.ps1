@@ -1,3 +1,4 @@
+# Version 2.0
 Function New-LaunchScriptLFD2serverPS {
     #----------   left4dead2 Server CFG    -------------------
     $global:MODDIR = "left4dead2"
