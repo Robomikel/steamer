@@ -23,7 +23,6 @@ Function Select-Steamer {
         Get-Steam
         Set-SteamInfo
         Set-SteamInfoAppID
-        New-CreateVariables
         Get-Finished
     }
     elseif ($global:command -eq "install") {
@@ -37,7 +36,6 @@ Function Select-Steamer {
         Get-Steam
         Set-SteamInfo
         Set-SteamInfoAppID
-        New-CreateVariables
         Get-Finished
     }
     elseif (($global:command -eq "update") -and ($null -eq $global:server)) {   
@@ -95,7 +93,7 @@ Function Select-Steamer {
         Get-CheckForVars    
         Get-CheckServer
         Get-ServerBuildCheck
-        Select-launchServer
+        Select-StartServer
         if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
         Get-ClearVariables
     }
@@ -105,7 +103,7 @@ Function Select-Steamer {
         Get-CheckForVars   
         Get-CheckServer
         Get-ServerBuildCheck
-        Select-launchServer
+        Select-StartServer
         if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
         Get-ClearVariables
     }
@@ -183,6 +181,7 @@ Function Select-Steamer {
         New-BackupFolder
         New-BackupServer
         if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        if ($global:DisableDiscordBackup -eq "1") { New-DiscordAlert }
         Get-Finished
     }
     elseif ($global:command -eq "backup") {
@@ -195,6 +194,7 @@ Function Select-Steamer {
         New-BackupFolder  
         New-BackupServer
         if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        if ($global:DisableDiscordBackup -eq "1") { New-DiscordAlert }
         Get-Finished  
     }
     elseif (($global:command -eq "monitor") -and ($null -eq $global:server)) {
@@ -250,25 +250,6 @@ Function Select-Steamer {
         Get-GamedigServerv2
         Get-ClearVariables
     }
-    elseif (($global:command -eq "gamedigPrivate") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
-        $global:server = Read-host
-        Get-TestString
-        Get-FolderNames
-        Get-createdvaribles
-        Get-CheckForVars
-        Get-NodeJS
-        Get-GamedigServerPrivatev2
-        Get-ClearVariables
-    }
-    elseif ($global:command -eq "gamedigPrivate") {
-        Get-FolderNames
-        Get-createdvaribles
-        Get-CheckForVars
-        Get-NodeJS
-        Get-GamedigServerPrivatev2
-        Get-ClearVariables
-    }
     elseif (($global:command -eq "mcrcon") -and ($null -eq $global:server)) {
         Write-Host 'Server FolderName for mcrcon: ' -ForegroundColor Cyan -NoNewline
         $global:server = Read-host
@@ -286,25 +267,6 @@ Function Select-Steamer {
         Get-CheckForVars
         Get-MCRcon
         set-connectMCRcon
-        Get-ClearVariables
-    }
-    elseif (($global:command -eq "mcrconPrivate") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for mcrcon: ' -ForegroundColor Cyan -NoNewline
-        $global:server = Read-host
-        Get-TestString
-        Get-FolderNames
-        Get-createdvaribles
-        Get-CheckForVars
-        Get-MCRcon 
-        set-connectMCRconP
-        Get-ClearVariables
-    }
-    elseif ($global:command -eq "mcrconPrivate") {
-        Get-FolderNames
-        Get-createdvaribles
-        Get-CheckForVars
-        Get-MCRcon
-        set-connectMCRconP
         Get-ClearVariables
     }
     elseif ($global:command -eq "discord") {

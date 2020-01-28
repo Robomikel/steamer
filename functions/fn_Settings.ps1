@@ -19,9 +19,16 @@ Function Set-SteamerSetting {
     $global:AutoUpdate = "0"
     #   disable  check Task 0
     $global:DisableChecktask = "1"
-    # max backups   2
+    #  max backups   x
     $global:backupcount = "2"
-
+    #  Version  2
+    $global:Version = "2"
+    #  Disable Discord backup 0
+    $global:DisableDiscordBackup = "1"
+    # Disable Discord backup 0
+    $global:DisableDiscordUpdate = "1"
+    # Use private Ip for Gamedig, mcrcon 1
+    $global:Useprivate = "0"
 }
 
 

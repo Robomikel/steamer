@@ -302,31 +302,42 @@ Function New-LaunchScriptasserverPS {
 # TEMPLATE Server
 #       ADD ID #
 # WIKI
+# Requiered Dont change 
+# # Version 2.0
 # $global:MODDIR=""
 # $global:EXEDIR=""
+# $global:EXE=""
 # $global:GAME = ""
 # $global:SAVES = ""
 # $global:PROCESS = ""
-# $global:SERVERCFGDIR = ""
-        
+# $global:SERVERCFGDIR = ""        
 # Get-StopServerInstall
+# Game-server-configs \/
 # $global:gamedirname=""
 # $global:config1=""
 # Get-Servercfg
 # - - - - - - - - - - - - -
-        
+# Rename source exe       
 #Write-Host "***  Renaming srcds.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
 #Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\TEMP.exe" >$null 2>&1
 #Rename-Item -Path "start-process cmd `"/c srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe`"" >$null 2>&1
-
+# game config
 #Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
 #((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
 #((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
 
+# VERSION 1 Requieres  Input
+#If ( $global:Version -eq "2" ) {
 #Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
 #New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
 #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
 #dd-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
 #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process -FilePath cmd.exe -ArgumentList (`"/c temp.exe -some launch params`") -NoNewWindow"
+#}
+
+# VERSION 2 Requieres  Vars
+# New-CreateVariables 
+#Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
+#Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXE -< LAUNCH PARAMS HERE >-`")"
 #}
 

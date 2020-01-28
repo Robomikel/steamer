@@ -73,17 +73,11 @@ Function Get-CreatedVaribles {
 }
 Function Get-ClearVariables {
     Write-Host "****   Clearing Variables   *****" -ForegroundColor Yellow -BackgroundColor Black
-    $global:vars = "PROCESS", "IP", "PORT", "SOURCETVPORT", "CLIENTPORT", "MAP", "TICKRATE", "GSLT", "MAXPLAYERS", "WORKSHOP", "HOSTNAME", "QUERYPORT", "SAVES", "APPID", "RCONPORT", "RCONPASSWORD", "SV_PURE", "SCENARIO", "GAMETYPE", "GAMEMODE", "MAPGROUP", "WSCOLLECTIONID", "WSSTARTMAP", "WSAPIKEY", "WEBHOOK", "EXEDIR", "GAME", "SERVERCFGDIR", "gamedirname", "config1", "config2", "config3", "config4", "config5", "MODDIR", "status", "CpuCores", "cpu", "avmem", "totalmem", "mem", "backups", "backupssize", "stats", "gameresponse", "os", "results,", "disks", "computername", "ANON"
+    $global:vars = "PROCESS", "IP", "PORT", "SOURCETVPORT", "CLIENTPORT", "MAP", "TICKRATE", "GSLT", "MAXPLAYERS", "WORKSHOP", "HOSTNAME", "QUERYPORT", "SAVES", "APPID", "RCONPORT", "RCONPASSWORD", "SV_PURE", "SCENARIO", "GAMETYPE", "GAMEMODE", "MAPGROUP", "WSCOLLECTIONID", "WSSTARTMAP", "WSAPIKEY", "WEBHOOK", "EXEDIR", "GAME", "SERVERCFGDIR", "gamedirname", "config1", "config2", "config3", "config4", "config5", "MODDIR", "status", "CpuCores", "cpu", "avmem", "totalmem", "mem", "backups", "backupssize", "stats", "gameresponse", "os", "results,", "disks", "computername", "ANON", "ALERT", "launchParams"
     Foreach ($global:vars in $global:vars) {
         Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
         Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
     }
-}
-Function Select-launchServer {
-    Write-Host '****   Starting Launch script   *****' -ForegroundColor Yellow -BackgroundColor Black  
-    & "$global:currentdir\$global:server\Launch-*.ps1"
-    Get-CheckForError
-    Set-Location $global:currentdir
 }
 Function Get-CheckServer {
     Write-Host '****   Check  Server process    *****' -ForegroundColor Yellow -BackgroundColor Black 
@@ -115,7 +109,7 @@ Function Get-RestartsServer {
     Clear-Host
     Start-Countdown -Seconds 10 -Message "Restarting server"
     Get-Logo
-    & "$global:currentdir\$global:server\Launch-*.ps1"
+    Select-StartServer
     Get-CheckForError
 }
 Function Start-Countdown {
@@ -182,6 +176,7 @@ Function Get-UpdateServer {
     }
     ElseIf ($?) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
+        if ($global:DisableDiscordUpdate -eq "1") { Get-UpdateServer }
     }
     Set-Location $global:currentdir
 }
@@ -287,6 +282,7 @@ Function Set-SteamInfoAppID {
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     If ($decision -eq 0) {
+        Set-VariablesPS
         Read-AppID
         Write-Host 'Entered Y'
     }
@@ -306,7 +302,7 @@ Function Get-GamedigServerv2 {
             .\gamedig --type $global:GAME ${global:EXTIP}:${global:QUERYPORT} --pretty
             Set-Location $global:currentdir
         }
-        ElseIf ($global:command -eq "gamedigprivate") {
+        ElseIf ($global:Useprivate -eq "1") {
             Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
             .\gamedig --type $global:GAME ${global:IP}:${global:QUERYPORT} --pretty
             Set-Location $global:currentdir
@@ -315,7 +311,7 @@ Function Get-GamedigServerv2 {
     ElseIf (($null -eq ${global:PORT}) -or ("" -eq ${global:PORT} )) {
         Write-Host '****   Missing PORT Var!   ****' -ForegroundColor Red -BackgroundColor Black
     }
-    ElseIf ($global:command -eq "gamedigprivate") {
+    ElseIf ($global:Useprivate -eq "1") {
         Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64  
         .\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty
         Set-Location $global:currentdir
@@ -343,8 +339,15 @@ Function Get-Details {
     If ($null -ne ${global:QUERYPORT}) { 
         ${global:PORT} = ${global:QUERYPORT} 
     }
-    $global:gameresponse = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
-    $global:stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
+    If ($global:Useprivate -eq "0") {
+        $global:gameresponse = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
+        $global:stats = (.\gamedig --type $global:GAME ${global:EXTIP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)
+    }
+    Else {
+        $global:gameresponse = (.\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty | Select-String -Pattern 'game' -CaseSensitive -SimpleMatch)
+        $global:stats = (.\gamedig --type $global:GAME ${global:IP}:${global:PORT} --pretty | Select-String -Pattern 'ping' -CaseSensitive -SimpleMatch)    
+    }
+    
     Get-CreatedVaribles
     New-BackupFolder
     $global:backups = (Get-Childitem -Path $global:currentdir\backups -recurse | Measure-Object) 
@@ -434,7 +437,7 @@ Function New-ServerFolder {
 }
 Function Get-CheckForVars {
     Write-Host "****   Checking for Vars   ****" -ForegroundColor Yellow -BackgroundColor Black
-    If (($global:command -eq "mcrcon") -or ($global:command -eq "mcrconPrivate")) {
+    If ($global:command -eq "mcrcon") {
         $global:missingvars = $global:RCONPORT, $global:RCONPASSWORD
     }
     Else {
@@ -461,14 +464,16 @@ Function Get-CheckForError {
 }
 
 Function Set-ConnectMCRcon {
-    set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
-    .\mcrcon.exe -t -H $global:EXTIP -P $global:RCONPORT -p $global:RCONPASSWORD
-    set-location $global:currentdir
-}
-Function Set-ConnectMCRconP {
-    set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
-    .\mcrcon.exe -t -H $global:IP -P $global:RCONPORT -p $global:RCONPASSWORD
-    set-location $global:currentdir
+    If ($global:Useprivate -eq "0") {
+        set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
+        .\mcrcon.exe -t -H $global:EXTIP -P $global:RCONPORT -p $global:RCONPASSWORD
+        set-location $global:currentdir
+    }
+    Else {
+        set-location $global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32
+        .\mcrcon.exe -t -H $global:IP -P $global:RCONPORT -p $global:RCONPASSWORD
+        set-location $global:currentdir
+    }
 }
 Function Get-MCRcon {
     $start_time = Get-Date
@@ -509,12 +514,30 @@ Function New-DiscordAlert {
         Write-Host "****   Add Discord  WEBHOOK to $global:currentdir\$global:server\Variables-$global:server.ps1   ****" -ForegroundColor Yellow -BackgroundColor Black    
     }
     Else {
+        If ($global:command -eq "Backup") {
+            # BACKUP
+            $global:ALERT = ' Server Backed UP'
+            # GREEN
+            $global:ALERTCOLOR = '3334680'
+        }
+        ElseIf ($global:command -eq "update") {
+            # UDPATE
+            $global:ALERT = ' Server Updated '
+            # BLUE
+            $global:ALERTCOLOR = '385734'
+        }
+        Else {
+            # RESTART
+            $global:ALERT = " Server not Running, Starting Server "
+            # RED
+            $global:ALERTCOLOR = '16711680'
+        }
         Write-Host '****   Sending Discord Alert   ****' -ForegroundColor Magenta -BackgroundColor Black
         $webHookUrl = "$global:WEBHOOK"
         [System.Collections.ArrayList]$embedArray = @()
         $title = "$global:HOSTNAME"
-        $description = 'Server not Running, Starting Server!'
-        $color = '16711680'
+        $description = "$global:ALERT"
+        $color = "$global:ALERTCOLOR"
         $embedObject = [PSCustomObject]@{
             title       = $title       
             description = $description  
@@ -621,18 +644,25 @@ Function Add-NodeJS {
     .\npm install gamedig -g
     Set-Location $global:currentdir
 }
+Function Set-VariablesPS {
+    Write-Host "***  Creating Variables and adding launch params  ***" -ForegroundColor Magenta -BackgroundColor Black
+    New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
+}
 Function New-CreateVariables {
     Write-Host '*** Creating Variables Script ****' -ForegroundColor Magenta -BackgroundColor Black 
-    New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# WEBHOOK HERE - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WEBHOOK = `"$global:WEBHOOK`""
     If ($global:MODDIR) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Mod dir - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MODDIR = `"$global:MODDIR`""
     }
+    If ($global:EXE) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXE = `"$global:EXE`""
+    }
     If ($global:EXEDIR) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  exe dir - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MODDIR = `"$global:EXEDIR`""
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe dir - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR = `"$global:EXEDIR`""
     }
     If ($global:GAME) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Game name used by Gamedig - - \/  \/  \/"
@@ -645,6 +675,10 @@ Function New-CreateVariables {
     If (${global:IP}) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server IP - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:IP} = `"${global:IP}`""
+    }
+    If (${global:EXTIP}) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server EXT IP - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:EXTIP} = `"${global:EXTIP}`""
     }
     If (${global:PORT}) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server PORT - - \/  \/  \/"
@@ -678,10 +712,14 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Workshop 1/0 HERE - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WORKSHOP = `"$global:WORKSHOP`""
     }
-#    If ($global:HOSTNAME) {
-#        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Name - - \/  \/  \/"
-#        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:HOSTNAME = `"$global:HOSTNAME`""
-#    }
+    If ($global:HOSTNAME) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Name - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:HOSTNAME = `"$global:HOSTNAME`""
+    }
+    If ($global:launchParams) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Launch Params - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:launchParams = `"$global:launchParams`""
+    }
     If (${global:QUERYPORT}) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  query port - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:QUERYPORT} = `"${global:QUERYPORT}`""
@@ -1073,6 +1111,31 @@ Function Get-Servercfg {
         Add-Content $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:SERVERCFG $WebResponse
     }
 }
+Function Get-StartServer {
+    param(
+        # [string]
+        [Parameter(Mandatory = $true, Position = 0)]
+        # [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)] 
+        $global:launchParams
+    )
+    Set-Location $global:currentdir\$global:server\
+    #Start-Process -FilePath CMD -ArgumentList ("/c $global:launchParams") -NoNewWindow
+    If ( $global:APPID -eq 581330) {
+        Start-Process CMD "/c $global:launchParams" -NoNewWindow
+    }
+    Else {
+        Start-Process CMD "/c $global:launchParams" 
+    }
+    
+    Set-Location $global:currentdir
+}
+Function Select-StartServer {
+    Write-Host '****   Starting Server   *****' -ForegroundColor Yellow -BackgroundColor Black  
+    Get-StartServer $global:launchParams
+    #& "$global:currentdir\$global:server\Launch-*.ps1"
+    #Get-CheckForError
+    #Set-Location $global:currentdir
+}
 Function Read-AppID {
     If ($global:AppID -eq 302200) {
         Set-Console  >$null 2>&1
@@ -1088,7 +1151,7 @@ Function Read-AppID {
     }
     ElseIf ($global:AppID -eq 581330) {
         Set-Console  >$null 2>&1
-        New-LaunchScriptInssserverPS
+        New-LaunchScriptInsserverPS
     }
     ElseIf ($global:AppID -eq 233780) {
         Set-Console  >$null 2>&1

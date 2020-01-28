@@ -3,6 +3,7 @@ Function New-LaunchScriptcsgoserverPS {
         #----------   CSGO Server CFG    -------------------
         $global:MODDIR = "csgo"
         $global:EXEDIR = ""
+        $global:EXE="csgo.exe"
         $global:GAME = "csgo"
         $global:PROCESS = "csgo"
         $global:SERVERCFGDIR = "csgo\cfg"
@@ -12,7 +13,15 @@ Function New-LaunchScriptcsgoserverPS {
         $global:config1 = "server.cfg"
         Get-Servercfg
         # - - - - - - - - - - - - -
-
+        # # Version 2.0
+        # $global:MODDIR=""
+        # $global:EXEDIR=""
+        # $global:EXE=""
+        # $global:GAME = ""
+        # $global:SAVES = ""
+        # $global:PROCESS = ""
+        # $global:SERVERCFGDIR = ""  
+        
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
@@ -61,13 +70,20 @@ Function New-LaunchScriptcsgoserverPS {
         Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
         ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
         ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
-        Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
-        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c csgo.exe -game csgo -console -usercon -strictportbind -ip `${global:IP} -port `${global:PORT} +clientport  `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} +sv_setsteamaccount `"`${global:GSLT}`" -tickrate `${global:TICKRATE} +map `${global:MAP} -maxplayers_override `${global:MAXPLAYERS} +mapgroup `${global:MAPGROUP} +game_type `${global:GAMETYPE} +game_mode `${global:GAMEMODE} +host_workshop_collection `${wscollectionid} +workshop_start_map `${WSSTARTMAP} -authkey `${WSAPIKEY} -nobreakpad +net_public_adr ${global:EXTIP} -condebug`" -NoNewWindow"
+        
+        #Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
+        #New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
+        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
+        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
+        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c csgo.exe -game csgo -console -usercon -strictportbind -ip `${global:IP} -port `${global:PORT} +clientport  `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} +sv_setsteamaccount `"`${global:GSLT}`" -tickrate `${global:TICKRATE} +map `${global:MAP} -maxplayers_override `${global:MAXPLAYERS} +mapgroup `${global:MAPGROUP} +game_type `${global:GAMETYPE} +game_mode `${global:GAMEMODE} +host_workshop_collection `${wscollectionid} +workshop_start_map `${WSSTARTMAP} -authkey `${WSAPIKEY} -nobreakpad +net_public_adr ${global:EXTIP} -condebug`" -NoNewWindow"
         #+net_public_adr xxx.xxx.xxx.xxx
         # parms="                                                                                                                        -game csgo -console -usercon -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers_override ${maxplayers} +mapgroup ${mapgroup} +game_type ${gametype} +game_mode ${gamemode} +host_workshop_collection ${WSCOLLECTIONID} +workshop_start_map ${WSSTARTMAP} -authkey ${wsapikey} -nobreakpad"
+        
+        # VERSION 2 Requieres  Vars
+         New-CreateVariables 
+        Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
+        Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXE -game csgo -console -usercon -strictportbind -ip `${global:IP} -port `${global:PORT} +clientport  `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} +sv_setsteamaccount `"`${global:GSLT}`" -tickrate `${global:TICKRATE} +map `${global:MAP} -maxplayers_override `${global:MAXPLAYERS} +mapgroup `${global:MAPGROUP} +game_type `${global:GAMETYPE} +game_mode `${global:GAMEMODE} +host_workshop_collection `${wscollectionid} +workshop_start_map `${WSSTARTMAP} -authkey `${WSAPIKEY} -nobreakpad +net_public_adr `${global:EXTIP} -condebug`")"
+        
         Get-SourceMetMod
 }
 
