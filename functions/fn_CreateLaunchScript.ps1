@@ -282,25 +282,39 @@ Function New-LaunchScriptasserverPS {
 # $global:config1=""
 # Get-Servercfg
 # - - - - - - - - - - - - -
+# If ( $global:Version -eq "1" ) {
+#        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+#        Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
+#        ${global:IP} = Read-host
+#        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "7777" }else { $global:PORT }
+#        if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27015" }else { $global:QUERYPORT }
+# }
+
+# ElseIf ( $global:Version -eq "2" ) {
+        # Version 2.0
+        #  First Run Vars \/ \/ Add Here
+        # ${global:IP} = "${global:IP}"
+        # $global:PORT = "7777"
+        # $global:QUERYPORT = "27015"
+        #     Add here     /\ /\ /\
+# }
+# ElseIf ( $global:Version -eq "0" ) {
+        #     Get-UserInput 1 1 0
+#    }
+
 # Rename source exe       
 #Write-Host "***  Renaming srcds.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
 #Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\TEMP.exe" >$null 2>&1
 #Rename-Item -Path "start-process cmd `"/c srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe`"" >$null 2>&1
+
 # game config
 #Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
 #((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
 #((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
 
-# VERSION 1 Requieres  Input
-#If ( $global:Version -eq "2" ) {
-#Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
-#New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-#Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-#dd-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-#Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process -FilePath cmd.exe -ArgumentList (`"/c temp.exe -some launch params`") -NoNewWindow"
-#}
 
-# VERSION 2 Requieres  Vars
+# VERSION 2 
 #$global:launchParams = '@("$global:EXE -< LAUNCH PARAMS HERE >-")'
+#$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 #}
 
