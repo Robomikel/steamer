@@ -24,6 +24,7 @@ Function New-LaunchScriptKF2serverPS {
     Get-Servercfg
     Set-Location $global:currentdir\$global:server\$global:SERVERCFGDIR
     Get-ChildItem -Filter "LinuxServer-*.ini" -Recurse | Rename-Item -NewName { $_.name -replace 'LinuxServer', 'PCServer' } -Force
+    Set-Location $global:currentdir\$global:server
     # - - - - - - - - - - - - -
 
     If ( $global:Version -eq "1" ) {
@@ -59,11 +60,8 @@ Function New-LaunchScriptKF2serverPS {
         $global:ADMINPASSWORD = "$global:RANDOMPASSWORD"
     }
     # VERSION 2 Requieres  Vars
-    $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?Game=${global:GAMEMODE}?Difficulty=${global:DIFF}? -Port=${global:PORT} -QueryPort=${global:QUERYPORT}")'  
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
-    Get-createdvaribles
-    New-CreateVariables
-    Select-StartServer
+    .\KF2Server.bat
     timeout 5
     Write-Host "***  stopping Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
     Get-StopServer
@@ -75,5 +73,6 @@ Function New-LaunchScriptKF2serverPS {
     ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\KFWeb.ini -Raw) -replace "\bbEnabled=false\b", "bEnabled=true") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\KFWeb.ini
     Write-Host "***  Disabling Takeover PCServer-KFEngine.ini ***" -ForegroundColor Magenta -BackgroundColor Black
     ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-KFEngine.ini -Raw) -replace "\bbUsedForTakeover=TRUE\b", "bUsedForTakeover=FALSE") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFEngine.ini
-    
+    $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?Game=${global:GAMEMODE}?Difficulty=${global:DIFF}? -Port=${global:PORT} -QueryPort=${global:QUERYPORT}")'  
+    Set-Location $global:currentdir
 }
