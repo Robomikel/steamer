@@ -33,7 +33,6 @@ Function New-LaunchScriptdoiserverPS {
         $global:RCONPORT = "$global:PORT" 
     }
     Else {
-
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
@@ -56,19 +55,19 @@ Function New-LaunchScriptdoiserverPS {
         $global:RCONPORT = "$global:PORT"
     }
     Select-EditSourceCFG
-
     #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c doi.exe -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan ${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`" -NoNewWindow"
     # VERSION 2 Requieres  Vars
     Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
     Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXE -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan `${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`")"
     # -game doi -strictportbind           -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers ${maxplayers} -workshop"
     #start srcds.exe -usercon +maxplayers 24 +sv_lan 0 +map "bastogne offensive"              
-    Add-SubMotdtxts
+    Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
+    New-Item $global:currentdir\$global:server\doi\subscribed_file_ids.txt -Force
+    Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
+    New-Item $global:currentdir\$global:server\doi\motd.txt -Force
     Get-Gamemodedoi
     Get-SourceMetMod
 }
-
-
 # not used in DOI 
 #server.cfg		// this is your primary server config file containing global variables
 #default_server_<mode>.cfg		// default file which contains settings for specific mode
@@ -106,8 +105,6 @@ Function Get-Playlistdoi {
         #                                Write-Host "entered blank or null" -ForegroundColor Red
     }
 }
-                
-
 Function Set-Gamemodedoi {
     #nwi/coop_commando
     #nwi/coop
@@ -154,13 +151,6 @@ Function Get-Gamemodedoi {
         Write-Host 'Entered N'
     }
 
-}
-
-Function Add-SubMotdtxts {
-    Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
-    New-Item $global:currentdir\$global:server\doi\subscribed_file_ids.txt -Force
-    Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
-    New-Item $global:currentdir\$global:server\doi\motd.txt -Force
 }
 Function new-mapcycles {
     #mkdir $global:currentdir\$global:server\doi   >$null 2>&1
