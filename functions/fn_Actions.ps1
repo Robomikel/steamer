@@ -1200,6 +1200,10 @@ Function Get-UserInput {
         Write-Host "Enter MAXPLAYERS" -F Cyan
         $global:MAXPLAYERS = Read-Host
     }
+    If ($parm8 -eq 1) {
+        Write-Host "Enter GSLT" -F Cyan
+        $global:GSLT = Read-Host
+    }
 
 }
 Function Read-AppID {
