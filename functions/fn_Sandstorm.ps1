@@ -32,8 +32,7 @@ Function New-LaunchScriptInssserverPS {
                 $global:steamID64 = Read-Host
         }
         ElseIf ( $global:Version -eq "2" ) {
-                # Version 2.0 \/
-                # Game Specific  
+                # Version 2.0
                 #  First Run Vars \/ \/ Add Here
                 $global:SCENARIO = "Scenario_Outskirts_Checkpoint_Security"
                 $global:MAP = "Compound"
@@ -44,11 +43,13 @@ Function New-LaunchScriptInssserverPS {
                 $global:SERVERPASSWORD = ""
                 $global:RCONPORT = "64094"
                 $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
-                $global:steamID64 = ""
+                $global:steamID64 = "steamID64"
                 #     Add here     /\ /\ /\
         }       
         ElseIf ( $global:Version -eq "0" ) {
-                #     Get-UserInput 1 1 0
+                     Get-UserInput 0 1 1 1 1 1 1 1
+                     $global:SCENARIO = "Scenario_Outskirts_Checkpoint_Security"
+                     $global:MAP = "Compound"
         }      
         #  Version 2 Launch Param
         If ($global:SERVERPASSWORD -ne "") {

@@ -15,7 +15,7 @@ Function New-LaunchScriptMiscreatedPS {
         # $global:config1=""
         # Get-Servercfg
         # - - - - - - - - - - - - -
-
+        $global:RCONPORT = "$global:PORT"
         If ( $global:Version -eq "1" ) {
                 # #################### Version 1.0 ###################################################
                 Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -26,14 +26,7 @@ Function New-LaunchScriptMiscreatedPS {
                 $global:MAXPLAYERS = Read-host 
                 Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
                 $global:HOSTNAME = Read-host
-                Write-Host '*** Creating Launch Script *****' -ForegroundColor Magenta -BackgroundColor Black  
-                New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-                Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-                Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\$global:EXEDIR"
-                Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c MiscreatedServer.exe  +sv_bind `${global:IP} +sv_maxplayers `${global:MAXPLAYERS} +map islands -sv_port `${global:PORT} +http_startserver -mis_gameserverid 100`" -NoNewWindow"
-                Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process -FilePath cmd Argumnet (`"/c MiscreatedServer.exe  +sv_bind `${global:IP} +sv_maxplayers `${global:MAXPLAYERS} +map islands -sv_port `${global:PORT} +http_startserver -mis_gameserverid 100`" -NoNewWindow)"
                 if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-                $global:RCONPORT = "$global:PORT"
         }
         ElseIf ( $global:Version -eq "2" ) {
                 # Version 2.0 \/
@@ -41,18 +34,16 @@ Function New-LaunchScriptMiscreatedPS {
                 #  First Run Vars \/ \/ Add Here        
                 ${global:IP} = ""
                 $global:PORT = ""
-                $global:MAXPLAYERS = ""
-                $global:HOSTNAME = ""
+                # $global:RCONPORT = ""
                 $global:RCONPASSWORD = ""
-                $global:RCONPORT = ""
+                $global:HOSTNAME = ""
+                $global:MAXPLAYERS = ""  
         }
         ElseIf ( $global:Version -eq "0" ) {
-                #     Get-UserInput 1 1 0
+                Get-UserInput 1 1 0 0 1 1 0 1
         }  
         #VERSION 2 Requieres  Vars
-
         $global:launchParams = '@("$global:EXE +sv_bind ${global:IP} +sv_maxplayers ${global:MAXPLAYERS} +map islands -sv_port ${global:PORT} +http_startserver -mis_gameserverid 100")'
-
 
         # Custom config game based         
         Write-Host '*** Creating HOSTING.CFG *****' -ForegroundColor Magenta -BackgroundColor Black 

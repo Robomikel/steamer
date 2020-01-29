@@ -32,27 +32,33 @@ Function New-LaunchScriptRustPS {
                 $global:HOSTNAME = Read-host
                 Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
                 $global:MAXPLAYERS = Read-host
-                if (($global:SEED = Read-Host -Prompt (Write-Host "Input Server seed,Press enter to accept default value [$global:SEED]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SEED = "$global:RANDOMSEED" }else { $global:SEED }
+                if (($global:SEED = Read-Host -Prompt (Write-Host "Input Server seed,Press enter to accept default value [$global:RANDOMSEED]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SEED = "$global:RANDOMSEED" }else { $global:SEED }
                 if (($global:WORLDSIZE = Read-Host -Prompt (Write-Host "Input Server WorldSize,Press enter to accept default value [3000]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:WORLDSIZE = "3000" }else { $global:WORLDSIZE }
                 if (($global:SAVEINTERVAL = Read-Host -Prompt (Write-Host "Input Server Save Interval,Press enter to accept default value [300]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SAVEINTERVAL = "300" }else { $global:SAVEINTERVAL }
                 if (($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server Tickrate,Press enter to accept default value [30]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:TICKRATE = "30" }else { $global:TICKRATE }  
         }
         ElseIf ( $global:Version -eq "2" ) {
-                ${global:IP} = ""
-                $global:PORT = ""
-                $global:RCONPORT = ""
-                $global:RCONPASSWORD = ""
-                $global:RCONWEB = ""
-                $global:HOSTNAME = ""
-                $global:MAXPLAYERS = ""
-                $global:SEED = ""
-                $global:WORLDSIZE = ""
-                $global:SAVEINTERVAL = ""
-                $global:TICKRATE = ""
-                #          Add here     /\ /\ /\
+                #  Edit Vars here \/ \/ \/
+                ${global:IP} = "${global:IP}"
+                $global:PORT = "28015"
+                $global:RCONPORT = "28016"
+                $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
+                $global:RCONWEB = "1"
+                $global:HOSTNAME = "PS steamer"
+                $global:MAXPLAYERS = "32"
+                $global:SEED = "$global:RANDOMSEED"
+                $global:WORLDSIZE = "3000"
+                $global:SAVEINTERVAL = "300"
+                $global:TICKRATE = "30"
+                #  Edit Vars here     /\ /\ /\
         }
         ElseIf ( $global:Version -eq "0" ) {
-                #     Get-UserInput 1 1 0
+                Get-UserInput 1 1 0 1 1 1 0 1
+                $global:RCONWEB = "1"
+                $global:SEED = "$global:RANDOMSEED"
+                $global:WORLDSIZE = "3000"
+                $global:SAVEINTERVAL = "300"
+                $global:TICKRATE = "30"
         }
         #  Version 2 Launch Param
         $global:launchParams = '@("$global:EXE -batchmode +server.ip ${global:IP}  +server.port ${global:PORT} +server.tickrate ${global:TICKRATE} +server.hostname `"${global:HOSTNAME}`" +server.maxplayers ${global:MAXPLAYERS} +server.worldsize ${global:WORLDSIZE} +server.saveinterval ${global:SAVEINTERVAL} +rcon.web ${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port ${global:RCONPORT} +rcon.password ${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog-$date.log")'

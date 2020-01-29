@@ -16,23 +16,8 @@ Function New-LaunchScriptdoiserverPS {
 
     Get-Servercfg
     Select-RenameSource
-    If ( $global:Version -eq "2" ) {
-        ${global:IP} = ""
-        $global:PORT = ""
-        $global:CLIENTPORT = ""
-        $global:SOURCETVPORT = ""
-        $global:TICKRATE = ""
-        $global:MAP = ""
-        $global:SV_LAN = ""
-        $global:MAXPLAYERS = ""
-        $global:COOPPLAYERS = ""
-        $global:WORKSHOP = ""
-        $global:SV_PURE = ""
-        $global:HOSTNAME = ""
-        $global:RCONPASSWORD = ""
-        $global:RCONPORT = "$global:PORT" 
-    }
-    Else {
+
+    If ( $global:Version -eq "1" ) {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
@@ -53,6 +38,22 @@ Function New-LaunchScriptdoiserverPS {
         $global:HOSTNAME = Read-host
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
         $global:RCONPORT = "$global:PORT"
+    }
+    ElseIf ( $global:Version -eq "2" ) {
+        ${global:IP} = ""
+        $global:PORT = ""
+        $global:CLIENTPORT = ""
+        $global:SOURCETVPORT = ""
+        $global:TICKRATE = ""
+        $global:MAP = ""
+        $global:SV_LAN = ""
+        $global:MAXPLAYERS = ""
+        $global:COOPPLAYERS = ""
+        $global:WORKSHOP = ""
+        $global:SV_PURE = ""
+        $global:HOSTNAME = ""
+        $global:RCONPASSWORD = ""
+        $global:RCONPORT = "$global:PORT" 
     }
     Select-EditSourceCFG
     #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c doi.exe -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan ${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`" -NoNewWindow"

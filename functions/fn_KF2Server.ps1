@@ -26,7 +26,7 @@ Function New-LaunchScriptKF2serverPS {
     Get-ChildItem -Filter "LinuxServer-*.ini" -Recurse | Rename-Item -NewName { $_.name -replace 'LinuxServer', 'PCServer' } -Force
     # - - - - - - - - - - - - -
 
-    If ( $global:Version -eq "2" ) {
+    If ( $global:Version -eq "1" ) {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         #Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         #${global:IP} = Read-Host
@@ -42,16 +42,21 @@ Function New-LaunchScriptKF2serverPS {
     }
     ElseIf ( $global:Version -eq "2" ) {
         #  First Run Vars \/ \/ Add Here
-        $global:PORT = ""
-        $global:QUERYPORT = ""
-        $global:MAP = ""
-        $global:GAMEMODE = ""
-        $global:DIFF = ""
-        $global:HOSTNAME = ""
-        $global:ADMINPASSWORD = ""
+        $global:PORT = "7777"
+        $global:QUERYPORT = "27015"
+        $global:MAP = "KF-BioticsLab"
+        $global:GAMEMODE = "KFGameContent.KFGameInfo_Endless"
+        $global:DIFF = "0"
+        $global:HOSTNAME = "PS Steamer"
+        $global:ADMINPASSWORD = "$global:RANDOMPASSWORD"
+        #  Edit Vars here     /\ /\ /\
     }
     ElseIf ( $global:Version -eq "0" ) {
-        #     Get-UserInput 1 1 0
+        Get-UserInput 0 1 1 0 0 1 0 0
+        $global:MAP = "KF-BioticsLab"
+        $global:GAMEMODE = "KFGameContent.KFGameInfo_Endless"
+        $global:DIFF = "0"
+        $global:ADMINPASSWORD = "$global:RANDOMPASSWORD"
     }  
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
     Select-launchServer

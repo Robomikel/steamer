@@ -1164,28 +1164,36 @@ Function Get-UserInput {
         [parameter(Position = 8)]$parm8,
         [parameter(Position = 9)]$parm9)
     If ($parm0 -eq 1) {
-        $global:IP = Read-Host "Enter IP"
+        Write-Host  "Enter IP" -F Cyan
+        $global:IP = Read-Host
     }
     If ($parm1 -eq 1) {
-        $global:PORT = Read-Host "Enter PORT"
+        Write-Host "Enter PORT" -F Cyan
+        $global:PORT = Read-Host 
     }
     If ($parm2 -eq 1) {
-        $global:QUERYPORT = Read-Host "Enter QUERYPORT"
+        Write-Host "Enter QUERYPORT" -F Cyan
+        $global:QUERYPORT = Read-Host
     }
     If ($parm3 -eq 1) {
-        $global:RCONPORT = Read-Host "Enter RCONPORT"
+        Write-Host "Enter RCONPORT" -F Cyan
+        $global:RCONPORT = Read-Host
     }
     If ($parm4 -eq 1) {
-        $global:RCONPASSWORD = Read-Host "Enter RCONPASSWORD"
+        Write-Host "Enter RCONPASSWORD" -F Cyan
+        $global:RCONPASSWORD = Read-Host
     }
     If ($parm5 -eq 1) {
-        $global:HOSTNAME = Read-Host "Enter HOSTNAME"
+        Write-Host "Enter HOSTNAME" -F Cyan
+        $global:HOSTNAME = Read-Host
     }
     If ($parm6 -eq 1) {
-        $global:SERVERPASSWORD = Read-Host "Enter SERVERPASSWORD"
+        Write-Host "Enter SERVERPASSWORD" -F Cyan
+        $global:SERVERPASSWORD = Read-Host
     }
     If ($parm7 -eq 1) {
-        $global:MAXPLAYERS = Read-Host "Enter MAXPLAYERS"
+        Write-Host "Enter MAXPLAYERS" -F Cyan
+        $global:MAXPLAYERS = Read-Host
     }
 
 }

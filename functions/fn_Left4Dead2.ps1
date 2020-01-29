@@ -16,6 +16,7 @@ Function New-LaunchScriptLFD2serverPS {
     Get-Servercfg
     # - - - - - - - - - - - - -
     Select-RenameSource
+    $global:RCONPORT = "$global:PORT"
     If ( $global:Version -eq "1" ) {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
@@ -28,22 +29,24 @@ Function New-LaunchScriptLFD2serverPS {
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-        $global:RCONPORT = "$global:PORT"
     }
     ElseIf ( $global:Version -eq "2" ) {
         # Version 2.0
         #  First Run Vars \/ \/ Add Here
-        ${global:IP} = ""
-        $global:PORT = ""
-        $global:CLIENTPORT = ""
-        $global:MAP = ""
-        $global:MAXPLAYERS = ""
-        $global:HOSTNAME = ""
-        $global:RCONPASSWORD = ""
-        $global:RCONPORT = "$global:PORT"
+        ${global:IP} = "${global:IP}"
+        $global:PORT = "27015"
+        $global:CLIENTPORT = "27005"
+        $global:MAP = "c1m1_hotel"
+        $global:MAXPLAYERS = "8"
+        $global:HOSTNAME = "PS Steamer"
+        $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
+        #  Edit Vars here     /\ /\ /\
+
     }
     ElseIf ( $global:Version -eq "0" ) {
-        #     Get-UserInput 1 1 0
+        Get-UserInput 1 1 0 0 1 1 0 1
+        $global:CLIENTPORT = "27005"
+        $global:MAP = "c1m1_hotel"
     }  
     #if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
     #if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
