@@ -1133,10 +1133,10 @@ Function Get-StartServer {
     Set-Location $global:currentdir\$global:server\
     #Start-Process -FilePath CMD -ArgumentList ("/c $global:launchParams") -NoNewWindow
     If  (( $global:APPID -eq 258550 ) -or ($global:APPID -eq 294420 ) -or ($global:APPID -eq 302550))  {
-        Start-Process CMD "/c $global:launchParams"
+        Start-Process CMD "/c start $global:launchParams"
     }
     Else {
-        Start-Process CMD "/c $global:launchParams"  -NoNewWindow
+        Start-Process CMD "/c start $global:launchParams"  -NoNewWindow
     }
     Set-Location $global:currentdir
 }
