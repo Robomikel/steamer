@@ -1055,7 +1055,6 @@ Function Add-Sevenzip {
         Write-Host "****   7Zip Extract succeeded   ****" -ForegroundColor Yellow -BackgroundColor Black
     }
 }
-
 Function New-backupAppdata {
     Write-Host '****   Server App Data Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\ 
@@ -1128,13 +1127,12 @@ Function Get-StartServer {
     )
     Set-Location $global:currentdir\$global:server\
     #Start-Process -FilePath CMD -ArgumentList ("/c $global:launchParams") -NoNewWindow
-    If (( $global:APPID -eq 581330) -or ($global:APPID -eq 233780)){
+    If (( $global:APPID -eq 581330) -or ($global:APPID -eq 233780)) {
         Start-Process CMD "/c $global:launchParams" -NoNewWindow
     }
     Else {
         Start-Process CMD "/c $global:launchParams" 
     }
-    
     Set-Location $global:currentdir
 }
 Function Select-StartServer {
@@ -1191,7 +1189,6 @@ Function Get-UserInput {
     }
 
 }
-    
 Function Read-AppID {
     If ($global:AppID -eq 302200) {
         Set-Console  >$null 2>&1
