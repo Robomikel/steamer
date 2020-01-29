@@ -1,4 +1,4 @@
-Function New-LaunchScriptInsserverPS {
+Function New-LaunchScriptInssserverPS {
         #----------   INS: Sandstorm Server  -------------------
         # Requiered Dont change 
         # # Version 2.0

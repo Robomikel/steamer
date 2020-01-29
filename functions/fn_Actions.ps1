@@ -1204,7 +1204,7 @@ Function Read-AppID {
     }
     ElseIf ($global:AppID -eq 581330) {
         Set-Console  >$null 2>&1
-        New-LaunchScriptInsserverPS
+        New-LaunchScriptInssserverPS
     }
     ElseIf ($global:AppID -eq 233780) {
         Set-Console  >$null 2>&1
