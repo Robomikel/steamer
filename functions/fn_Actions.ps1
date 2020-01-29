@@ -669,6 +669,10 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe dir - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR = `"$global:EXEDIR`""
     }
+    If ($global:SERVERCFGDIR) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  SERVERCFGDIR dir - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SERVERCFGDIR = `"$global:SERVERCFGDIR`""
+    }
     If ($global:GAME) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Game name used by Gamedig - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:GAME`""
