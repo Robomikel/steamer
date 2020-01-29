@@ -45,7 +45,7 @@ Function New-LaunchScriptLFD2serverPS {
     }
     ElseIf ( $global:Version -eq "0" ) {
         #     Get-UserInput 1 1 0
-     }  
+    }  
     #if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
     #if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
     Select-EditSourceCFG

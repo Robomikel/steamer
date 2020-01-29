@@ -18,7 +18,7 @@ Function New-LaunchScriptRustPS {
         # Game Specific  
         #       First Run Vars \/ \/ Add Here
 
-         If ( $global:Version -eq "1" )  {
+        If ( $global:Version -eq "1" ) {
                 # - Version 1
                 $global:RANDOMSEED = Get-Random -Minimum 1 -Maximum 2147483647
                 Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -49,11 +49,11 @@ Function New-LaunchScriptRustPS {
                 $global:WORLDSIZE = ""
                 $global:SAVEINTERVAL = ""
                 $global:TICKRATE = ""
-        #          Add here     /\ /\ /\
+                #          Add here     /\ /\ /\
         }
         ElseIf ( $global:Version -eq "0" ) {
                 #     Get-UserInput 1 1 0
-             }
+        }
         #  Version 2 Launch Param
         $global:launchParams = '@("$global:EXE -batchmode +server.ip ${global:IP}  +server.port ${global:PORT} +server.tickrate ${global:TICKRATE} +server.hostname `"${global:HOSTNAME}`" +server.maxplayers ${global:MAXPLAYERS} +server.worldsize ${global:WORLDSIZE} +server.saveinterval ${global:SAVEINTERVAL} +rcon.web ${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port ${global:RCONPORT} +rcon.password ${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog-$date.log")'
         # adding to server.cfg                   server.hostname "server"

@@ -79,7 +79,7 @@ Function New-LaunchScriptcsgoserverPS {
         }
         ElseIf ( $global:Version -eq "0" ) {
                 #     Get-UserInput 1 1 0
-             } 
+        } 
         Select-EditSourceCFG
         # VERSION 2
         $global:launchParams = '@("$global:EXE -game csgo -console -usercon -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport  ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +sv_setsteamaccount ${global:GSLT} -tickrate ${global:TICKRATE} +map ${global:MAP} -maxplayers_override ${global:MAXPLAYERS} +mapgroup ${global:MAPGROUP} +game_type ${global:GAMETYPE} +game_mode ${global:GAMEMODE} +host_workshop_collection ${wscollectionid} +workshop_start_map ${WSSTARTMAP} -authkey ${WSAPIKEY} -nobreakpad +net_public_adr ${global:EXTIP} -condebug")'

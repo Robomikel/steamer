@@ -1172,19 +1172,19 @@ Function Get-UserInput {
         $global:PORT = Read-Host "Enter PORT"
     }
     If ($parm2 -eq 1) {
-        $global:HOSTNAME = Read-Host "Enter HOSTNAME"
-    }
-    If ($parm3 -eq 1) {
         $global:QUERYPORT = Read-Host "Enter QUERYPORT"
     }
-    If ($parm4 -eq 1) {
-        $global:SERVERPASSWORD = Read-Host "Enter SERVERPASSWORD"
-    }
-    If ($parm5 -eq 1) {
+    If ($parm3 -eq 1) {
         $global:RCONPORT = Read-Host "Enter RCONPORT"
     }
-    If ($parm6 -eq 1) {
+    If ($parm4 -eq 1) {
         $global:RCONPASSWORD = Read-Host "Enter RCONPASSWORD"
+    }
+    If ($parm5 -eq 1) {
+        $global:HOSTNAME = Read-Host "Enter HOSTNAME"
+    }
+    If ($parm6 -eq 1) {
+        $global:SERVERPASSWORD = Read-Host "Enter SERVERPASSWORD"
     }
     If ($parm7 -eq 1) {
         $global:MAXPLAYERS = Read-Host "Enter MAXPLAYERS"

@@ -18,49 +18,49 @@ Function New-LaunchScriptInsserverPS {
     # - - - - - - - - - - - - -
     If ( $global:Version -eq "1" ) {
 
-    Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-    ${global:IP} = Read-Host
-    if ((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
-    if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
-    if (($global:SOURCETVPORT = Read-Host -Prompt (Write-Host "Input Server Source TV Port, Press enter to accept default value [27020]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SOURCETVPORT = "27020" }else { $global:SOURCETVPORT }
-    if (($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server Tickrate,Press enter to accept default value [64]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:TICKRATE = "64" }else { $global:TICKRATE }  
-    Write-Host "Input Game Server Token: " -ForegroundColor Cyan -NoNewline
-    $global:GSLT = Read-Host
-    if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [buhriz_coop checkpoint]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "buhriz_coop checkpoint" }else { $global:MAP }
-    Write-Host 'Input maxplayers (lobby size [24-48]): ' -ForegroundColor Cyan -NoNewline
-    $global:MAXPLAYERS = Read-host
-    if (($global:SV_LAN = Read-Host -Prompt (Write-Host "Input SV_LAN,Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SV_LAN = "0" }else { $global:SV_LAN }
-    Write-Host 'Input players  (mp_coop_lobbysize [1-8]): ' -ForegroundColor Cyan -NoNewline  
-    $global:COOPPLAYERS = Read-host
-    if (($global:WORKSHOP = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:WORKSHOP = "0" }else { $global:WORKSHOP }
-    if (($global:SV_PURE = Read-Host -Prompt (Write-Host "Input +sv_pure, Press enter to accept default value [1]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SV_PURE = "1" }else { $global:SV_PURE } 
-    Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
-    $global:HOSTNAME = Read-host
-    if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-    $global:RCONPORT = "${global:PORT}"
-}
-ElseIf ( $global:Version -eq "2" ) {
-    ${global:IP} = ""
-    ${global:PORT} =""
-    $global:CLIENTPORT =""
-    $global:SOURCETVPORT =""
-    $global:TICKRATE =""
-    $global:GSLT =""
-    $global:MAP =""
-    $global:MAXPLAYERS =""
-    $global:SV_LAN =""
-    $global:COOPPLAYERS = ""
-    $global:WORKSHOP =""
-    $global:SV_PURE =""
-    $global:HOSTNAME =""
-    $global:RCONPASSWORD =""
-    $global:RCONPORT = "${global:PORT}"
+        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+        ${global:IP} = Read-Host
+        if ((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
+        if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
+        if (($global:SOURCETVPORT = Read-Host -Prompt (Write-Host "Input Server Source TV Port, Press enter to accept default value [27020]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SOURCETVPORT = "27020" }else { $global:SOURCETVPORT }
+        if (($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server Tickrate,Press enter to accept default value [64]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:TICKRATE = "64" }else { $global:TICKRATE }  
+        Write-Host "Input Game Server Token: " -ForegroundColor Cyan -NoNewline
+        $global:GSLT = Read-Host
+        if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [buhriz_coop checkpoint]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "buhriz_coop checkpoint" }else { $global:MAP }
+        Write-Host 'Input maxplayers (lobby size [24-48]): ' -ForegroundColor Cyan -NoNewline
+        $global:MAXPLAYERS = Read-host
+        if (($global:SV_LAN = Read-Host -Prompt (Write-Host "Input SV_LAN,Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SV_LAN = "0" }else { $global:SV_LAN }
+        Write-Host 'Input players  (mp_coop_lobbysize [1-8]): ' -ForegroundColor Cyan -NoNewline  
+        $global:COOPPLAYERS = Read-host
+        if (($global:WORKSHOP = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:WORKSHOP = "0" }else { $global:WORKSHOP }
+        if (($global:SV_PURE = Read-Host -Prompt (Write-Host "Input +sv_pure, Press enter to accept default value [1]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SV_PURE = "1" }else { $global:SV_PURE } 
+        Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
+        $global:HOSTNAME = Read-host
+        if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
+        $global:RCONPORT = "${global:PORT}"
+    }
+    ElseIf ( $global:Version -eq "2" ) {
+        ${global:IP} = ""
+        ${global:PORT} = ""
+        $global:CLIENTPORT = ""
+        $global:SOURCETVPORT = ""
+        $global:TICKRATE = ""
+        $global:GSLT = ""
+        $global:MAP = ""
+        $global:MAXPLAYERS = ""
+        $global:SV_LAN = ""
+        $global:COOPPLAYERS = ""
+        $global:WORKSHOP = ""
+        $global:SV_PURE = ""
+        $global:HOSTNAME = ""
+        $global:RCONPASSWORD = ""
+        $global:RCONPORT = "${global:PORT}"
 
-}
-ElseIf ( $global:Version -eq "0" ) {
-    #     Get-UserInput 1 1 0
- }  
+    }
+    ElseIf ( $global:Version -eq "0" ) {
+        #     Get-UserInput 1 1 0
+    }  
     
     Select-EditSourceCFG
     Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
