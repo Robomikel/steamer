@@ -720,10 +720,6 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Name - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:HOSTNAME = `"$global:HOSTNAME`""
     }
-    If ($global:launchParams) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Launch Params - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:launchParams = `"$global:launchParams`""
-    }
     If (${global:QUERYPORT}) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  query port - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:QUERYPORT} = `"${global:QUERYPORT}`""
@@ -777,7 +773,7 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSAPIKEY = `"$global:WSAPIKEY`""
     }
     If ($global:launchParams) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  launch Params   - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Launch Params - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:launchParams = $global:launchParams"
     }
 }
