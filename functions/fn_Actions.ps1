@@ -653,7 +653,8 @@ Function Set-VariablesPS {
     New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
 }
 Function New-CreateVariables {
-    Write-Host '*** Creating Variables Script ****' -ForegroundColor Magenta -BackgroundColor Black 
+    Write-Host '*** Creating Variables Script ****' -ForegroundColor Magenta -BackgroundColor Black
+    New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# WEBHOOK HERE - - \/  \/  \/"
     Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WEBHOOK = `"$global:WEBHOOK`""
     If ($global:MODDIR) {
