@@ -59,7 +59,6 @@ Function New-LaunchScriptdoiserverPS {
 
     #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c doi.exe -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan ${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`" -NoNewWindow"
     # VERSION 2 Requieres  Vars
-    New-CreateVariables 
     Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
     Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXE -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan `${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`")"
     # -game doi -strictportbind           -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers ${maxplayers} -workshop"

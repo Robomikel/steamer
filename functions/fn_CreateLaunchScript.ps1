@@ -305,8 +305,6 @@ Function New-LaunchScriptasserverPS {
 #}
 
 # VERSION 2 Requieres  Vars
-# New-CreateVariables 
-#Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
 #$global:launchParams = '@("$global:EXE -< LAUNCH PARAMS HERE >-")'
 #}
 
