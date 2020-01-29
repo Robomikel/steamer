@@ -1010,7 +1010,6 @@ Function New-BackupServer {
     Write-Host '****   Server Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\
     Get-Childitem $global:currentdir\backups\ -Recurse | where-object name -like Backup_$global:server-*.zip | Sort-Object CreationTime -desc | Select-Object -Skip $global:backupcount | Remove-Item -Force 
-    #Get-Childitem $global:currentdir\backups\ -Recurse | where-object {-like Backup_$global:server-*.zip}| Sort-Object CreationTime -desc | Select-Object -Skip $global:backupcount | Remove-Item -Force
     #./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* -an > backup.log
     ./7za a $global:currentdir\backups\Backup_$global:server-$global:Date.zip $global:currentdir\$global:server\* > backup.log
     Write-Host '****   Server Backup is Done!   ****' -ForegroundColor Yellow -BackgroundColor Black
@@ -1143,9 +1142,6 @@ Function Get-StartServer {
 Function Select-StartServer {
     Write-Host '****   Starting Server   *****' -ForegroundColor Yellow -BackgroundColor Black  
     Get-StartServer $global:launchParams
-    #& "$global:currentdir\$global:server\Launch-*.ps1"
-    #Get-CheckForError
-    #Set-Location $global:currentdir
 }
 Function Select-RenameSource {
     Write-Host "***  Renaming srcds.exe to $global:EXE to avoid conflict with local source Engine (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
