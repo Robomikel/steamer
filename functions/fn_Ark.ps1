@@ -32,14 +32,15 @@ Function New-LaunchScriptArkPS {
     ElseIf ( $global:Version -eq "2" ) {
         # Version 2.0
         #  First Run Vars \/ \/ Add Here
-        ${global:IP} = ""
-        $global:PORT = ""
-        $global:QUERYPORT = ""
-        $global:RCONPORT = ""
-        $global:RCONPASSWORD = ""
-        $global:MAP = ""
-        $global:MAXPLAYERS = ""
-        $global:HOSTNAME = ""
+        ${global:IP} = "${global:IP}"
+        $global:PORT = "7777"
+        $global:QUERYPORT = "27015"
+        $global:RCONPORT = "27020"
+        $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
+        $global:MAP = "TheIsland"
+        $global:MAXPLAYERS = "70"
+        $global:HOSTNAME = "PS Steamer"
+        #     Add here     /\ /\ /\
     }
     ElseIf ( $global:Version -eq "0" ) {
         #     Get-UserInput 1 1 0

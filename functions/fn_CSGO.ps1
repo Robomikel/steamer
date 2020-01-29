@@ -61,20 +61,22 @@ Function New-LaunchScriptcsgoserverPS {
         ElseIf ( $global:Version -eq "2" ) {
 
                 # # Version 2.0
-                ${global:IP} = ""
-                $global:PORT = ""
-                $global:CLIENTPORT = ""
-                $global:SOURCETVPORT = ""
-                $global:TICKRATE = ""
+                 #  First Run Vars \/ \/ Add Here
+                ${global:IP} = "${global:IP}"
+                $global:PORT = "27015"
+                $global:CLIENTPORT = "27005"
+                $global:SOURCETVPORT = "27020"
+                $global:TICKRATE = "64"
                 $global:GSLT = ""
-                $global:MAP =
-                $global:MAXPLAYERS = ""
-                $global:HOSTNAME = ""
-                $global:RCONPASSWORD = ""
+                $global:MAP = "de_inferno"
+                $global:MAXPLAYERS = "32"
+                $global:HOSTNAME = "PS Steamer"
+                $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
                 $global:RCONPORT = "$global:PORT"
-                $global:GAMETYPE = ""
-                $global:GAMEMODE = ""
-                $global:MAPGROUP = ""
+                $global:GAMETYPE = "0"
+                $global:GAMEMODE = "0"
+                $global:MAPGROUP = "mg_active"
+                #     Add here     /\ /\ /\
 
         }
         ElseIf ( $global:Version -eq "0" ) {

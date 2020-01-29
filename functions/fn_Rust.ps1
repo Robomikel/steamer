@@ -15,12 +15,13 @@ Function New-LaunchScriptRustPS {
         $global:config1 = "server.cfg"
         Get-Servercfg
         # # Version 2.0
-        # Game Specific  
-        #       First Run Vars \/ \/ Add Here
+        # Game Specific
+        $global:RANDOMSEED = Get-Random -Minimum 1 -Maximum 2147483647  
+        
 
         If ( $global:Version -eq "1" ) {
                 # - Version 1
-                $global:RANDOMSEED = Get-Random -Minimum 1 -Maximum 2147483647
+                
                 Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
                 Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
                 ${global:IP} = Read-host

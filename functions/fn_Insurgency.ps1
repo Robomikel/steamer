@@ -41,21 +41,23 @@ Function New-LaunchScriptInsserverPS {
         $global:RCONPORT = "${global:PORT}"
     }
     ElseIf ( $global:Version -eq "2" ) {
-        ${global:IP} = ""
-        ${global:PORT} = ""
-        $global:CLIENTPORT = ""
-        $global:SOURCETVPORT = ""
-        $global:TICKRATE = ""
+        #  First Run Vars \/ \/ Add Here
+        ${global:IP} = "${global:IP}"
+        ${global:PORT} = "27015"
+        $global:CLIENTPORT = "27005"
+        $global:SOURCETVPORT = "27020"
+        $global:TICKRATE = "64"
         $global:GSLT = ""
-        $global:MAP = ""
-        $global:MAXPLAYERS = ""
-        $global:SV_LAN = ""
-        $global:COOPPLAYERS = ""
-        $global:WORKSHOP = ""
-        $global:SV_PURE = ""
-        $global:HOSTNAME = ""
-        $global:RCONPASSWORD = ""
+        $global:MAP = "buhriz_coop checkpoint"
+        $global:MAXPLAYERS = "32"
+        $global:SV_LAN = "0"
+        $global:COOPPLAYERS = "8"
+        $global:WORKSHOP = "1"
+        $global:SV_PURE = "0"
+        $global:HOSTNAME = "PS Steamer"
+        $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
         $global:RCONPORT = "${global:PORT}"
+        #     Add here     /\ /\ /\
 
     }
     ElseIf ( $global:Version -eq "0" ) {

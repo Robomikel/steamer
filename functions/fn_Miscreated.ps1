@@ -32,12 +32,13 @@ Function New-LaunchScriptMiscreatedPS {
                 # Version 2.0 \/
                 # Game Specific  
                 #  First Run Vars \/ \/ Add Here        
-                ${global:IP} = ""
-                $global:PORT = ""
+                ${global:IP} = "${global:IP}"
+                $global:PORT = "64090"
                 # $global:RCONPORT = ""
-                $global:RCONPASSWORD = ""
-                $global:HOSTNAME = ""
-                $global:MAXPLAYERS = ""  
+                $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
+                $global:HOSTNAME = "PS Steamer"
+                $global:MAXPLAYERS = "32"
+                #     Add here     /\ /\ /\  
         }
         ElseIf ( $global:Version -eq "0" ) {
                 Get-UserInput 1 1 0 0 1 1 0 1

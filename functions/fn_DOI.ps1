@@ -40,20 +40,22 @@ Function New-LaunchScriptdoiserverPS {
         $global:RCONPORT = "$global:PORT"
     }
     ElseIf ( $global:Version -eq "2" ) {
-        ${global:IP} = ""
-        $global:PORT = ""
-        $global:CLIENTPORT = ""
-        $global:SOURCETVPORT = ""
-        $global:TICKRATE = ""
-        $global:MAP = ""
-        $global:SV_LAN = ""
-        $global:MAXPLAYERS = ""
-        $global:COOPPLAYERS = ""
-        $global:WORKSHOP = ""
-        $global:SV_PURE = ""
-        $global:HOSTNAME = ""
-        $global:RCONPASSWORD = ""
-        $global:RCONPORT = "$global:PORT" 
+         #  First Run Vars \/ \/ Add Here
+        ${global:IP} = "${global:IP}"
+        $global:PORT = "27015"
+        $global:CLIENTPORT = "27005"
+        $global:SOURCETVPORT = "27020"
+        $global:TICKRATE = "64"
+        $global:MAP = "bastogne stronghold"
+        $global:SV_LAN = "0"
+        $global:MAXPLAYERS = "32"
+        $global:COOPPLAYERS = "8"
+        $global:WORKSHOP = "1"
+        $global:SV_PURE = "0"
+        $global:HOSTNAME = "PS Steamer"
+        $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
+        $global:RCONPORT = "$global:PORT"
+        #     Add here     /\ /\ /\ 
     }
     Select-EditSourceCFG
     #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c doi.exe -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan ${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`" -NoNewWindow"
