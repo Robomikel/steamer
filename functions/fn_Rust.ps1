@@ -5,7 +5,7 @@ Function New-LaunchScriptRustPS {
         # # Version 2.0
         $global:MODDIR = "RustDedicated_Data"
         $global:EXEDIR = ""
-        $global:EXE = "RustDedicated.exe"
+        $global:EXE = "RustDedicated"
         $global:GAME = "rust"
         $global:PROCESS = "RustDedicated"
         $global:SERVERCFGDIR = "server\my_server_identity\cfg"

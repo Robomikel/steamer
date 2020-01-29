@@ -3,7 +3,7 @@ Function New-LaunchScriptArkPS {
     # Ark: Survival Evolved Server
     # - - - - - - - - - - - -
     $global:MODDIR = ""
-    $global:EXE = "ShooterGameServer.exe "
+    $global:EXE = "ShooterGameServer"
     $global:EXEDIR = "ShooterGame\Binaries\Win64"
     $global:GAME = "arkse"
     $global:PROCESS = "ShooterGameServer"

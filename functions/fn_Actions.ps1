@@ -170,17 +170,17 @@ Function Get-UpdateServer {
     Get-Steamtxt
     Write-Host '****   Updating Server   ****' -ForegroundColor Magenta -BackgroundColor Black
     .\steamcmd +runscript Updates-$global:server.txt
-    If ( !$?) {
-        Write-Host "****   Downloading  Install/update server Failed   ****" -ForegroundColor Red
-        New-TryagainNew 
-    }
-    ElseIf ($?) {
+    If (($?) -or ($LASTEXITCODE -eq 7)) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
         If ($global:command -ne "install") { 
             If ($global:DisableDiscordUpdate -eq "1"){
             New-DiscordAlert 
             }
         }
+    }
+    ElseIf (!$?) {
+        Write-Host "****   Downloading  Install/update server Failed   ****" -ForegroundColor Red
+        New-TryagainNew 
     }
     Set-Location $global:currentdir
 }
@@ -1127,7 +1127,7 @@ Function Get-StartServer {
     )
     Set-Location $global:currentdir\$global:server\
     #Start-Process -FilePath CMD -ArgumentList ("/c $global:launchParams") -NoNewWindow
-    If ( $global:APPID -eq 258550 ) {
+    If  (( $global:APPID -eq 258550 ) -or ($global:APPID -eq 294420 ))  {
         Start-Process CMD "/c $global:launchParams"
     }
     Else {

@@ -5,7 +5,7 @@ Function New-LaunchScriptMiscreatedPS {
         # # Version 2.0
         # $global:MODDIR=""
         $global:EXEDIR = "Bin64_dedicated"
-        $global:EXE = "MiscreatedServer.exe"
+        $global:EXE = "MiscreatedServer"
         $global:GAME = "protocol-valve"
         # $global:SAVES = ""
         $global:PROCESS = "MiscreatedServer"
@@ -44,7 +44,7 @@ Function New-LaunchScriptMiscreatedPS {
                 Get-UserInput 1 1 0 0 1 1 0 1
         }  
         #VERSION 2 Requieres  Vars
-        $global:launchParams = '@("$global:EXE +sv_bind ${global:IP} +sv_maxplayers ${global:MAXPLAYERS} +map islands -sv_port ${global:PORT} +http_startserver -mis_gameserverid 100")'
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE +sv_bind ${global:IP} +sv_maxplayers ${global:MAXPLAYERS} +map islands -sv_port ${global:PORT} +http_startserver -mis_gameserverid 100")'
 
         # Custom config game based         
         Write-Host '*** Creating HOSTING.CFG *****' -ForegroundColor Magenta -BackgroundColor Black 

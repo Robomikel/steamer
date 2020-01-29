@@ -3,7 +3,7 @@ Function New-LaunchScriptInssserverPS {
         # Requiered Dont change 
         # # Version 2.0
         # $global:MODDIR=""
-        $global:EXE = "InsurgencyServer.exe"
+        $global:EXE = "InsurgencyServer"
         $global:EXEDIR = ""
         $global:GAME = "insurgencysandstorm"
         $global:PROCESS = "InsurgencyServer-Win64-Shipping"
