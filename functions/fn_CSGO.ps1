@@ -61,7 +61,7 @@ Function New-LaunchScriptcsgoserverPS {
         ElseIf ( $global:Version -eq "2" ) {
 
                 # # Version 2.0
-                 #  First Run Vars \/ \/ Add Here
+                #  First Run Vars \/ \/ Add Here
                 ${global:IP} = "${global:IP}"
                 $global:PORT = "27015"
                 $global:CLIENTPORT = "27005"

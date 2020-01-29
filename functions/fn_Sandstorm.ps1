@@ -47,9 +47,9 @@ Function New-LaunchScriptInssserverPS {
                 #     Add here     /\ /\ /\
         }       
         ElseIf ( $global:Version -eq "0" ) {
-                     Get-UserInput 0 1 1 1 1 1 1 1
-                     $global:SCENARIO = "Scenario_Outskirts_Checkpoint_Security"
-                     $global:MAP = "Compound"
+                Get-UserInput 0 1 1 1 1 1 1 1
+                $global:SCENARIO = "Scenario_Outskirts_Checkpoint_Security"
+                $global:MAP = "Compound"
         }      
         #  Version 2 Launch Param
         If ($global:SERVERPASSWORD -ne "") {

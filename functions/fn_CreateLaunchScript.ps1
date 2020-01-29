@@ -291,15 +291,15 @@ Function New-LaunchScriptasserverPS {
 # }
 
 # ElseIf ( $global:Version -eq "2" ) {
-        # Version 2.0
-        #  First Run Vars \/ \/ Add Here
-        # ${global:IP} = "${global:IP}"
-        # $global:PORT = "7777"
-        # $global:QUERYPORT = "27015"
-        #     Add here     /\ /\ /\
+# Version 2.0
+#  First Run Vars \/ \/ Add Here
+# ${global:IP} = "${global:IP}"
+# $global:PORT = "7777"
+# $global:QUERYPORT = "27015"
+#     Add here     /\ /\ /\
 # }
 # ElseIf ( $global:Version -eq "0" ) {
-        #     Get-UserInput 1 1 0
+#     Get-UserInput 1 1 0
 #    }
 
 # Rename source exe       
