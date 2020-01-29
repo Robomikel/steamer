@@ -20,7 +20,7 @@ Install steam server ```>_./steamer install misserver```
  - Downloads and extract steamcmd
  - Asks and uses Steaminfo.db App ID -
  - uses anon or steam login for install         
- - Creates Launch Script - per App ID, if exists.
+ - Server Launch - per App ID, if exists.
  - Creates per instance variables
  - Creates custom default config for server- if available 
    * Miscreated Server (302200) - "misserver" (optional server folder name) 
