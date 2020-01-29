@@ -1,37 +1,66 @@
 Function New-LaunchScriptInssserverPS {
-        #----------   INS: Sandstorm Server CFG  -------------------
-        # - - - - - - - - - - - -
-        $global:EXEDIR=""
+        #----------   INS: Sandstorm Server  -------------------
+        # Requiered Dont change 
+        # # Version 2.0
+        # $global:MODDIR=""
+        $global:EXE = "InsurgencyServer"
+        $global:EXEDIR = ""
         $global:GAME = "insurgencysandstorm"
         $global:PROCESS = "InsurgencyServer-Win64-Shipping"
         $global:SERVERCFGDIR = ""
-        $q="``"
         Get-StopServerInstall
-        # - - - - - - - - - - - -
+        # Game-server-configs \/
+        # $global:gamedirname=""
+        # $global:config1=""
+        # Get-Servercfg
+        # - - - - - - - - - 
 
+        If ( $global:Version -eq "1" ) {
+                # #################### Version 1.0 ###################################################
+                Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black 
+                if (($global:SCENARIO = Read-Host -Prompt (Write-Host "Input Server Scenario, Press enter to accept default value [Scenario_Outskirts_Checkpoint_Security]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SCENARIO = "Scenario_Outskirts_Checkpoint_Security" }else { $global:SCENARIO }
+                if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [Compound]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "Compound" }else { $global:MAP }
+                if (($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [8]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAXPLAYERS = "8" }else { $global:MAXPLAYERS }
+                if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port, Press enter to accept default value [27102]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27102" }else { $global:PORT }
+                if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27131]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27131" }else { $global:QUERYPORT }
+                if (($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SERVERPASSWORD = "" }else { $global:SERVERPASSWORD }
+                Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
+                $global:HOSTNAME = Read-host
+                if (($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [25575]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPORT = "25575" }else { $global:RCONPORT }
+                if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
+                Write-Host "Enter Admin Steam ID64  for admins.txt: " -ForegroundColor Cyan -BackgroundColor Black
+                $global:steamID64 = Read-Host
+        }
+        ElseIf ( $global:Version -eq "2" ) {
+                # Version 2.0
+                #  First Run Vars \/ \/ Add Here
+                $global:SCENARIO = "Scenario_Outskirts_Checkpoint_Security"
+                $global:MAP = "Compound"
+                $global:MAXPLAYERS = "8"
+                $global:PORT = "64090"
+                $global:QUERYPORT = "64092"
+                $global:HOSTNAME = "Steamer Test"
+                $global:SERVERPASSWORD = ""
+                $global:RCONPORT = "64094"
+                $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
+                $global:steamID64 = "steamID64"
+                #     Add here     /\ /\ /\
+        }       
+        ElseIf ( $global:Version -eq "0" ) {
+                     Get-UserInput 0 1 1 1 1 1 1 1
+                     $global:SCENARIO = "Scenario_Outskirts_Checkpoint_Security"
+                     $global:MAP = "Compound"
+        }      
+        #  Version 2 Launch Param
+        If ($global:SERVERPASSWORD -ne "") {
         
-        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black 
-        if(($global:SCENARIO = Read-Host -Prompt (Write-Host "Input Server Scenario, Press enter to accept default value [Scenario_Outskirts_Checkpoint_Security]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SCENARIO="Scenario_Outskirts_Checkpoint_Security"}else{$global:SCENARIO}
-        if(($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [Compound]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAP="Compound"}else{$global:MAP}
-        if(($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [8]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:MAXPLAYERS="8"}else{$global:MAXPLAYERS}
-        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port, Press enter to accept default value [27102]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="27102"}else{$global:PORT}
-        if(($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27131]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:QUERYPORT="27131"}else{$global:QUERYPORT}
-        if(($global:SERVERPASSWORD = Read-Host -Prompt (Write-Host "Input Server Password, Press enter to accept default value []: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:SERVERPASSWORD=""}else{$global:SERVERPASSWORD}
-        Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
-        $global:HOSTNAME = Read-host
-        if(($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [25575]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPORT="25575"}else{$global:RCONPORT}
-        if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
-        Write-Host "Enter Admin Steam ID64  for admins.txt: " -ForegroundColor Cyan -BackgroundColor Black
-        $global:steamID64= Read-Host
-        Write-Host "***  Creating Launch script  ***" -ForegroundColor Magenta -BackgroundColor Black
-        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-        #If ($global:SERVERPASSWORD -eq ""){Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c InsurgencyServer.exe `${global:MAP}?Scenario=`${global:SCENARIO}?MaxPlayers=`${global:MAXPLAYERS} -Port=`${global:PORT} -QueryPort=`${global:QUERYPORT} -log -hostname=$q`"`${global:HOSTNAME}$q`"`" -NoNewWindow"}Else{
-        #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c InsurgencyServer.exe `${global:MAP}?Scenario=`${global:SCENARIO}?MaxPlayers=`${global:MAXPLAYERS}?password=`${global:SERVERPASSWORD} -Port=`${global:PORT} -QueryPort=`${global:QUERYPORT} -log -hostname=$q`"`${global:HOSTNAME}$q`"`" -NoNewWindow"}
-        If ($global:SERVERPASSWORD -eq ""){Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process -FilePath cmd.exe -ArgumentList (`"/c InsurgencyServer.exe ${global:MAP}?Scenario=${global:SCENARIO}?MaxPlayers=${global:MAXPLAYERS} -Port=${global:PORT} -QueryPort=${global:QUERYPORT} -log`") -NoNewWindow"}else{
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Start-Process -FilePath cmd.exe -ArgumentList (`"/c InsurgencyServer.exe ${global:MAP}?Scenario=${global:SCENARIO}?MaxPlayers=${global:MAXPLAYERS}?password=${global:SERVERPASSWORD} -Port=${global:PORT} -QueryPort=${global:QUERYPORT} -log`") -NoNewWindow"}
-        
+                $global:launchParams = '@("$global:EXE ${global:MAP}?Scenario=${global:SCENARIO}?MaxPlayers=${global:MAXPLAYERS}?password=${global:SERVERPASSWORD} -Port=${global:PORT} -QueryPort=${global:QUERYPORT} -log -hostname=`"${global:HOSTNAME}`"")'
+        }
+        Else {
+                $global:launchParams = '@("$global:EXE ${global:MAP}?Scenario=${global:SCENARIO}?MaxPlayers=${global:MAXPLAYERS} -Port=${global:PORT} -QueryPort=${global:QUERYPORT} -log -hostname=`"${global:HOSTNAME}`"")'     
+        }
+
+        # Custom config game based
         mkdir $global:currentdir\$global:server\Insurgency\Config\Server   >$null 2>&1
         $MapCyclePath = "$global:currentdir\$global:server\Insurgency\Config\Server"  
         mkdir $global:currentdir\$global:server\Insurgency\Saved\Config\WindowsServer   >$null 2>&1

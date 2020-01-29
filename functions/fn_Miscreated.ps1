@@ -1,32 +1,52 @@
+# Version 2.0
 Function New-LaunchScriptMiscreatedPS {
         #----------   Miscreated Server CFG  -------------------
-        $global:MODDIR=""
-        $global:EXEDIR=""
+        # Requiered Dont change 
+        # # Version 2.0
+        # $global:MODDIR=""
+        $global:EXEDIR = "Bin64_dedicated"
+        $global:EXE = "MiscreatedServer"
         $global:GAME = "protocol-valve"
+        # $global:SAVES = ""
         $global:PROCESS = "MiscreatedServer"
-        $global:SERVERCFGDIR = ""
-        
+        # $global:SERVERCFGDIR = ""        
         Get-StopServerInstall
-        $global:gamedirname=""
-        $global:config1=""
+        # $global:gamedirname=""
+        # $global:config1=""
         # Get-Servercfg
         # - - - - - - - - - - - - -
+        $global:RCONPORT = "$global:PORT"
+        If ( $global:Version -eq "1" ) {
+                # #################### Version 1.0 ###################################################
+                Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+                Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
+                ${global:IP} = Read-host
+                if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [64090]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "64090" }else { $global:PORT }
+                Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
+                $global:MAXPLAYERS = Read-host 
+                Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
+                $global:HOSTNAME = Read-host
+                if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
+        }
+        ElseIf ( $global:Version -eq "2" ) {
+                # Version 2.0 \/
+                # Game Specific  
+                #  First Run Vars \/ \/ Add Here        
+                ${global:IP} = "${global:IP}"
+                $global:PORT = "64090"
+                # $global:RCONPORT = ""
+                $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
+                $global:HOSTNAME = "PS Steamer"
+                $global:MAXPLAYERS = "32"
+                #     Add here     /\ /\ /\  
+        }
+        ElseIf ( $global:Version -eq "0" ) {
+                Get-UserInput 1 1 0 0 1 1 0 1
+        }  
+        #VERSION 2 Requieres  Vars
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE +sv_bind ${global:IP} +sv_maxplayers ${global:MAXPLAYERS} +map islands -sv_port ${global:PORT} +http_startserver -mis_gameserverid 100")'
 
-        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-        Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
-        ${global:IP} = Read-host
-        if(($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [64090]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:PORT="64090"}else{$global:PORT}
-        Write-Host 'Input maxplayers: ' -ForegroundColor Cyan -NoNewline
-        $global:MAXPLAYERS = Read-host 
-        Write-Host 'Input Server name: ' -ForegroundColor Cyan -NoNewline
-        $global:HOSTNAME = Read-host
-        Write-Host '*** Creating Launch Script *****' -ForegroundColor Magenta -BackgroundColor Black  
-        New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\Bin64_dedicated\"
-        Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c MiscreatedServer.exe  +sv_bind `${global:IP} +sv_maxplayers `${global:MAXPLAYERS} +map islands -sv_port `${global:PORT} +http_startserver -mis_gameserverid 100`" -NoNewWindow"
-        if(($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq ''){$global:RCONPASSWORD="$global:RANDOMPASSWORD"}else{$global:RCONPASSWORD}
-        $global:RCONPORT="$global:PORT"
+        # Custom config game based         
         Write-Host '*** Creating HOSTING.CFG *****' -ForegroundColor Magenta -BackgroundColor Black 
         New-Item $global:currentdir\$global:server\HOSTING.CFG -Force
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "sv_servername=`"$global:HOSTNAME`""
@@ -55,5 +75,6 @@ Function New-LaunchScriptMiscreatedPS {
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "asm_hordeCooldown=900"
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "pcs_maxCorpses=20"
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "pcs_maxCorpseTime=1200"
+        Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "steam_inventory_enable=1"
         Add-Content -Path $global:currentdir\$global:server\HOSTING.CFG -Value "steam_inventory_enable=1"
 }
