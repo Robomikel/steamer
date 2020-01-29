@@ -176,7 +176,11 @@ Function Get-UpdateServer {
     }
     ElseIf ($?) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
-        if (($global:DisableDiscordUpdate -eq "1") -or ($global:command -ne "install")) { New-DiscordAlert }
+        If ($global:command -ne "install") { 
+            If ($global:DisableDiscordUpdate -eq "1"){
+            New-DiscordAlert 
+            }
+        }
     }
     Set-Location $global:currentdir
 }
