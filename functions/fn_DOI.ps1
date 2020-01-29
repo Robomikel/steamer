@@ -1,23 +1,39 @@
 # Version 2.0
 Function New-LaunchScriptdoiserverPS {
     #----------   doi Server CFG    -------------------
+    # Steamer Vars Do Not Edit
     $global:MODDIR = "doi"
     $global:EXEDIR = ""
+    $global:EXE = "doi"
     $global:GAME = "doi"
     $global:PROCESS = "doi"
     $global:SERVERCFGDIR = "doi\cfg"
 
     Get-StopServerInstall
+    # Game-Server-Configs
     $global:gamedirname = "DayOfInfamy"
     $global:config1 = "server.cfg"
 
     Get-Servercfg
-    # - - - - - - - - - - - - -
-    
-    Write-Host "***  Renaming srcds.exe to doi.exe to avoid conflict with local Insurgency (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
-    Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\doi.exe" >$null 2>&1
-    Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\doi_x64.exe" >$null 2>&1
-    
+    Select-RenameSource
+    If ( $global:Version -eq "2" ) {
+        ${global:IP} =""
+        $global:PORT =""
+        $global:CLIENTPORT =""
+        $global:SOURCETVPORT =""
+        $global:TICKRATE =""
+        $global:MAP =""
+        $global:SV_LAN =""
+        $global:MAXPLAYERS =""
+        $global:COOPPLAYERS =""
+        $global:WORKSHOP =""
+        $global:SV_PURE =""
+        $global:HOSTNAME =""
+        $global:RCONPASSWORD =""
+        $global:RCONPORT = "$global:PORT" 
+    }
+    Else {
+
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
     Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
     ${global:IP} = Read-Host
@@ -38,21 +54,17 @@ Function New-LaunchScriptdoiserverPS {
     $global:HOSTNAME = Read-host
     if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
     $global:RCONPORT = "$global:PORT"
-    
-    Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
-    Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
-    New-Item $global:currentdir\$global:server\doi\subscribed_file_ids.txt -Force
-    Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
-    New-Item $global:currentdir\$global:server\doi\motd.txt -Force
-    Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
-    New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c doi.exe -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan ${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`" -NoNewWindow"
+    }
+    Select-EditSourceCFG
+
+    #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c doi.exe -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan ${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`" -NoNewWindow"
+    # VERSION 2 Requieres  Vars
+    New-CreateVariables 
+    Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
+    Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXE -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan `${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`")"
     # -game doi -strictportbind           -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers ${maxplayers} -workshop"
     #start srcds.exe -usercon +maxplayers 24 +sv_lan 0 +map "bastogne offensive"              
+    Add-SubMotdtxts
     Get-Gamemodedoi
     Get-SourceMetMod
 }
@@ -145,7 +157,12 @@ Function Get-Gamemodedoi {
 
 }
 
-
+Function Add-SubMotdtxts{
+    Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
+    New-Item $global:currentdir\$global:server\doi\subscribed_file_ids.txt -Force
+    Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
+    New-Item $global:currentdir\$global:server\doi\motd.txt -Force
+}
 Function new-mapcycles {
     #mkdir $global:currentdir\$global:server\doi   >$null 2>&1
     $MapCyclePath = "$global:currentdir\$global:server\doi"

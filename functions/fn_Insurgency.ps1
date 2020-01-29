@@ -1,17 +1,22 @@
 # Version 2.0
 Function New-LaunchScriptInsserverPS {
     #----------   Insurgency Server CFG    -------------------
+    # Requiered Dont change 
+    # # Version 2.0
     $global:MODDIR = "insurgency"
+    $global:EXE = "srcds"
     $global:EXEDIR = ""
     $global:GAME = "insurgency"
     $global:PROCESS = "srcds"
     $global:SERVERCFGDIR = "insurgency\cfg"
     
     Get-StopServerInstall
+    # Game-server-configs \/
     $global:gamedirname = "Insurgency"
     $global:config1 = "server.cfg"
     Get-Servercfg
     # - - - - - - - - - - - - -
+    If ( $global:Version -eq "1" ) {
 
     Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
     Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
@@ -34,20 +39,36 @@ Function New-LaunchScriptInsserverPS {
     $global:HOSTNAME = Read-host
     if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
     $global:RCONPORT = "${global:PORT}"
+}
+ElseIf ( $global:Version -eq "2" ) {
+    ${global:IP} = ""
+    ${global:PORT} =""
+    $global:CLIENTPORT =""
+    $global:SOURCETVPORT =""
+    $global:TICKRATE =""
+    $global:GSLT =""
+    $global:MAP =""
+    $global:MAXPLAYERS =""
+    $global:SV_LAN =""
+    $global:COOPPLAYERS = ""
+    $global:WORKSHOP =""
+    $global:SV_PURE =""
+    $global:HOSTNAME =""
+    $global:RCONPASSWORD =""
+    $global:RCONPORT = "${global:PORT}"
+
+}
+ElseIf ( $global:Version -eq "0" ) {
+    #     Get-UserInput 1 1 0
+ }  
     
-    Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
+    Select-EditSourceCFG
     Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\insurgency\subscribed_file_ids.txt -Force
     Write-Host "***  Creating motd.txt ***" -ForegroundColor Magenta -BackgroundColor Black
     New-Item $global:currentdir\$global:server\insurgency\motd.txt -Force
-    Write-Host "***  Creating Launch script ***" -ForegroundColor Magenta -BackgroundColor Black
-    New-Item $global:currentdir\$global:server\Launch-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Write-Host `"****   Server Starting  ****`" -ForegroundColor Magenta -BackgroundColor Black"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "Set-Location $global:currentdir\$global:server\"
-    #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "$global:currentdir\$global:server\srcds.exe -ip ${global:IP} -port $global:PORT +maxplayers $global:MAXPLAYERS +mp_coop_lobbysize $global:PLAYERS +map '$global:MAP' +sv_workshop_enabled $global:WORKSHOP $global:SV_PURE"
-    Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c srcds.exe -game insurgency -strictportbind -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +sv_setsteamaccount `${global:GSLT} +map `${global:MAP} -maxplayers `${global:MAXPLAYERS} +sv_lan $global:SV_LAN +mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug -norestart`" -NoNewWindow"
+     
+    $global:launchParams = '@("$global:EXE -game insurgency -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} -tickrate ${global:TICKRATE} +sv_setsteamaccount ${global:GSLT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} +sv_lan $global:SV_LAN +mp_coop_lobbysize ${global:COOPPLAYERS} +sv_workshop_enabled ${global:WORKSHOP} +sv_pure ${global:SV_PURE} -condebug -norestart")'
     Get-SourceMetMod
     Get-Gamemode
 }

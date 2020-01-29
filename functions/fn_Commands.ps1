@@ -23,6 +23,7 @@ Function Select-Steamer {
         Get-Steam
         Set-SteamInfo
         Set-SteamInfoAppID
+        New-CreateVariables
         Get-Finished
     }
     elseif ($global:command -eq "install") {
@@ -36,6 +37,7 @@ Function Select-Steamer {
         Get-Steam
         Set-SteamInfo
         Set-SteamInfoAppID
+        New-CreateVariables
         Get-Finished
     }
     elseif (($global:command -eq "update") -and ($null -eq $global:server)) {   

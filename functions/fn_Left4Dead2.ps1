@@ -1,36 +1,23 @@
 # Version 2.0
 Function New-LaunchScriptLFD2serverPS {
     #----------   left4dead2 Server CFG    -------------------
+    # Steamer Vars Do Not Edit
     $global:MODDIR = "left4dead2"
     $global:EXEDIR = ""
-    $global:EXE = "l4d2.exe"
+    $global:EXE = "l4d2"
     $global:GAME = "left4dead2"
     $global:PROCESS = "l4d2"
     $global:SERVERCFGDIR = "left4dead2\cfg"
     
     Get-StopServerInstall
+    # Game-Server-Configs
     $global:gamedirname = "Left4Dead2"
     $global:config1 = "server.cfg"
     Get-Servercfg
-    $q = "``"
     # - - - - - - - - - - - - -
+    Select-RenameSource
 
-    Write-Host "***  Renaming srcds.exe to l4d2.exe to avoid conflict with local source Engine (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
-    Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\l4d2.exe" >$null 2>&1
-    Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\l4d2_x64.exe" >$null 2>&1
-    If ( $global:Version -eq "2" ) {
-        # Version 2.0
-        #  First Run Vars \/ \/ Add Here
-        ${global:IP} = ""
-        $global:PORT = ""
-        $global:CLIENTPORT = ""
-        $global:MAP = ""
-        $global:MAXPLAYERS = ""
-        $global:HOSTNAME = ""
-        $global:RCONPASSWORD = ""
-        $global:RCONPORT = "$global:PORT"
-    } 
-    Else {
+    If ( $global:Version -eq "1" ) {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
@@ -44,14 +31,27 @@ Function New-LaunchScriptLFD2serverPS {
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
         $global:RCONPORT = "$global:PORT"
     }
+    ElseIf ( $global:Version -eq "2" ) {
+        # Version 2.0
+        #  First Run Vars \/ \/ Add Here
+        ${global:IP} = ""
+        $global:PORT = ""
+        $global:CLIENTPORT = ""
+        $global:MAP = ""
+        $global:MAXPLAYERS = ""
+        $global:HOSTNAME = ""
+        $global:RCONPASSWORD = ""
+        $global:RCONPORT = "$global:PORT"
+    }
+    ElseIf ( $global:Version -eq "0" ) {
+        #     Get-UserInput 1 1 0
+     }  
     #if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
     #if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
-    Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg
-   
-    New-CreateVariables
-    Write-Host "**** Creating Start params ******" -ForegroundColor Magenta 
-    Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXE -console -game left4dead2 -strictportbind -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +hostip `${global:EXTIP} +maxplayers `${global:MAXPLAYERS} +map $q`"`${global:MAP}$q`" -condebug `")"
+    Select-EditSourceCFG
+    
+ 
+    $global:launchParams = '@("$global:EXE -console -game left4dead2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +hostip ${global:EXTIP} +maxplayers ${global:MAXPLAYERS} +map `"${global:MAP}`" -condebug ")'
+    
     Get-SourceMetMod
 }

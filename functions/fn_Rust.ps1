@@ -14,25 +14,11 @@ Function New-LaunchScriptRustPS {
         $global:gamedirname = "Rust"
         $global:config1 = "server.cfg"
         Get-Servercfg
-        $q = "``"
         # # Version 2.0
         # Game Specific  
         #       First Run Vars \/ \/ Add Here
-        If ( $global:Version -eq "2" ) {
-                ${global:IP} = ""
-                $global:PORT = ""
-                $global:RCONPORT = ""
-                $global:RCONPASSWORD = ""
-                $global:RCONWEB = ""
-                $global:HOSTNAME = ""
-                $global:MAXPLAYERS = ""
-                $global:SEED = ""
-                $global:WORLDSIZE = ""
-                $global:SAVEINTERVAL = ""
-                $global:TICKRATE = ""
-        #          Add here     /\ /\ /\
-        }
-        Else {
+
+         If ( $global:Version -eq "1" )  {
                 # - Version 1
                 $global:RANDOMSEED = Get-Random -Minimum 1 -Maximum 2147483647
                 Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -51,10 +37,25 @@ Function New-LaunchScriptRustPS {
                 if (($global:SAVEINTERVAL = Read-Host -Prompt (Write-Host "Input Server Save Interval,Press enter to accept default value [300]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:SAVEINTERVAL = "300" }else { $global:SAVEINTERVAL }
                 if (($global:TICKRATE = Read-Host -Prompt (Write-Host "Input Server Tickrate,Press enter to accept default value [30]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:TICKRATE = "30" }else { $global:TICKRATE }  
         }
-        
+        ElseIf ( $global:Version -eq "2" ) {
+                ${global:IP} = ""
+                $global:PORT = ""
+                $global:RCONPORT = ""
+                $global:RCONPASSWORD = ""
+                $global:RCONWEB = ""
+                $global:HOSTNAME = ""
+                $global:MAXPLAYERS = ""
+                $global:SEED = ""
+                $global:WORLDSIZE = ""
+                $global:SAVEINTERVAL = ""
+                $global:TICKRATE = ""
+        #          Add here     /\ /\ /\
+        }
+        ElseIf ( $global:Version -eq "0" ) {
+                #     Get-UserInput 1 1 0
+             }
         #  Version 2 Launch Param
-        New-CreateVariables
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:launchParams = @(`"`$global:EXE -batchmode +server.ip `${global:IP}  +server.port `${global:PORT} +server.tickrate `${global:TICKRATE} +server.hostname $q`"`${global:HOSTNAME}$q`" +server.maxplayers `${global:MAXPLAYERS} +server.worldsize `${global:WORLDSIZE} +server.saveinterval `${global:SAVEINTERVAL} +rcon.web `${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port `${global:RCONPORT} +rcon.password `${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog-$date.log`")"
+        $global:launchParams = '@("$global:EXE -batchmode +server.ip ${global:IP}  +server.port ${global:PORT} +server.tickrate ${global:TICKRATE} +server.hostname `"${global:HOSTNAME}`" +server.maxplayers ${global:MAXPLAYERS} +server.worldsize ${global:WORLDSIZE} +server.saveinterval ${global:SAVEINTERVAL} +rcon.web ${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port ${global:RCONPORT} +rcon.password ${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog-$date.log")'
         # adding to server.cfg                   server.hostname "server"
         #Add-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Value "server.hostname `"$global:HOSTNAME`""
         Get-OxideQ

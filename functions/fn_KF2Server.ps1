@@ -25,17 +25,8 @@ Function New-LaunchScriptKF2serverPS {
     Set-Location $global:currentdir\$global:server\$global:SERVERCFGDIR
     Get-ChildItem -Filter "LinuxServer-*.ini" -Recurse | Rename-Item -NewName { $_.name -replace 'LinuxServer', 'PCServer' } -Force
     # - - - - - - - - - - - - -
+
     If ( $global:Version -eq "2" ) {
-        #  First Run Vars \/ \/ Add Here
-        $global:PORT = ""
-        $global:QUERYPORT = ""
-        $global:MAP = ""
-        $global:GAMEMODE = ""
-        $global:DIFF = ""
-        $global:HOSTNAME = ""
-        $global:ADMINPASSWORD = ""
-    }
-    Else {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         #Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         #${global:IP} = Read-Host
@@ -49,7 +40,19 @@ Function New-LaunchScriptKF2serverPS {
         $global:HOSTNAME = Read-host
         if (($global:ADMINPASSWORD = Read-Host -Prompt (Write-Host "Input ADMIN password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:ADMINPASSWORD = "$global:RANDOMPASSWORD" }else { $global:ADMINPASSWORD }
     }
-  
+    ElseIf ( $global:Version -eq "2" ) {
+        #  First Run Vars \/ \/ Add Here
+        $global:PORT = ""
+        $global:QUERYPORT = ""
+        $global:MAP = ""
+        $global:GAMEMODE = ""
+        $global:DIFF = ""
+        $global:HOSTNAME = ""
+        $global:ADMINPASSWORD = ""
+    }
+    ElseIf ( $global:Version -eq "0" ) {
+        #     Get-UserInput 1 1 0
+    }  
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
     Select-launchServer
     timeout 5
@@ -65,7 +68,5 @@ Function New-LaunchScriptKF2serverPS {
     ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-KFEngine.ini -Raw) -replace "\bbUsedForTakeover=TRUE\b", "bUsedForTakeover=FALSE") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFEngine.ini
 
     # VERSION 2 Requieres  Vars
-    New-CreateVariables 
-    Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
-    Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXEDIR\`$global:EXE `${global:MAP}?Game=`${global:GAMEMODE}?Difficulty=`${global:DIFF}? -Port=`${global:PORT} -QueryPort=`${global:QUERYPORT}`")"
+    $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?Game=${global:GAMEMODE}?Difficulty=${global:DIFF}? -Port=${global:PORT} -QueryPort=${global:QUERYPORT}")'
 }

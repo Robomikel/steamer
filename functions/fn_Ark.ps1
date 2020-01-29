@@ -10,26 +10,13 @@ Function New-LaunchScriptArkPS {
     $global:SERVERCFGDIR = "ShooterGame\Saved\Config\WindowsServer"
     
     Get-StopServerInstall
-    
     $global:gamedirname = "ARKSurvivalEvolved"
     $global:config1 = "GameUserSettings.ini"
-
     Get-Servercfg
 
     # - - - - - - - - - - - - -
-    If ( $global:Version -eq "2" ) {
-        # Version 2.0
-        #  First Run Vars \/ \/ Add Here
-        ${global:IP} = ""
-        $global:PORT = ""
-        $global:QUERYPORT = ""
-        $global:RCONPORT = ""
-        $global:RCONPASSWORD = ""
-        $global:MAP = ""
-        $global:MAXPLAYERS = ""
-        $global:HOSTNAME = ""
-    }
-    Else {
+
+    If ( $global:Version -eq "1" ) {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-host
@@ -42,12 +29,24 @@ Function New-LaunchScriptArkPS {
         Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
         $global:HOSTNAME = Read-host
     }
+    ElseIf ( $global:Version -eq "2" ) {
+        # Version 2.0
+        #  First Run Vars \/ \/ Add Here
+        ${global:IP} = ""
+        $global:PORT = ""
+        $global:QUERYPORT = ""
+        $global:RCONPORT = ""
+        $global:RCONPASSWORD = ""
+        $global:MAP = ""
+        $global:MAXPLAYERS = ""
+        $global:HOSTNAME = ""
+    }
+    ElseIf ( $global:Version -eq "0" ) {
+        #     Get-UserInput 1 1 0
+     }
+    Select-EditSourceCFG
 
-    Write-Host "***  Adding Server Name to Default GameUserSettings.ini  ***" -ForegroundColor Magenta -BackgroundColor Black
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\GameUserSettings.ini -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\GameUserSettings.ini
 
     # Version 2.0
-    New-CreateVariables 
-    Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
-    Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXEDIR\`$global:EXE `${global:MAP}`?AltSaveDirectoryName=`${global:MAP}`?listen`?MultiHome=`${global:IP}`?MaxPlayers=`${global:MAXPLAYERS}`?QueryPort=`${global:QUERYPORT}`?RCONEnabled=True`?RCONPort=`${global:RCONPORT}`?ServerAdminPassword=`${global:RCONPASSWORD}`?Port=`${global:PORT} -automanagedmods`")"
+    $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?AltSaveDirectoryName=${global:MAP}?listen?MultiHome=${global:IP}?MaxPlayers=${global:MAXPLAYERS}?QueryPort=${global:QUERYPORT}?RCONEnabled=True?RCONPort=${global:RCONPORT}?ServerAdminPassword=${global:RCONPASSWORD}?Port=${global:PORT} -automanagedmods")'
 }

@@ -176,7 +176,7 @@ Function Get-UpdateServer {
     }
     ElseIf ($?) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
-        if ($global:DisableDiscordUpdate -eq "1") { Get-UpdateServer }
+        if ($global:DisableDiscordUpdate -eq "1") { New-DiscordAlert }
     }
     Set-Location $global:currentdir
 }
@@ -688,6 +688,10 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Source TV Port - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SOURCETVPORT = `"$global:SOURCETVPORT`""
     }
+    If ($global:SV_LAN) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server SV_LAN - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SV_LAN = `"$global:SV_LAN`""
+    }
     If ($global:CLIENTPORT) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server client port- - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:CLIENTPORT = `"$global:CLIENTPORT`""
@@ -771,6 +775,10 @@ Function New-CreateVariables {
     If ($global:AppID -eq 740) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSAPIKEY   - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSAPIKEY = `"$global:WSAPIKEY`""
+    }
+    If ($global:launchParams) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  launch Params   - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:launchParams = $global:launchParams"
     }
 }
 Function Get-SourceMetMod {
@@ -1120,7 +1128,7 @@ Function Get-StartServer {
     )
     Set-Location $global:currentdir\$global:server\
     #Start-Process -FilePath CMD -ArgumentList ("/c $global:launchParams") -NoNewWindow
-    If ( $global:APPID -eq 581330) {
+    If (( $global:APPID -eq 581330) or ($global:APPID -eq 233780)){
         Start-Process CMD "/c $global:launchParams" -NoNewWindow
     }
     Else {
@@ -1136,6 +1144,54 @@ Function Select-StartServer {
     #Get-CheckForError
     #Set-Location $global:currentdir
 }
+Function Select-RenameSource {
+    Write-Host "***  Renaming srcds.exe to $global:EXE to avoid conflict with local source Engine (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
+    Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\$global:EXE.exe" >$null 2>&1
+    Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\$global:EXE-x64.exe" >$null 2>&1
+}
+Function Select-EditSourceCFG {
+    Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1
+    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -ErrorAction SilentlyContinue
+}
+Function Get-UserInput {
+    Param([parameter(Position = 0)]$parm0,
+        [parameter(Position = 1)]$parm1,
+        [parameter(Position = 2)]$parm2,
+        [parameter(Position = 3)]$parm3,
+        [parameter(Position = 4)]$parm4,
+        [parameter(Position = 5)]$parm5,
+        [parameter(Position = 6)]$parm6,
+        [parameter(Position = 7)]$parm7,
+        [parameter(Position = 8)]$parm8,
+        [parameter(Position = 9)]$parm9)
+    If ($parm0 -eq 1) {
+        $global:IP = Read-Host "Enter IP"
+    }
+    If ($parm1 -eq 1) {
+        $global:PORT = Read-Host "Enter PORT"
+    }
+    If ($parm2 -eq 1) {
+        $global:HOSTNAME = Read-Host "Enter HOSTNAME"
+    }
+    If ($parm3 -eq 1) {
+        $global:QUERYPORT = Read-Host "Enter QUERYPORT"
+    }
+    If ($parm4 -eq 1) {
+        $global:SERVERPASSWORD = Read-Host "Enter SERVERPASSWORD"
+    }
+    If ($parm5 -eq 1) {
+        $global:RCONPORT = Read-Host "Enter RCONPORT"
+    }
+    If ($parm6 -eq 1) {
+        $global:RCONPASSWORD = Read-Host "Enter RCONPASSWORD"
+    }
+    If ($parm7 -eq 1) {
+        $global:MAXPLAYERS = Read-Host "Enter MAXPLAYERS"
+    }
+
+}
+    
 Function Read-AppID {
     If ($global:AppID -eq 302200) {
         Set-Console  >$null 2>&1

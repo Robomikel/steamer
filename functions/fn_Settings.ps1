@@ -24,9 +24,9 @@ Function Set-SteamerSetting {
     #  Version  2
     $global:Version = "2"
     #  Disable Discord backup 0
-    $global:DisableDiscordBackup = "1"
+    $global:DisableDiscordBackup = "0"
     # Disable Discord backup 0
-    $global:DisableDiscordUpdate = "1"
+    $global:DisableDiscordUpdate = "0"
     # Use private Ip for Gamedig, mcrcon 1
     $global:Useprivate = "0"
 }
