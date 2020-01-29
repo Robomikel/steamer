@@ -61,6 +61,7 @@ Function New-LaunchScriptKF2serverPS {
     # VERSION 2 Requieres  Vars
     $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?Game=${global:GAMEMODE}?Difficulty=${global:DIFF}? -Port=${global:PORT} -QueryPort=${global:QUERYPORT}")'  
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
+    Get-createdvaribles
     New-CreateVariables
     Select-StartServer
     timeout 5
