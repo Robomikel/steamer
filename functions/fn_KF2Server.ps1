@@ -5,7 +5,7 @@ Function New-LaunchScriptKF2serverPS {
     # Requiered Dont change 
     # # Version 2.0
     # $global:MODDIR=""
-    $global:EXE = "KFServer.exe"   
+    $global:EXE = "KFServer"   
     $global:EXEDIR = "Binaries\Win64"
     $global:GAME = "killingfloor2"
     $global:PROCESS = "KFserver"
@@ -61,6 +61,7 @@ Function New-LaunchScriptKF2serverPS {
     # VERSION 2 Requieres  Vars
     $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?Game=${global:GAMEMODE}?Difficulty=${global:DIFF}? -Port=${global:PORT} -QueryPort=${global:QUERYPORT}")'  
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
+    New-CreateVariables
     Get-StartServer $global:launchParams
     timeout 5
     Write-Host "***  stopping Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
