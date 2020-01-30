@@ -1291,7 +1291,19 @@ Function Read-AppID {
     }
     ElseIf ($global:AppID -eq 635) {
         Set-Console  >$null 2>&1
-        New-LaunchScriptasserverPS
+        New-LaunchScriptswarmserverPS
+    }
+    ElseIf ($global:AppID -eq 416880) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptBOserverPS
+    }
+    ElseIf ($global:AppID -eq 985050) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptAHL2serverPS
+    }
+    ElseIf ($global:AppID -eq 475370) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptBB2serverPS
     }
     Else {
         Write-Host "No Launch Script Found for this server" -ForegroundColor Yellow -BackgroundColor Black
