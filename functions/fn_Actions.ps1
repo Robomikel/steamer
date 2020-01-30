@@ -1211,7 +1211,10 @@ Function Get-UserInput {
         Write-Host "Enter GSLT" -F Cyan
         $global:GSLT = Read-Host
     }
-
+    If ($parm9 -eq 1) {
+        Write-Host "Enter MAP" -F Cyan
+        $global:MAP = Read-Host
+    }
 }
 Function Read-AppID {
     If ($global:AppID -eq 302200) {
