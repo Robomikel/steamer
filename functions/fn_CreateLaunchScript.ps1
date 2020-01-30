@@ -422,53 +422,121 @@ Function New-LaunchScriptBB2serverPS {
         $global:launchParams = '@("$global:EXE -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
 }
 #Function New-LaunchScriptTEMPLATEserverPS {
+        #        * * Add to Read-AppID in fn_Actions.ps1 * *
 # TEMPLATE Server
-#       ADD ID #
+# APP ID #
 # WIKI
 # Requiered Dont change 
 # # Version 2.0
+#--->Requieres \/ \/ Get-SourceMetMod
 # $global:MODDIR=""
+
+#--->Exe NOT in root server folder \/\/
 # $global:EXEDIR=""
+
+#--->rename srcds to this name \/\/
 # $global:EXE=""
+
+#--->Requieres \/ \/ game dig 
 # $global:GAME = ""
+
+#--->Requieres \/ \/ AppData Roaming save
 # $global:SAVES = ""
+ 
+#--->Requieres \/ \/ maybe same as game exe?
 # $global:PROCESS = ""
-# $global:SERVERCFGDIR = ""        
+
+#--->game config folder
+# $global:SERVERCFGDIR = ""
+
+#--->Stop existing process if running        
 # Get-StopServerInstall
-# Game-server-configs \/
+
+#--->Game-server-manger folder \/
 # $global:gamedirname=""
+
+#--->Game-server-manger config name \/
 # $global:config1=""
+
+#--->Get game-server-config \/\/
 # Get-Servercfg
-# - - - - - - - - - - - - -
-# If ( $global:Version -eq "1" ) {
-#        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-#        Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
-#        ${global:IP} = Read-host
-#        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "7777" }else { $global:PORT }
-#        if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27015" }else { $global:QUERYPORT }
-# }
-
-# ElseIf ( $global:Version -eq "2" ) {
-# Version 2.0
-#  First Run Vars \/ \/ Add Here
-# ${global:IP} = "${global:IP}"
-# $global:PORT = "7777"
-# $global:QUERYPORT = "27015"
+# - - - - - - - - - - - - - - -- - -- - 
+# # If ( $global:Version -eq "1" ) {
+# #       Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+# #       Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
+# #       ${global:IP} = Read-host
+# #       if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "7777" }else { $global:PORT }
+# #       if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27015" }else { $global:QUERYPORT }
+# # }
+# # ElseIf ( $global:Version -eq "2" ) {
+# # Version 2.0
+# # First Run Vars \/ \/ Add Here
+# # ${global:IP} = "${global:IP}"
+# # $global:PORT = "7777"
+# # $global:QUERYPORT = "27015"
 #     Add here     /\ /\ /\
-# }
-# ElseIf ( $global:Version -eq "0" ) {
-#     Get-UserInput 1 1 0
-#    }
+# # }
+# - - - -- - - - - -- - - - -- - - - -- - - - -
+# # ElseIf ( $global:Version -eq "0" ) {
 
+# --->input questions 
+#     Get-UserInput 1 1 0
+# # }
+#--->rename srcds.exe \/\/
 # Select-RenameSource
 
-# game config
-# Select-EditSourceCFG
-
-
-# VERSION 2 
-# $global:launchParams = '@("$global:EXE -< LAUNCH PARAMS HERE >-")'
-# or
-# $global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
+#--->Edit game config \/ SERVERNAME ADMINPASSWORD
+#  Select-EditSourceCFG
+# --->Launch 
+#$global:launchParams = '@("$global:EXE -< LAUNCH PARAMS HERE >-")'
+# OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
+#$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 #}
 
+Function New-LaunchScriptHL2DMserverPS {
+        #        * * Add to Read-AppID in fn_Actions.ps1 * *
+        # Half-Life 2: Deathmatch Dedicated Server
+        #      232370 
+        # https://kb.firedaemon.com/support/solutions/articles/4000086964-half-life-2-deathmatch
+        # Requiered Dont change 
+        # Version 2.0
+        # Requieres \/ \/ Get-SourceMetMod
+        $global:MODDIR = "hl2mp"
+        # Exe NOT in root server folder \/\/
+        $global:EXEDIR = ""
+        # rename srcds to this name \/\/
+        $global:EXE = "HL2DM"
+        # Requieres \/ \/ game dig
+        $global:GAME = "hl2dm"
+        # Requieres \/ \/ AppData Roaming save folder
+        $global:SAVES = ""
+        # Requieres \/ \/ maybe same as game
+        $global:PROCESS = "hl2dm"
+        #---game config folder \/\/
+        $global:SERVERCFGDIR = "hl2mp\cfg"
+        #---Stop existing process if running          
+        Get-StopServerInstall
+        # Game-server-manger folder \/
+        $global:gamedirname = "HalfLife2Deathmatch"
+        # Game-server-manger config name \/
+        $global:config1 = "server.cfg"
+        # Get game-server-config  \/\/
+        Get-Servercfg
+        # Stop existing process if running  
+        Get-StopServerInstall
+        # input questions \/\/
+        Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
+
+        # rename srcds.exe \/\/
+        Select-RenameSource
+
+        #---- Edit game config \/ SERVERNAME ADMINPASSWORD
+        Select-EditSourceCFG
+
+        # VERSION 2 launch params exe in root \/\/
+        $global:launchParams = '@("$global:EXE -game hl2mp -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+        # $global:launchParams = '@("$global:EXE -console -game "hl2dm" -secure +map dm_lockdown -autoupdate +log on +maxplayers 32 -port 27015 +ip 1.2.3.4 +exec server.cfg")'
+
+        # OR EXE NOT In ROOT server folder add EXEDIR
+        # $global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
+}

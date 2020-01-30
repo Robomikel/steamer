@@ -1220,6 +1220,14 @@ Function Get-UserInput {
         Write-Host "Enter MAP" -F Cyan
         $global:MAP = Read-Host
     }
+    If ($parm10 -eq 1) {
+        Write-Host "Enter clientport" -F Cyan
+        $global:MAP = Read-Host
+    }
+    If ($parm11 -eq 1) {
+        Write-Host "Enter sourcetvport" -F Cyan
+        $global:MAP = Read-Host
+    }
 }
 Function Read-AppID {
     If ($global:AppID -eq 302200) {
@@ -1310,6 +1318,14 @@ Function Read-AppID {
         Set-Console  >$null 2>&1
         New-LaunchScriptBB2serverPS
     }
+    ElseIf ($global:AppID -eq 232370) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptHL2DMserverPS
+    }
+#    ElseIf ($global:AppID -eq Template) {
+#        Set-Console  >$null 2>&1
+#        New-LaunchScriptTemplateserverPS
+#    }
     Else {
         Write-Host "No Launch Script Found for this server" -ForegroundColor Yellow -BackgroundColor Black
         Exit
