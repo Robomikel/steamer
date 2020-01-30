@@ -581,6 +581,14 @@ Function Get-Logo {
           \/             \/      \/       \/      \/        
 "
 }
+Function Set-Steamer {
+    If ($null -eq $global:command) {
+        Select-Steamer 
+    }
+    else {
+        Select-Steamer $global:command $global:server
+    }
+}
 Function Get-AdminCheck {
     $user = "$env:COMPUTERNAME\$env:USERNAME"
     $group = 'Administrators'
