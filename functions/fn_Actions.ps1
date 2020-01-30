@@ -166,10 +166,11 @@ Function Get-ValidateServer {
     Set-Location $global:currentdir
 }
 Function Get-UpdateServer {
+    if ($global:DisableDiscordBackup -eq "1") {
     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
     Get-Steamtxt
     Write-Host '****   Updating Server   ****' -ForegroundColor Magenta -BackgroundColor Black
-    .\steamcmd +runscript Updates-$global:server.txt
+    .\steamcmd +runscript Updates-$global:server.txt}
     If (($?) -or ($LASTEXITCODE -eq 7)) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
         If ($global:command -ne "install") { 
@@ -445,7 +446,7 @@ Function Get-CheckForVars {
         $global:missingvars = $global:RCONPORT, $global:RCONPASSWORD
     }
     Else {
-        $global:missingvars = ${global:QUERYPORT}, ${global:IP}, $global:APPID, $global:PROCESS, ${global:PORT}
+        $global:missingvars = ${global:QUERYPORT}, ${global:IP}, $global:APPID, $global:PROCESS,${global:PORT}
     }
     Foreach ($global:missingvars in $global:missingvars) {
         If ( "" -eq $global:missingvars) {
@@ -553,14 +554,6 @@ Function New-DiscordAlert {
             }                              
             Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
         }
-    }
-}
-Function Set-Steamer {
-    If ($null -eq $global:command) {
-        Select-Steamer 
-    }
-    else {
-        Select-Steamer $global:command $global:server
     }
 }
 Function Set-Console {
@@ -999,8 +992,7 @@ Function Get-ChecktaskUnreg {
 }
 Function Get-ChecktaskDisable {
     If ($global:DisableChecktask -eq "1") {
-        Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
-    }
+        Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
     If ($?) {
         Write-Host '****   disabling scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
         Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
@@ -1010,9 +1002,8 @@ Function Get-ChecktaskDisable {
     }
 }
 Function Get-ChecktaskEnable {
-    If ($global:DisableChecktask -eq "1") {
-        Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
-    }
+    if ($global:DisableChecktask -eq "1") {
+    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
     If ($?) {
         Write-Host '****   Enabling scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
         Enable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
