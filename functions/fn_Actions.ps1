@@ -445,7 +445,7 @@ Function Get-CheckForVars {
         $global:missingvars = $global:RCONPORT, $global:RCONPASSWORD
     }
     Else {
-        $global:missingvars = ${global:QUERYPORT}, ${global:IP}, $global:APPID, $global:PROCESS
+        $global:missingvars = ${global:QUERYPORT}, ${global:IP}, $global:APPID, $global:PROCESS, ${global:PORT}
     }
     Foreach ($global:missingvars in $global:missingvars) {
         If ( "" -eq $global:missingvars) {
@@ -512,45 +512,55 @@ Function Get-MCRcon {
     }
 }
 Function New-DiscordAlert {
-    If ( "" -eq $global:WEBHOOK) {
-        Write-Host "$global:DIAMOND $global:DIAMOND Missing WEBHOOK ! $global:DIAMOND $global:DIAMOND"-ForegroundColor Red -BackgroundColor Black
-        Write-Host "****   Add Discord  WEBHOOK to $global:currentdir\$global:server\Variables-$global:server.ps1   ****" -ForegroundColor Yellow -BackgroundColor Black    
-    }
-    Else {
-        If ($global:command -eq "Backup") {
-            # BACKUP
-            $global:ALERT = ' Server Backed UP'
-            # GREEN
-            $global:ALERTCOLOR = '3334680'
-        }
-        ElseIf ($global:command -eq "update") {
-            # UDPATE
-            $global:ALERT = ' Server Updated '
-            # BLUE
-            $global:ALERTCOLOR = '385734'
+    If ($global:DisableDiscordBackup -eq "1") {    
+        If ( "" -eq $global:WEBHOOK) {
+            Write-Host "$global:DIAMOND $global:DIAMOND Missing WEBHOOK ! $global:DIAMOND $global:DIAMOND"-ForegroundColor Red -BackgroundColor Black
+            Write-Host "****   Add Discord  WEBHOOK to $global:currentdir\$global:server\Variables-$global:server.ps1   ****" -ForegroundColor Yellow -BackgroundColor Black    
         }
         Else {
-            # RESTART
-            $global:ALERT = " Server not Running, Starting Server "
-            # RED
-            $global:ALERTCOLOR = '16711680'
+            If ($global:command -eq "Backup") {
+                # BACKUP
+                $global:ALERT = ' Server Backed UP'
+                # GREEN
+                $global:ALERTCOLOR = '3334680'
+            }
+            ElseIf ($global:command -eq "update") {
+                # UDPATE
+                $global:ALERT = ' Server Updated '
+                # BLUE
+                $global:ALERTCOLOR = '385734'
+            }
+            Else {
+                # RESTART
+                $global:ALERT = " Server not Running, Starting Server "
+                # RED
+                $global:ALERTCOLOR = '16711680'
+            }
+            Write-Host '****   Sending Discord Alert   ****' -ForegroundColor Magenta -BackgroundColor Black
+            $webHookUrl = "$global:WEBHOOK"
+            [System.Collections.ArrayList]$embedArray = @()
+            $title = "$global:HOSTNAME"
+            $description = "$global:ALERT"
+            $color = "$global:ALERTCOLOR"
+            $embedObject = [PSCustomObject]@{
+                title       = $title       
+                description = $description  
+                color       = $color
+            }                              
+            $embedArray.Add($embedObject) | Out-Null
+            $payload = [PSCustomObject]@{
+                embeds = $embedArray
+            }                              
+            Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
         }
-        Write-Host '****   Sending Discord Alert   ****' -ForegroundColor Magenta -BackgroundColor Black
-        $webHookUrl = "$global:WEBHOOK"
-        [System.Collections.ArrayList]$embedArray = @()
-        $title = "$global:HOSTNAME"
-        $description = "$global:ALERT"
-        $color = "$global:ALERTCOLOR"
-        $embedObject = [PSCustomObject]@{
-            title       = $title       
-            description = $description  
-            color       = $color
-        }                              
-        $embedArray.Add($embedObject) | Out-Null
-        $payload = [PSCustomObject]@{
-            embeds = $embedArray
-        }                              
-        Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
+    }
+}
+Function Set-Steamer {
+    If ($null -eq $global:command) {
+        Select-Steamer 
+    }
+    else {
+        Select-Steamer $global:command $global:server
     }
 }
 Function Set-Console {
@@ -988,7 +998,8 @@ Function Get-ChecktaskUnreg {
     }
 }
 Function Get-ChecktaskDisable {
-    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
+    If ($global:DisableChecktask -eq "1") {
+    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
     If ($?) {
         Write-Host '****   disabling scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
         Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
@@ -998,7 +1009,8 @@ Function Get-ChecktaskDisable {
     }
 }
 Function Get-ChecktaskEnable {
-    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
+    If ($global:DisableChecktask -eq "1") {
+    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
     If ($?) {
         Write-Host '****   Enabling scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
         Enable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1

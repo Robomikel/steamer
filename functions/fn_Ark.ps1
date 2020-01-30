@@ -43,7 +43,7 @@ Function New-LaunchScriptArkPS {
         #     Add here     /\ /\ /\
     }
     ElseIf ( $global:Version -eq "0" ) {
-        Get-UserInput 1 1 1 1 1 1 0 1 0
+        Get-UserInput 1 1 1 1 1 1 0 1 0 0
         $global:MAP = "TheIsland"
     }
     Select-EditSourceCFG

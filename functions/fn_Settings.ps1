@@ -21,7 +21,7 @@ Function Set-SteamerSetting {
     $global:DisableChecktask = "1"
     #  max backups   x
     $global:backupcount = "2"
-    #  Version  2
+    #  Version  0 prompt min, 1 prompt max, 2 no prompt
     $global:Version = "1"
     #  Disable Discord backup 0
     $global:DisableDiscordBackup = "1"

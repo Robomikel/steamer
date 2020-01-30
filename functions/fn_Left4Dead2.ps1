@@ -14,9 +14,9 @@ Function New-LaunchScriptLFD2serverPS {
     $global:gamedirname = "Left4Dead2"
     $global:config1 = "server.cfg"
     Get-Servercfg
+    $global:RCONPORT = "${global:PORT}"
     # - - - - - - - - - - - - -
     Select-RenameSource
-    $global:RCONPORT = "$global:PORT"
     If ( $global:Version -eq "1" ) {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
@@ -44,7 +44,7 @@ Function New-LaunchScriptLFD2serverPS {
 
     }
     ElseIf ( $global:Version -eq "0" ) {
-        Get-UserInput 1 1 0 0 1 1 0 1
+        Get-UserInput 1 1 0 0 1 1 0 1 0 0
         $global:CLIENTPORT = "27005"
         $global:MAP = "c1m1_hotel"
     }  

@@ -15,6 +15,7 @@ Function New-LaunchScriptInsserverPS {
     $global:gamedirname = "Insurgency"
     $global:config1 = "server.cfg"
     Get-Servercfg
+    $global:RCONPORT = "${global:PORT}"
     # - - - - - - - - - - - - -
     If ( $global:Version -eq "1" ) {
 
@@ -38,7 +39,6 @@ Function New-LaunchScriptInsserverPS {
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-        $global:RCONPORT = "${global:PORT}"
     }
     ElseIf ( $global:Version -eq "2" ) {
         #  First Run Vars \/ \/ Add Here
@@ -56,7 +56,6 @@ Function New-LaunchScriptInsserverPS {
         $global:SV_PURE = "0"
         $global:HOSTNAME = "PS Steamer"
         $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
-        $global:RCONPORT = "${global:PORT}"
         #     Add here     /\ /\ /\
 
     }

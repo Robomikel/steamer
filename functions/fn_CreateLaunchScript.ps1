@@ -208,6 +208,7 @@ Function New-LaunchScriptAoCserverPS {
         $global:SAVES = ""
         $global:PROCESS = "aoc"
         $global:SERVERCFGDIR = "ageofchivalry\cfg"
+        $global:RCONPORT = "${global:PORT}"
         
         Get-StopServerInstall
         $global:gamedirname = "AgeOfChivalry"
@@ -224,7 +225,6 @@ Function New-LaunchScriptAoCserverPS {
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-        $global:RCONPORT = "${global:PORT}"
 
         Select-EditSourceCFG
         $global:launchParams = '@("$global:EXE -console -game ageofchivalry -secure +map ${global:MAP} -autoupdate +log on +maxplayers ${global:MAXPLAYERS} -port ${global:PORT} +ip ${global:IP} +exec server.cfg")'
@@ -268,11 +268,12 @@ Function New-LaunchScriptswarmserverPS {
                 #     Add here     /\ /\ /\ 
         }
         ElseIf ( $global:Version -eq "0" ) {
-                Get-UserInput 0 0 0 0 0 0 0 1 0 1
+                Get-UserInput 0 0 0 0 0 0 0 1 0 0
+                $global:MAP = "lobby"
         }
         Select-RenameSource
  
-        $global:launchParams = '@("$global:EXE -console -game swarm +map $global:MAP -maxplayers $global:MAXPLAYERS -autoupdate")'
+        $global:launchParams = '@("$global:EXE -console -game swarm +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} -autoupdate")'
 }
 Function New-LaunchScriptBOserverPS {     
         # Ballistic Overkill Dedicated Server
@@ -309,8 +310,7 @@ Function New-LaunchScriptBOserverPS {
                 Get-UserInput 1 0 0 0 0 0 0 0 1
         }
         # game config
-        Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+        Select-EditSourceCFG
         
         $global:launchParams = '@("$global:EXE -batchmode -nographics -dedicated ")'
 }
@@ -362,10 +362,9 @@ Function New-LaunchScriptAHL2serverPS {
         }
         Select-RenameSource
         # game config
-        Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+        Select-EditSourceCFG
         
-        $global:launchParams = '@("$global:EXE -game ahl2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport $global:CLIENTPORT +tv_port $global:SOURCETVPORT +map $global:MAP -maxplayers $global:MAXPLAYERS ")'
+        $global:launchParams = '@("$global:EXE -game ahl2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
 }
 Function New-LaunchScriptBB2serverPS {     
         # BrainBread 2 Dedicated Server
@@ -379,14 +378,13 @@ Function New-LaunchScriptBB2serverPS {
         $global:GAME = "protocol-valve"
         $global:SAVES = ""
         $global:PROCESS = "BB2"
-        $global:SERVERCFGDIR = "cfg"
-        $global:RCONPORT = "${global:PORT}"    
+        $global:SERVERCFGDIR = "cfg"   
         Get-StopServerInstall
         #Game-server-configs \/
         $global:gamedirname = "BrainBread2"
         $global:config1 = "server.cfg"
         Get-Servercfg
-        
+        $global:RCONPORT = "${global:PORT}"
         If ( $global:Version -eq "1" ) {
                 Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
                 ${global:IP} = Read-Host
@@ -414,15 +412,14 @@ Function New-LaunchScriptBB2serverPS {
                 #     Add here     /\ /\ /\ 
         }
         ElseIf ( $global:Version -eq "0" ) {
-                Get-UserInput 1 1 0 0 1 0 0 1 0 1
+                Get-UserInput 1 1 0 0 1 0 0 1 0 0
+                $global:MAP = "bba_barracks"
         }
         Select-RenameSource
         # game config
-        Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
-        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+        Select-EditSourceCFG
 
-        $global:launchParams = '@("$global:EXE -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport $global:CLIENTPORT +tv_port $global:SOURCETVPORT +map $global:MAP -maxplayers $global:MAXPLAYERS ")'
+        $global:launchParams = '@("$global:EXE -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
 }
 #Function New-LaunchScriptTEMPLATEserverPS {
 # TEMPLATE Server
@@ -466,13 +463,12 @@ Function New-LaunchScriptBB2serverPS {
 # Select-RenameSource
 
 # game config
-#Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-#((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
-#((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+# Select-EditSourceCFG
 
 
 # VERSION 2 
-#$global:launchParams = '@("$global:EXE -< LAUNCH PARAMS HERE >-")'
-#$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
+# $global:launchParams = '@("$global:EXE -< LAUNCH PARAMS HERE >-")'
+# or
+# $global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 #}
 

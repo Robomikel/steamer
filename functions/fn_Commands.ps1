@@ -47,18 +47,18 @@ Function Select-Steamer {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-UpdateServer 
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+         Get-ChecktaskEnable
         Get-Finished
     }
     elseif ($global:command -eq "update") {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-UpdateServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+         Get-ChecktaskEnable
         Get-Finished
     }
     elseif (($global:command -eq "validate") -and ($null -eq $global:server)) {
@@ -68,22 +68,22 @@ Function Select-Steamer {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-StopServer
         Get-Steam
         Get-ValidateServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+         Get-ChecktaskEnable
         Get-Finished
     }
     elseif ($global:command -eq "validate") {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-StopServer
         Get-Steam
         Get-ValidateServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+         Get-ChecktaskEnable
         Get-Finished
     }
     elseif (($global:command -eq "start") -and ($null -eq $global:server)) {
@@ -96,7 +96,7 @@ Function Select-Steamer {
         Get-CheckServer
         Get-ServerBuildCheck
         Select-StartServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+         Get-ChecktaskEnable
         Get-ClearVariables
     }
     elseif ($global:command -eq "start") {
@@ -106,7 +106,7 @@ Function Select-Steamer {
         Get-CheckServer
         Get-ServerBuildCheck
         Select-StartServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+         Get-ChecktaskEnable
         Get-ClearVariables
     }
     elseif (($global:command -eq "stop") -and ($null -eq $global:server)) {
@@ -116,7 +116,7 @@ Function Select-Steamer {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-StopServer
         Get-ClearVariables
     }
@@ -124,7 +124,7 @@ Function Select-Steamer {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-StopServer
         Get-ClearVariables 
     }
@@ -135,22 +135,22 @@ Function Select-Steamer {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-StopServer
         Get-ServerBuildCheck
         Get-RestartsServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+         Get-ChecktaskEnable
         Get-ClearVariables
     }
     elseif ($global:command -eq "restart") {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-StopServer
         Get-ServerBuildCheck
         Get-RestartsServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }  
+         Get-ChecktaskEnable  
         Get-ClearVariables
     }
     elseif (($global:command -eq "check") -and ($null -eq $global:server)) {
@@ -178,12 +178,12 @@ Function Select-Steamer {
         Get-createdvaribles
         Get-CheckForVars 
         Get-SevenZip
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-StopServer
         New-BackupFolder
         New-BackupServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
-        if ($global:DisableDiscordBackup -eq "1") { New-DiscordAlert }
+         Get-ChecktaskEnable
+         New-DiscordAlert
         Get-Finished
     }
     elseif ($global:command -eq "backup") {
@@ -191,12 +191,12 @@ Function Select-Steamer {
         Get-createdvaribles
         Get-CheckForVars
         Get-SevenZip
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+         Get-ChecktaskDisable
         Get-StopServer
         New-BackupFolder  
         New-BackupServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
-        if ($global:DisableDiscordBackup -eq "1") { New-DiscordAlert }
+         Get-ChecktaskEnable
+         New-DiscordAlert
         Get-Finished  
     }
     elseif (($global:command -eq "monitor") -and ($null -eq $global:server)) {

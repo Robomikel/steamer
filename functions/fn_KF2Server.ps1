@@ -53,11 +53,11 @@ Function New-LaunchScriptKF2serverPS {
         #  Edit Vars here     /\ /\ /\
     }
     ElseIf ( $global:Version -eq "0" ) {
-        Get-UserInput 0 1 1 0 0 1 0 0
-        $global:MAP = "KF-BioticsLab"
+        Get-UserInput 0 1 1 0 0 1 0 0 0 0
         $global:GAMEMODE = "KFGameContent.KFGameInfo_Endless"
         $global:DIFF = "0"
         $global:ADMINPASSWORD = "$global:RANDOMPASSWORD"
+        $global:MAP = "KF-BioticsLab"
     }
     # VERSION 2 Requieres  Vars
     Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
