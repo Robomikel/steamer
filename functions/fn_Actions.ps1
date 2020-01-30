@@ -708,6 +708,10 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server client port- - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:CLIENTPORT = `"$global:CLIENTPORT`""
     }
+    If ($global:STEAMPORT) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server STEAMPORT port- - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:STEAMPORT = `"$global:STEAMPORT`""
+    }
     If ($global:MAP) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  default Map- - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAP = `"$global:MAP`""
