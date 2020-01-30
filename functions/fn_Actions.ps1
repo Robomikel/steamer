@@ -511,7 +511,6 @@ Function Get-MCRcon {
         }
     }
 }
-
 Function New-DiscordAlert {
     If ( "" -eq $global:WEBHOOK) {
         Write-Host "$global:DIAMOND $global:DIAMOND Missing WEBHOOK ! $global:DIAMOND $global:DIAMOND"-ForegroundColor Red -BackgroundColor Black
