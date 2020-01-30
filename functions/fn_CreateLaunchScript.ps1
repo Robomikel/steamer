@@ -303,14 +303,10 @@ Function New-LaunchScriptasserverPS {
 #    }
 
 # Rename source exe       
-#Write-Host "***  Renaming srcds.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
-#Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\TEMP.exe" >$null 2>&1
-#Rename-Item -Path "start-process cmd `"/c srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe`"" >$null 2>&1
+# Select-RenameSource
 
-# game config
-#Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
-#((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
-#((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+# edit game config SERVERNAME/ADMINPASSWORD
+# Select-EditSourceCFG
 
 
 # VERSION 2 
