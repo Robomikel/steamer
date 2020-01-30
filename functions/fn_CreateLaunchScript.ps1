@@ -247,21 +247,183 @@ Function New-LaunchScriptacserverPS {
         $global:launchParams = '@("$global:EXEDIR\$global:EXE")'
 }
 
-Function New-LaunchScriptasserverPS {
+Function New-LaunchScriptswarmserverPS {
         # Alien Swarm Dedicated Server
         #       635
         # https://developer.valvesoftware.com/wiki/Alien_Swarm_Dedicated_Server
-        $global:EXE = "asds"
+        $global:EXE = "swarm"
         $global:EXEDIR = ""
         $global:GAME = "protocol-valve"
-        $global:PROCESS = "asds"
+        $global:PROCESS = "swarm"
         $global:SERVERCFGDIR = "swarm\cfg"
-
         Get-StopServerInstall
-
+        If ( $global:Version -eq "1" ) {
+                if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [lobby]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "buhriz_coop checkpoint" }else { $global:MAP }
+                if (($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server MAXPLAYERS,Press enter to accept default value [4]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAXPLAYERS = "4" }else { $global:MAXPLAYERS } 
+        }
+        ElseIf ( $global:Version -eq "2" ) {
+                # GSLT used for running a public server.
+                #  First Run Vars \/ \/ Add Here
+                $global:MAP = "lobby"
+                $global:MAXPLAYERS = "4"
+                #     Add here     /\ /\ /\ 
+        }
+        ElseIf ( $global:Version -eq "0" ) {
+                Get-UserInput 0 0 0 0 0 0 0 1 0 1
+        }
         Select-RenameSource
  
-        $global:launchParams = '@("$global:EXE -console -game swarm +map lobby -maxplayers 4 -autoupdate")'
+        $global:launchParams = '@("$global:EXE -console -game swarm +map $global:MAP -maxplayers $global:MAXPLAYERS -autoupdate")'
+}
+Function New-LaunchScriptBOserverPS {     
+        # Ballistic Overkill Dedicated Server
+        # 416880
+        # https://steamcommunity.com/app/296300/discussions/1/135508662495143639/
+        # Requiered Dont change 
+        # Version 2.0
+        $global:MODDIR = ""
+        $global:EXEDIR = ""
+        $global:EXE = "BODS"
+        $global:GAME = "protocol-valve"
+        $global:SAVES = ""
+        $global:PROCESS = "BODS"
+        $global:SERVERCFGDIR = ""    
+        Get-StopServerInstall
+        #Game-server-configs \/
+        $global:gamedirname = "BallisticOverkill"
+        $global:config1 = "config.txt"
+        Get-Servercfg
+        If ( $global:Version -eq "1" ) {
+                Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+                ${global:IP} = Read-Host
+                Write-Host "Input Game Server Token: " -ForegroundColor Cyan -NoNewline
+                $global:GSLT = Read-Host
+        }
+        ElseIf ( $global:Version -eq "2" ) {
+                # GSLT used for running a public server.
+                #  First Run Vars \/ \/ Add Here
+                ${global:IP} = "${global:IP}"
+                $global:GSLT = ""
+                #     Add here     /\ /\ /\ 
+        }
+        ElseIf ( $global:Version -eq "0" ) {
+                Get-UserInput 1 0 0 0 0 0 0 0 1
+        }
+        # game config
+        Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+        
+        $global:launchParams = '@("$global:EXE -batchmode -nographics -dedicated ")'
+}
+
+Function New-LaunchScriptAHL2serverPS {     
+        # Action: Source Dedicated Server
+        # 985050
+        # Requiere Steam Login
+        # Requiered Dont change 
+        # Version 2.0
+        $global:MODDIR = ""
+        $global:EXEDIR = ""
+        $global:EXE = "ahl2"
+        $global:GAME = "protocol-valve"
+        $global:SAVES = ""
+        $global:PROCESS = "ahl2"
+        $global:SERVERCFGDIR = "cfg"    
+        Get-StopServerInstall
+        #Game-server-configs \/
+        $global:gamedirname = "ActionSource"
+        $global:config1 = "server.cfg"
+        Get-Servercfg
+        If ( $global:Version -eq "1" ) {
+                Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+                ${global:IP} = Read-Host
+                if ((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
+                if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
+                if (($global:SOURCETVPORT = Read-Host -Prompt (Write-Host "Input Server Source TV Port, Press enter to accept default value [27020]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SOURCETVPORT = "27020" }else { $global:SOURCETVPORT }
+                if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [act_airport]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "buhriz_coop checkpoint" }else { $global:MAP }
+                Write-Host 'Input maxplayers : ' -ForegroundColor Cyan -NoNewline
+                $global:MAXPLAYERS = Read-host        
+                Write-Host "Input Game Server Token: " -ForegroundColor Cyan -NoNewline
+                $global:GSLT = Read-Host
+        }
+        ElseIf ( $global:Version -eq "2" ) {
+                # GSLT used for running a public server.
+                #  First Run Vars \/ \/ Add Here
+                ${global:IP} = "${global:IP}"
+                ${global:PORT} = "27015"
+                $global:CLIENTPORT = "27005"
+                $global:SOURCETVPORT = "27020"
+                $global:GSLT = ""
+                $global:MAP = "act_airport"
+                $global:MAXPLAYERS = "20"
+                #     Add here     /\ /\ /\ 
+        }
+        ElseIf ( $global:Version -eq "0" ) {
+                Get-UserInput 1 1 0 0 0 0 0 1 0
+        }
+        Select-RenameSource
+        # game config
+        Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+        
+        $global:launchParams = '@("$global:EXE -game ahl2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport $global:CLIENTPORT +tv_port $global:SOURCETVPORT +map $global:MAP -maxplayers $global:MAXPLAYERS ")'
+}
+Function New-LaunchScriptBB2serverPS {     
+        # BrainBread 2 Dedicated Server
+        # 475370
+        # 
+        # Requiered Dont change 
+        # Version 2.0
+        $global:MODDIR = ""
+        $global:EXEDIR = ""
+        $global:EXE = "BB2"
+        $global:GAME = "protocol-valve"
+        $global:SAVES = ""
+        $global:PROCESS = "BB2"
+        $global:SERVERCFGDIR = "cfg"
+        $global:RCONPORT = "${global:PORT}"    
+        Get-StopServerInstall
+        #Game-server-configs \/
+        $global:gamedirname = "BrainBread2"
+        $global:config1 = "server.cfg"
+        Get-Servercfg
+        
+        If ( $global:Version -eq "1" ) {
+                Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+                ${global:IP} = Read-Host
+                if ((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
+                if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
+                if (($global:SOURCETVPORT = Read-Host -Prompt (Write-Host "Input Server Source TV Port, Press enter to accept default value [27020]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SOURCETVPORT = "27020" }else { $global:SOURCETVPORT }
+                if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [bba_barracks]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "buhriz_coop checkpoint" }else { $global:MAP }
+                Write-Host 'Input maxplayers : ' -ForegroundColor Cyan -NoNewline
+                $global:MAXPLAYERS = Read-host        
+                Write-Host "Input Game Server Token: " -ForegroundColor Cyan -NoNewline
+                $global:GSLT = Read-Host
+                if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
+        }
+        ElseIf ( $global:Version -eq "2" ) {
+                # GSLT used for running a public server.
+                #  First Run Vars \/ \/ Add Here
+                ${global:IP} = "${global:IP}"
+                ${global:PORT} = "27015"
+                $global:CLIENTPORT = "27005"
+                $global:SOURCETVPORT = "27020"
+                $global:GSLT = ""
+                $global:MAP = "bba_barracks"
+                $global:MAXPLAYERS = "20"
+                $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
+                #     Add here     /\ /\ /\ 
+        }
+        ElseIf ( $global:Version -eq "0" ) {
+                Get-UserInput 1 1 0 0 1 0 0 1 0 1
+        }
+        Select-RenameSource
+        # game config
+        Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1} -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\${config1}
+
+        $global:launchParams = '@("$global:EXE -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport $global:CLIENTPORT +tv_port $global:SOURCETVPORT +map $global:MAP -maxplayers $global:MAXPLAYERS ")'
 }
 #Function New-LaunchScriptTEMPLATEserverPS {
 # TEMPLATE Server
@@ -291,21 +453,18 @@ Function New-LaunchScriptasserverPS {
 # }
 
 # ElseIf ( $global:Version -eq "2" ) {
-        # Version 2.0
-        #  First Run Vars \/ \/ Add Here
-        # ${global:IP} = "${global:IP}"
-        # $global:PORT = "7777"
-        # $global:QUERYPORT = "27015"
-        #     Add here     /\ /\ /\
+# Version 2.0
+#  First Run Vars \/ \/ Add Here
+# ${global:IP} = "${global:IP}"
+# $global:PORT = "7777"
+# $global:QUERYPORT = "27015"
+#     Add here     /\ /\ /\
 # }
 # ElseIf ( $global:Version -eq "0" ) {
-        #     Get-UserInput 1 1 0
+#     Get-UserInput 1 1 0
 #    }
 
-# Rename source exe       
-#Write-Host "***  Renaming srcds.exe to avoid conflict with local source (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
-#Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\TEMP.exe" >$null 2>&1
-#Rename-Item -Path "start-process cmd `"/c srcds_x64.exe" -NewName "$global:currentdir\$global:server\TEMP_x64.exe`"" >$null 2>&1
+# Select-RenameSource
 
 # game config
 #Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black

@@ -40,7 +40,7 @@ Function New-LaunchScriptdoiserverPS {
         $global:RCONPORT = "$global:PORT"
     }
     ElseIf ( $global:Version -eq "2" ) {
-         #  First Run Vars \/ \/ Add Here
+        #  First Run Vars \/ \/ Add Here
         ${global:IP} = "${global:IP}"
         $global:PORT = "27015"
         $global:CLIENTPORT = "27005"
@@ -58,10 +58,8 @@ Function New-LaunchScriptdoiserverPS {
         #     Add here     /\ /\ /\ 
     }
     Select-EditSourceCFG
-    #Add-Content -Path $global:currentdir\$global:server\Launch-$global:server.ps1 -Value "start-process cmd `"/c doi.exe -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan ${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`" -NoNewWindow"
     # VERSION 2 Requieres  Vars
-    Write-Host "**** Creating Start params ******" -ForegroundColor Magenta
-    Add-Content $global:currentdir\$global:server\Variables-$global:server.ps1 "`$global:launchParams = @(`"`$global:EXE -game doi -strictportbind -usercon -ip `${global:IP} -port `${global:PORT} +clientport `${global:CLIENTPORT} +tv_port `${global:SOURCETVPORT} -tickrate `${global:TICKRATE} +map '`${global:MAP}' +maxplayers `${global:MAXPLAYERS} +sv_lan `${global:SV_LAN }+mp_coop_lobbysize `${global:COOPPLAYERS} +sv_workshop_enabled `${global:WORKSHOP} +sv_pure `${global:SV_PURE} -condebug`")"
+    $global:launchParams = '@("$global:EXE -game doi -strictportbind -usercon -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} -tickrate ${global:TICKRATE} +map `"${global:MAP}`" +maxplayers ${global:MAXPLAYERS} +sv_lan ${global:SV_LAN }+mp_coop_lobbysize ${global:COOPPLAYERS} +sv_workshop_enabled ${global:WORKSHOP} +sv_pure ${global:SV_PURE} -condebug")'
     # -game doi -strictportbind           -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} -tickrate ${tickrate} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers ${maxplayers} -workshop"
     #start srcds.exe -usercon +maxplayers 24 +sv_lan 0 +map "bastogne offensive"              
     Write-Host "***  Creating subscribed_file_ids.txt ***" -ForegroundColor Magenta -BackgroundColor Black

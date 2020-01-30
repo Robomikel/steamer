@@ -73,7 +73,7 @@ Function Get-CreatedVaribles {
 }
 Function Get-ClearVariables {
     Write-Host "****   Clearing Variables   *****" -ForegroundColor Yellow -BackgroundColor Black
-    $global:vars = "PROCESS", "IP", "PORT", "SOURCETVPORT", "CLIENTPORT", "MAP", "TICKRATE", "GSLT", "MAXPLAYERS", "WORKSHOP", "HOSTNAME", "QUERYPORT", "SAVES", "APPID", "RCONPORT", "RCONPASSWORD", "SV_PURE", "SCENARIO", "GAMETYPE", "GAMEMODE", "MAPGROUP", "WSCOLLECTIONID", "WSSTARTMAP", "WSAPIKEY", "WEBHOOK", "EXEDIR", "GAME", "SERVERCFGDIR", "gamedirname", "config1", "config2", "config3", "config4", "config5", "MODDIR", "status", "CpuCores", "cpu", "avmem", "totalmem", "mem", "backups", "backupssize", "stats", "gameresponse", "os", "results,", "disks", "computername", "ANON", "ALERT", "launchParams","COOPPLAYERS"
+    $global:vars = "PROCESS", "IP", "PORT", "SOURCETVPORT", "CLIENTPORT", "MAP", "TICKRATE", "GSLT", "MAXPLAYERS", "WORKSHOP", "HOSTNAME", "QUERYPORT", "SAVES", "APPID", "RCONPORT", "RCONPASSWORD", "SV_PURE", "SCENARIO", "GAMETYPE", "GAMEMODE", "MAPGROUP", "WSCOLLECTIONID", "WSSTARTMAP", "WSAPIKEY", "WEBHOOK", "EXEDIR", "GAME", "SERVERCFGDIR", "gamedirname", "config1", "config2", "config3", "config4", "config5", "MODDIR", "status", "CpuCores", "cpu", "avmem", "totalmem", "mem", "backups", "backupssize", "stats", "gameresponse", "os", "results,", "disks", "computername", "ANON", "ALERT", "launchParams", "COOPPLAYERS","SV_LAN"
     Foreach ($global:vars in $global:vars) {
         Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
         Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
@@ -173,8 +173,8 @@ Function Get-UpdateServer {
     If (($?) -or ($LASTEXITCODE -eq 7)) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
         If ($global:command -ne "install") { 
-            If ($global:DisableDiscordUpdate -eq "1"){
-            New-DiscordAlert 
+            If ($global:DisableDiscordUpdate -eq "1") {
+                New-DiscordAlert 
             }
         }
     }
@@ -511,7 +511,6 @@ Function Get-MCRcon {
         }
     }
 }
-
 Function New-DiscordAlert {
     If ( "" -eq $global:WEBHOOK) {
         Write-Host "$global:DIAMOND $global:DIAMOND Missing WEBHOOK ! $global:DIAMOND $global:DIAMOND"-ForegroundColor Red -BackgroundColor Black
@@ -693,6 +692,10 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server PORT - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:PORT} = `"${global:PORT}`""
     }
+    If (${global:DIFF}) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server DIFF - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:DIFF} = `"${global:DIFF}`""
+    }
     If ($global:SOURCETVPORT) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Source TV Port - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SOURCETVPORT = `"$global:SOURCETVPORT`""
@@ -705,9 +708,17 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server client port- - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:CLIENTPORT = `"$global:CLIENTPORT`""
     }
+    If ($global:STEAMPORT) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server STEAMPORT port- - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:STEAMPORT = `"$global:STEAMPORT`""
+    }
     If ($global:MAP) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  default Map- - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAP = `"$global:MAP`""
+    }
+    If ($global:GALAXYNAME) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  default GALAXYNAME- - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GALAXYNAME = `"$global:GALAXYNAME`""
     }
     If ($global:TICKRATE) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server tick rate - - \/  \/  \/"
@@ -1010,7 +1021,6 @@ Function New-BackupServer {
     Write-Host '****   Server Backup Started!   ****' -ForegroundColor Magenta -BackgroundColor Black
     Set-Location $global:currentdir\7za920\
     Get-Childitem $global:currentdir\backups\ -Recurse | where-object name -like Backup_$global:server-*.zip | Sort-Object CreationTime -desc | Select-Object -Skip $global:backupcount | Remove-Item -Force 
-    #Get-Childitem $global:currentdir\backups\ -Recurse | where-object {-like Backup_$global:server-*.zip}| Sort-Object CreationTime -desc | Select-Object -Skip $global:backupcount | Remove-Item -Force
     #./7za a $global:currentdir\backups\Backup_$global:server-$BackupDate.zip $global:currentdir\$global:server\* -an > backup.log
     ./7za a $global:currentdir\backups\Backup_$global:server-$global:Date.zip $global:currentdir\$global:server\* > backup.log
     Write-Host '****   Server Backup is Done!   ****' -ForegroundColor Yellow -BackgroundColor Black
@@ -1132,20 +1142,17 @@ Function Get-StartServer {
     )
     Set-Location $global:currentdir\$global:server\
     #Start-Process -FilePath CMD -ArgumentList ("/c $global:launchParams") -NoNewWindow
-    If  (( $global:APPID -eq 258550 ) -or ($global:APPID -eq 294420 ) -or ($global:APPID -eq 302550))  {
-        Start-Process CMD "/c $global:launchParams"
+    If (( $global:APPID -eq 258550 ) -or ($global:APPID -eq 294420 ) -or ($global:APPID -eq 302550)) {
+        Start-Process CMD "/c start $global:launchParams"
     }
     Else {
-        Start-Process CMD "/c $global:launchParams"  -NoNewWindow
+        Start-Process CMD "/c start $global:launchParams"  -NoNewWindow
     }
     Set-Location $global:currentdir
 }
 Function Select-StartServer {
     Write-Host '****   Starting Server   *****' -ForegroundColor Yellow -BackgroundColor Black  
     Get-StartServer $global:launchParams
-    #& "$global:currentdir\$global:server\Launch-*.ps1"
-    #Get-CheckForError
-    #Set-Location $global:currentdir
 }
 Function Select-RenameSource {
     Write-Host "***  Renaming srcds.exe to $global:EXE to avoid conflict with local source Engine (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -1200,7 +1207,14 @@ Function Get-UserInput {
         Write-Host "Enter MAXPLAYERS" -F Cyan
         $global:MAXPLAYERS = Read-Host
     }
-
+    If ($parm8 -eq 1) {
+        Write-Host "Enter GSLT" -F Cyan
+        $global:GSLT = Read-Host
+    }
+    If ($parm9 -eq 1) {
+        Write-Host "Enter MAP" -F Cyan
+        $global:MAP = Read-Host
+    }
 }
 Function Read-AppID {
     If ($global:AppID -eq 302200) {
