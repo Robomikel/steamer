@@ -692,6 +692,10 @@ Function New-CreateVariables {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server PORT - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:PORT} = `"${global:PORT}`""
     }
+    If (${global:DIFF}) {
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server DIFF - - \/  \/  \/"
+        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:DIFF} = `"${global:DIFF}`""
+    }
     If ($global:SOURCETVPORT) {
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Source TV Port - - \/  \/  \/"
         Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SOURCETVPORT = `"$global:SOURCETVPORT`""
