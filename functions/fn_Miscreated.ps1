@@ -15,7 +15,7 @@ Function New-LaunchScriptMiscreatedPS {
         # $global:config1=""
         # Get-Servercfg
         # - - - - - - - - - - - - -
-        $global:RCONPORT = "$global:PORT"
+        # $global:RCONPORT += "4"
         If ( $global:Version -eq "1" ) {
                 # #################### Version 1.0 ###################################################
                 Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -34,7 +34,7 @@ Function New-LaunchScriptMiscreatedPS {
                 #  First Run Vars \/ \/ Add Here        
                 ${global:IP} = "${global:IP}"
                 $global:PORT = "64090"
-                # $global:RCONPORT = ""
+                # $global:RCONPORT += "4"
                 $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
                 $global:HOSTNAME = "PS Steamer"
                 $global:MAXPLAYERS = "32"
@@ -42,7 +42,8 @@ Function New-LaunchScriptMiscreatedPS {
         }
         ElseIf ( $global:Version -eq "0" ) {
                 Get-UserInput 1 1 0 0 1 1 0 1
-        }  
+        }
+        $global:RCONPORT += "4"  
         #VERSION 2 Requieres  Vars
         $global:launchParams = '@("$global:EXEDIR\$global:EXE +sv_bind ${global:IP} +sv_maxplayers ${global:MAXPLAYERS} +map islands -sv_port ${global:PORT} +http_startserver -mis_gameserverid 100")'
 
