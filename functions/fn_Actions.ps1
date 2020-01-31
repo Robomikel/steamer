@@ -145,7 +145,7 @@ Function Get-TestString {
 }
 Function Get-FolderNames {
     Write-Host "****   Checking Folder Names   ****" -F Y -B Black
-    If (Test "$global:currentdir\$global:server\") {
+    If (Test-Path "$global:currentdir\$global:server\") {
     }
     Else {
         New-ServerFolderq
@@ -190,7 +190,7 @@ Function Get-Steam {
     $start_time = Get-Date
     $path = "$global:currentdir\steamcmd\"
     $patha = "$global:currentdir\steamcmd\steamcmd.exe" 
-    If ((Test $path) -and (Test $patha)) { 
+    If ((Test-Path $path) -and (Test-Path $patha)) { 
         Write-Host '****   steamCMD already downloaded!   ****' -F Y -B Black
     } 
     Else {  
@@ -269,7 +269,7 @@ Function Get-Steamtxt {
     $patha = "$global:currentdir\steamcmd\Validate-$global:server.txt"
     $pathb = "$global:currentdir\steamcmd\Updates-$global:server.txt"
     $pathc = "$global:currentdir\steamcmd\Buildcheck-$global:server.txt" 
-    If ((Test $patha) -and (Test $pathb) -and (Test $pathc)) {
+    If ((Test-Path $patha) -and (Test-Path $pathb) -and (Test-Path $pathc)) {
         Write-Host '****   steamCMD Runscripts .txt Exist   ***' -F Y -B Black
     } 
     Else {  
@@ -433,7 +433,7 @@ Function New-ServerFolder {
         Write-Host "****   You EnteR a space or Empty   ****" -F R -B Black
         Select-Steamer
     }
-    ElseIf (Test "$global:currentdir\$global:server\" ) {
+    ElseIf (Test-Path "$global:currentdir\$global:server\" ) {
         Write-Host '****   Server Folder Already Created!   ****' -F Y -B Black
     }
     Else {
@@ -485,7 +485,7 @@ Function Get-MCRcon {
     $start_time = Get-Date
     $path = "$global:currentdir\mcrcon\"
     $patha = "$global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32\mcrcon.exe" 
-    If ((Test $path) -and (Test $patha)) { 
+    If ((Test-Path $path) -and (Test-Path $patha)) { 
         Write-Host '****   mcrcon already downloaded!   ****' -F Y -B Black
     } 
     Else {  
@@ -621,7 +621,7 @@ Function Get-NodeJS {
     $patha = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64\node.exe"
     $pathb = "node-v$global:nodeversion-win-x64.zip"
     Write-Host "****   Checking for Nodejs   ****" -F M -B Black     
-    If ((Test $path) -and (Test $pathb) -and (Test $patha)) { 
+    If ((Test-Path $path) -and (Test-Path $pathb) -and (Test-Path $patha)) { 
         Write-Host '****   NodeJS already downloaded!   ****' -F Y -B Black
     }
     Else {
@@ -1025,7 +1025,7 @@ Function Get-ChecktaskEnable {
 }
 Function New-BackupFolder {
     $path = "$global:currentdir\backups" 
-    If (Test $path) { 
+    If (Test-Path $path) { 
         Write-Host '****   Backup folder exists!   ****' -F Y -B Black
     } 
     Else {  
@@ -1054,7 +1054,7 @@ Function Get-SevenZip {
     $patha = "$global:currentdir\7za920\7za.exe"
     $pathb = "$global:currentdir\7za920.zip"
     Write-Host '****   Checking for 7ZIP   *****' -F Y -B Black   
-    If ((Test $path) -and (Test $patha) -and (Test $pathb)) { 
+    If ((Test-Path $path) -and (Test-Path $patha) -and (Test-Path $pathb)) { 
         Write-Host '****   7Zip already downloaded!   ****' -F Y -B Black
     }
     Else {
