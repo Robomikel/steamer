@@ -549,7 +549,7 @@ Function New-LaunchScriptHL2DMserverPS {
   
         # Default Vars
         $global:RCONPORT = "${global:PORT}"
-        $global:defaultip = "$global:ip"
+        $global:defaultip = "${global:ip}"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
@@ -604,7 +604,7 @@ Function New-LaunchScriptDystopiaserverPS {
         
         # Default Vars
         $global:RCONPORT = "${global:PORT}"
-        $global:defaultip = "$global:ip"
+        $global:defaultip = "${global:ip}"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
@@ -656,7 +656,7 @@ Function New-LaunchScriptBlackMesaserverPS {
         Get-Servercfg
         #--->Default Vars
         $global:RCONPORT = "${global:PORT}"
-        $global:defaultip="0.0.0.0"
+        $global:defaultip="${global:ip}"
         $global:defaultport="27015"
         $global:defaultclientport="27005"
         $global:defaultsourcetvport="27020"
