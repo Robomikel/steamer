@@ -17,13 +17,13 @@ Function Select-Steamer {
         $global:server)
     Set-Console  >$null 2>&1
     If (($global:command -eq "install") -and ($null -eq $global:server)) {     
-        Write-Host 'Input Server Folder Name make unique to instance [i.e. sdtdserver (No Spaces!)]: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Input Server Folder Name make unique to instance [i.e. sdtdserver (No Spaces!)]: ' -F C -N
         $global:server = Read-host
         Get-TestString
-        Write-Host 'Input Steam Server App ID: ' -ForegroundColor Cyan -NoNewline 
+        Write-Host 'Input Steam Server App ID: ' -F C -N 
         $global:AppID = Read-host
         Get-TestInterger
-        Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -ForegroundColor Cyan -NoNewline 
+        Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -F C -N 
         $global:Branch = Read-host
         New-ServerFolder
         Get-Steam
@@ -34,10 +34,10 @@ Function Select-Steamer {
     }
     elseif ($global:command -eq "install") {
         Get-TestString
-        Write-Host 'Input Steam Server App ID: ' -ForegroundColor Cyan -NoNewline 
+        Write-Host 'Input Steam Server App ID: ' -F C -N 
         $global:AppID = Read-host
         Get-TestInterger
-        Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -ForegroundColor Cyan -NoNewline 
+        Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -F C -N 
         $global:Branch = Read-host
         New-ServerFolder
         Get-Steam
@@ -47,53 +47,53 @@ Function Select-Steamer {
         Get-Finished
     }
     elseif (($global:command -eq "update") -and ($null -eq $global:server)) {   
-        Write-Host 'Server FolderName for server updates: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for server updates: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-UpdateServer 
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        Get-ChecktaskEnable
         Get-Finished
     }
     elseif ($global:command -eq "update") {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-UpdateServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        Get-ChecktaskEnable
         Get-Finished
     }
     elseif (($global:command -eq "validate") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server validate: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for server validate: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-StopServer
         Get-Steam
         Get-ValidateServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        Get-ChecktaskEnable
         Get-Finished
     }
     elseif ($global:command -eq "validate") {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-StopServer
         Get-Steam
         Get-ValidateServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        Get-ChecktaskEnable
         Get-Finished
     }
     elseif (($global:command -eq "start") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server launch, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for server launch, warning stops running process!: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -102,7 +102,7 @@ Function Select-Steamer {
         Get-CheckServer
         Get-ServerBuildCheck
         Select-StartServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        Get-ChecktaskEnable
         Get-ClearVariables
     }
     elseif ($global:command -eq "start") {
@@ -112,17 +112,17 @@ Function Select-Steamer {
         Get-CheckServer
         Get-ServerBuildCheck
         Select-StartServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        Get-ChecktaskEnable
         Get-ClearVariables
     }
     elseif (($global:command -eq "stop") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server stop, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for server stop, warning stops running process!: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-StopServer
         Get-ClearVariables
     }
@@ -130,37 +130,37 @@ Function Select-Steamer {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-StopServer
         Get-ClearVariables 
     }
     elseif (($global:command -eq "restart") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server restart, warning stops running process!: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for server restart, warning stops running process!: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-StopServer
         Get-ServerBuildCheck
         Get-RestartsServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
+        Get-ChecktaskEnable
         Get-ClearVariables
     }
     elseif ($global:command -eq "restart") {
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-StopServer
         Get-ServerBuildCheck
         Get-RestartsServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }  
+        Get-ChecktaskEnable  
         Get-ClearVariables
     }
     elseif (($global:command -eq "check") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server check: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for server check: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -177,19 +177,19 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "backup") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server backup: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for server backup: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
         Get-createdvaribles
         Get-CheckForVars 
         Get-SevenZip
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-StopServer
         New-BackupFolder
         New-BackupServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
-        if ($global:DisableDiscordBackup -eq "1") { New-DiscordAlert }
+        Get-ChecktaskEnable
+        New-DiscordAlert
         Get-Finished
     }
     elseif ($global:command -eq "backup") {
@@ -197,16 +197,16 @@ Function Select-Steamer {
         Get-createdvaribles
         Get-CheckForVars
         Get-SevenZip
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskDisable }
+        Get-ChecktaskDisable
         Get-StopServer
         New-BackupFolder  
         New-BackupServer
-        if ($global:DisableChecktask -eq "1") { Get-ChecktaskEnable }
-        if ($global:DisableDiscordBackup -eq "1") { New-DiscordAlert }
+        Get-ChecktaskEnable
+        New-DiscordAlert
         Get-Finished  
     }
     elseif (($global:command -eq "monitor") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for monitor: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for monitor: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -223,7 +223,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "AutoRestart") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for AutoRestart: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for AutoRestart: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -240,7 +240,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "gamedig") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for gamedig: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for gamedig: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -259,7 +259,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "mcrcon") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for mcrcon: ' -ForegroundColor Cyan -NoNewline
+        Write-Host 'Server FolderName for mcrcon: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -300,9 +300,9 @@ Function Select-Steamer {
         Get-UpdateSteamer   
     }
     else {
-        Write-Host "Format:  ./steamer <Command> <serverFolderName>" -ForegroundColor Yellow -BackgroundColor Black
-        Write-Host "IE:      ./steamer install  insserver" -ForegroundColor Yellow -BackgroundColor Black
-        Write-Host "Command not found! Available Commands" -ForegroundColor Red -BackgroundColor Black
+        Write-Host "Format:  ./steamer <Command> <serverFolderName>" -F Yellow -BackgroundColor Black
+        Write-Host "IE:      ./steamer install  insserver" -F Yellow -BackgroundColor Black
+        Write-Host "Command not found! Available Commands" -F Red -BackgroundColor Black
         Write-Host "install"
         Write-Host "update"
         Write-Host "validate"

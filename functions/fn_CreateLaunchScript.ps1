@@ -1,4 +1,11 @@
 # Version 2.0
+# .::::::.::::::::::::.,::::::   :::.     .        :  .,:::::: :::::::..   
+# ;;;`    `;;;;;;;;'''';;;;''''   ;;`;;    ;;,.    ;;; ;;;;'''' ;;;;``;;;;  
+# '[==/[[[[,    [[      [[cccc   ,[[ '[[,  [[[[, ,[[[[, [[cccc   [[[,/[[['  
+#   '''    $    $$      $$""""  c$$$cc$$$c $$$$$$$$"$$$ $$""""   $$$$$$c    
+#  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
+#   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
+#----------      Install server    ----------------------
 #:::::::::::::   CREATE LAUNCH SCRIPT FOR SERVER :::::::::::::::::::::::::
 # check other Functions for other Games
 Function New-LaunchScriptArma3serverPS {
@@ -44,8 +51,137 @@ Function New-LaunchScriptArma3serverPS {
         # -autoinit only for presistant missions
         $global:launchParams = '@("$global:EXE -ip=${global:IP} -port=${global:PORT} -cfg=$global:currentdir\$global:server\$global:SERVERCFGDIR\network.cfg -config=$global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -mod= -servermod= -bepath=$global:currentdir\$global:server\battleye\ -profiles=SC -name=SC -loadmissiontomemory")'
 
+}
+Function New-LaunchScriptKF2serverPS {
+        # Killing Floor 2 Server
+        # - - - - - - - - - - - -
+        # Requiered Dont change 
+        # # Version 2.0
+        # $global:MODDIR=""
+        $global:EXE = "KFServer"   
+        $global:EXEDIR = "Binaries\Win64"
+        $global:GAME = "killingfloor2"
+        $global:PROCESS = "KFserver"
+        $global:SERVERCFGDIR = "\KFGame\Config"
+    
+        Get-StopServerInstall
+        
+        $global:gamedirname = "KillingFloor2"
+        $global:config1 = "KFWeb.ini"
+        $global:config2 = "LinuxServer-KFEngine.ini"
+        $global:config3 = "LinuxServer-KFGame.ini"
+        $global:config4 = "LinuxServer-KFInput.ini"
+        $global:config5 = "LinuxServer-KFSystemSettings.ini"
+    
+        Remove-item $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-*.ini -Force  >$null 2>&1
+        Get-Servercfg
+        Set-Location $global:currentdir\$global:server\$global:SERVERCFGDIR
+        Get-ChildItem -Filter "LinuxServer-*.ini" -Recurse | Rename-Item -NewName { $_.name -replace 'LinuxServer', 'PCServer' } -Force
+        Set-Location $global:currentdir\$global:server
+
+        #  First Run Vars \/ \/ Add Here
+        $global:defaultPORT = "7777"
+        $global:defaultQUERYPORT = "27015"
+        $global:defaultMAP = "KF-BioticsLab"
+        $global:defaultGAMEMODE = "KFGameContent.KFGameInfo_Endless"
+        $global:defaultDIFF = "0"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultADMINPASSWORD = "$global:RANDOMPASSWORD"
+        #  Edit Vars here     /\ /\ /\
+
+        Get-UserInput 0 1 1 0 0 1 0 0 0 1 0 0 1 1 1 0
+
+        # VERSION 2 Requieres  Vars
+        Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
+        .\KF2Server.bat
+        timeout 5
+        Write-Host "***  stopping Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
+        Get-StopServer
+        Write-Host "***  Editing Default Server Name PCServer-KFGame.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-KFGame.ini -Raw) -replace "\bKilling Floor 2 Server\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFGame.ini
+        Write-Host "***  Adding ADMIN PASSWORD PCServer-KFGame.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-KFGame.ini -Raw) -replace "AdminPassword=", "AdminPassword=$global:ADMINPASSWORD") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFGame.ini
+        Write-Host "***  Enabling Webmin in KFWeb.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\KFWeb.ini -Raw) -replace "\bbEnabled=false\b", "bEnabled=true") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\KFWeb.ini
+        Write-Host "***  Disabling Takeover PCServer-KFEngine.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-KFEngine.ini -Raw) -replace "\bbUsedForTakeover=TRUE\b", "bUsedForTakeover=FALSE") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFEngine.ini
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?Game=${global:GAMEMODE}?Difficulty=${global:DIFF}? -Port=${global:PORT} -QueryPort=${global:QUERYPORT}")'  
+        Set-Location $global:currentdir
+}
+Function New-LaunchScriptLFD2serverPS {
+        #----------   left4dead2 Server CFG    -------------------
+        # Steamer Vars Do Not Edit
+        $global:MODDIR = "left4dead2"
+        $global:EXEDIR = ""
+        $global:EXE = "l4d2"
+        $global:GAME = "left4dead2"
+        $global:PROCESS = "l4d2"
+        $global:SERVERCFGDIR = "left4dead2\cfg"
+        
+        Get-StopServerInstall
+        # Game-Server-Configs
+        $global:gamedirname = "Left4Dead2"
+        $global:config1 = "server.cfg"
+        Get-Servercfg
+        $global:RCONPORT = "${global:PORT}"
+        # - - - - - - - - - - - - -
+        Select-RenameSource
+
+        # Version 2.0
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        $global:defaultPORT = "27015"
+        $global:defaultCLIENTPORT = "27005"
+        $global:defaultMAP = "c1m1_hotel"
+        $global:defaultMAXPLAYERS = "8"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
+        #  Edit Vars here     /\ /\ /\
+
+        Get-UserInput 1 1 0 0 1 1 0 1 0 1 1
+
+        #if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
+        #if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
+        Select-EditSourceCFG
+        $global:launchParams = '@("$global:EXE -console -game left4dead2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +hostip ${global:EXTIP} +maxplayers ${global:MAXPLAYERS} +map `"${global:MAP}`" -condebug ")'
+        Get-SourceMetMod
+}
+    
+Function New-LaunchScriptArkPS {
+        # Ark: Survival Evolved Server
+        # - - - - - - - - - - - -
+        $global:MODDIR = ""
+        $global:EXE = "ShooterGameServer"
+        $global:EXEDIR = "ShooterGame\Binaries\Win64"
+        $global:GAME = "arkse"
+        $global:PROCESS = "ShooterGameServer"
+        $global:SERVERCFGDIR = "ShooterGame\Saved\Config\WindowsServer"
+        
+        Get-StopServerInstall
+        $global:gamedirname = "ARKSurvivalEvolved"
+        $global:config1 = "GameUserSettings.ini"
+        Get-Servercfg
+
+        # Version 2.0
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        $global:defaultPORT = "7777"
+        $global:defaultQUERYPORT = "27015"
+        $global:defaultRCONPORT = "27020"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
+        $global:defaultMAP = "TheIsland"
+        $global:defaultMAXPLAYERS = "70"
+        $global:defaultHOSTNAME = "PS Steamer"
+        #     Add here     /\ /\ /\
+
+        Get-UserInput 1 1 1 1 1 1 0 1 0 1 0 0
+
+        Select-EditSourceCFG
+    
+    
+        # Version 2.0
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?AltSaveDirectoryName=${global:MAP}?listen?MultiHome=${global:IP}?MaxPlayers=${global:MAXPLAYERS}?QueryPort=${global:QUERYPORT}?RCONEnabled=True?RCONPort=${global:RCONPORT}?ServerAdminPassword=${global:RCONPASSWORD}?Port=${global:PORT} -automanagedmods")'
 }    
-  
 Function New-LaunchScriptSdtdserverPS {
         #----------   7Days2Die Ask for input for server cfg    -------------------
         $global:MODDIR = ""
@@ -152,7 +288,7 @@ Function  New-LaunchScriptavserverPS {
         if (($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (-3 - 3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:DIFF = "0" }else { $global:DIFF }
         if (($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [10]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAXPLAYERS = "10" }else { $global:MAXPLAYERS }
   
-        $global:launchParams = '@("$global:EXEDIR\$global:EXE --server-name ${global:HOSTNAME} --galaxy-name ${global:GALAXYNAME} --admin ${global:steamID64} --difficulty ${global:DIFF} --max-players ${global:MAXPLAYERS}")'
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE --server-name `"${global:HOSTNAME}`" --galaxy-name ${global:GALAXYNAME} --difficulty ${global:DIFF} --max-players ${global:MAXPLAYERS}")'
 }
    
 Function New-LaunchScriptboundelserverPS {
@@ -208,6 +344,7 @@ Function New-LaunchScriptAoCserverPS {
         $global:SAVES = ""
         $global:PROCESS = "aoc"
         $global:SERVERCFGDIR = "ageofchivalry\cfg"
+        $global:RCONPORT = "${global:PORT}"
         
         Get-StopServerInstall
         $global:gamedirname = "AgeOfChivalry"
@@ -224,7 +361,6 @@ Function New-LaunchScriptAoCserverPS {
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-        $global:RCONPORT = "${global:PORT}"
 
         Select-EditSourceCFG
         $global:launchParams = '@("$global:EXE -console -game ageofchivalry -secure +map ${global:MAP} -autoupdate +log on +maxplayers ${global:MAXPLAYERS} -port ${global:PORT} +ip ${global:IP} +exec server.cfg")'
@@ -246,71 +382,299 @@ Function New-LaunchScriptacserverPS {
 
         $global:launchParams = '@("$global:EXEDIR\$global:EXE")'
 }
-
-Function New-LaunchScriptasserverPS {
+Function New-LaunchScriptswarmserverPS {
         # Alien Swarm Dedicated Server
         #       635
         # https://developer.valvesoftware.com/wiki/Alien_Swarm_Dedicated_Server
-        $global:EXE = "asds"
+        $global:EXE = "swarm"
         $global:EXEDIR = ""
         $global:GAME = "protocol-valve"
-        $global:PROCESS = "asds"
+        $global:PROCESS = "swarm"
         $global:SERVERCFGDIR = "swarm\cfg"
-
         Get-StopServerInstall
+
+        # GSLT used for running a public server.
+        #  First Run Vars \/ \/ Add Here
+        $global:defaultMAP = "lobby"
+        $global:defaultMAXPLAYERS = "4"
+        #     Add here     /\ /\ /\ 
+
+        Get-UserInput 0 0 0 0 0 0 0 1 0 1
 
         Select-RenameSource
  
-        $global:launchParams = '@("$global:EXE -console -game swarm +map lobby -maxplayers 4 -autoupdate")'
+        $global:launchParams = '@("$global:EXE -console -game swarm +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} -autoupdate")'
+}
+Function New-LaunchScriptBOserverPS {     
+        # Ballistic Overkill Dedicated Server
+        # 416880
+        # https://steamcommunity.com/app/296300/discussions/1/135508662495143639/
+        # Requiered Dont change 
+        # Version 2.0
+        $global:MODDIR = ""
+        $global:EXEDIR = ""
+        $global:EXE = "BODS"
+        $global:GAME = "protocol-valve"
+        $global:SAVES = ""
+        $global:PROCESS = "BODS"
+        $global:SERVERCFGDIR = ""    
+        Get-StopServerInstall
+        #Game-server-configs \/
+        $global:gamedirname = "BallisticOverkill"
+        $global:config1 = "config.txt"
+        Get-Servercfg
+
+        # GSLT used for running a public server.
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        $global:defaultGSLT = ""
+        #     Add here     /\ /\ /\ 
+
+        Get-UserInput 1 0 0 0 0 0 0 0 1
+        # game config
+        Select-EditSourceCFG
+        
+        $global:launchParams = '@("$global:EXE -batchmode -nographics -dedicated ")'
+}
+
+Function New-LaunchScriptAHL2serverPS {     
+        # Action: Source Dedicated Server
+        # 985050
+        # Requiere Steam Login
+        # Requiered Dont change 
+        # Version 2.0
+        $global:MODDIR = ""
+        $global:EXEDIR = ""
+        $global:EXE = "ahl2"
+        $global:GAME = "protocol-valve"
+        $global:SAVES = ""
+        $global:PROCESS = "ahl2"
+        $global:SERVERCFGDIR = "cfg"    
+        Get-StopServerInstall
+        #Game-server-configs \/
+        $global:gamedirname = "ActionSource"
+        $global:config1 = "server.cfg"
+        Get-Servercfg
+
+        # GSLT used for running a public server.
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        ${global:defaultPORT} = "27015"
+        $global:defaultCLIENTPORT = "27005"
+        $global:defaultSOURCETVPORT = "27020"
+        $global:defaultGSLT = ""
+        $global:defaultMAP = "act_airport"
+        $global:defaultMAXPLAYERS = "20"
+        #     Add here     /\ /\ /\ 
+
+        Get-UserInput 1 1 0 0 0 0 0 1 1 1 1 1
+
+        Select-RenameSource
+        # game config
+        Select-EditSourceCFG
+        
+        $global:launchParams = '@("$global:EXE -console -game ahl2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
+}
+Function New-LaunchScriptBB2serverPS {     
+        # BrainBread 2 Dedicated Server
+        # 475370
+        # 
+        # Requiered Dont change 
+        # Version 2.0
+        $global:MODDIR = ""
+        $global:EXEDIR = ""
+        $global:EXE = "BB2"
+        $global:GAME = "protocol-valve"
+        $global:SAVES = ""
+        $global:PROCESS = "BB2"
+        $global:SERVERCFGDIR = "cfg"   
+        Get-StopServerInstall
+        #Game-server-configs \/
+        $global:gamedirname = "BrainBread2"
+        $global:config1 = "server.cfg"
+        Get-Servercfg
+        $global:RCONPORT = "${global:PORT}"
+
+        # GSLT used for running a public server.
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        ${global:defaultPORT} = "27015"
+        $global:defaultCLIENTPORT = "27005"
+        $global:defaultSOURCETVPORT = "27020"
+        $global:defaultGSLT = ""
+        $global:defaultMAP = "bba_barracks"
+        $global:defaultMAXPLAYERS = "20"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
+        #     Add here     /\ /\ /\ 
+
+        Get-UserInput 1 1 0 0 1 0 0 1 1 1
+
+        Select-RenameSource
+        # game config
+        Select-EditSourceCFG
+
+        $global:launchParams = '@("$global:EXE -console -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
+}
+Function New-LaunchScriptHL2DMserverPS {
+        #        * * Add to Read-AppID in fn_Actions.ps1 * *
+        # Half-Life 2: Deathmatch Dedicated Server
+        #      232370 
+        # https://kb.firedaemon.com/support/solutions/articles/4000086964-half-life-2-deathmatch
+        # Requiered Dont change 
+        # Version 2.0
+        # Requieres \/ \/ Get-SourceMetMod
+        $global:MODDIR = "hl2mp"
+        # Exe NOT in root server folder \/\/
+        $global:EXEDIR = ""
+        # rename srcds to this name \/\/
+        $global:EXE = "HL2DM"
+        # Requieres \/ \/ game dig
+        $global:GAME = "hl2dm"
+        # Requieres \/ \/ AppData Roaming save folder
+        $global:SAVES = ""
+        # Requieres \/ \/ maybe same as game
+        $global:PROCESS = "hl2dm"
+        #---game config folder \/\/
+        $global:SERVERCFGDIR = "hl2mp\cfg"
+        #---Stop existing process if running          
+        Get-StopServerInstall
+        # Game-server-manger folder \/
+        $global:gamedirname = "HalfLife2Deathmatch"
+        # Game-server-manger config name \/
+        $global:config1 = "server.cfg"
+        # Get game-server-config  \/\/
+        Get-Servercfg
+  
+        # Default Vars
+        $global:defaultip = "$global:ip"
+        $global:defaultport = "27015"
+        $global:defaultclientport = "27005"
+        $global:defaultsourcetvport = "27020"
+        $global:defaultmap = "dm_lockdown"
+        $global:defaultmaxplayers = "16"
+
+        # input questions \/\/
+        Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
+
+        # rename srcds.exe \/\/
+        Select-RenameSource
+
+        #---- Edit game config \/ SERVERNAME ADMINPASSWORD
+        Select-EditSourceCFG
+
+        # VERSION 2 launch params exe in root \/\/
+        $global:launchParams = '@("$global:EXE -console -game hl2mp -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+        # $global:launchParams = '@("$global:EXE -console -game "hl2dm" -secure +map dm_lockdown -autoupdate +log on +maxplayers 32 -port 27015 +ip 1.2.3.4 +exec server.cfg")'
+
+        # OR EXE NOT In ROOT server folder add EXEDIR
+        # $global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
+}
+Function New-LaunchScriptDystopiaserverPS {
+        #        * * Add to Read-AppID in fn_Actions.ps1 * *
+        # Dystopia Dedicated Server
+        #      17585 
+        # https://steamdb.info/app/17585/
+        # Requiered Dont change 
+        # Version 2.0
+        # Requieres \/ \/ Get-SourceMetMod
+        $global:MODDIR = ""
+        # Exe NOT in root server folder \/\/
+        $global:EXEDIR = "bin\win32"
+        # rename srcds to this name \/\/
+        $global:EXE = "Dystopia"
+        # Requieres \/ \/ game dig
+        $global:GAME = "protocol-valve"
+        # Requieres \/ \/ AppData Roaming save folder
+        $global:SAVES = ""
+        # Requieres \/ \/ maybe same as game
+        $global:PROCESS = "Dystopia"
+        #---game config folder \/\/
+        $global:SERVERCFGDIR = "dystopia\cfg"
+        #---Stop existing process if running          
+        Get-StopServerInstall
+        # Game-server-manger folder \/
+        $global:gamedirname = "Dystopia"
+        # Game-server-manger config name \/
+        $global:config1 = "server.cfg"
+        # Get game-server-config  \/\/
+        Get-Servercfg  
+        
+        # Default Vars
+        $global:defaultip = "$global:ip"
+        $global:defaultport = "27015"
+        $global:defaultclientport = "27005"
+        $global:defaultsourcetvport = "27020"
+        $global:defaultmap = "dys_broadcast"
+        $global:defaultmaxplayers = "16"
+        
+        # input questions \/\/
+        Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
+
+        # rename srcds.exe \/\/
+        Select-RenameSource
+
+        #---- Edit game config \/ SERVERNAME ADMINPASSWORD
+        Select-EditSourceCFG
+
+        # VERSION 2 launch params exe in root \/\/
+        #-game "${serverfiles}/dystopia" -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +map ${defaultmap} +sv_setsteamaccount ${gslt} +servercfgfile ${servercfg} -maxplayers ${maxplayers}
+        # OR EXE NOT In ROOT server folder add EXEDIR
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -game `"$global:currentdir\${global:server}\dystopia`" -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'      
 }
 #Function New-LaunchScriptTEMPLATEserverPS {
+#        * * Add to Read-AppID in fn_Actions.ps1 * *
 # TEMPLATE Server
-#       ADD ID #
+# APP ID #
 # WIKI
 # Requiered Dont change 
 # # Version 2.0
+#--->Requieres \/ \/ Get-SourceMetMod
 # $global:MODDIR=""
+
+#--->Exe NOT in root server folder \/\/
 # $global:EXEDIR=""
+
+#--->rename srcds to this name \/\/
 # $global:EXE=""
+
+#--->Requieres \/ \/ game dig 
 # $global:GAME = ""
+
+#--->Requieres \/ \/ AppData Roaming save
 # $global:SAVES = ""
+ 
+#--->Requieres \/ \/ maybe same as game exe?
 # $global:PROCESS = ""
-# $global:SERVERCFGDIR = ""        
+
+#--->game config folder
+# $global:SERVERCFGDIR = ""
+
+#--->Stop existing process if running        
 # Get-StopServerInstall
-# Game-server-configs \/
+
+#--->Game-server-manger folder \/
 # $global:gamedirname=""
+
+#--->Game-server-manger config name \/
 # $global:config1=""
+
+#--->Get game-server-config \/\/
 # Get-Servercfg
-# - - - - - - - - - - - - -
-# If ( $global:Version -eq "1" ) {
-#        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-#        Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
-#        ${global:IP} = Read-host
-#        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "7777" }else { $global:PORT }
-#        if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27015" }else { $global:QUERYPORT }
-# }
 
-# ElseIf ( $global:Version -eq "2" ) {
-# Version 2.0
-#  First Run Vars \/ \/ Add Here
-# ${global:IP} = "${global:IP}"
-# $global:PORT = "7777"
-# $global:QUERYPORT = "27015"
-#     Add here     /\ /\ /\
-# }
-# ElseIf ( $global:Version -eq "0" ) {
-#     Get-UserInput 1 1 0
-#    }
+#--->Default Vars
+# $global:ip="0.0.0.0"
 
-# Rename source exe       
+#--->input questions 
+# Get-UserInput 1 1 0
+
+#--->rename srcds.exe \/\/
 # Select-RenameSource
 
-# edit game config SERVERNAME/ADMINPASSWORD
-# Select-EditSourceCFG
+#--->Edit game config \/ SERVERNAME ADMINPASSWORD
+#  Select-EditSourceCFG
 
-
-# VERSION 2 
+# --->Launch 
 #$global:launchParams = '@("$global:EXE -< LAUNCH PARAMS HERE >-")'
+# OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
 #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 #}
-

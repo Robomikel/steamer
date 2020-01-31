@@ -47,7 +47,7 @@ Function New-LaunchScriptInssserverPS {
                 #     Add here     /\ /\ /\
         }       
         ElseIf ( $global:Version -eq "0" ) {
-                Get-UserInput 0 1 1 1 1 1 1 1
+                Get-UserInput 0 1 1 1 1 1 1 1 0 0
                 $global:SCENARIO = "Scenario_Outskirts_Checkpoint_Security"
                 $global:MAP = "Compound"
         }      

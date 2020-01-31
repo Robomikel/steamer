@@ -16,6 +16,7 @@ Function New-LaunchScriptdoiserverPS {
 
     Get-Servercfg
     Select-RenameSource
+    $global:RCONPORT = "${global:PORT}"
 
     If ( $global:Version -eq "1" ) {
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
@@ -37,7 +38,6 @@ Function New-LaunchScriptdoiserverPS {
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-        $global:RCONPORT = "$global:PORT"
     }
     ElseIf ( $global:Version -eq "2" ) {
         #  First Run Vars \/ \/ Add Here

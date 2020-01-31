@@ -12,6 +12,7 @@ Function New-LaunchScriptcsgoserverPS {
         $global:gamedirname = "CounterStrikeGlobalOffensive"
         $global:config1 = "server.cfg"
         Get-Servercfg
+        $global:RCONPORT = "${global:PORT}"
         # - - - - - - - - - - - - -
 
         Select-RenameSource
@@ -33,7 +34,6 @@ Function New-LaunchScriptcsgoserverPS {
                 Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
                 $global:HOSTNAME = Read-host
                 if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-                $global:RCONPORT = "$global:PORT"
                 Write-Host "
                 * Competitive / Scrimmage: +game_type 0 +game_mode 1
                 * Wingman:              +game_type 0 +game_mode 2
