@@ -680,7 +680,7 @@ Function New-LaunchScriptBlackMesaserverPS {
 
 Function New-LaunchScriptDODSserverPS {
         #* * Add to Read-AppID in fn_Actions.ps1 * *
-        # Day of Defeat Dedicated Server
+        # Day of Defeat Source Dedicated Server
         # APP ID # 232290  
         # https://kb.firedaemon.com/support/solutions/articles/4000086944-day-of-defeat-source
         # Requiered Dont change 
