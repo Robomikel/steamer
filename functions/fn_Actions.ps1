@@ -1196,7 +1196,7 @@ Function Get-UserInput {
         [parameter(Position = 13)]$parm13,
         [parameter(Position = 14)]$parm14,
         [parameter(Position = 15)]$parm15)
-        Write-Host "$global:SMILEY_BLACK Press Enter to Accept default $global:SMILEY_BLACK" -F Y
+    Write-Host "$global:SMILEY_BLACK Press Enter to Accept default $global:SMILEY_BLACK" -F Y
     If ($parm0 -eq 1) {
         If ((${global:IP} = Read-Host -P(Write-Host "Input IP [$global:defaultIP]: "-F CY -N )) -eq '') { $global:IP = "$global:defaultIP" }Else { $global:IP }
     }

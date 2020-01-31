@@ -72,34 +72,34 @@ Function New-LaunchScriptKF2serverPS {
         Get-ChildItem -Filter "LinuxServer-*.ini" -Recurse | Rename-Item -NewName { $_.name -replace 'LinuxServer', 'PCServer' } -Force
         Set-Location $global:currentdir\$global:server
         # - - - - - - - - - - - - -
-    #    If ( $global:Version -eq "1" ) {
-    #        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-    #        #Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-    #        #${global:IP} = Read-Host
-    #        Write-Host "Changing the Port will change the query Port. N+? if not sure keep default" -ForegroundColor Yellow
-    #        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "7777" }else { $global:PORT }
-    #        if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27015" }else { $global:QUERYPORT }
-    #        if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [KF-BioticsLab]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "KF-BioticsLab" }else { $global:MAP }
-    #        if (($global:GAMEMODE = Read-Host -Prompt (Write-Host "Input gamemode, Press enter to accept default value [KFGameContent.KFGameInfo_Endless]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:GAMEMODE = "KFGameContent.KFGameInfo_Endless" }else { $global:GAMEMODE }
-    #        if (($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (0-3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:DIFF = "0" }else { $global:DIFF }
-    #        Write-Host 'Input Server Name: ' -ForegroundColor Cyan -NoNewline
-    #        $global:HOSTNAME = Read-host
-    #        if (($global:ADMINPASSWORD = Read-Host -Prompt (Write-Host "Input ADMIN password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:ADMINPASSWORD = "$global:RANDOMPASSWORD" }else { $global:ADMINPASSWORD }
-    #    }
-    #    ElseIf ( $global:Version -eq "2" ) {
-            #  First Run Vars \/ \/ Add Here
-            $global:defaultPORT = "7777"
-            $global:defaultQUERYPORT = "27015"
-            $global:defaultMAP = "KF-BioticsLab"
-            $global:defaultGAMEMODE = "KFGameContent.KFGameInfo_Endless"
-            $global:defaultDIFF = "0"
-            $global:defaultHOSTNAME = "PS Steamer"
-            $global:defaultADMINPASSWORD = "$global:RANDOMPASSWORD"
-            #  Edit Vars here     /\ /\ /\
-    #    }
-    #    ElseIf ( $global:Version -eq "0" ) {
-            Get-UserInput 0 1 1 0 0 1 0 0 0 1 0 0 1 1 1 0
-    #    }
+        #    If ( $global:Version -eq "1" ) {
+        #        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+        #        #Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+        #        #${global:IP} = Read-Host
+        #        Write-Host "Changing the Port will change the query Port. N+? if not sure keep default" -ForegroundColor Yellow
+        #        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "7777" }else { $global:PORT }
+        #        if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27015" }else { $global:QUERYPORT }
+        #        if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [KF-BioticsLab]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "KF-BioticsLab" }else { $global:MAP }
+        #        if (($global:GAMEMODE = Read-Host -Prompt (Write-Host "Input gamemode, Press enter to accept default value [KFGameContent.KFGameInfo_Endless]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:GAMEMODE = "KFGameContent.KFGameInfo_Endless" }else { $global:GAMEMODE }
+        #        if (($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (0-3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:DIFF = "0" }else { $global:DIFF }
+        #        Write-Host 'Input Server Name: ' -ForegroundColor Cyan -NoNewline
+        #        $global:HOSTNAME = Read-host
+        #        if (($global:ADMINPASSWORD = Read-Host -Prompt (Write-Host "Input ADMIN password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:ADMINPASSWORD = "$global:RANDOMPASSWORD" }else { $global:ADMINPASSWORD }
+        #    }
+        #    ElseIf ( $global:Version -eq "2" ) {
+        #  First Run Vars \/ \/ Add Here
+        $global:defaultPORT = "7777"
+        $global:defaultQUERYPORT = "27015"
+        $global:defaultMAP = "KF-BioticsLab"
+        $global:defaultGAMEMODE = "KFGameContent.KFGameInfo_Endless"
+        $global:defaultDIFF = "0"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultADMINPASSWORD = "$global:RANDOMPASSWORD"
+        #  Edit Vars here     /\ /\ /\
+        #    }
+        #    ElseIf ( $global:Version -eq "0" ) {
+        Get-UserInput 0 1 1 0 0 1 0 0 0 1 0 0 1 1 1 0
+        #    }
         # VERSION 2 Requieres  Vars
         Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
         .\KF2Server.bat
@@ -135,35 +135,35 @@ Function New-LaunchScriptLFD2serverPS {
         $global:RCONPORT = "${global:PORT}"
         # - - - - - - - - - - - - -
         Select-RenameSource
-    #    If ( $global:Version -eq "1" ) {
-    #        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
-    #        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-    #        ${global:IP} = Read-Host
-    #        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
-    #        if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
-    #        if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [c1m1_hotel]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "c1m1_hotel" }else { $global:MAP }
-    #        Write-Host 'Input maxplayers[1-8]: ' -ForegroundColor Cyan -NoNewline
-    #        $global:MAXPLAYERS = Read-host 
-    #        Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
-    #        $global:HOSTNAME = Read-host
-    #        if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-    #    }
-    #    ElseIf ( $global:Version -eq "2" ) {
-            # Version 2.0
-            #  First Run Vars \/ \/ Add Here
-            ${global:defaultIP} = "${global:IP}"
-            $global:defaultPORT = "27015"
-            $global:defaultCLIENTPORT = "27005"
-            $global:defaultMAP = "c1m1_hotel"
-            $global:defaultMAXPLAYERS = "8"
-            $global:defaultHOSTNAME = "PS Steamer"
-            $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
-            #  Edit Vars here     /\ /\ /\
+        #    If ( $global:Version -eq "1" ) {
+        #        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+        #        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+        #        ${global:IP} = Read-Host
+        #        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
+        #        if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
+        #        if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [c1m1_hotel]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "c1m1_hotel" }else { $global:MAP }
+        #        Write-Host 'Input maxplayers[1-8]: ' -ForegroundColor Cyan -NoNewline
+        #        $global:MAXPLAYERS = Read-host 
+        #        Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
+        #        $global:HOSTNAME = Read-host
+        #        if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
+        #    }
+        #    ElseIf ( $global:Version -eq "2" ) {
+        # Version 2.0
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        $global:defaultPORT = "27015"
+        $global:defaultCLIENTPORT = "27005"
+        $global:defaultMAP = "c1m1_hotel"
+        $global:defaultMAXPLAYERS = "8"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
+        #  Edit Vars here     /\ /\ /\
     
-    #    }
-    #    ElseIf ( $global:Version -eq "0" ) {
-            Get-UserInput 1 1 0 0 1 1 0 1 0 1 1
-    #    }  
+        #    }
+        #    ElseIf ( $global:Version -eq "0" ) {
+        Get-UserInput 1 1 0 0 1 1 0 1 0 1 1
+        #    }  
         #if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
         #if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
         Select-EditSourceCFG
