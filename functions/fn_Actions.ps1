@@ -1094,7 +1094,6 @@ Function New-backupAppdata {
     If ($global:appdatabackuplog -eq "1") { 
         .\AppDatabackup.log 
     }
-    Set-Location $global:currentdir
 }
 Function Get-Savelocation {
     If (("" -eq $global:saves) -or ($null -eq $global:saves )) {
