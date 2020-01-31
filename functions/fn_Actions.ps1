@@ -167,10 +167,11 @@ Function Get-ValidateServer {
 }
 Function Get-UpdateServer {
     if ($global:DisableDiscordBackup -eq "1") {
-    Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-    Get-Steamtxt
-    Write-Host '****   Updating Server   ****' -ForegroundColor Magenta -BackgroundColor Black
-    .\steamcmd +runscript Updates-$global:server.txt}
+        Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
+        Get-Steamtxt
+        Write-Host '****   Updating Server   ****' -ForegroundColor Magenta -BackgroundColor Black
+        .\steamcmd +runscript Updates-$global:server.txt
+    }
     If (($?) -or ($LASTEXITCODE -eq 7)) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -ForegroundColor Yellow
         If ($global:command -ne "install") { 
@@ -446,7 +447,7 @@ Function Get-CheckForVars {
         $global:missingvars = $global:RCONPORT, $global:RCONPASSWORD
     }
     Else {
-        $global:missingvars = ${global:QUERYPORT}, ${global:IP}, $global:APPID, $global:PROCESS,${global:PORT}
+        $global:missingvars = ${global:QUERYPORT}, ${global:IP}, $global:APPID, $global:PROCESS, ${global:PORT}
     }
     Foreach ($global:missingvars in $global:missingvars) {
         If ( "" -eq $global:missingvars) {
@@ -1000,7 +1001,8 @@ Function Get-ChecktaskUnreg {
 }
 Function Get-ChecktaskDisable {
     If ($global:DisableChecktask -eq "1") {
-        Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
+        Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
+    }
     If ($?) {
         Write-Host '****   disabling scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
         Disable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
@@ -1011,7 +1013,8 @@ Function Get-ChecktaskDisable {
 }
 Function Get-ChecktaskEnable {
     if ($global:DisableChecktask -eq "1") {
-    Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1}
+        Get-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
+    }
     If ($?) {
         Write-Host '****   Enabling scheduled task   ****' -ForegroundColor Magenta -BackgroundColor Black
         Enable-ScheduledTask -TaskName "$global:server monitor" >$null 2>&1
@@ -1190,53 +1193,42 @@ Function Get-UserInput {
         [parameter(Position = 9)]$parm9,
         [parameter(Position = 10)]$parm10,
         [parameter(Position = 11)]$parm11)
+        Write-Host "$global:SMILEY_BLACK Press Enter to Accept default $global:SMILEY_BLACK" -F Y
     If ($parm0 -eq 1) {
-        Write-Host  "Enter IP" -F Cyan
-        $global:IP = Read-Host
+        If ((${global:IP} = Read-Host -P(Write-Host "Input IP [$global:defaultIP]: "-F CY -N )) -eq '') { $global:IP = "$global:defaultIP" }Else { $global:IP }
     }
     If ($parm1 -eq 1) {
-        Write-Host "Enter PORT" -F Cyan
-        $global:PORT = Read-Host 
+        If ((${global:PORT} = Read-Host -P(Write-Host "Input PORT [$global:defaultPORT]: "-F CY -N )) -eq '') { $global:PORT = "$global:defaultPORT" }Else { $global:PORT }
     }
     If ($parm2 -eq 1) {
-        Write-Host "Enter QUERYPORT" -F Cyan
-        $global:QUERYPORT = Read-Host
+        If ((${global:QUERYPORT} = Read-Host -P(Write-Host "Input QUERYPORT [$global:defaultQUERYPORT]: "-F CY -N )) -eq '') { $global:QUERYPORT = "$global:defaultQUERYPORT" }Else { $global:QUERYPORT }
     }
     If ($parm3 -eq 1) {
-        Write-Host "Enter RCONPORT" -F Cyan
-        $global:RCONPORT = Read-Host
+        If ((${global:RCONPORT} = Read-Host -P(Write-Host "Input RCONPORT [$global:defaultRCONPORT]: "-F CY -N )) -eq '') { $global:RCONPORT = "$global:defaultRCONPORT" }Else { $global:RCONPORT }
     }
     If ($parm4 -eq 1) {
-        Write-Host "Enter RCONPASSWORD" -F Cyan
-        $global:RCONPASSWORD = Read-Host
+        If ((${global:RCONPASSWORD} = Read-Host -P(Write-Host "Input RCONPASSWORD [$global:RANDOMPASSWORD]: "-F CY -N )) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }Else { $global:RCONPASSWORD }
     }
     If ($parm5 -eq 1) {
-        Write-Host "Enter HOSTNAME" -F Cyan
-        $global:HOSTNAME = Read-Host
+        If ((${global:HOSTNAME} = Read-Host -P(Write-Host "Input HOSTNAME [$env:USERNAME]: "-F CY -N )) -eq '') { $global:HOSTNAME = "$env:USERNAME" }Else { $global:HOSTNAME }
     }
     If ($parm6 -eq 1) {
-        Write-Host "Enter SERVERPASSWORD" -F Cyan
-        $global:SERVERPASSWORD = Read-Host
+        If ((${global:SERVERPASSWORD} = Read-Host -P(Write-Host "Input SERVERPASSWORD [$global:defaultSERVERPASSWORD]: "-F CY -N )) -eq '') { $global:SERVERPASSWORD = "$global:defaultSERVERPASSWORD" }Else { $global:SERVERPASSWORD }
     }
     If ($parm7 -eq 1) {
-        Write-Host "Enter MAXPLAYERS" -F Cyan
-        $global:MAXPLAYERS = Read-Host
+        If ((${global:MAXPLAYERS} = Read-Host -P(Write-Host "Input MAXPLAYERS [$global:defaultMAXPLAYERS]: "-F CY -N )) -eq '') { $global:MAXPLAYERS = "$global:defaultMAXPLAYERS" }Else { $global:MAXPLAYERS }
     }
     If ($parm8 -eq 1) {
-        Write-Host "Enter GSLT" -F Cyan
-        $global:GSLT = Read-Host
+        If ((${global:GSLT} = Read-Host -P(Write-Host "Input GSLT [$global:defaultGSLT]: "-F CY -N )) -eq '') { $global:GSLT = "$global:defaultGSLT" }Else { $global:GSLT }
     }
     If ($parm9 -eq 1) {
-        Write-Host "Enter MAP" -F Cyan
-        $global:MAP = Read-Host
+        If ((${global:MAP} = Read-Host -P(Write-Host "Input MAP [$global:defaultMAP]: "-F CY -N )) -eq '') { $global:MAP = "$global:defaultMAP" }Else { $global:MAP }
     }
     If ($parm10 -eq 1) {
-        Write-Host "Enter clientport" -F Cyan
-        $global:clientport = Read-Host
+        If ((${global:clientport} = Read-Host -P(Write-Host "Input clientport [$global:defaultclientport]: "-F CY -N )) -eq '') { $global:clientport = "$global:defaultclientport" }Else { $global:clientport }
     }
     If ($parm11 -eq 1) {
-        Write-Host "Enter sourcetvport" -F Cyan
-        $global:sourcetvport = Read-Host
+        If ((${global:sourcetvport} = Read-Host -P(Write-Host "Input sourcetvport [$global:defaultsourcetvport]: "-F CY -N )) -eq '') { $global:sourcetvport = "$global:defaultsourcetvport" }Else { $global:sourcetvport }
     }
 }
 Function Read-AppID {
@@ -1336,10 +1328,10 @@ Function Read-AppID {
         Set-Console  >$null 2>&1
         New-LaunchScriptDystopiaserverPS
     }
-#    ElseIf ($global:AppID -eq Template) {
-#        Set-Console  >$null 2>&1
-#        New-LaunchScriptTemplateserverPS
-#    }
+    #    ElseIf ($global:AppID -eq Template) {
+    #        Set-Console  >$null 2>&1
+    #        New-LaunchScriptTemplateserverPS
+    #    }
     Else {
         Write-Host "No Launch Script Found for this server" -ForegroundColor Yellow -BackgroundColor Black
         Exit
