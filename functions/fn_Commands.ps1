@@ -5,7 +5,6 @@
 #   '''    $    $$      $$""""  c$$$cc$$$c $$$$$$$$"$$$ $$""""   $$$$$$c    
 #  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
 #   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
-#----------      Install server    ----------------------
 Function Select-Steamer {
     param(
         [string]
@@ -314,10 +313,8 @@ Function Select-Steamer {
         Write-Host "backup"
         Write-Host "exit"
         Write-Host "gamedig"
-        Write-Host "gamedigPrivate"
         Write-Host "monitor"
         Write-Host "mcrcon"
-        Write-Host "mcrconPrivate"
         Write-Host "AutoRestart"
         Write-Host "discord"
         Write-Host "details"
