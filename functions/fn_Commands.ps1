@@ -18,13 +18,13 @@ Function Select-Steamer {
         $global:server)
     Set-Console  >$null 2>&1
     If (($global:command -eq "install") -and ($null -eq $global:server)) {     
-        Write-Host 'Input Server Folder Name make unique to instance [i.e. sdtdserver (No Spaces!)]: ' -F C -NoNewline
+        Write-Host 'Input Server Folder Name make unique to instance [i.e. sdtdserver (No Spaces!)]: ' -F C -N
         $global:server = Read-host
         Get-TestString
-        Write-Host 'Input Steam Server App ID: ' -F C -NoNewline 
+        Write-Host 'Input Steam Server App ID: ' -F C -N 
         $global:AppID = Read-host
         Get-TestInterger
-        Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -F C -NoNewline 
+        Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -F C -N 
         $global:Branch = Read-host
         New-ServerFolder
         Get-Steam
@@ -35,10 +35,10 @@ Function Select-Steamer {
     }
     elseif ($global:command -eq "install") {
         Get-TestString
-        Write-Host 'Input Steam Server App ID: ' -F C -NoNewline 
+        Write-Host 'Input Steam Server App ID: ' -F C -N 
         $global:AppID = Read-host
         Get-TestInterger
-        Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -F C -NoNewline 
+        Write-Host 'Add Argument?, -beta... or leave Blank for none: ' -F C -N 
         $global:Branch = Read-host
         New-ServerFolder
         Get-Steam
@@ -48,7 +48,7 @@ Function Select-Steamer {
         Get-Finished
     }
     elseif (($global:command -eq "update") -and ($null -eq $global:server)) {   
-        Write-Host 'Server FolderName for server updates: ' -F C -NoNewline
+        Write-Host 'Server FolderName for server updates: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -69,7 +69,7 @@ Function Select-Steamer {
         Get-Finished
     }
     elseif (($global:command -eq "validate") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server validate: ' -F C -NoNewline
+        Write-Host 'Server FolderName for server validate: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -94,7 +94,7 @@ Function Select-Steamer {
         Get-Finished
     }
     elseif (($global:command -eq "start") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server launch, warning stops running process!: ' -F C -NoNewline
+        Write-Host 'Server FolderName for server launch, warning stops running process!: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -117,7 +117,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "stop") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server stop, warning stops running process!: ' -F C -NoNewline
+        Write-Host 'Server FolderName for server stop, warning stops running process!: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -136,7 +136,7 @@ Function Select-Steamer {
         Get-ClearVariables 
     }
     elseif (($global:command -eq "restart") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server restart, warning stops running process!: ' -F C -NoNewline
+        Write-Host 'Server FolderName for server restart, warning stops running process!: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -161,7 +161,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "check") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server check: ' -F C -NoNewline
+        Write-Host 'Server FolderName for server check: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -178,7 +178,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "backup") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for server backup: ' -F C -NoNewline
+        Write-Host 'Server FolderName for server backup: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -207,7 +207,7 @@ Function Select-Steamer {
         Get-Finished  
     }
     elseif (($global:command -eq "monitor") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for monitor: ' -F C -NoNewline
+        Write-Host 'Server FolderName for monitor: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -224,7 +224,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "AutoRestart") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for AutoRestart: ' -F C -NoNewline
+        Write-Host 'Server FolderName for AutoRestart: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -241,7 +241,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "gamedig") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for gamedig: ' -F C -NoNewline
+        Write-Host 'Server FolderName for gamedig: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
@@ -260,7 +260,7 @@ Function Select-Steamer {
         Get-ClearVariables
     }
     elseif (($global:command -eq "mcrcon") -and ($null -eq $global:server)) {
-        Write-Host 'Server FolderName for mcrcon: ' -F C -NoNewline
+        Write-Host 'Server FolderName for mcrcon: ' -F C -N
         $global:server = Read-host
         Get-TestString
         Get-FolderNames
