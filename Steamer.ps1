@@ -38,8 +38,8 @@ $global:sevenzip = "https://www.7-zip.org/a/7za920.zip"
 $global:steamurl = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $global:steamoutput = "steamcmd.zip"
 # Steamer url
-$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
-#$global:steamerurl = "https://github.com/Robomikel/steamer/archive/untested.zip"
+#$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
+$global:steamerurl = "https://github.com/Robomikel/steamer/archive/untested.zip"
 # mcrcon
 $global:mcrconurl = "https://github.com/Tiiffi/mcrcon/releases/download/v0.7.1/mcrcon-0.7.1-windows-x86-32.zip"
 
@@ -58,14 +58,11 @@ $global:NOTE2 = ([char]9835)
 $global:CHECKMARK = ([char]8730) 
 
 .$global:currentdir\functions\fn_Actions.ps1
-.$global:currentdir\functions\fn_Ark.ps1
 .$global:currentdir\functions\fn_Commands.ps1
 .$global:currentdir\functions\fn_CreateLaunchScript.ps1
 .$global:currentdir\functions\fn_CSGO.ps1
 .$global:currentdir\functions\fn_DOI.ps1
 .$global:currentdir\functions\fn_Insurgency.ps1
-.$global:currentdir\functions\fn_KF2Server.ps1
-.$global:currentdir\functions\fn_Left4Dead2.ps1
 .$global:currentdir\functions\fn_Miscreated.ps1
 .$global:currentdir\functions\fn_Rust.ps1
 .$global:currentdir\functions\fn_Sandstorm.ps1

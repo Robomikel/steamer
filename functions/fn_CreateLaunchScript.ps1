@@ -44,8 +44,185 @@ Function New-LaunchScriptArma3serverPS {
         # -autoinit only for presistant missions
         $global:launchParams = '@("$global:EXE -ip=${global:IP} -port=${global:PORT} -cfg=$global:currentdir\$global:server\$global:SERVERCFGDIR\network.cfg -config=$global:currentdir\$global:server\$global:SERVERCFGDIR\server.cfg -mod= -servermod= -bepath=$global:currentdir\$global:server\battleye\ -profiles=SC -name=SC -loadmissiontomemory")'
 
+}
+Function New-LaunchScriptKF2serverPS {
+        # Killing Floor 2 Server
+        # - - - - - - - - - - - -
+        # Requiered Dont change 
+        # # Version 2.0
+        # $global:MODDIR=""
+        $global:EXE = "KFServer"   
+        $global:EXEDIR = "Binaries\Win64"
+        $global:GAME = "killingfloor2"
+        $global:PROCESS = "KFserver"
+        $global:SERVERCFGDIR = "\KFGame\Config"
+    
+        Get-StopServerInstall
+        
+        $global:gamedirname = "KillingFloor2"
+        $global:config1 = "KFWeb.ini"
+        $global:config2 = "LinuxServer-KFEngine.ini"
+        $global:config3 = "LinuxServer-KFGame.ini"
+        $global:config4 = "LinuxServer-KFInput.ini"
+        $global:config5 = "LinuxServer-KFSystemSettings.ini"
+    
+        Remove-item $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-*.ini -Force  >$null 2>&1
+        Get-Servercfg
+        Set-Location $global:currentdir\$global:server\$global:SERVERCFGDIR
+        Get-ChildItem -Filter "LinuxServer-*.ini" -Recurse | Rename-Item -NewName { $_.name -replace 'LinuxServer', 'PCServer' } -Force
+        Set-Location $global:currentdir\$global:server
+        # - - - - - - - - - - - - -
+    #    If ( $global:Version -eq "1" ) {
+    #        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+    #        #Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+    #        #${global:IP} = Read-Host
+    #        Write-Host "Changing the Port will change the query Port. N+? if not sure keep default" -ForegroundColor Yellow
+    #        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "7777" }else { $global:PORT }
+    #        if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27015" }else { $global:QUERYPORT }
+    #        if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [KF-BioticsLab]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "KF-BioticsLab" }else { $global:MAP }
+    #        if (($global:GAMEMODE = Read-Host -Prompt (Write-Host "Input gamemode, Press enter to accept default value [KFGameContent.KFGameInfo_Endless]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:GAMEMODE = "KFGameContent.KFGameInfo_Endless" }else { $global:GAMEMODE }
+    #        if (($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (0-3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:DIFF = "0" }else { $global:DIFF }
+    #        Write-Host 'Input Server Name: ' -ForegroundColor Cyan -NoNewline
+    #        $global:HOSTNAME = Read-host
+    #        if (($global:ADMINPASSWORD = Read-Host -Prompt (Write-Host "Input ADMIN password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:ADMINPASSWORD = "$global:RANDOMPASSWORD" }else { $global:ADMINPASSWORD }
+    #    }
+    #    ElseIf ( $global:Version -eq "2" ) {
+            #  First Run Vars \/ \/ Add Here
+            $global:defaultPORT = "7777"
+            $global:defaultQUERYPORT = "27015"
+            $global:defaultMAP = "KF-BioticsLab"
+            $global:defaultGAMEMODE = "KFGameContent.KFGameInfo_Endless"
+            $global:defaultDIFF = "0"
+            $global:defaultHOSTNAME = "PS Steamer"
+            $global:defaultADMINPASSWORD = "$global:RANDOMPASSWORD"
+            #  Edit Vars here     /\ /\ /\
+    #    }
+    #    ElseIf ( $global:Version -eq "0" ) {
+            Get-UserInput 0 1 1 0 0 1 0 0 0 1 0 0 1 1 1 0
+    #    }
+        # VERSION 2 Requieres  Vars
+        Write-Host "***  starting Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
+        .\KF2Server.bat
+        timeout 5
+        Write-Host "***  stopping Server before Setting PCServer-KFGame.ini Please Wait ***" -ForegroundColor Magenta -BackgroundColor Black
+        Get-StopServer
+        Write-Host "***  Editing Default Server Name PCServer-KFGame.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-KFGame.ini -Raw) -replace "\bKilling Floor 2 Server\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFGame.ini
+        Write-Host "***  Adding ADMIN PASSWORD PCServer-KFGame.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-KFGame.ini -Raw) -replace "AdminPassword=", "AdminPassword=$global:ADMINPASSWORD") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFGame.ini
+        Write-Host "***  Enabling Webmin in KFWeb.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\KFWeb.ini -Raw) -replace "\bbEnabled=false\b", "bEnabled=true") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\KFWeb.ini
+        Write-Host "***  Disabling Takeover PCServer-KFEngine.ini ***" -ForegroundColor Magenta -BackgroundColor Black
+        ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\PCServer-KFEngine.ini -Raw) -replace "\bbUsedForTakeover=TRUE\b", "bUsedForTakeover=FALSE") | Set-Content -Path $global:currentdir\$global:server\KFGame\Config\PCServer-KFEngine.ini
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?Game=${global:GAMEMODE}?Difficulty=${global:DIFF}? -Port=${global:PORT} -QueryPort=${global:QUERYPORT}")'  
+        Set-Location $global:currentdir
+}
+Function New-LaunchScriptLFD2serverPS {
+        #----------   left4dead2 Server CFG    -------------------
+        # Steamer Vars Do Not Edit
+        $global:MODDIR = "left4dead2"
+        $global:EXEDIR = ""
+        $global:EXE = "l4d2"
+        $global:GAME = "left4dead2"
+        $global:PROCESS = "l4d2"
+        $global:SERVERCFGDIR = "left4dead2\cfg"
+        
+        Get-StopServerInstall
+        # Game-Server-Configs
+        $global:gamedirname = "Left4Dead2"
+        $global:config1 = "server.cfg"
+        Get-Servercfg
+        $global:RCONPORT = "${global:PORT}"
+        # - - - - - - - - - - - - -
+        Select-RenameSource
+    #    If ( $global:Version -eq "1" ) {
+    #        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+    #        Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
+    #        ${global:IP} = Read-Host
+    #        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
+    #        if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
+    #        if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [c1m1_hotel]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "c1m1_hotel" }else { $global:MAP }
+    #        Write-Host 'Input maxplayers[1-8]: ' -ForegroundColor Cyan -NoNewline
+    #        $global:MAXPLAYERS = Read-host 
+    #        Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
+    #        $global:HOSTNAME = Read-host
+    #        if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
+    #    }
+    #    ElseIf ( $global:Version -eq "2" ) {
+            # Version 2.0
+            #  First Run Vars \/ \/ Add Here
+            ${global:defaultIP} = "${global:IP}"
+            $global:defaultPORT = "27015"
+            $global:defaultCLIENTPORT = "27005"
+            $global:defaultMAP = "c1m1_hotel"
+            $global:defaultMAXPLAYERS = "8"
+            $global:defaultHOSTNAME = "PS Steamer"
+            $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
+            #  Edit Vars here     /\ /\ /\
+    
+    #    }
+    #    ElseIf ( $global:Version -eq "0" ) {
+            Get-UserInput 1 1 0 0 1 1 0 1 0 1 1
+    #    }  
+        #if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
+        #if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
+        Select-EditSourceCFG
+        $global:launchParams = '@("$global:EXE -console -game left4dead2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +hostip ${global:EXTIP} +maxplayers ${global:MAXPLAYERS} +map `"${global:MAP}`" -condebug ")'
+        Get-SourceMetMod
+}
+    
+Function New-LaunchScriptArkPS {
+        # Ark: Survival Evolved Server
+        # - - - - - - - - - - - -
+        $global:MODDIR = ""
+        $global:EXE = "ShooterGameServer"
+        $global:EXEDIR = "ShooterGame\Binaries\Win64"
+        $global:GAME = "arkse"
+        $global:PROCESS = "ShooterGameServer"
+        $global:SERVERCFGDIR = "ShooterGame\Saved\Config\WindowsServer"
+        
+        Get-StopServerInstall
+        $global:gamedirname = "ARKSurvivalEvolved"
+        $global:config1 = "GameUserSettings.ini"
+        Get-Servercfg
+    
+        # - - - - - - - - - - - - -
+    
+        #    If ( $global:Version -eq "1" ) {
+        #        Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
+        #        Write-Host 'Input Server local IP: ' -ForegroundColor Cyan -NoNewline
+        #        ${global:IP} = Read-host
+        #        if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [7777]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "7777" }else { $global:PORT }
+        #        if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27015]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27015" }else { $global:QUERYPORT }
+        #        if (($global:RCONPORT = Read-Host -Prompt (Write-Host "Input Server Rcon Port,Press enter to accept default value [27020]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPORT = "27020" }else { $global:RCONPORT }
+        #        if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input RCON password Alpha Numeric:, Press enter to accept Random String value [$global:RANDOMPASSWORD]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
+        #        if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map, Press enter to accept default value [TheIsland]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "TheIsland" }else { $global:MAP }
+        #        if (($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [70]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAXPLAYERS = "70" }else { $global:MAXPLAYERS }
+        #        Write-Host 'Input server hostname: ' -ForegroundColor Cyan -NoNewline
+        #        $global:HOSTNAME = Read-host
+        #    }
+        #    ElseIf ( $global:Version -eq "2" ) {
+        # Version 2.0
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        $global:defaultPORT = "7777"
+        $global:defaultQUERYPORT = "27015"
+        $global:defaultRCONPORT = "27020"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
+        $global:defaultMAP = "TheIsland"
+        $global:defaultMAXPLAYERS = "70"
+        $global:defaultHOSTNAME = "PS Steamer"
+        #     Add here     /\ /\ /\
+        #    }
+        #    ElseIf ( $global:Version -eq "0" ) {
+        Get-UserInput 1 1 1 1 1 1 0 1 0 1 0 0
+        #    }
+        Select-EditSourceCFG
+    
+    
+        # Version 2.0
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE ${global:MAP}?AltSaveDirectoryName=${global:MAP}?listen?MultiHome=${global:IP}?MaxPlayers=${global:MAXPLAYERS}?QueryPort=${global:QUERYPORT}?RCONEnabled=True?RCONPort=${global:RCONPORT}?ServerAdminPassword=${global:RCONPASSWORD}?Port=${global:PORT} -automanagedmods")'
 }    
-  
 Function New-LaunchScriptSdtdserverPS {
         #----------   7Days2Die Ask for input for server cfg    -------------------
         $global:MODDIR = ""
@@ -451,7 +628,7 @@ Function New-LaunchScriptHL2DMserverPS {
         Get-Servercfg
   
         # Default Vars
-        $global:defaultip="$global:ip"
+        $global:defaultip = "$global:ip"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
@@ -505,7 +682,7 @@ Function New-LaunchScriptDystopiaserverPS {
         Get-Servercfg  
         
         # Default Vars
-        $global:defaultip="$global:ip"
+        $global:defaultip = "$global:ip"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"

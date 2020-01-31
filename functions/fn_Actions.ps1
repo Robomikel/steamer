@@ -1191,8 +1191,11 @@ Function Get-UserInput {
         [parameter(Position = 7)]$parm7,
         [parameter(Position = 8)]$parm8,
         [parameter(Position = 9)]$parm9,
-        [parameter(Position = 10)]$parm10,
-        [parameter(Position = 11)]$parm11)
+        [parameter(Position = 11)]$parm11,
+        [parameter(Position = 12)]$parm12,
+        [parameter(Position = 13)]$parm13,
+        [parameter(Position = 14)]$parm14,
+        [parameter(Position = 15)]$parm15)
         Write-Host "$global:SMILEY_BLACK Press Enter to Accept default $global:SMILEY_BLACK" -F Y
     If ($parm0 -eq 1) {
         If ((${global:IP} = Read-Host -P(Write-Host "Input IP [$global:defaultIP]: "-F CY -N )) -eq '') { $global:IP = "$global:defaultIP" }Else { $global:IP }
@@ -1229,6 +1232,18 @@ Function Get-UserInput {
     }
     If ($parm11 -eq 1) {
         If ((${global:sourcetvport} = Read-Host -P(Write-Host "Input sourcetvport [$global:defaultsourcetvport]: "-F CY -N )) -eq '') { $global:sourcetvport = "$global:defaultsourcetvport" }Else { $global:sourcetvport }
+    }
+    If ($parm12 -eq 1) {
+        If ((${global:GAMEMODE} = Read-Host -P(Write-Host "Input sourcetvport [$global:defaultGAMEMODE]: "-F CY -N )) -eq '') { $global:GAMEMODE = "$global:defaultGAMEMODE" }Else { $global:GAMEMODE }
+    }
+    If ($parm13 -eq 1) {
+        If ((${global:DIFF} = Read-Host -P(Write-Host "Input sourcetvport [$global:defaultDIFF]: "-F CY -N )) -eq '') { $global:DIFF = "$global:defaultDIFF" }Else { $global:DIFF }
+    }
+    If ($parm14 -eq 1) {
+        If ((${global:ADMINPASSWORD} = Read-Host -P(Write-Host "Input sourcetvport [$global:defaultADMINPASSWORD]: "-F CY -N )) -eq '') { $global:ADMINPASSWORD = "$global:defaultADMINPASSWORD" }Else { $global:ADMINPASSWORD }
+    }
+    If ($parm15 -eq 1) {
+        If ((${global:xx} = Read-Host -P(Write-Host "Input sourcetvport [$global:xx]: "-F CY -N )) -eq '') { $global:xx = "$global:xx" }Else { $global:xx }
     }
 }
 Function Read-AppID {
