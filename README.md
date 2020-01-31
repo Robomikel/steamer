@@ -48,6 +48,7 @@ Install steam server ```>_./steamer install misserver```
    * BrainBread 2 Dedicated Server (475370)
    * Dystopia Dedicated Server (17585)
    * Half-Life 2: Deathmatch Dedicated Server (232370)
+   * Black Mesa: Deathmatch Dedicated Server (346680)
    -----
  - Manage Steam server with features
    * install steam server
