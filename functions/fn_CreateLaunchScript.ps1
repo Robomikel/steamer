@@ -346,6 +346,7 @@ Function New-LaunchScriptAoCserverPS {
         $global:RCONPORT = "${global:PORT}"
         
         Get-StopServerInstall
+        $global:RCONPORT = "${global:PORT}"
         $global:gamedirname = "AgeOfChivalry"
         $global:config1 = "server.cfg"
         Get-Servercfg
@@ -394,6 +395,7 @@ Function New-LaunchScriptswarmserverPS {
 
         # GSLT used for running a public server.
         #  First Run Vars \/ \/ Add Here
+        $global:RCONPORT = "${global:PORT}"
         $global:defaultMAP = "lobby"
         $global:defaultMAXPLAYERS = "4"
         #     Add here     /\ /\ /\ 
@@ -545,7 +547,8 @@ Function New-LaunchScriptHL2DMserverPS {
         Get-Servercfg
   
         # Default Vars
-        $global:defaultip = "$global:ip"
+        $global:RCONPORT = "${global:PORT}"
+        $global:defaultip = "${global:ip}"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
@@ -599,7 +602,8 @@ Function New-LaunchScriptDystopiaserverPS {
         Get-Servercfg  
         
         # Default Vars
-        $global:defaultip = "$global:ip"
+        $global:RCONPORT = "${global:PORT}"
+        $global:defaultip = "${global:ip}"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
@@ -620,9 +624,113 @@ Function New-LaunchScriptDystopiaserverPS {
         # OR EXE NOT In ROOT server folder add EXEDIR
         $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -game `"$global:currentdir\${global:server}\dystopia`" -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'      
 }
+Function New-LaunchScriptBlackMesaserverPS {
+        #        * * Add to Read-AppID in fn_Actions.ps1 * *
+        # Black Mesa: Deathmatch
+        # APP ID # 346680
+        # WIKI
+        # Requiered Dont change 
+        # # Version 2.0
+        #--->Requieres \/ \/ Get-SourceMetMod
+        $global:MODDIR = ""
+        #--->Exe NOT in root server folder \/\/
+        $global:EXEDIR = ""
+        #--->rename srcds to this name \/\/
+        $global:EXE = "bmdm"
+        #--->Requieres \/ \/ game dig 
+        $global:GAME = "protocol-valve"
+        #--->Requieres \/ \/ AppData Roaming save
+        $global:SAVES = ""
+        #--->Requieres \/ \/ maybe same as game exe?
+        $global:PROCESS = "bmdm"
+        #--->game config folder
+        $global:SERVERCFGDIR = "bms\cfg"
+        #--->Stop existing process if running        
+        Get-StopServerInstall
+        #--->Game-server-manger folder \/
+        $global:gamedirname = "BlackMesa"
+        #--->Game-server-manger config name \/
+        $global:config1 = "server.cfg"
+        #--->Get game-server-config \/\/
+        Get-Servercfg
+        #--->Default Vars
+        $global:RCONPORT = "${global:PORT}"
+        $global:defaultip = "${global:ip}"
+        $global:defaultport = "27015"
+        $global:defaultclientport = "27005"
+        $global:defaultsourcetvport = "27020"
+        $global:defaultdefaultmap = "dm_bounce"
+        $global:defaultmaxplayers = "16"
+
+        #--->input questions 
+        Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1 0 0 0 0
+
+        #--->rename srcds.exe \/\/
+        Select-RenameSource
+
+        #--->Edit game config \/ SERVERNAME ADMINPASSWORD
+        Select-EditSourceCFG
+
+        # --->Launch 
+        $global:launchParams = '@("$global:EXE -console -game bms -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers ${maxplayers}")'
+        # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
+        #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
+}
+
+Function New-LaunchScriptDODSserverPS {
+        #* * Add to Read-AppID in fn_Actions.ps1 * *
+        # Day of Defeat Source Dedicated Server
+        # APP ID # 232290  
+        # https://kb.firedaemon.com/support/solutions/articles/4000086944-day-of-defeat-source
+        # Requiered Dont change 
+        # # Version 2.0
+        #--->Requieres \/ \/ Get-SourceMetMod
+        $global:MODDIR = ""
+        #--->Exe NOT in root server folder \/\/
+        $global:EXEDIR = ""
+        #--->rename srcds to this name \/\/
+        $global:EXE = "dods"
+        #--->Requieres \/ \/ game dig 
+        $global:GAME = "dods"
+        #--->Requieres \/ \/ AppData Roaming save
+        $global:SAVES = ""
+        #--->Requieres \/ \/ maybe same as game exe?
+        $global:PROCESS = "dods"
+        #--->game config folder
+        $global:SERVERCFGDIR = "dod\cfg"
+        #--->Stop existing process if running        
+        Get-StopServerInstall
+        #--->Game-server-manger folder \/
+        $global:gamedirname = "DayOfDefeat"
+        #--->Game-server-manger config name \/
+        $global:config1 = "server.cfg"
+        #--->Get game-server-config \/\/
+        Get-Servercfg
+        #--->Default Vars
+        $global:RCONPORT = "${global:PORT}"
+        $global:defaultip = "0.0.0.0"
+        $global:defaultport = "27015"
+        #$global:defaultclientport="27005"
+        $global:defaultmap = "dod_Anzio"
+        $global:defaultmaxplayers = "16"
+        #--->input questions 1 1 0 0 0 0 0 1 0 1 1 0 0
+        Get-UserInput 1 1 0 0 0 0 0 1 0 1 0 0 0 
+        #--->rename srcds.exe \/\/
+        Select-RenameSource
+        #--->Edit game config \/ SERVERNAME ADMINPASSWORD
+        Select-EditSourceCFG
+        # --->Launch 
+        $global:launchParams = '@("$global:EXE -console -game `"dods`" -secure +map ${defaultmap} -autoupdate +log on +maxplayers ${maxplayers} -port ${port}  +ip ${ip} +exec server.cfg")'
+        # $global:launchParams = '@("$global:EXE -console -game dod -strictportbind +ip ${ip} -port ${port} +clientport ${clientport} +map ${defaultmap} +servercfgfile server.cfg -maxplayers ${maxplayers}")'
+        # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
+        #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
+}
+
+
+
 #Function New-LaunchScriptTEMPLATEserverPS {
 #        * * Add to Read-AppID in fn_Actions.ps1 * *
-# TEMPLATE Server
+# TEMPLATE Dedicated Server
 # APP ID #
 # WIKI
 # Requiered Dont change 
@@ -661,6 +769,7 @@ Function New-LaunchScriptDystopiaserverPS {
 # Get-Servercfg
 
 #--->Default Vars
+# $global:RCONPORT = "${global:PORT}"
 # $global:ip="0.0.0.0"
 
 #--->input questions 

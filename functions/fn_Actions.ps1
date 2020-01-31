@@ -1343,6 +1343,14 @@ Function Read-AppID {
         Set-Console  >$null 2>&1
         New-LaunchScriptDystopiaserverPS
     }
+    ElseIf ($global:AppID -eq 346680) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptBlackMesaserverPS
+    }
+    ElseIf ($global:AppID -eq 232290) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptDODSserverPS
+    }
     #    ElseIf ($global:AppID -eq Template) {
     #        Set-Console  >$null 2>&1
     #        New-LaunchScriptTemplateserverPS
