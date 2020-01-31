@@ -708,6 +708,7 @@ Function New-LaunchScriptDODSserverPS {
         #--->Get game-server-config \/\/
         Get-Servercfg
         #--->Default Vars
+        $global:RCONPORT = "${global:PORT}"
         $global:defaultip = "0.0.0.0"
         $global:defaultport = "27015"
         #$global:defaultclientport="27005"
@@ -769,6 +770,7 @@ Function New-LaunchScriptDODSserverPS {
 # Get-Servercfg
 
 #--->Default Vars
+# $global:RCONPORT = "${global:PORT}"
 # $global:ip="0.0.0.0"
 
 #--->input questions 
