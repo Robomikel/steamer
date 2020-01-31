@@ -364,7 +364,7 @@ Function New-LaunchScriptAHL2serverPS {
         # game config
         Select-EditSourceCFG
         
-        $global:launchParams = '@("$global:EXE -game ahl2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
+        $global:launchParams = '@("$global:EXE -console -game ahl2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
 }
 Function New-LaunchScriptBB2serverPS {     
         # BrainBread 2 Dedicated Server
@@ -419,7 +419,7 @@ Function New-LaunchScriptBB2serverPS {
         # game config
         Select-EditSourceCFG
 
-        $global:launchParams = '@("$global:EXE -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
+        $global:launchParams = '@("$global:EXE -console -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
 }
 #Function New-LaunchScriptTEMPLATEserverPS {
         #        * * Add to Read-AppID in fn_Actions.ps1 * *
@@ -534,7 +534,7 @@ Function New-LaunchScriptHL2DMserverPS {
         Select-EditSourceCFG
 
         # VERSION 2 launch params exe in root \/\/
-        $global:launchParams = '@("$global:EXE -game hl2mp -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+        $global:launchParams = '@("$global:EXE -console -game hl2mp -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
         # $global:launchParams = '@("$global:EXE -console -game "hl2dm" -secure +map dm_lockdown -autoupdate +log on +maxplayers 32 -port 27015 +ip 1.2.3.4 +exec server.cfg")'
 
         # OR EXE NOT In ROOT server folder add EXEDIR

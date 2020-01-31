@@ -46,6 +46,8 @@ Install steam server ```>_./steamer install misserver```
    * Ballistic Overkill Dedicated Server (416880)
    * Action: Source Dedicated Server (985050)
    * BrainBread 2 Dedicated Server (475370)
+   * Dystopia Dedicated Server (17585)
+   * Half-Life 2: Deathmatch Dedicated Server (232370)
    -----
  - Manage Steam server with features
    * install steam server
