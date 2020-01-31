@@ -1169,8 +1169,8 @@ Function Select-StartServer {
 }
 Function Select-RenameSource {
     Write-Host "***  Renaming srcds.exe to $global:EXE to avoid conflict with local source Engine (srcds.exe) server  ***" -ForegroundColor Magenta -BackgroundColor Black
-    Rename-Item -Path "$global:currentdir\$global:server\srcds.exe" -NewName "$global:currentdir\$global:server\$global:EXE.exe" >$null 2>&1
-    Rename-Item -Path "$global:currentdir\$global:server\srcds_x64.exe" -NewName "$global:currentdir\$global:server\$global:EXE-x64.exe" >$null 2>&1
+    Rename-Item -Path "$global:currentdir\$global:server\$global:EXEDIR\srcds.exe" -NewName "$global:currentdir\$global:server\$global:EXEDIR\$global:EXE.exe" >$null 2>&1
+    Rename-Item -Path "$global:currentdir\$global:server\$global:EXEDIR\srcds_x64.exe" -NewName "$global:currentdir\$global:server\$global:EXEDIR\$global:EXE-x64.exe" >$null 2>&1
 }
 Function Select-EditSourceCFG {
     Write-Host "***  Editing Default server.cfg  ***" -ForegroundColor Magenta -BackgroundColor Black
@@ -1187,7 +1187,9 @@ Function Get-UserInput {
         [parameter(Position = 6)]$parm6,
         [parameter(Position = 7)]$parm7,
         [parameter(Position = 8)]$parm8,
-        [parameter(Position = 9)]$parm9)
+        [parameter(Position = 9)]$parm9,
+        [parameter(Position = 10)]$parm10,
+        [parameter(Position = 11)]$parm11)
     If ($parm0 -eq 1) {
         Write-Host  "Enter IP" -F Cyan
         $global:IP = Read-Host
@@ -1230,11 +1232,11 @@ Function Get-UserInput {
     }
     If ($parm10 -eq 1) {
         Write-Host "Enter clientport" -F Cyan
-        $global:MAP = Read-Host
+        $global:clientport = Read-Host
     }
     If ($parm11 -eq 1) {
         Write-Host "Enter sourcetvport" -F Cyan
-        $global:MAP = Read-Host
+        $global:sourcetvport = Read-Host
     }
 }
 Function Read-AppID {

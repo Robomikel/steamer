@@ -552,7 +552,7 @@ Function New-LaunchScriptDystopiaserverPS {
         # Requieres \/ \/ Get-SourceMetMod
         $global:MODDIR = ""
         # Exe NOT in root server folder \/\/
-        $global:EXEDIR = "bin"
+        $global:EXEDIR = "bin\win32"
         # rename srcds to this name \/\/
         $global:EXE = "Dystopia"
         # Requieres \/ \/ game dig
@@ -562,7 +562,7 @@ Function New-LaunchScriptDystopiaserverPS {
         # Requieres \/ \/ maybe same as game
         $global:PROCESS = "Dystopia"
         #---game config folder \/\/
-        $global:SERVERCFGDIR = ""
+        $global:SERVERCFGDIR = "dystopia\cfg"
         #---Stop existing process if running          
         Get-StopServerInstall
         # Game-server-manger folder \/
@@ -573,7 +573,7 @@ Function New-LaunchScriptDystopiaserverPS {
         Get-Servercfg  
         
         # input questions \/\/
-        Get-UserInput 1 1 0 0 1 1 0 1 0 1 1 1
+        Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
 
         # rename srcds.exe \/\/
         Select-RenameSource
@@ -587,8 +587,15 @@ Function New-LaunchScriptDystopiaserverPS {
 
         #-game "${serverfiles}/dystopia" -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +map ${defaultmap} +sv_setsteamaccount ${gslt} +servercfgfile ${servercfg} -maxplayers ${maxplayers}
 
+        #ip="0.0.0.0"
+        #port="27015"
+        #clientport="27005"
+        #sourcetvport="27020"
+        #defaultmap="dys_broadcast"
+        #maxplayers="16"
+
         # OR EXE NOT In ROOT server folder add EXEDIR
-         $global:launchParams = '@("$global:EXEDIR\$global:EXE -game "${global:server}/dystopia" -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+         $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -game `"$global:currentdir\${global:server}\dystopia`" -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
         # SHOUBI testing weird stuff ^^
         
 }
