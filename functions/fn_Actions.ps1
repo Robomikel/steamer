@@ -16,12 +16,12 @@ Function Set-SteamInfo {
     If ($decision -eq 1) {
         $global:ANON = "yes"
         Install-Anonserver
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
     }
     Else {
         $global:ANON = "no"
         Install-Anonserver
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
     }
 }
 Function Install-Anonserver {
@@ -222,11 +222,11 @@ Function New-TryagainNew {
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     If ($decision -eq 0) {
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
         Select-Steamer $global:command $global:server
     }
     Else {
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
         Exit
     }
 }
@@ -290,10 +290,10 @@ Function Set-SteamInfoAppID {
     If ($decision -eq 0) {
         Set-VariablesPS
         Read-AppID
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
     }
     Else {
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
     }
 }
 Function Get-GamedigServerv2 {
@@ -414,12 +414,12 @@ Function New-ServerFolderq {
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     If ($decision -eq 0) {
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
         $global:command = "install"
         Select-Steamer $global:command $global:server
     }
     Else {
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
         Exit
     }
 }
@@ -818,10 +818,10 @@ Function Get-SourceMetMod {
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     If ($decision -eq 0) {
         Get-SourceMetaMod
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
     } 
     Else {
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
     }
 }
 Function Get-SourceMetaMod {
@@ -873,10 +873,10 @@ Function Get-OxideQ {
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     If ($decision -eq 0) {
         Get-Oxide
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
     } 
     Else {
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
     }
 }
 Function Get-Oxide {
@@ -961,12 +961,12 @@ Function Set-MonitorJob {
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
     If ($decision -eq 0) {
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
         Get-ChecktaskUnreg
         New-MontiorJobBG
     }
     Else {
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
         Get-ChecktaskUnreg
         New-MontiorJob
     }
@@ -979,12 +979,12 @@ Function Set-RestartJob {
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
     If ($decision -eq 0) {
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
         Get-ChecktaskUnreg
         New-RestartJobBG
     }
     Else {
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
         Get-ChecktaskUnreg
         New-RestartJob
     }
@@ -1112,11 +1112,11 @@ Function New-AppDataSave {
     $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
     If ($decision -eq 0) {
-        Write-Host 'EnteR Y'
+        Write-Host 'Entered Y'
         New-backupAppdata
     } 
     Else {
-        Write-Host 'EnteR N'
+        Write-Host 'Entered N'
         Exit
     }
 }
