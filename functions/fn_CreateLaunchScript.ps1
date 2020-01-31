@@ -542,3 +542,53 @@ Function New-LaunchScriptHL2DMserverPS {
         # SHOUBI testing weird stuff ^^
         
 }
+Function New-LaunchScriptDystopiaserverPS {
+        #        * * Add to Read-AppID in fn_Actions.ps1 * *
+        # Dystopia Dedicated Server
+        #      17585 
+        # https://steamdb.info/app/17585/
+        # Requiered Dont change 
+        # Version 2.0
+        # Requieres \/ \/ Get-SourceMetMod
+        $global:MODDIR = ""
+        # Exe NOT in root server folder \/\/
+        $global:EXEDIR = "bin"
+        # rename srcds to this name \/\/
+        $global:EXE = "Dystopia"
+        # Requieres \/ \/ game dig
+        $global:GAME = "protocol-valve"
+        # Requieres \/ \/ AppData Roaming save folder
+        $global:SAVES = ""
+        # Requieres \/ \/ maybe same as game
+        $global:PROCESS = "Dystopia"
+        #---game config folder \/\/
+        $global:SERVERCFGDIR = ""
+        #---Stop existing process if running          
+        Get-StopServerInstall
+        # Game-server-manger folder \/
+        $global:gamedirname = "Dystopia"
+        # Game-server-manger config name \/
+        $global:config1 = "server.cfg"
+        # Get game-server-config  \/\/
+        Get-Servercfg  
+        
+        # input questions \/\/
+        Get-UserInput 1 1 0 0 1 1 0 1 0 1 1 1
+
+        # rename srcds.exe \/\/
+        Select-RenameSource
+
+        #---- Edit game config \/ SERVERNAME ADMINPASSWORD
+        Select-EditSourceCFG
+
+        # VERSION 2 launch params exe in root \/\/
+        #$global:launchParams = '@("$global:EXE -game hl2mp -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+        # $global:launchParams = '@("$global:EXE -console -game "hl2dm" -secure +map dm_lockdown -autoupdate +log on +maxplayers 32 -port 27015 +ip 1.2.3.4 +exec server.cfg")'
+
+        #-game "${serverfiles}/dystopia" -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +map ${defaultmap} +sv_setsteamaccount ${gslt} +servercfgfile ${servercfg} -maxplayers ${maxplayers}
+
+        # OR EXE NOT In ROOT server folder add EXEDIR
+         $global:launchParams = '@("$global:EXEDIR\$global:EXE -game "${global:server}/dystopia" -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+        # SHOUBI testing weird stuff ^^
+        
+}
