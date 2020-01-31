@@ -1,5 +1,6 @@
+# Version 2.5
+#----------   INS: Sandstorm Server Install Function   -------------------
 Function New-LaunchScriptInssserverPS {
-        #----------   INS: Sandstorm Server  -------------------
         # Requiered Dont change 
         # # Version 2.0
         # $global:MODDIR=""

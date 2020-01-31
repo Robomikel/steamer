@@ -1,12 +1,11 @@
-# Version 2.0
+# Version 2.5
 # .::::::.::::::::::::.,::::::   :::.     .        :  .,:::::: :::::::..   
 # ;;;`    `;;;;;;;;'''';;;;''''   ;;`;;    ;;,.    ;;; ;;;;'''' ;;;;``;;;;  
 # '[==/[[[[,    [[      [[cccc   ,[[ '[[,  [[[[, ,[[[[, [[cccc   [[[,/[[['  
 #   '''    $    $$      $$""""  c$$$cc$$$c $$$$$$$$"$$$ $$""""   $$$$$$c    
 #  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
 #   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
-#----------      Install server    ----------------------
-#:::::::::::::   CREATE LAUNCH SCRIPT FOR SERVER :::::::::::::::::::::::::
+#----------      Launch Functions + Server Vars   ----------------------
 # check other Functions for other Games
 Function New-LaunchScriptArma3serverPS {
         #----------   Arma3 Ask for input for server cfg  -------------------

@@ -1,6 +1,6 @@
-# Version 2.0
+# Version 2.5
+#----------   Miscreated Server Install Function   -------------------
 Function New-LaunchScriptMiscreatedPS {
-        #----------   Miscreated Server CFG  -------------------
         # Requiered Dont change 
         # # Version 2.0
         # $global:MODDIR=""

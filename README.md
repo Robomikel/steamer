@@ -61,7 +61,7 @@ Install steam server ```>_./steamer install misserver```
    * monitor server process
    * Rcon to server 
    * Daily AutoRestart server process 
-   * send discord alert 
+   * send discord alerts - backup - monitor - update 
    * run gamedig on hosted server 
    * update steamer PS scripts from github
    * get details from host and server
@@ -74,15 +74,20 @@ Install steam server ```>_./steamer install misserver```
  - ```restart <serverFolder>``` - ```>_./steamer restart misserver``` - stops and starts process for miscreated server]
  - ```validate <serverFolder>``` - ```>_./steamer validate misserver``` - Validate App ID files
  - ```check <serverFolder>``` - ```>_./steamer check misserver``` - checks process for miscreated server
- - ```update <serverFolder>``` - ```>_./steamer update misserver``` - updates App ID
- - ```backup <serverFolder>``` - ```>_./steamer backup misserver``` - Creates zip folder of server files in backups folder (Downloads portable 7Zip)
+ - ```update <serverFolder>``` - ```>_./steamer update misserver``` - updates App ID, with  Discord alert. Does not require reboot to check.
+ - ```backup <serverFolder>``` - ```>_./steamer backup misserver``` - Creates zip folder of server files in backups folder, with  Discord alert. purge backups over specfic count. (Downloads portable 7Zip)
  - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task to start server if off, with  Discord alert
  - ```discord <serverFolder>``` - ```>_./steamer discord misserver``` -  * Discord Alert * -command will send test alert. requires Discord webhook
  - ```AutoRestart <serverFolder>``` - ```>_./steamer AutoRestart misserver``` - Creates Scheduled Task for Daily Auto Restart
  - ```MCRcon <serverFolder>``` - ```>_./steamer mcrcon inssserver``` - Uses MCRcon. Rcon to server (Downloads MCRcon)
- - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. TBD (Downloads  NodeJS and installs Gamedig)
+ - ```gamedig <serverFolder>``` - ```>_./steamer gamedig sdtdserver``` * not supported for miscreated. although supported by several games. (Downloads  NodeJS and installs Gamedig)
  - ```Update Steamer``` - ```>_./steamer steamer update```  - Downloads and overwrites steamer github files
-  - ```details <serverFolder>``` - ```>_./steamer details sdtdserver```  - outputs host and server details. requires gamedig. 
+  - ```details <serverFolder>``` - ```>_./steamer details sdtdserver```  - outputs host and server details. requires gamedig.
+
+# Configure
+- After install can edit variables-$server.ps1 to change launch vars or edit Launch Params.
+- fn_Settings.ps1 disable some of the default features.   
+
 # Mod
 * Insurgency - option for sourcemod and Meta Mod install
  * Rust - option for Oxide install

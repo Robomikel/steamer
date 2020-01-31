@@ -1,6 +1,6 @@
-# Version 2.0
+# Version 2.5
+#----------   Rust Server Install Function   -------------------
 Function New-LaunchScriptRustPS {
-        #----------   Rust server   -------------------
         # Requiered Dont change 
         # # Version 2.0
         $global:MODDIR = "RustDedicated_Data"

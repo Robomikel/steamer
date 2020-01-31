@@ -1,10 +1,11 @@
-# Version 2.0
+# Version 2.5
 # .::::::.::::::::::::.,::::::   :::.     .        :  .,:::::: :::::::..   
 # ;;;`    `;;;;;;;;'''';;;;''''   ;;`;;    ;;,.    ;;; ;;;;'''' ;;;;``;;;;  
 # '[==/[[[[,    [[      [[cccc   ,[[ '[[,  [[[[, ,[[[[, [[cccc   [[[,/[[['  
 #   '''    $    $$      $$""""  c$$$cc$$$c $$$$$$$$"$$$ $$""""   $$$$$$c    
 #  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
-#   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
+#   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W"
+#----------      Core Resource Vars    ---------------------- 
 $global:command = $($args[0])
 $global:server = $($args[1])
 $global:currentdir = Get-Location

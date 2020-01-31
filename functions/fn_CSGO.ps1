@@ -1,6 +1,6 @@
-# Version 2.0
+# Version 2.5
+#----------   CSGO Server Install Function   -------------------
 Function New-LaunchScriptcsgoserverPS {
-        #----------   CSGO Server CFG    -------------------
         $global:MODDIR = "csgo"
         $global:EXEDIR = ""
         $global:EXE = "csgo"
