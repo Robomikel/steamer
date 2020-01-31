@@ -31,38 +31,38 @@ Function Install-Anonserver {
     }
     Write-Host '****    Creating SteamCMD Run txt   *****' -F M -B Black 
     New-Item $global:currentdir\SteamCMD\Updates-$global:server.txt -Force
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
+    Add-Content  $global:currentdir\SteamCMD\Updates-$global:server.txt  "@ShutdownOnFailedCommand 1"
     if ($global:ANON -ne "no") {
-        Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "@NoPromptForPassword 1"  
+        Add-Content  $global:currentdir\SteamCMD\Updates-$global:server.txt  "@NoPromptForPassword 1"  
     }
  
     If ($global:ANON -eq "no") { 
-        Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login $global:username" 
+        Add-Content  $global:currentdir\SteamCMD\Updates-$global:server.txt  "login $global:username" 
     }
     Else {
-        Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "login anonymous"
+        Add-Content  $global:currentdir\SteamCMD\Updates-$global:server.txt  "login anonymous"
     }
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "app_update $global:APPID $global:Branch"
-    Add-Content -Path $global:currentdir\SteamCMD\Updates-$global:server.txt -Value "Exit"
-    New-Item -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@ShutdownOnFailedCommand 1"
+    Add-Content  $global:currentdir\SteamCMD\Updates-$global:server.txt  "force_install_dir $global:currentdir\$global:server"
+    Add-Content  $global:currentdir\SteamCMD\Updates-$global:server.txt  "app_update $global:APPID $global:Branch"
+    Add-Content  $global:currentdir\SteamCMD\Updates-$global:server.txt  "Exit"
+    New-Item  $global:currentdir\SteamCMD\Validate-$global:server.txt -Force
+    Add-Content  $global:currentdir\SteamCMD\Validate-$global:server.txt  "@ShutdownOnFailedCommand 1"
     If ($global:ANON -ne "no") { 
-        Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "@NoPromptForPassword 1"
+        Add-Content  $global:currentdir\SteamCMD\Validate-$global:server.txt  "@NoPromptForPassword 1"
     }
     If ($global:ANON -eq "no") { 
-        Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login $global:username" 
+        Add-Content  $global:currentdir\SteamCMD\Validate-$global:server.txt  "login $global:username" 
     }
     Else {
-        Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "login anonymous"
+        Add-Content  $global:currentdir\SteamCMD\Validate-$global:server.txt  "login anonymous"
     }
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "force_install_dir $global:currentdir\$global:server"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "app_update $global:APPID $global:Branch validate"
-    Add-Content -Path $global:currentdir\SteamCMD\Validate-$global:server.txt -Value "Exit"
-    New-Item -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Force
-    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_update 1"
-    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "app_info_print $global:APPID"
-    Add-Content -Path $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Value "quit"
+    Add-Content  $global:currentdir\SteamCMD\Validate-$global:server.txt  "force_install_dir $global:currentdir\$global:server"
+    Add-Content  $global:currentdir\SteamCMD\Validate-$global:server.txt  "app_update $global:APPID $global:Branch validate"
+    Add-Content  $global:currentdir\SteamCMD\Validate-$global:server.txt  "Exit"
+    New-Item  $global:currentdir\SteamCMD\Buildcheck-$global:server.txt -Force
+    Add-Content  $global:currentdir\SteamCMD\Buildcheck-$global:server.txt  "app_info_update 1"
+    Add-Content  $global:currentdir\SteamCMD\Buildcheck-$global:server.txt  "app_info_print $global:APPID"
+    Add-Content  $global:currentdir\SteamCMD\Buildcheck-$global:server.txt  "quit"
     Get-UpdateServer
     
 }
@@ -75,8 +75,8 @@ Function Get-ClearVariables {
     Write-Host "****   Clearing Variables   *****" -F Y -B Black
     $global:vars = "PROCESS", "IP", "PORT", "SOURCETVPORT", "CLIENTPORT", "MAP", "TICKRATE", "GSLT", "MAXPLAYERS", "WORKSHOP", "HOSTNAME", "QUERYPORT", "SAVES", "APPID", "RCONPORT", "RCONPASSWORD", "SV_PURE", "SCENARIO", "GAMETYPE", "GAMEMODE", "MAPGROUP", "WSCOLLECTIONID", "WSSTARTMAP", "WSAPIKEY", "WEBHOOK", "EXEDIR", "GAME", "SERVERCFGDIR", "gamedirname", "config1", "config2", "config3", "config4", "config5", "MODDIR", "status", "CpuCores", "cpu", "avmem", "totalmem", "mem", "backups", "backupssize", "stats", "gameresponse", "os", "results,", "disks", "computername", "ANON", "ALERT", "launchParams", "COOPPLAYERS", "SV_LAN","DIFF","GALAXYNAME"
     Foreach ($global:vars in $global:vars) {
-        Clear-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
-        Remove-Variable $global:vars -Scope Global -ErrorAction SilentlyContinue
+        Clear-Variable $global:vars -Scope Global -ea SilentlyContinue
+        Remove-Variable $global:vars -Scope Global -ea SilentlyContinue
     }
 }
 Function Get-CheckServer {
@@ -145,7 +145,7 @@ Function Get-TestString {
 }
 Function Get-FolderNames {
     Write-Host "****   Checking Folder Names   ****" -F Y -B Black
-    If (Test-Path "$global:currentdir\$global:server\") {
+    If (Test "$global:currentdir\$global:server\") {
     }
     Else {
         New-ServerFolderq
@@ -190,7 +190,7 @@ Function Get-Steam {
     $start_time = Get-Date
     $path = "$global:currentdir\steamcmd\"
     $patha = "$global:currentdir\steamcmd\steamcmd.exe" 
-    If ((Test-Path $path) -and (Test-Path $patha)) { 
+    If ((Test $path) -and (Test $patha)) { 
         Write-Host '****   steamCMD already downloaded!   ****' -F Y -B Black
     } 
     Else {  
@@ -269,7 +269,7 @@ Function Get-Steamtxt {
     $patha = "$global:currentdir\steamcmd\Validate-$global:server.txt"
     $pathb = "$global:currentdir\steamcmd\Updates-$global:server.txt"
     $pathc = "$global:currentdir\steamcmd\Buildcheck-$global:server.txt" 
-    If ((Test-Path $patha) -and (Test-Path $pathb) -and (Test-Path $pathc)) {
+    If ((Test $patha) -and (Test $pathb) -and (Test $pathc)) {
         Write-Host '****   steamCMD Runscripts .txt Exist   ***' -F Y -B Black
     } 
     Else {  
@@ -356,7 +356,7 @@ Function Get-Details {
     
     Get-CreatedVaribles
     New-BackupFolder
-    $global:backups = (Get-Childitem -Path $global:currentdir\backups -recurse | Measure-Object) 
+    $global:backups = (Get-Childitem  $global:currentdir\backups -recurse | Measure-Object) 
     $global:backups = $backups.count 
     $global:backupssize = "{0:N2} GB" -f ((Get-Childitem $global:currentdir\backups | Measure-Object Length -s -ea silentlycontinue ).Sum / 1GB) 
     If (($global:AppID -eq 302200)) { 
@@ -404,7 +404,7 @@ Function Get-DriveSpace {
     }
     #$results | Out-GridView
     $global:results | Format-Table -AutoSize
-    #$results | Export-Csv -Path .\disks.csv -NoTypeInformation -Encoding ASCII
+    #$results | Export-Csv  .\disks.csv -NoTypeInformation -Encoding ASCII
 }
 Function New-ServerFolderq {
     $title = 'Server Folder Name does not exist!'
@@ -433,12 +433,12 @@ Function New-ServerFolder {
         Write-Host "****   You EnteR a space or Empty   ****" -F R -B Black
         Select-Steamer
     }
-    ElseIf (Test-Path "$global:currentdir\$global:server\" ) {
+    ElseIf (Test "$global:currentdir\$global:server\" ) {
         Write-Host '****   Server Folder Already Created!   ****' -F Y -B Black
     }
     Else {
         Write-Host '****   Creating Server Folder   ****' -F M -B Black 
-        New-Item -Path . -Name "$global:server" -ItemType "directory"
+        New-Item  . -Name "$global:server" -ItemType "directory"
     }
 }
 Function Get-CheckForVars {
@@ -485,7 +485,7 @@ Function Get-MCRcon {
     $start_time = Get-Date
     $path = "$global:currentdir\mcrcon\"
     $patha = "$global:currentdir\mcrcon\mcrcon-0.7.1-windows-x86-32\mcrcon.exe" 
-    If ((Test-Path $path) -and (Test-Path $patha)) { 
+    If ((Test $path) -and (Test $patha)) { 
         Write-Host '****   mcrcon already downloaded!   ****' -F Y -B Black
     } 
     Else {  
@@ -608,9 +608,9 @@ Function Get-UpdateSteamer {
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest -Uri $global:steamerurl -OutFile $global:currentdir\steamer.zip
     Write-Host "Download Time:  $((Get-Date).Subtract($start_time).Seconds) second(s)" -F Y -B Black 
-    Remove-Item -Path "$global:currentdir\steamer\*" -Recurse -Force -ea SilentlyContinue
+    Remove-Item  "$global:currentdir\steamer\*" -Recurse -Force -ea SilentlyContinue
     Expand-Archive "$global:currentdir\steamer.zip" "$global:currentdir\steamer" -Force
-    Copy-Item -Path "$global:currentdir\steamer\steamer-*\*" -Destination "$global:currentdir\" -Recurse -Force
+    Copy-Item  "$global:currentdir\steamer\steamer-*\*" -Destination "$global:currentdir\" -Recurse -Force
     Write-Host '****   Steamer github files Updated   ****' -F Y -B Black
     Write-Host '****   Press Enter to Close this session   ****' -F Y -B Black
     Pause  
@@ -621,7 +621,7 @@ Function Get-NodeJS {
     $patha = "$global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64\node.exe"
     $pathb = "node-v$global:nodeversion-win-x64.zip"
     Write-Host "****   Checking for Nodejs   ****" -F M -B Black     
-    If ((Test-Path $path) -and (Test-Path $pathb) -and (Test-Path $patha)) { 
+    If ((Test $path) -and (Test $pathb) -and (Test $patha)) { 
         Write-Host '****   NodeJS already downloaded!   ****' -F Y -B Black
     }
     Else {
@@ -666,147 +666,147 @@ Function Set-VariablesPS {
 Function New-CreateVariables {
     Write-Host '*** Creating Variables Script ****' -F M -B Black
     New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# WEBHOOK HERE - - \/  \/  \/"
-    Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WEBHOOK = `"$global:WEBHOOK`""
+    Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# WEBHOOK HERE - - \/  \/  \/"
+    Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WEBHOOK = `"$global:WEBHOOK`""
     If ($global:MODDIR) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Mod dir - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MODDIR = `"$global:MODDIR`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Mod dir - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:MODDIR = `"$global:MODDIR`""
     }
     If ($global:EXE) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXE = `"$global:EXE`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Exe - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:EXE = `"$global:EXE`""
     }
     If ($global:EXEDIR) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Exe dir - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:EXEDIR = `"$global:EXEDIR`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Exe dir - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:EXEDIR = `"$global:EXEDIR`""
     }
     If ($global:SERVERCFGDIR) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  SERVERCFGDIR dir - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SERVERCFGDIR = `"$global:SERVERCFGDIR`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  SERVERCFGDIR dir - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SERVERCFGDIR = `"$global:SERVERCFGDIR`""
     }
     If ($global:GAME) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Game name used by Gamedig - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:game = `"$global:GAME`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Game name used by Gamedig - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:game = `"$global:GAME`""
     }
     If ($global:PROCESS) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  PROCESS name - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:PROCESS = `"$global:PROCESS`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  PROCESS name - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:PROCESS = `"$global:PROCESS`""
     }
     If (${global:IP}) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server IP - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:IP} = `"${global:IP}`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Server IP - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`${global:IP} = `"${global:IP}`""
     }
     If (${global:EXTIP}) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server EXT IP - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:EXTIP} = `"${global:EXTIP}`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Server EXT IP - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`${global:EXTIP} = `"${global:EXTIP}`""
     }
     If (${global:PORT}) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server PORT - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:PORT} = `"${global:PORT}`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Server PORT - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`${global:PORT} = `"${global:PORT}`""
     }
     If (${global:DIFF}) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server DIFF - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:DIFF} = `"${global:DIFF}`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Server DIFF - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`${global:DIFF} = `"${global:DIFF}`""
     }
     If ($global:SOURCETVPORT) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Source TV Port - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SOURCETVPORT = `"$global:SOURCETVPORT`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Server Source TV Port - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SOURCETVPORT = `"$global:SOURCETVPORT`""
     }
     If ($global:SV_LAN) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server SV_LAN - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SV_LAN = `"$global:SV_LAN`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Server SV_LAN - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SV_LAN = `"$global:SV_LAN`""
     }
     If ($global:CLIENTPORT) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server client port- - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:CLIENTPORT = `"$global:CLIENTPORT`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  server client port- - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:CLIENTPORT = `"$global:CLIENTPORT`""
     }
     If ($global:STEAMPORT) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server STEAMPORT port- - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:STEAMPORT = `"$global:STEAMPORT`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  server STEAMPORT port- - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:STEAMPORT = `"$global:STEAMPORT`""
     }
     If ($global:MAP) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  default Map- - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAP = `"$global:MAP`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  default Map- - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:MAP = `"$global:MAP`""
     }
     If ($global:GALAXYNAME) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  default GALAXYNAME- - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GALAXYNAME = `"$global:GALAXYNAME`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  default GALAXYNAME- - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:GALAXYNAME = `"$global:GALAXYNAME`""
     }
     If ($global:TICKRATE) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  server tick rate - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:TICKRATE = `"$global:TICKRATE`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  server tick rate - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:TICKRATE = `"$global:TICKRATE`""
     } 
     If ($global:GSLT) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Gamer Server token - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GSLT = `"$global:GSLT`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Gamer Server token - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:GSLT = `"$global:GSLT`""
     }
     If ($global:MAXPLAYERS) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Max Players  - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAXPLAYERS = `"$global:MAXPLAYERS`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Max Players  - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:MAXPLAYERS = `"$global:MAXPLAYERS`""
     }
     If ($global:WORKSHOP) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Workshop 1/0 HERE - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WORKSHOP = `"$global:WORKSHOP`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Workshop 1/0 HERE - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WORKSHOP = `"$global:WORKSHOP`""
     }
     If ($global:HOSTNAME) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Name - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:HOSTNAME = `"$global:HOSTNAME`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Server Name - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:HOSTNAME = `"$global:HOSTNAME`""
     }
     If (${global:QUERYPORT}) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  query port - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`${global:QUERYPORT} = `"${global:QUERYPORT}`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  query port - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`${global:QUERYPORT} = `"${global:QUERYPORT}`""
     }
     If ($global:SAVES) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  local App Data SAVES folder - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SAVES = `"$global:SAVES`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  local App Data SAVES folder - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SAVES = `"$global:SAVES`""
     }
     If ($global:APPID) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  App ID  - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:APPID = `"$global:APPID`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  App ID  - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:APPID = `"$global:APPID`""
     }
     If ($global:RCONPORT) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Rcon Port  - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPORT = `"$global:RCONPORT`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Rcon Port  - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:RCONPORT = `"$global:RCONPORT`""
     }
     If ($global:RCONPASSWORD) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Rcon Password HERE - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:RCONPASSWORD = `"$global:RCONPASSWORD`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Rcon Password HERE - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:RCONPASSWORD = `"$global:RCONPASSWORD`""
     }
     If ($global:SV_PURE) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Extra Launch Parms - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SV_PURE = `"$global:SV_PURE`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Extra Launch Parms - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SV_PURE = `"$global:SV_PURE`""
     }
     If ($global:SCENARIO) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# Sandstorm SCENARIO   - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:SCENARIO = `"$global:SCENARIO`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# Sandstorm SCENARIO   - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SCENARIO = `"$global:SCENARIO`""
     }
     If ($global:GAMETYPE) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO Gametype   - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMETYPE = `"$global:GAMETYPE`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# CSGO Gametype   - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:GAMETYPE = `"$global:GAMETYPE`""
     }
     If ($global:GAMEMODE) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO Gamemode   - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:GAMEMODE = `"$global:GAMEMODE`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# CSGO Gamemode   - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:GAMEMODE = `"$global:GAMEMODE`""
     }
     If ($global:MAPGROUP) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO mapgroup   - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:MAPGROUP = `"$global:MAPGROUP`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# CSGO mapgroup   - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:MAPGROUP = `"$global:MAPGROUP`""
     }
     If ($global:AppID -eq 740) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSCOLLECTIONID   - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSCOLLECTIONID = `"$global:WSCOLLECTIONID`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# CSGO WSCOLLECTIONID   - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WSCOLLECTIONID = `"$global:WSCOLLECTIONID`""
     }
     If ($global:AppID -eq 740) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSSTARTMAP  - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSSTARTMAP= `"$global:WSSTARTMAP`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# CSGO WSSTARTMAP  - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WSSTARTMAP= `"$global:WSSTARTMAP`""
     }
     If ($global:AppID -eq 740) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "# CSGO WSAPIKEY   - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:WSAPIKEY = `"$global:WSAPIKEY`""
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# CSGO WSAPIKEY   - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WSAPIKEY = `"$global:WSAPIKEY`""
     }
     If ($global:launchParams) {
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "#  Server Launch Params - - \/  \/  \/"
-        Add-Content -Path $global:currentdir\$global:server\Variables-$global:server.ps1 -Value "`$global:launchParams = $global:launchParams"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Server Launch Params - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:launchParams = $global:launchParams"
     }
 }
 Function Get-SourceMetMod {
@@ -840,7 +840,7 @@ Function Get-SourceMetaMod {
         Write-Host "****   Extracting Meta Mod Failed !!   ****" -F R -B Black ; ; Exit 
     }
     Write-Host '****   Copying/installing Meta Mod   ****' -F M -B Black 
-    Copy-Item -Path $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
+    Copy-Item  $global:currentdir\metamod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
     If (!$?) { 
         Write-Host "****   Copying Meta Mod Failed !!   ****" -F R -B Black ; ; Exit 
     }
@@ -859,7 +859,7 @@ Function Get-SourceMetaMod {
         Write-Host "****   Extracting SourceMod Failed !!   ****" -F R -B Black ; ; Exit 
     }
     Write-Host '****   Copying/installing SourceMod   ****' -F M -B Black
-    Copy-Item -Path $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
+    Copy-Item  $global:currentdir\sourcemod\* -Destination $global:currentdir\$global:server\$global:MODDIR -Force -Recurse
     If (!$?) { 
         Write-Host "****   Copying SourceMod Failed !!   ****" -F R -B Black ; ; Exit 
     }
@@ -896,7 +896,7 @@ Function Get-Oxide {
     }
 
     Write-Host '****   Copying Oxide *****' -F M -B Black
-    Copy-Item -Path $global:currentdir\oxide\$global:MODDIR\* -Destination $global:currentdir\$global:server\$global:MODDIR\ -Force -Recurse
+    Copy-Item  $global:currentdir\oxide\$global:MODDIR\* -Destination $global:currentdir\$global:server\$global:MODDIR\ -Force -Recurse
     If (!$?) { 
         Write-Host "****   Copying Oxide Failed !!   ****" -F R -B Black ; ; Exit 
     }
@@ -1025,12 +1025,12 @@ Function Get-ChecktaskEnable {
 }
 Function New-BackupFolder {
     $path = "$global:currentdir\backups" 
-    If (Test-Path $path) { 
+    If (Test $path) { 
         Write-Host '****   Backup folder exists!   ****' -F Y -B Black
     } 
     Else {  
         Write-Host '****   Creating backup folder   ****' -F M -B Black
-        New-Item -Path "$global:currentdir\" -Name "backups" -ItemType "directory"
+        New-Item  "$global:currentdir\" -Name "backups" -ItemType "directory"
     }
 }
 Function New-BackupServer {
@@ -1054,7 +1054,7 @@ Function Get-SevenZip {
     $patha = "$global:currentdir\7za920\7za.exe"
     $pathb = "$global:currentdir\7za920.zip"
     Write-Host '****   Checking for 7ZIP   *****' -F Y -B Black   
-    If ((Test-Path $path) -and (Test-Path $patha) -and (Test-Path $pathb)) { 
+    If ((Test $path) -and (Test $patha) -and (Test $pathb)) { 
         Write-Host '****   7Zip already downloaded!   ****' -F Y -B Black
     }
     Else {
@@ -1172,13 +1172,13 @@ Function Select-StartServer {
 }
 Function Select-RenameSource {
     Write-Host "***  Renaming srcds.exe to $global:EXE to avoid conflict with local source Engine (srcds.exe) server  ***" -F M -B Black
-    Rename-Item -Path "$global:currentdir\$global:server\$global:EXEDIR\srcds.exe" -NewName "$global:currentdir\$global:server\$global:EXEDIR\$global:EXE.exe" >$null 2>&1
-    Rename-Item -Path "$global:currentdir\$global:server\$global:EXEDIR\srcds_x64.exe" -NewName "$global:currentdir\$global:server\$global:EXEDIR\$global:EXE-x64.exe" >$null 2>&1
+    Rename-Item  "$global:currentdir\$global:server\$global:EXEDIR\srcds.exe" -NewName "$global:currentdir\$global:server\$global:EXEDIR\$global:EXE.exe" >$null 2>&1
+    Rename-Item  "$global:currentdir\$global:server\$global:EXEDIR\srcds_x64.exe" -NewName "$global:currentdir\$global:server\$global:EXEDIR\$global:EXE-x64.exe" >$null 2>&1
 }
 Function Select-EditSourceCFG {
     Write-Host "***  Editing Default server.cfg  ***" -F M -B Black
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1
-    ((Get-Content -path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -ErrorAction SilentlyContinue
+    ((Get-Content  $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Raw) -replace "\bSERVERNAME\b", "$global:HOSTNAME") | Set-Content  $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1
+    ((Get-Content  $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Raw) -replace "\bADMINPASSWORD\b", "$global:RCONPASSWORD") | Set-Content  $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -ea SilentlyContinue
 }
 Function Get-UserInput {
     Param([parameter(Position = 0)]$parm0,
