@@ -392,20 +392,15 @@ Function New-LaunchScriptswarmserverPS {
         $global:PROCESS = "swarm"
         $global:SERVERCFGDIR = "swarm\cfg"
         Get-StopServerInstall
-        If ( $global:Version -eq "1" ) {
-                if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [lobby]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "buhriz_coop checkpoint" }else { $global:MAP }
-                if (($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server MAXPLAYERS,Press enter to accept default value [4]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAXPLAYERS = "4" }else { $global:MAXPLAYERS } 
-        }
-        ElseIf ( $global:Version -eq "2" ) {
-                # GSLT used for running a public server.
-                #  First Run Vars \/ \/ Add Here
-                $global:MAP = "lobby"
-                $global:MAXPLAYERS = "4"
-                #     Add here     /\ /\ /\ 
-        }
-        ElseIf ( $global:Version -eq "0" ) {
-                Get-UserInput 0 0 0 0 0 0 0 1 0 1
-        }
+
+        # GSLT used for running a public server.
+        #  First Run Vars \/ \/ Add Here
+        $global:defaultMAP = "lobby"
+        $global:defaultMAXPLAYERS = "4"
+        #     Add here     /\ /\ /\ 
+
+        Get-UserInput 0 0 0 0 0 0 0 1 0 1
+
         Select-RenameSource
  
         $global:launchParams = '@("$global:EXE -console -game swarm +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} -autoupdate")'
@@ -428,22 +423,14 @@ Function New-LaunchScriptBOserverPS {
         $global:gamedirname = "BallisticOverkill"
         $global:config1 = "config.txt"
         Get-Servercfg
-        If ( $global:Version -eq "1" ) {
-                Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-                ${global:IP} = Read-Host
-                Write-Host "Input Game Server Token: " -ForegroundColor Cyan -NoNewline
-                $global:GSLT = Read-Host
-        }
-        ElseIf ( $global:Version -eq "2" ) {
-                # GSLT used for running a public server.
-                #  First Run Vars \/ \/ Add Here
-                ${global:IP} = "${global:IP}"
-                $global:GSLT = ""
-                #     Add here     /\ /\ /\ 
-        }
-        ElseIf ( $global:Version -eq "0" ) {
-                Get-UserInput 1 0 0 0 0 0 0 0 1
-        }
+
+        # GSLT used for running a public server.
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        $global:defaultGSLT = ""
+        #     Add here     /\ /\ /\ 
+
+        Get-UserInput 1 0 0 0 0 0 0 0 1
         # game config
         Select-EditSourceCFG
         
@@ -468,33 +455,20 @@ Function New-LaunchScriptAHL2serverPS {
         $global:gamedirname = "ActionSource"
         $global:config1 = "server.cfg"
         Get-Servercfg
-        If ( $global:Version -eq "1" ) {
-                Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-                ${global:IP} = Read-Host
-                if ((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
-                if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
-                if (($global:SOURCETVPORT = Read-Host -Prompt (Write-Host "Input Server Source TV Port, Press enter to accept default value [27020]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SOURCETVPORT = "27020" }else { $global:SOURCETVPORT }
-                if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [act_airport]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "buhriz_coop checkpoint" }else { $global:MAP }
-                Write-Host 'Input maxplayers : ' -ForegroundColor Cyan -NoNewline
-                $global:MAXPLAYERS = Read-host        
-                Write-Host "Input Game Server Token: " -ForegroundColor Cyan -NoNewline
-                $global:GSLT = Read-Host
-        }
-        ElseIf ( $global:Version -eq "2" ) {
-                # GSLT used for running a public server.
-                #  First Run Vars \/ \/ Add Here
-                ${global:IP} = "${global:IP}"
-                ${global:PORT} = "27015"
-                $global:CLIENTPORT = "27005"
-                $global:SOURCETVPORT = "27020"
-                $global:GSLT = ""
-                $global:MAP = "act_airport"
-                $global:MAXPLAYERS = "20"
-                #     Add here     /\ /\ /\ 
-        }
-        ElseIf ( $global:Version -eq "0" ) {
-                Get-UserInput 1 1 0 0 0 0 0 1 0
-        }
+
+        # GSLT used for running a public server.
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        ${global:defaultPORT} = "27015"
+        $global:defaultCLIENTPORT = "27005"
+        $global:defaultSOURCETVPORT = "27020"
+        $global:defaultGSLT = ""
+        $global:defaultMAP = "act_airport"
+        $global:defaultMAXPLAYERS = "20"
+        #     Add here     /\ /\ /\ 
+
+        Get-UserInput 1 1 0 0 0 0 0 1 1 1 1 1
+
         Select-RenameSource
         # game config
         Select-EditSourceCFG
@@ -520,36 +494,21 @@ Function New-LaunchScriptBB2serverPS {
         $global:config1 = "server.cfg"
         Get-Servercfg
         $global:RCONPORT = "${global:PORT}"
-        If ( $global:Version -eq "1" ) {
-                Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
-                ${global:IP} = Read-Host
-                if ((${global:PORT} = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
-                if (($global:CLIENTPORT = Read-Host -Prompt (Write-Host "Input Server Client Port, Press enter to accept default value [27005]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:CLIENTPORT = "27005" }else { $global:CLIENTPORT }
-                if (($global:SOURCETVPORT = Read-Host -Prompt (Write-Host "Input Server Source TV Port, Press enter to accept default value [27020]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:SOURCETVPORT = "27020" }else { $global:SOURCETVPORT }
-                if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map and Mode,Press enter to accept default value [bba_barracks]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "buhriz_coop checkpoint" }else { $global:MAP }
-                Write-Host 'Input maxplayers : ' -ForegroundColor Cyan -NoNewline
-                $global:MAXPLAYERS = Read-host        
-                Write-Host "Input Game Server Token: " -ForegroundColor Cyan -NoNewline
-                $global:GSLT = Read-Host
-                if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-        }
-        ElseIf ( $global:Version -eq "2" ) {
-                # GSLT used for running a public server.
-                #  First Run Vars \/ \/ Add Here
-                ${global:IP} = "${global:IP}"
-                ${global:PORT} = "27015"
-                $global:CLIENTPORT = "27005"
-                $global:SOURCETVPORT = "27020"
-                $global:GSLT = ""
-                $global:MAP = "bba_barracks"
-                $global:MAXPLAYERS = "20"
-                $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
-                #     Add here     /\ /\ /\ 
-        }
-        ElseIf ( $global:Version -eq "0" ) {
-                Get-UserInput 1 1 0 0 1 0 0 1 0 0
-                $global:MAP = "bba_barracks"
-        }
+
+        # GSLT used for running a public server.
+        #  First Run Vars \/ \/ Add Here
+        ${global:defaultIP} = "${global:IP}"
+        ${global:defaultPORT} = "27015"
+        $global:defaultCLIENTPORT = "27005"
+        $global:defaultSOURCETVPORT = "27020"
+        $global:defaultGSLT = ""
+        $global:defaultMAP = "bba_barracks"
+        $global:defaultMAXPLAYERS = "20"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
+        #     Add here     /\ /\ /\ 
+
+        Get-UserInput 1 1 0 0 1 0 0 1 1 1
+
         Select-RenameSource
         # game config
         Select-EditSourceCFG
