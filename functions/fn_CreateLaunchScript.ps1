@@ -288,7 +288,7 @@ Function  New-LaunchScriptavserverPS {
         if (($global:DIFF = Read-Host -Prompt (Write-Host "Input Difficulty (-3 - 3), Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:DIFF = "0" }else { $global:DIFF }
         if (($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [10]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAXPLAYERS = "10" }else { $global:MAXPLAYERS }
   
-        $global:launchParams = '@("$global:EXEDIR\$global:EXE --server-name ${global:HOSTNAME} --galaxy-name ${global:GALAXYNAME} --admin ${global:steamID64} --difficulty ${global:DIFF} --max-players ${global:MAXPLAYERS}")'
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE --server-name `"${global:HOSTNAME}`" --galaxy-name ${global:GALAXYNAME} --difficulty ${global:DIFF} --max-players ${global:MAXPLAYERS}")'
 }
    
 Function New-LaunchScriptboundelserverPS {
