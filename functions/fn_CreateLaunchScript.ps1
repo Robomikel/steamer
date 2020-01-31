@@ -678,7 +678,7 @@ Function New-LaunchScriptBlackMesaserverPS {
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
 
-Function New-LaunchScriptTEMPLATEserverPS {
+Function New-LaunchScriptDODSserverPS {
         #* * Add to Read-AppID in fn_Actions.ps1 * *
         # Day of Defeat Dedicated Server
         # APP ID # 232290  
@@ -690,7 +690,7 @@ Function New-LaunchScriptTEMPLATEserverPS {
         #--->Exe NOT in root server folder \/\/
         $global:EXEDIR = ""
         #--->rename srcds to this name \/\/
-        $global:EXE = ""
+        $global:EXE = "dods"
         #--->Requieres \/ \/ game dig 
         $global:GAME = "dods"
         #--->Requieres \/ \/ AppData Roaming save
@@ -698,7 +698,7 @@ Function New-LaunchScriptTEMPLATEserverPS {
         #--->Requieres \/ \/ maybe same as game exe?
         $global:PROCESS = "dods"
         #--->game config folder
-        $global:SERVERCFGDIR = ""
+        $global:SERVERCFGDIR = "dod\cfg"
         #--->Stop existing process if running        
         Get-StopServerInstall
         #--->Game-server-manger folder \/
