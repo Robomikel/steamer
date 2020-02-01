@@ -51,6 +51,7 @@ Install steam server ```>_./steamer install misserver```
    * Black Mesa: Deathmatch Dedicated Server (346680)
    * Day of Defeat Source Dedicated Server (232290)
    * Don't Starve Together Dedicated Server (343050)
+   * Garry's Mod Dedicated Server (4020)
    -----
  - Manage Steam server with features
    * install steam server

@@ -500,7 +500,7 @@ Function New-LaunchScriptHL2DMserverPS {
         Get-Servercfg
         # Default Vars
         $global:RCONPORT = "${global:PORT}"
-        $global:defaultip = "${global:ip}"
+        $global:defaultip = "${global:IP}"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
@@ -549,7 +549,7 @@ Function New-LaunchScriptDystopiaserverPS {
         Get-Servercfg
         # Default Vars
         $global:RCONPORT = "${global:PORT}"
-        $global:defaultip = "${global:ip}"
+        $global:defaultip = "${global:IP}"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
@@ -597,7 +597,7 @@ Function New-LaunchScriptBlackMesaserverPS {
         Get-Servercfg
         #--->Default Vars
         $global:RCONPORT = "${global:PORT}"
-        $global:defaultip = "${global:ip}"
+        $global:defaultip = "${global:IP}"
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
@@ -610,7 +610,7 @@ Function New-LaunchScriptBlackMesaserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch
-        $global:launchParams = '@("$global:EXE -console -game bms -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +sv_setsteamaccount ${gslt} +map ${defaultmap} +servercfgfile ${servercfg} -maxplayers ${maxplayers}")'
+        $global:launchParams = '@("$global:EXE -console -game bms -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +sv_setsteamaccount ${global:gslt} +map ${global:defaultmap} +servercfgfile $server.cfg -maxplayers ${global:maxplayers}")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
@@ -645,7 +645,7 @@ Function New-LaunchScriptDODSserverPS {
         Get-Servercfg
         #--->Default Vars
         $global:RCONPORT = "${global:PORT}"
-        $global:defaultip = "0.0.0.0"
+        $global:defaultip = "${global:IP}"
         $global:defaultport = "27015"
         #$global:defaultclientport="27005"
         $global:defaultmap = "dod_Anzio"
@@ -657,7 +657,7 @@ Function New-LaunchScriptDODSserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch 
-        $global:launchParams = '@("$global:EXE -console -game `"dods`" -secure +map ${defaultmap} -autoupdate +log on +maxplayers ${maxplayers} -port ${port}  +ip ${ip} +exec server.cfg")'
+        $global:launchParams = '@("$global:EXE -console -game `"dods`" -secure +map ${global:map} -autoupdate +log on +maxplayers ${global:maxplayers} -port ${global:port}  +ip ${global:ip} +exec server.cfg")'
         # $global:launchParams = '@("$global:EXE -console -game dod -strictportbind +ip ${ip} -port ${port} +clientport ${clientport} +map ${defaultmap} +servercfgfile server.cfg -maxplayers ${maxplayers}")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
@@ -674,7 +674,7 @@ Function New-LaunchScriptDSTserverPS {
         #--->rename srcds to this name \/\/
         $global:EXE = "dontstarve_dedicated_server_nullrenderer"
         #--->Requieres \/ \/ game dig
-        $global:GAME = ""
+        $global:GAME = "protocol-valve"
         #--->Requieres \/ \/ maybe same as game exe?
         $global:PROCESS = "dontstarve_dedicated_server_nullrenderer"
         #--->game config folder
@@ -683,28 +683,28 @@ Function New-LaunchScriptDSTserverPS {
         Get-StopServerInstall
         #--->Game-server-manger folder \/
         $global:gamedirname = "DontStarveTogether"
-        #--->Game-server-manger config name \/
+
         $shard = "Master"
         $shard2 = "Cave"
         $cluster = "Cluster_1"
         ${persistentstorageroot} = "C:\users\$env:USERNAME\Klei\$global:gamedirname "
-
+        
+        #--->Game-server-manger config name \/
         $global:SERVERCFGDIR = "$persistentstorageroot\$cluster\$shard\"
         $global:config1 = "server.ini"
-         # C:\users\$env:USERNAME\Klei\DontStarveTogether\Cluster_1\Master\server.ini
         #--->Get game-server-config \/\/
         Get-Servercfg
-
+        
+        #--->Game-server-manger config name \/
         $global:SERVERCFGDIR = "$persistentstorageroot\$cluster"
         $global:config2 = "cluster.ini"
         #--->Get game-server-config \/\/
         Get-Servercfg
-        #C:\users\$env:USERNAME\Klei\DontStarveTogether\Cluster_1\cluster.ini
              
         #--->Default Vars
         $global:RCONPORT = "${global:PORT}"
         $global:defaultip = "${global:IP}"
-        $global:defaultport="10999"
+        $global:defaultport = "10999"
         $global:defaultmaxplayers = "32"
   
         #--->input questions 1 1 0 0 0 0 0 1 0 1 1 0 0
@@ -719,6 +719,62 @@ Function New-LaunchScriptDSTserverPS {
         $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -bind_ip ${global:ip} -port ${global:PORT} -players ${global:maxplayers} -persistent_storage_root ${persistentstorageroot} -conf_dir ${global:gamedirname} -cluster ${cluster} -shard ${shard} -backup_logs")'
         # Caves
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -console -bind_ip ${global:ip} -port ${global:PORT} -players ${global:maxplayers} -persistent_storage_root ${persistentstorageroot} -conf_dir ${global:gamedirname} -cluster ${cluster} -shard ${shard} -backup_logs")'
+}
+Function New-LaunchScriptGMODserverPS {
+        #        * * Add to Read-AppID in fn_Actions.ps1 * *
+        # Garry's Mod Dedicated Server
+        # APP ID # 4020
+        # WIKI
+        # Requiered Dont change 
+        # # Version 2.0
+        #--->Requieres \/ \/ Get-SourceMetMod
+        $global:MODDIR = "garrysmod"
+        #--->Exe NOT in root server folder \/\/
+        $global:EXEDIR = ""
+        #--->rename srcds to this name \/\/
+        $global:EXE = "gmod"
+        #--->Requieres \/ \/ game dig 
+        $global:GAME = "garrysmod"
+        #--->Requieres \/ \/ AppData Roaming save
+        $global:SAVES = ""
+        #--->Requieres \/ \/ maybe same as game exe?
+        $global:PROCESS = "gmod"
+        #--->game config folder
+        $global:SERVERCFGDIR = "garrysmod\cfg"
+        #--->Stop existing process if running        
+        Get-StopServerInstall
+        #--->Game-server-manger folder \/
+        $global:gamedirname = "GarrysMod"
+        #--->Game-server-manger config name \/
+        $global:config1 = "server.cfg"
+        #--->Get game-server-config \/\/
+        Get-Servercfg
+        #--->Default Vars
+        $global:RCONPORT = "${global:PORT}"
+        $global:defaultip = "${global:IP}"
+        $global:defaultport = "27015"
+        $global:defaultclientport = "27005"
+        $global:defaultsourcetvport = "27020"
+        $global:defaultdefaultmap = "gm_construct"
+        $global:defaultmaxplayers = "16"
+        $global:defaultgamemode = "sandbox"     
+        $global:tickrate = "66"
+        # API key visit - https://steamcommunity.com/dev/apikey
+        $wsapikey = ""
+        $wscollectionid = ""
+        # Custom Start Parameters
+        $customparms = "-disableluarefresh"
+        $gslt = ""
+        #--->input questions
+        Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1 1 
+        #--->rename srcds.exe \/\/
+        Select-RenameSource
+        #--->Edit game config \/ SERVERNAME ADMINPASSWORD
+        Select-EditSourceCFG
+        # --->Launch 
+        $global:launchParams = '@("$global:EXE -console -game garrysmod -strictportbind -ip ${global:ip} -port ${global:port} -tickrate ${global:tickrate} +host_workshop_collection ${wscollectionid} -authkey ${wsapikey} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +gamemode ${global:gamemode} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers} ${customparms}")'
+        # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
+        #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
 
 
