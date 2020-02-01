@@ -815,7 +815,7 @@ Function New-LaunchScriptTF2serverPS {
         $global:defaultmaxplayers = "16"
         $global:gslt = ""
         #--->input questions 
-        Get-UserInput 1 1 0 0 0 1 1 0 1 1 1 1 1
+        Get-UserInput 1 1 0 0 0 1 1 1 1 1 1 1
         #--->rename srcds.exe \/\/
         Select-RenameSource
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
