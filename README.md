@@ -38,6 +38,7 @@ Install steam server ```>_./steamer install misserver```
    * Counter-Strike Global Offensive - Dedicated Server (740) "csgoserver" (optional server folder name)
    * Left 4 Dead 2 - Dedicated Server (222860) "lfd2server" (optional server folder name)
    * Age of Chivalry Dedicated Server (17515)  "aocserver" (optional server folder name)
+    * Team Fortress 2 Dedicated Server (232250) "tf2server"
    # untested
    * Avorion - Dedicated Server (565060)
    * Boundel - Dedicated Server (454070)
@@ -52,7 +53,6 @@ Install steam server ```>_./steamer install misserver```
    * Day of Defeat Source Dedicated Server (232290)
    * Don't Starve Together Dedicated Server (343050)
    * Garry's Mod Dedicated Server (4020)
-   * Team Fortress 2 Dedicated Server (232250)
    * No More Room in Hell Dedicated Server (317670)
    -----
  - Manage Steam server with features
