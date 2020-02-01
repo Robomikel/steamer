@@ -55,6 +55,7 @@ Install steam server ```>_./steamer install misserver```
    * Garry's Mod Dedicated Server (4020)
    * No More Room in Hell Dedicated Server (317670)
    * Blade Symphony Dedicated Server (228780)
+   * Fistful of Frags Dedicated Server (295230)
    -----
  - Manage Steam server with features
    * install steam server
