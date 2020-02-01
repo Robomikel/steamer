@@ -9,6 +9,7 @@
 # check other Functions for other Games
 Function New-LaunchScriptArma3serverPS {
         #----------   Arma3 Ask for input for server cfg  -------------------
+        # APP ID # 233780
         # requires https://www.microsoft.com/en-us/download/details.aspx?id=35 Direct x
         $global:MODDIR = ""
         $global:EXE = "arma3server"
@@ -21,8 +22,7 @@ Function New-LaunchScriptArma3serverPS {
         $global:config1 = "server.cfg"
         $global:config2 = "network.cfg"
         Get-Servercfg
-        # - - - - - - - - - - - - -
-        
+        # - - - - - - - - - - - - -     
         Write-Host '*** Configure Instance *****' -ForegroundColor Yellow -BackgroundColor Black
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
         ${global:IP} = Read-Host
@@ -52,7 +52,7 @@ Function New-LaunchScriptArma3serverPS {
 }
 Function New-LaunchScriptKF2serverPS {
         # Killing Floor 2 Server
-        # - - - - - - - - - - - -
+        # APP ID # 232130
         # Requiered Dont change 
         # # Version 2.0
         # $global:MODDIR=""
@@ -102,6 +102,7 @@ Function New-LaunchScriptKF2serverPS {
 }
 Function New-LaunchScriptLFD2serverPS {
         #----------   left4dead2 Server CFG    -------------------
+        # APP ID # 222860
         # Steamer Vars Do Not Edit
         $global:MODDIR = "left4dead2"
         $global:EXEDIR = ""
@@ -137,7 +138,7 @@ Function New-LaunchScriptLFD2serverPS {
     
 Function New-LaunchScriptArkPS {
         # Ark: Survival Evolved Server
-        # - - - - - - - - - - - -
+        # APP ID # 376030
         $global:MODDIR = ""
         $global:EXE = "ShooterGameServer"
         $global:EXEDIR = "ShooterGame\Binaries\Win64"
@@ -166,6 +167,7 @@ Function New-LaunchScriptArkPS {
 }    
 Function New-LaunchScriptSdtdserverPS {
         #----------   7Days2Die Ask for input for server cfg    -------------------
+        # APP ID # 294420
         $global:MODDIR = ""
         $global:EXE = "startdedicated.bat"
         $global:EXEDIR = ""
@@ -190,6 +192,8 @@ Function New-LaunchScriptSdtdserverPS {
 }
 
 Function New-LaunchScriptempserverPS {
+        #----------   Empyrion: Dedicated Server
+        # APP ID # 530870
         $global:MODDIR = ""
         $global:EXE = "EmpyrionLauncher"
         $global:EXEDIR = ""
@@ -212,6 +216,8 @@ Function New-LaunchScriptempserverPS {
 }
 
 Function New-LaunchScriptceserverPS {
+        # Conan: Exiles Dedicated server
+        # APP ID # 443030        
         #  http://cdn.funcom.com/downloads/exiles/DedicatedServerLauncher1044.exe
         $global:MODDIR = ""
         $global:EXE = "ConanSandboxServer"
@@ -243,6 +249,7 @@ Function New-LaunchScriptceserverPS {
 
 Function  New-LaunchScriptavserverPS {
         # Avorion Dedicated Server
+        # APP ID # 565060  
         $global:MODDIR = ""
         $global:EXE = "AvorionServer"
         $global:EXEDIR = "bin"
@@ -277,15 +284,14 @@ Function New-LaunchScriptboundelserverPS {
 
 Function New-LaunchScriptforestserverPS {
         # The forest dedciated Server
+        # 556450
         $global:MODDIR = ""
         $global:EXE = "TheForestDedicatedServer"
         $global:EXEDIR = ""
         $global:GAME = "forrest"
         $global:PROCESS = "TheForestDedicatedServer"
         $global:SERVERCFGDIR = "SKS\TheForestDedicatedServer\ds"
-
-        Get-StopServerInstall
-        
+        Get-StopServerInstall  
         # 556450
         $global:IP = ${global:IP}
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
@@ -297,7 +303,6 @@ Function New-LaunchScriptforestserverPS {
         if (($global:PORT = Read-Host -Prompt (Write-Host "Input Server Port,Press enter to accept default value [27015]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:PORT = "27015" }else { $global:PORT }
         if (($global:QUERYPORT = Read-Host -Prompt  (Write-Host "Input Server Query Port, Press enter to accept default value [27016]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:QUERYPORT = "27016" }else { $global:QUERYPORT }
         if (($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [8]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAXPLAYERS = "8" }else { $global:MAXPLAYERS }
-
         #-serverip xxx.xxx.xxx.xxx -serversteamport 8766 -servergameport 27015 -serverqueryport 27016 -servername TheForestGameDS -serverplayers 8 -difficulty Normal -inittype Continue -slot 1
         $global:launchParams = '@("$global:EXE -serverip ${global:IP} -serversteamport ${global:STEAMPORT} -servergameport ${global:PORT} -serverqueryport ${global:QUERYPORT} -servername `"${global:HOSTNAME}`" -serverplayers ${global:MAXPLAYERS} -difficulty Normal -configfilepath $global:currentdir\$global:server\SKS\TheForestDedicatedServer\ds\server.cfg -inittype Continue -slot 4 -batchmode -nographics")'
 }
@@ -312,8 +317,7 @@ Function New-LaunchScriptAoCserverPS {
         $global:SAVES = ""
         $global:PROCESS = "aoc"
         $global:SERVERCFGDIR = "ageofchivalry\cfg"
-        $global:RCONPORT = "${global:PORT}"
-        
+        $global:RCONPORT = "${global:PORT}"   
         Get-StopServerInstall
         $global:RCONPORT = "${global:PORT}"
         $global:gamedirname = "AgeOfChivalry"
@@ -321,7 +325,6 @@ Function New-LaunchScriptAoCserverPS {
         Get-Servercfg
         # - - - - - - - - - - - - -	
         Select-RenameSource
-
         if (($global:MAP = Read-Host -Prompt (Write-Host "Input Server Map,Press enter to accept default value [aoc_siege]: "-ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAP = "aoc_siege" }else { $global:MAP }
         if (($global:MAXPLAYERS = Read-Host -Prompt (Write-Host "Input Server Maxplayers, Press enter to accept default value [32]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:MAXPLAYERS = "32" }else { $global:MAXPLAYERS }
         Write-Host "Input Server local IP: " -ForegroundColor Cyan -NoNewline
@@ -330,7 +333,6 @@ Function New-LaunchScriptAoCserverPS {
         Write-Host 'Input hostname: ' -ForegroundColor Cyan -NoNewline 
         $global:HOSTNAME = Read-host
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
-
         Select-EditSourceCFG
         $global:launchParams = '@("$global:EXE -console -game ageofchivalry -secure +map ${global:MAP} -autoupdate +log on +maxplayers ${global:MAXPLAYERS} -port ${global:PORT} +ip ${global:IP} +exec server.cfg")'
 }
