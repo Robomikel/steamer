@@ -601,7 +601,7 @@ Function New-LaunchScriptBlackMesaserverPS {
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
-        $global:defaultdefaultmap = "dm_bounce"
+        $global:defaultmap = "dm_bounce"
         $global:defaultmaxplayers = "16"
         #--->input questions
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1 0 0 0 0
@@ -755,7 +755,7 @@ Function New-LaunchScriptGMODserverPS {
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
-        $global:defaultdefaultmap = "gm_construct"
+        $global:defaultmap = "gm_construct"
         $global:defaultmaxplayers = "16"
         $global:defaultgamemode = "sandbox"     
         $global:tickrate = "66"
@@ -811,7 +811,7 @@ Function New-LaunchScriptTF2serverPS {
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
-        $global:defaultdefaultmap = "cp_badlands"
+        $global:defaultmap = "cp_badlands"
         $global:defaultmaxplayers = "16"
         $global:gslt = ""
         #--->input questions 
@@ -860,7 +860,7 @@ Function New-LaunchScriptNMRIHserverPS {
         $global:defaultport = "27015"
         $global:defaultclientport = "27005"
         $global:defaultsourcetvport = "27020"
-        $global:defaultdefaultmap = "nmo_broadway"
+        $global:defaultmap = "nmo_broadway"
         $global:defaultmaxplayers = "8"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1 0
