@@ -1,6 +1,6 @@
-# Version 2.0
+# Version 2.5
+#----------   DOI Server Install Function   -------------------
 Function New-LaunchScriptdoiserverPS {
-    #----------   doi Server CFG    -------------------
     # Steamer Vars Do Not Edit
     $global:MODDIR = "doi"
     $global:EXEDIR = ""

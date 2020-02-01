@@ -1,11 +1,11 @@
-# Version 2.0
+# Version 2.5
 # .::::::.::::::::::::.,::::::   :::.     .        :  .,:::::: :::::::..   
 # ;;;`    `;;;;;;;;'''';;;;''''   ;;`;;    ;;,.    ;;; ;;;;'''' ;;;;``;;;;  
 # '[==/[[[[,    [[      [[cccc   ,[[ '[[,  [[[[, ,[[[[, [[cccc   [[[,/[[['  
 #   '''    $    $$      $$""""  c$$$cc$$$c $$$$$$$$"$$$ $$""""   $$$$$$c    
 #  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
 #   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
-#----------      Install server    ----------------------
+#----------      Core Functions    ----------------------
 Function Set-SteamInfo {
     $title = 'Install Steam server with Anonymous login'
     $question = 'Use Anonymous Login?'
@@ -26,7 +26,7 @@ Function Set-SteamInfo {
 }
 Function Install-Anonserver {
     If ($global:ANON -eq "no") {
-        Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -F Cyan -B Black  
+        Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -F Cyan -B Black
         $global:username = Read-host
     }
     Write-Host '****    Creating SteamCMD Run txt   *****' -F M -B Black 
@@ -1350,6 +1350,14 @@ Function Read-AppID {
     ElseIf ($global:AppID -eq 232290) {
         Set-Console  >$null 2>&1
         New-LaunchScriptDODSserverPS
+    }
+    ElseIf ($global:AppID -eq 343050) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptDSTserverPS
+    }
+    ElseIf ($global:AppID -eq 4020) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptGMODserverPS
     }
     #    ElseIf ($global:AppID -eq Template) {
     #        Set-Console  >$null 2>&1

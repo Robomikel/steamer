@@ -1,10 +1,11 @@
-# Version 2.0
+# Version 2.5
 # .::::::.::::::::::::.,::::::   :::.     .        :  .,:::::: :::::::..   
 # ;;;`    `;;;;;;;;'''';;;;''''   ;;`;;    ;;,.    ;;; ;;;;'''' ;;;;``;;;;  
 # '[==/[[[[,    [[      [[cccc   ,[[ '[[,  [[[[, ,[[[[, [[cccc   [[[,/[[['  
 #   '''    $    $$      $$""""  c$$$cc$$$c $$$$$$$$"$$$ $$""""   $$$$$$c    
 #  88b    dP    88,     888oo,__ 888   888,888 Y88" 888o888oo,__ 888b "88bo,
-#   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W" 
+#   "YMmMY"     MMM     """"YUMMMYMM   ""` MMM  M'  "MMM""""YUMMMMMMM   "W"
+#----------      Core Resource Vars    ---------------------- 
 $global:command = $($args[0])
 $global:server = $($args[1])
 $global:currentdir = Get-Location
@@ -38,8 +39,8 @@ $global:sevenzip = "https://www.7-zip.org/a/7za920.zip"
 $global:steamurl = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $global:steamoutput = "steamcmd.zip"
 # Steamer url
-#$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
-$global:steamerurl = "https://github.com/Robomikel/steamer/archive/untested.zip"
+$global:steamerurl="https://github.com/Robomikel/steamer/archive/master.zip"
+#$global:steamerurl = "https://github.com/Robomikel/steamer/archive/untested.zip"
 # mcrcon
 $global:mcrconurl = "https://github.com/Tiiffi/mcrcon/releases/download/v0.7.1/mcrcon-0.7.1-windows-x86-32.zip"
 
