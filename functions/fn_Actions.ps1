@@ -1363,6 +1363,10 @@ Function Read-AppID {
         Set-Console  >$null 2>&1
         New-LaunchScriptTF2serverPS
     }
+    ElseIf ($global:AppID -eq 317670) {
+        Set-Console  >$null 2>&1
+        New-LaunchScriptNMRIHserverPS
+    }
     #    ElseIf ($global:AppID -eq Template) {
     #        Set-Console  >$null 2>&1
     #        New-LaunchScriptTemplateserverPS

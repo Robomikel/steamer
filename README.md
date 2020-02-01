@@ -53,6 +53,7 @@ Install steam server ```>_./steamer install misserver```
    * Don't Starve Together Dedicated Server (343050)
    * Garry's Mod Dedicated Server (4020)
    * Team Fortress 2 Dedicated Server (232250)
+   * No More Room in Hell Dedicated Server (317670)
    -----
  - Manage Steam server with features
    * install steam server
