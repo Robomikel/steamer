@@ -26,7 +26,7 @@ Function Set-SteamInfo {
 }
 Function Install-Anonserver {
     If ($global:ANON -eq "no") {
-        Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -F Cyan -B Black  
+        Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -F Cyan -B Black
         $global:username = Read-host
     }
     Write-Host '****    Creating SteamCMD Run txt   *****' -F M -B Black 
