@@ -50,6 +50,7 @@ Install steam server ```>_./steamer install misserver```
    * Half-Life 2: Deathmatch Dedicated Server (232370)
    * Black Mesa: Deathmatch Dedicated Server (346680)
    * Day of Defeat Source Dedicated Server (232290)
+   * Don't Starve Together Dedicated Server (343050)
    -----
  - Manage Steam server with features
    * install steam server
