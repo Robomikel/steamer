@@ -57,6 +57,7 @@ Install steam server ```>_./steamer install misserver```
    * Blade Symphony Dedicated Server (228780)
    * Fistful of Frags Dedicated Server (295230)
    * Project Zomboid Dedicated Server (380870)
+   * SvenCoop Dedicated Server (276060)
    -----
  - Manage Steam server with features
    * install steam server
