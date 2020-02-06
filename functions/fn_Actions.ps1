@@ -724,6 +724,10 @@ Function New-CreateVariables {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  server STEAMPORT port- - \/  \/  \/"
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:STEAMPORT = `"$global:STEAMPORT`""
     }
+    If ($global:steamID64) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  server steamID64 - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:steamID64 = `"$global:steamID64`""
+    }
     If ($global:MAP) {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  default Map- - \/  \/  \/"
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:MAP = `"$global:MAP`""
