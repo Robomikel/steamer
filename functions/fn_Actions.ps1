@@ -15,14 +15,29 @@ Function Set-SteamInfo {
     $decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
     If ($decision -eq 1) {
         $global:ANON = "yes"
-        Install-Anonserver
+        #Install-Anonserver
+        Install-ServerFiles
         Write-Host 'Entered Y'
     }
     Else {
         $global:ANON = "no"
-        Install-Anonserver
+        #Install-Anonserver
+        Install-ServerFiles
         Write-Host 'Entered N'
     }
+}
+Function Install-ServerFiles {
+
+    Set-Location $global:currentdir\steamcmd\
+    If ($global:ANON -eq "yes") {
+        .\steamCMD +@ShutdownOnFailedCommand 1 +@NoPromptForPassword 1 +login anonymous +force_install_dir $global:currentdir\$global:server +app_update $global:APPID $global:Branch +Exit
+    }
+    Else {
+        .\steamCMD +@ShutdownOnFailedCommand 1 +login $global:username +force_install_dir $global:currentdir\$global:server +app_update $global:APPID $global:Branch +Exit
+    }
+
+
+    Set-Location $global:currentdir
 }
 Function Install-Anonserver {
     If ($global:ANON -eq "no") {
@@ -73,7 +88,7 @@ Function Get-CreatedVaribles {
 }
 Function Get-ClearVariables {
     Write-Host "****   Clearing Variables   *****" -F Y -B Black
-    $global:vars = "PROCESS", "IP", "PORT", "SOURCETVPORT", "CLIENTPORT", "MAP", "TICKRATE", "GSLT", "MAXPLAYERS", "WORKSHOP", "HOSTNAME", "QUERYPORT", "SAVES", "APPID", "RCONPORT", "RCONPASSWORD", "SV_PURE", "SCENARIO", "GAMETYPE", "GAMEMODE", "MAPGROUP", "WSCOLLECTIONID", "WSSTARTMAP", "WSAPIKEY", "WEBHOOK", "EXEDIR", "GAME", "SERVERCFGDIR", "gamedirname", "config1", "config2", "config3", "config4", "config5", "MODDIR", "status", "CpuCores", "cpu", "avmem", "totalmem", "mem", "backups", "backupssize", "stats", "gameresponse", "os", "results,", "disks", "computername", "ANON", "ALERT", "launchParams", "COOPPLAYERS", "SV_LAN", "DIFF", "GALAXYNAME","ADMINPASSWORD"
+    $global:vars = "PROCESS", "IP", "PORT", "SOURCETVPORT", "CLIENTPORT", "MAP", "TICKRATE", "GSLT", "MAXPLAYERS", "WORKSHOP", "HOSTNAME", "QUERYPORT", "SAVES", "APPID", "RCONPORT", "RCONPASSWORD", "SV_PURE", "SCENARIO", "GAMETYPE", "GAMEMODE", "MAPGROUP", "WSCOLLECTIONID", "WSSTARTMAP", "WSAPIKEY", "WEBHOOK", "EXEDIR", "GAME", "SERVERCFGDIR", "gamedirname", "config1", "config2", "config3", "config4", "config5", "MODDIR", "status", "CpuCores", "cpu", "avmem", "totalmem", "mem", "backups", "backupssize", "stats", "gameresponse", "os", "results,", "disks", "computername", "ANON", "ALERT", "launchParams", "COOPPLAYERS", "SV_LAN", "DIFF", "GALAXYNAME", "ADMINPASSWORD", "username"
     Foreach ($global:vars in $global:vars) {
         Clear-Variable $global:vars -Scope Global -ea SilentlyContinue
         Remove-Variable $global:vars -Scope Global -ea SilentlyContinue
@@ -153,9 +168,15 @@ Function Get-FolderNames {
 }
 Function Get-ValidateServer {
     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-    Get-Steamtxt
+    #Get-Steamtxt
     Write-Host '****   Validating Server   ****' -F M -B Black
-    .\steamcmd +runscript Validate-$global:server.txt
+    #.\steamcmd +runscript Validate-$global:server.txt
+    If ($global:ANON -eq "yes") {
+        .\steamCMD +@ShutdownOnFailedCommand 1 +@NoPromptForPassword 1 +login anonymous +force_install_dir $global:currentdir\$global:server +app_update $global:APPID $global:Branch validate +Exit
+    }
+    Else {
+        .\steamCMD +@ShutdownOnFailedCommand 1 +login $global:username +force_install_dir $global:currentdir\$global:server +app_update $global:APPID $global:Branch validate +Exit
+    }
     If ( !$? ) {
         Write-Host "****   Validating Server Failed   ****" -F R
         New-TryagainNew   
@@ -168,9 +189,15 @@ Function Get-ValidateServer {
 Function Get-UpdateServer {
     if ($global:DisableDiscordBackup -eq "1") {
         Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
-        Get-Steamtxt
+        #Get-Steamtxt
         Write-Host '****   Updating Server   ****' -F M -B Black
-        .\steamcmd +runscript Updates-$global:server.txt
+        #.\steamcmd +runscript Updates-$global:server.txt
+        If ($global:ANON -eq "yes") {
+            .\steamCMD +@ShutdownOnFailedCommand 1 +@NoPromptForPassword 1 +login anonymous +force_install_dir $global:currentdir\$global:server +app_update $global:APPID $global:Branch +Exit
+        }
+        Else {
+            .\steamCMD +@ShutdownOnFailedCommand 1 +login $global:username +force_install_dir $global:currentdir\$global:server +app_update $global:APPID $global:Branch +Exit
+        }
     }
     If (($?) -or ($LASTEXITCODE -eq 7)) {
         Write-Host "****   Downloading  Install/update server succeeded   ****" -F Y
@@ -232,11 +259,13 @@ Function New-TryagainNew {
 }
 Function Get-ServerBuildCheck {
     Get-Steam
-    Get-Steamtxt
+    #Get-Steamtxt
     Set-Location $global:currentdir\SteamCMD\ >$null 2>&1
     $search = "buildid"
     # public 
-    $remotebuild = .\steamcmd +runscript Buildcheck-$global:server.txt | select-string $search | Select-Object  -Index 0
+    #$remotebuild = Get-ServerBuild | select-string $search | Select-Object  -Index 0
+    $remotebuild = .\steamCMD +app_info_update 1 +app_info_print $global:APPID +quit | select-string $search | Select-Object  -Index 0
+
     #    # dev
     #    $remotebuild= .\steamcmd +runscript Buildcheck-$global:server.txt  | select-string $search | Select-Object  -Index 1
     #    # experimental
@@ -256,7 +285,7 @@ Function Get-ServerBuildCheck {
         Remove-Item $global:currentdir\$global:server\steamapps\appmanifest_$global:APPID.acf -Force  >$null 2>&1
         Write-Host "****   Removing Multiple appmanifest_$global:APPID.acf    ****" -F M -B Black
         Remove-Item $global:currentdir\$global:server\steamapps\appmanifest_*.acf -Force  >$null 2>&1
-        Get-StopServer
+        #Get-StopServer
         Get-UpdateServer  
     }
     Else {
@@ -447,7 +476,7 @@ Function Get-CheckForVars {
         $global:missingvars = $global:RCONPORT, $global:RCONPASSWORD
     }
     Else {
-        $global:missingvars = ${global:QUERYPORT}, ${global:IP}, $global:APPID, $global:PROCESS, ${global:PORT}
+        $global:missingvars = ${global:QUERYPORT}, ${global:IP}, $global:APPID, $global:PROCESS, ${global:PORT}, $global:ANON
     }
     Foreach ($global:missingvars in $global:missingvars) {
         If ( "" -eq $global:missingvars) {
@@ -668,6 +697,22 @@ Function New-CreateVariables {
     New-Item $global:currentdir\$global:server\Variables-$global:server.ps1 -Force
     Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "# WEBHOOK HERE - - \/  \/  \/"
     Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WEBHOOK = `"$global:WEBHOOK`""
+    If ($global:APPID) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  App ID  - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:APPID = `"$global:APPID`""
+    }
+    If ($global:Branch) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Branch   - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:Branch = `"$global:Branch`""
+    }
+    If ($global:username) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Steam username - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:username = $global:username"
+    }
+    If ($global:ANON) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Steam Anonymous user  - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:ANON = `"$global:ANON`""
+    }
     If ($global:MODDIR) {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Mod dir - - \/  \/  \/"
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:MODDIR = `"$global:MODDIR`""
@@ -725,7 +770,7 @@ Function New-CreateVariables {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:STEAMPORT = `"$global:STEAMPORT`""
     }
     If ($global:steamID64) {
-        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  server steamID64 - - \/  \/  \/"
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  server steamID64- - \/  \/  \/"
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:steamID64 = `"$global:steamID64`""
     }
     If ($global:MAP) {
@@ -763,10 +808,6 @@ Function New-CreateVariables {
     If ($global:SAVES) {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  local App Data SAVES folder - - \/  \/  \/"
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SAVES = `"$global:SAVES`""
-    }
-    If ($global:APPID) {
-        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  App ID  - - \/  \/  \/"
-        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:APPID = `"$global:APPID`""
     }
     If ($global:RCONPORT) {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#  Rcon Port  - - \/  \/  \/"
