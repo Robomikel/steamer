@@ -79,6 +79,7 @@ Function Select-Steamer {
         Get-CheckForVars
         Get-ChecktaskDisable
         #Get-ServerBuildCheck
+        Get-StopServer
         Get-UpdateServer 
         Get-ChecktaskEnable
         Get-Finished
@@ -89,6 +90,7 @@ Function Select-Steamer {
         Get-CheckForVars
         Get-ChecktaskDisable
         #Get-ServerBuildCheck
+        Get-StopServer
         Get-UpdateServer
         Get-ChecktaskEnable
         Get-Finished
