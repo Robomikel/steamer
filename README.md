@@ -84,7 +84,7 @@ Install steam server ```>_./steamer install misserver```
  - ```restart <serverFolder>``` - ```>_./steamer restart misserver``` - stops and starts process for miscreated server]
  - ```validate <serverFolder>``` - ```>_./steamer validate misserver``` - Validate App ID files
  - ```check <serverFolder>``` - ```>_./steamer check misserver``` - checks process for miscreated server
- - ```update <serverFolder>``` - ```>_./steamer update misserver``` - updates App ID, with  Discord alert. Reboots on update as needed, can be disabled in settings
+ - ```update <serverFolder>``` - ```>_./steamer update misserver``` - updates App ID, with  Discord alert. Stop server as needed, can be disabled in settings
   - ```ForceUpdate <serverFolder>``` - ```>_./steamer ForceUpdate misserver``` - updates App ID, with  Discord alert. Force server stop and update
  - ```backup <serverFolder>``` - ```>_./steamer backup misserver``` - Creates zip folder of server files in backups folder, with  Discord alert. purge backups over specfic count. (Downloads portable 7Zip)
  - ```monitor <serverFolder>``` - ```>_./steamer monitor misserver``` - Creates Scheduled Task to start server if off, with  Discord alert
