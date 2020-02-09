@@ -62,7 +62,7 @@ Function New-LaunchScriptRustPS {
                 $global:TICKRATE = "30"
         }
         #  Version 2 Launch Param
-        $global:launchParams = '@("$global:EXE -batchmode +server.ip ${global:IP}  +server.port ${global:PORT} +server.tickrate ${global:TICKRATE} +server.hostname `"${global:HOSTNAME}`" +server.maxplayers ${global:MAXPLAYERS} +server.worldsize ${global:WORLDSIZE} +server.saveinterval ${global:SAVEINTERVAL} +rcon.web ${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port ${global:RCONPORT} +rcon.password ${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\Serverlog-$date.log")'
+        $global:launchParams = '@("$global:EXE -batchmode +server.ip ${global:IP}  +server.port ${global:PORT} +server.tickrate ${global:TICKRATE} +server.hostname `"${global:HOSTNAME}`" +server.maxplayers ${global:MAXPLAYERS} +server.worldsize ${global:WORLDSIZE} +server.saveinterval ${global:SAVEINTERVAL} +rcon.web ${global:RCONWEB} +rcon.ip 0.0.0.0 +rcon.port ${global:RCONPORT} +rcon.password ${global:RCONPASSWORD} -logfile $global:currentdir\$global:server\server.log")'
         # adding to server.cfg                   server.hostname "server"
         #Add-Content -Path $global:currentdir\$global:server\$global:SERVERCFGDIR\$global:config1 -Value "server.hostname `"$global:HOSTNAME`""
         Get-OxideQ
