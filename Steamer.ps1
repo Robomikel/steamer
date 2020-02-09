@@ -68,7 +68,7 @@ $global:CHECKMARK = ([char]8730)
 .$global:currentdir\functions\fn_Rust.ps1
 .$global:currentdir\functions\fn_Sandstorm.ps1
 .$global:currentdir\functions\fn_Settings.ps1
-If ($global:log -eq "1") { Start-Transcript -Path "$global:currentdir\log\Steamer-$global:Date.log" -Append -NoClobber}
+If ($global:log -eq "1") { Start-Transcript -Path "$global:currentdir\log\ssm\Steamer-$global:Date.log" -Append -NoClobber}
 Set-SteamerSetting
 Set-Console  >$null 2>&1
 Set-Steamer

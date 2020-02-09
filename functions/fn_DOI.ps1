@@ -13,6 +13,7 @@ Function New-LaunchScriptdoiserverPS {
     # Game-Server-Configs
     $global:gamedirname = "DayOfInfamy"
     $global:config1 = "server.cfg"
+    $global:LOGDIR = "doi"
 
     Get-Servercfg
     Select-RenameSource
