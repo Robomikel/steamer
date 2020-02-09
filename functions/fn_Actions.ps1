@@ -1068,6 +1068,9 @@ Function Get-ChecktaskEnable {
         Write-Host "****   Scheduled Task does not exist   ****" -F Y -B Black
     }
 }
+Function New-ServerLog{
+    If ($global:log -eq "1") {Copy-Item "$global:currentdir\$global:server\server.log" -Destination "$global:currentdir\log\$global:server-$global:date.log"}
+}
 Function New-BackupFolder {
     $path = "$global:currentdir\backups" 
     If (Test-Path $path) { 
@@ -1203,10 +1206,10 @@ Function Get-StartServer {
     Set-Location $global:currentdir\$global:server\
     #Start-Process -FilePath CMD -ArgumentList ("/c $global:launchParams") -NoNewWindow
     If (( $global:APPID -eq 258550 ) -or ($global:APPID -eq 294420 ) -or ($global:APPID -eq 302550)) {
-        Start-Process CMD "/c start $global:launchParams"
+        Start-Process CMD "/c start $global:launchParams -condebug"
     }
     Else {
-        Start-Process CMD "/c start $global:launchParams"  -NoNewWindow
+        Start-Process CMD "/c start $global:launchParams -condebug"  -NoNewWindow
     }
     Set-Location $global:currentdir
 }
