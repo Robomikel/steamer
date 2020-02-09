@@ -798,6 +798,10 @@ Function New-CreateVariables {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         Max Players  "
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:MAXPLAYERS       = `"$global:MAXPLAYERS`""
     }
+    If ($global:COOPPLAYERS) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         COOPPLAYERS Players  "
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:COOPPLAYERS       = `"$global:COOPPLAYERS`""
+    }
     If ($global:WORKSHOP) {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         Workshop 1/0 HERE "
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WORKSHOP         = `"$global:WORKSHOP`""
@@ -830,6 +834,22 @@ Function New-CreateVariables {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         Sandstorm SCENARIO   "
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SCENARIO         = `"$global:SCENARIO`""
     }
+    If ($global:SAVEINTERVAL) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         SAVEINTERVAL   "
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SAVEINTERVAL         = `"$global:SAVEINTERVAL`""
+    }
+    If ($global:WORLDSIZE) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         WORLDSIZE  "
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WORLDSIZE         = `"$global:WORLDSIZE`""
+    }
+    If ($global:SEED) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                          SEED   "
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:SEED         = `"$global:SEED`""
+    }
+    If ($global:RCONWEB) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                          RCONWEB   "
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:RCONWEB         = `"$global:RCONWEB`""
+    }
     If ($global:GAMETYPE) {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         CSGO Gametype   "
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:GAMETYPE         = `"$global:GAMETYPE`""
@@ -842,16 +862,16 @@ Function New-CreateVariables {
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         CSGO mapgroup   "
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:MAPGROUP         = `"$global:MAPGROUP`""
     }
-    If ($global:AppID -eq 740) {
-        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                             CSGO WSCOLLECTIONID   "
+    If ($global:WSCOLLECTIONID) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                              WSCOLLECTIONID   "
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WSCOLLECTIONID       = `"$global:WSCOLLECTIONID`""
     }
-    If ($global:AppID -eq 740) {
-        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         CSGO WSSTARTMAP  "
+    If ($global:WSSTARTMAP) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                          WSSTARTMAP  "
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WSSTARTMAP       = `"$global:WSSTARTMAP`""
     }
-    If ($global:AppID -eq 740) {
-        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         CSGO WSAPIKEY   "
+    If ($global:WSAPIKEY) {
+        Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "#                         WSAPIKEY   "
         Add-Content  $global:currentdir\$global:server\Variables-$global:server.ps1  "`$global:WSAPIKEY         = `"$global:WSAPIKEY`""
     }
     If ($global:launchParams) {
@@ -1251,7 +1271,20 @@ Function Get-UserInput {
         [parameter(Position = 12)]$parm12,
         [parameter(Position = 13)]$parm13,
         [parameter(Position = 14)]$parm14,
-        [parameter(Position = 15)]$parm15)
+        [parameter(Position = 15)]$parm15,
+        [parameter(Position = 16)]$parm16,
+        [parameter(Position = 17)]$parm17,
+        [parameter(Position = 18)]$parm18,
+        [parameter(Position = 19)]$parm19,
+        [parameter(Position = 20)]$parm20,
+        [parameter(Position = 21)]$parm21,
+        [parameter(Position = 22)]$parm22,
+        [parameter(Position = 23)]$parm23,
+        [parameter(Position = 24)]$parm24,
+        [parameter(Position = 25)]$parm25,
+        [parameter(Position = 26)]$parm26,
+        [parameter(Position = 27)]$parm27,
+        [parameter(Position = 28)]$parm28)
     #Write-Host "$global:SMILEY_BLACK Press Enter to Accept default $global:SMILEY_BLACK" -F Y
     If ($parm0 -eq 1) {
         If ((${global:IP} = Read-Host -P(Write-Host "Enter Server IP, Press Enter to Accept default [$global:defaultIP]: "-F CY -N )) -eq '') { $global:IP = "$global:defaultIP" }Else { $global:IP }
@@ -1272,7 +1305,7 @@ Function Get-UserInput {
         If ((${global:HOSTNAME} = Read-Host -P(Write-Host "Enter Server HOSTNAME, Press Enter to Accept default [$env:USERNAME]: "-F CY -N )) -eq '') { $global:HOSTNAME = "$env:USERNAME" }Else { $global:HOSTNAME }
     }
     If ($parm6 -eq 1) {
-        If ((${global:SERVERPASSWORD} = Read-Host -P(Write-Host "Enter SERVER PASSWORD, Press Enter to Accept default [$global:defaultSERVERPASSWORD]: "-F CY -N )) -eq '') { $global:SERVERPASSWORD = "$global:defaultSERVERPASSWORD" }Else { $global:SERVERPASSWORD }
+        If ((${global:SERVERPASSWORD} = Read-Host -P(Write-Host "Enter Server SERVER PASSWORD, Press Enter to Accept default [$global:defaultSERVERPASSWORD]: "-F CY -N )) -eq '') { $global:SERVERPASSWORD = "$global:defaultSERVERPASSWORD" }Else { $global:SERVERPASSWORD }
     }
     If ($parm7 -eq 1) {
         If ((${global:MAXPLAYERS} = Read-Host -P(Write-Host "Enter Server MAX PLAYERS, Press Enter to Accept default [$global:defaultMAXPLAYERS]: "-F CY -N )) -eq '') { $global:MAXPLAYERS = "$global:defaultMAXPLAYERS" }Else { $global:MAXPLAYERS }
@@ -1299,7 +1332,49 @@ Function Get-UserInput {
         If ((${global:ADMINPASSWORD} = Read-Host -P(Write-Host "Enter Server ADMIN PASSWORD, Press Enter to Accept default [$global:defaultADMINPASSWORD]: "-F CY -N )) -eq '') { $global:ADMINPASSWORD = "$global:defaultADMINPASSWORD" }Else { $global:ADMINPASSWORD }
     }
     If ($parm15 -eq 1) {
-        If ((${global:xx} = Read-Host -P(Write-Host "Enter Server , Press Enter to Accept default [$global:xx]: "-F CY -N )) -eq '') { $global:xx = "$global:xx" }Else { $global:xx }
+        If ((${global:TICKRATE} = Read-Host -P(Write-Host "Enter Server TICKRATE, Press Enter to Accept default [$global:TICKRATE]: "-F CY -N )) -eq '') { $global:TICKRATE = "$global:defaultTICKRATE" }Else { $global:TICKRATE }
+    }
+    If ($parm16 -eq 1) {
+        If ((${global:SAVEINTERVAL} = Read-Host -P(Write-Host "Enter Server SAVEINTERVAL, Press Enter to Accept default [$global:SAVEINTERVAL]: "-F CY -N )) -eq '') { $global:SAVEINTERVAL = "$global:defaultSAVEINTERVAL" }Else { $global:SAVEINTERVAL }
+    }
+    If ($parm17 -eq 1) {
+        If ((${global:WORLDSIZE} = Read-Host -P(Write-Host "Enter Server WORLDSIZE, Press Enter to Accept default [$global:WORLDSIZE]: "-F CY -N )) -eq '') { $global:WORLDSIZE = "$global:defaultWORLDSIZE" }Else { $global:WORLDSIZE }
+    }
+    If ($parm18 -eq 1) {
+        If ((${global:SEED} = Read-Host -P(Write-Host "Enter Server SEED, Press Enter to Accept default [$global:SEED]: "-F CY -N )) -eq '') { $global:SEED = "$global:defaultSEED" }Else { $global:SEED }
+    }
+    If ($parm19 -eq 1) {
+        If ((${global:RCONWEB} = Read-Host -P(Write-Host "Enter Server RCONWEB, Press Enter to Accept default [$global:RCONWEB]: "-F CY -N )) -eq '') { $global:RCONWEB = "$global:defaultRCONWEB" }Else { $global:RCONWEB }
+    }
+    If ($parm20 -eq 1) {
+        If ((${global:steamID64} = Read-Host -P(Write-Host "Enter steamID64, Press Enter to Accept default [$global:steamID64]: "-F CY -N )) -eq '') { $global:steamID64 = "$global:defaultsteamID64" }Else { $global:steamID64 }
+    }
+    If ($parm21 -eq 1) {
+        If ((${global:GALAXYNAME} = Read-Host -P(Write-Host "Enter GALAXYNAME, Press Enter to Accept default [$global:GALAXYNAME]: "-F CY -N )) -eq '') { $global:GALAXYNAME = "$global:defaultGALAXYNAME" }Else { $global:GALAXYNAME }
+    }
+    If ($parm22 -eq 1) {
+        If ((${global:MAPGROUP} = Read-Host -P(Write-Host "Enter Server MAPGROUP, Press Enter to Accept default [$global:MAPGROUP]: "-F CY -N )) -eq '') { $global:MAPGROUP = "$global:defaultMAPGROUP" }Else { $global:MAPGROUP }
+    }
+    If ($parm23 -eq 1) {
+        If ((${global:GAMETYPE} = Read-Host -P(Write-Host "Enter Server xx, Press Enter to Accept default [$global:GAMETYPE]: "-F CY -N )) -eq '') { $global:GAMETYPE = "$global:defaultGAMETYPE" }Else { $global:GAMETYPE }
+    }
+    If ($parm24 -eq 1) {
+        If ((${global:COOPPLAYERS} = Read-Host -P(Write-Host "Enter Server COOPPLAYERS, Press Enter to Accept default [$global:COOPPLAYERS]: "-F CY -N )) -eq '') { $global:COOPPLAYERS = "$global:defaultCOOPPLAYERS" }Else { $global:COOPPLAYERS }
+    }
+    If ($parm25 -eq 1) {
+        If ((${global:SV_LAN} = Read-Host -P(Write-Host "Enter Server SV_LAN, Press Enter to Accept default [$global:SV_LAN]: "-F CY -N )) -eq '') { $global:SV_LAN = "$global:defaultSV_LAN" }Else { $global:SV_LAN }
+    }
+    If ($parm26 -eq 1) {
+        If ((${global:WORKSHOP} = Read-Host -P(Write-Host "Enter Server WORKSHOP, Press Enter to Accept default [$global:WORKSHOP]: "-F CY -N )) -eq '') { $global:WORKSHOP = "$global:defaultWORKSHOP" }Else { $global:WORKSHOP }
+    }
+    If ($parm27 -eq 1) {
+        If ((${global:SV_PURE} = Read-Host -P(Write-Host "Enter Server SV_PURE, Press Enter to Accept default [$global:SV_PURE]: "-F CY -N )) -eq '') { $global:SV_PURE = "$global:defaultSV_PURE" }Else { $global:SV_PURE }
+    }
+    If ($parm28 -eq 1) {
+        If ((${global:xx} = Read-Host -P(Write-Host "Enter Server xx, Press Enter to Accept default [$global:xx]: "-F CY -N )) -eq '') { $global:xx = "$global:xx" }Else { $global:xx }
+    }
+    If ($parm29 -eq 1) {
+        If ((${global:xx} = Read-Host -P(Write-Host "Enter Server xx, Press Enter to Accept default [$global:xx]: "-F CY -N )) -eq '') { $global:xx = "$global:xx" }Else { $global:xx }
     }
 }
 Function Read-AppID {
