@@ -132,7 +132,7 @@ Function New-LaunchScriptLFD2serverPS {
         #if(($global:workshop = Read-Host -Prompt (Write-Host "Input 1 to enable workshop, Press enter to accept default value [0]: "-ForegroundColor Cyan -NoNewline)) -eq ''){$global:workshop="0"}else{$global:workshop}
         #if(($global:sv_pure = Read-Host -Prompt (Write-Host "Input addtional launch params ie. +sv_pure 0, Press enter to accept default value []: "-ForegroundColor Cyan -NoNewline)) -eq ''){}else{$global:sv_pure}
         Select-EditSourceCFG
-        $global:launchParams = '@("$global:EXE -console -game left4dead2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +hostip ${global:EXTIP} +maxplayers ${global:MAXPLAYERS} +map `"${global:MAP}`" -condebug ")'
+        $global:launchParams = '@("$global:EXE -console -game left4dead2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +hostip ${global:EXTIP} +maxplayers ${global:MAXPLAYERS} +map `"${global:MAP}`" -condebug")'
         Get-SourceMetMod
 }
     
@@ -334,7 +334,7 @@ Function New-LaunchScriptAoCserverPS {
         $global:HOSTNAME = Read-host
         if (($global:RCONPASSWORD = Read-Host -Prompt (Write-Host "Input Server Rcon Password,Press enter to accept default value [$global:RANDOMPASSWORD]: " -ForegroundColor Cyan -NoNewline)) -eq '') { $global:RCONPASSWORD = "$global:RANDOMPASSWORD" }else { $global:RCONPASSWORD }
         Select-EditSourceCFG
-        $global:launchParams = '@("$global:EXE -console -game ageofchivalry -secure +map ${global:MAP} -autoupdate +log on +maxplayers ${global:MAXPLAYERS} -port ${global:PORT} +ip ${global:IP} +exec server.cfg")'
+        $global:launchParams = '@("$global:EXE -console -game ageofchivalry -secure +map ${global:MAP} -autoupdate +log on +maxplayers ${global:MAXPLAYERS} -port ${global:PORT} +ip ${global:IP} +exec server.cfg -condebug")'
 }
 
 
@@ -369,7 +369,7 @@ Function New-LaunchScriptswarmserverPS {
         #     Add here     /\ /\ /\ 
         Get-UserInput 0 0 0 0 0 0 0 1 0 1
         Select-RenameSource
-        $global:launchParams = '@("$global:EXE -console -game swarm +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} -autoupdate")'
+        $global:launchParams = '@("$global:EXE -console -game swarm +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} -autoupdate -condebug")'
 }
 Function New-LaunchScriptBOserverPS {
         # Ballistic Overkill Dedicated Server
@@ -431,7 +431,7 @@ Function New-LaunchScriptAHL2serverPS {
         Select-RenameSource
         # game config
         Select-EditSourceCFG
-        $global:launchParams = '@("$global:EXE -console -game ahl2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
+        $global:launchParams = '@("$global:EXE -console -game ahl2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} -condebug")'
 }
 Function New-LaunchScriptBB2serverPS {
         # BrainBread 2 Dedicated Server
@@ -467,7 +467,7 @@ Function New-LaunchScriptBB2serverPS {
         Select-RenameSource
         # game config
         Select-EditSourceCFG
-        $global:launchParams = '@("$global:EXE -console -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} ")'
+        $global:launchParams = '@("$global:EXE -console -game brainbread2 -strictportbind -ip ${global:IP} -port ${global:PORT} +clientport ${global:CLIENTPORT} +tv_port ${global:SOURCETVPORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} -condebug")'
 }
 Function New-LaunchScriptHL2DMserverPS {
         #        * * Add to Read-AppID in fn_Actions.ps1 * *
@@ -513,7 +513,7 @@ Function New-LaunchScriptHL2DMserverPS {
         #---- Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # VERSION 2 launch params exe in root \/\/
-        $global:launchParams = '@("$global:EXE -console -game hl2mp -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+        $global:launchParams = '@("$global:EXE -console -game hl2mp -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +servercfgfile server.cfg -maxplayers ${global:maxplayers} -condebug")'
         # $global:launchParams = '@("$global:EXE -console -game "hl2dm" -secure +map dm_lockdown -autoupdate +log on +maxplayers 32 -port 27015 +ip 1.2.3.4 +exec server.cfg")'
         # OR EXE NOT In ROOT server folder add EXEDIR
         # $global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
@@ -564,7 +564,7 @@ Function New-LaunchScriptDystopiaserverPS {
         # VERSION 2 launch params exe in root \/\/
         #-game "${serverfiles}/dystopia" -strictportbind -ip ${ip} -port ${port} +clientport ${clientport} +tv_port ${sourcetvport} +map ${defaultmap} +sv_setsteamaccount ${gslt} +servercfgfile ${servercfg} -maxplayers ${maxplayers}
         # OR EXE NOT In ROOT server folder add EXEDIR
-        $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -game `"$global:currentdir\${global:server}\dystopia`" -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'      
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -game `"$global:currentdir\${global:server}\dystopia`" -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers} -condebug")'      
 }
 Function New-LaunchScriptBlackMesaserverPS {
         #        * * Add to Read-AppID in fn_Actions.ps1 * *
@@ -610,7 +610,7 @@ Function New-LaunchScriptBlackMesaserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch
-        $global:launchParams = '@("$global:EXE -console -game bms -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +sv_setsteamaccount ${global:gslt} +map ${global:defaultmap} +servercfgfile $server.cfg -maxplayers ${global:maxplayers}")'
+        $global:launchParams = '@("$global:EXE -console -game bms -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +sv_setsteamaccount ${global:gslt} +map ${global:defaultmap} +servercfgfile $server.cfg -maxplayers ${global:maxplayers} -condebug")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
@@ -657,7 +657,7 @@ Function New-LaunchScriptDODSserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch 
-        $global:launchParams = '@("$global:EXE -console -game `"dods`" -secure +map ${global:map} -autoupdate +log on +maxplayers ${global:maxplayers} -port ${global:port}  +ip ${global:ip} +exec server.cfg")'
+        $global:launchParams = '@("$global:EXE -console -game `"dods`" -secure +map ${global:map} -autoupdate +log on +maxplayers ${global:maxplayers} -port ${global:port}  +ip ${global:ip} +exec server.cfg -condebug")'
         # $global:launchParams = '@("$global:EXE -console -game dod -strictportbind +ip ${ip} -port ${port} +clientport ${clientport} +map ${defaultmap} +servercfgfile server.cfg -maxplayers ${maxplayers}")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
@@ -716,7 +716,7 @@ Function New-LaunchScriptDSTserverPS {
         # BOTH CAVES AND MASTER
         # $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -cluster ${cluster} -shard ${shard} -backup_logs ;; $global:EXEDIR\$global:EXE -console -cluster ${cluster} -shard ${shard2} -backup_logs")'
         # Master
-        $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -bind_ip ${global:ip} -port ${global:PORT} -players ${global:maxplayers} -persistent_storage_root ${persistentstorageroot} -conf_dir ${global:gamedirname} -cluster ${cluster} -shard ${shard} -backup_logs")'
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -bind_ip ${global:ip} -port ${global:PORT} -players ${global:maxplayers} -persistent_storage_root ${persistentstorageroot} -conf_dir ${global:gamedirname} -cluster ${cluster} -shard ${shard} -backup_logs -condebug")'
         # Caves
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -console -bind_ip ${global:ip} -port ${global:PORT} -players ${global:maxplayers} -persistent_storage_root ${persistentstorageroot} -conf_dir ${global:gamedirname} -cluster ${cluster} -shard ${shard} -backup_logs")'
 }
@@ -772,7 +772,7 @@ Function New-LaunchScriptGMODserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch 
-        $global:launchParams = '@("$global:EXE -console -game garrysmod -strictportbind -ip ${global:ip} -port ${global:port} -tickrate ${global:tickrate} +host_workshop_collection ${wscollectionid} -authkey ${wsapikey} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +gamemode ${global:gamemode} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers} ${customparms}")'
+        $global:launchParams = '@("$global:EXE -console -game garrysmod -strictportbind -ip ${global:ip} -port ${global:port} -tickrate ${global:tickrate} +host_workshop_collection ${wscollectionid} -authkey ${wsapikey} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +gamemode ${global:gamemode} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers} ${customparms} -condebug")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
@@ -821,7 +821,7 @@ Function New-LaunchScriptTF2serverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch 
-        $global:launchParams = '@("$global:EXE -console -game tf -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+        $global:launchParams = '@("$global:EXE -console -game tf -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers} -condebug")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
@@ -869,7 +869,7 @@ Function New-LaunchScriptNMRIHserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch 
-        $global:launchParams = '@("$global:EXE -game nmrih -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers}")'
+        $global:launchParams = '@("$global:EXE -console -game nmrih -strictportbind -ip ${global:ip} -port ${global:port} +clientport ${global:clientport} +tv_port ${global:sourcetvport} +map ${global:map} +sv_setsteamaccount ${global:gslt} +servercfgfile server.cfg -maxplayers ${global:maxplayers} -condebug")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
@@ -918,7 +918,7 @@ Function New-LaunchScriptbsserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch 
-        $global:launchParams = '@("$global:EXEDIR\$global:EXE -game "$global:currentdir\${global:server}\berimbau" -autoupdate -strictportbind -ip ${$global:ip} -port ${$global:port} +clientport ${$global:clientport} +tv_port ${$global:sourcetvport} +sv_setsteamaccount ${$global:gslt} +map ${$global:map} +servercfgfile server.cfg -maxplayers ${$global:maxplayers}")'
+        $global:launchParams = '@("$global:EXEDIR\$global:EXE -console -game "$global:currentdir\${global:server}\berimbau" -autoupdate -strictportbind -ip ${$global:ip} -port ${$global:port} +clientport ${$global:clientport} +tv_port ${$global:sourcetvport} +sv_setsteamaccount ${$global:gslt} +map ${$global:map} +servercfgfile server.cfg -maxplayers ${$global:maxplayers} -condebug")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
@@ -966,7 +966,7 @@ Function New-LaunchScriptFOFserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
         Select-EditSourceCFG
         # --->Launch 
-        $global:launchParams = '@("$global:EXE -game fof -strictportbind -ip ${$global:ip} -port ${$global:port} +clientport ${$global:clientport} +tv_port ${$global:sourcetvport} +map ${$global:map} +servercfgfile server.cfg -maxplayers ${$global:maxplayers})'
+        $global:launchParams = '@("$global:EXE -console -game fof -strictportbind -ip ${$global:ip} -port ${$global:port} +clientport ${$global:clientport} +tv_port ${$global:sourcetvport} +map ${$global:map} +servercfgfile server.cfg -maxplayers ${$global:maxplayers} -condebug")'
         # OR    EXE NOT In server folder ROOT add EXEDIR \/ \/
         #$global:launchParams = '@("$global:EXEDIR\$global:EXE -< LAUNCH PARAMS HERE >-")'
 }
@@ -1062,7 +1062,7 @@ Function New-LaunchScriptSvenCoopserverPS {
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
          Select-EditSourceCFG
         # --->Launch 
-        $global:launchParams = '@("$global:EXE -console -game svencoop -strictportbind +ip ${$global:ip} -port ${$global:port} +clientport ${$global:clientport} +map ${$global:map} +servercfgfile server.cfg +maxplayers ${$global:maxplayers}")'
+        $global:launchParams = '@("$global:EXE -console -game svencoop -strictportbind +ip ${$global:ip} -port ${$global:port} +clientport ${$global:clientport} +map ${$global:map} +servercfgfile server.cfg +maxplayers ${$global:maxplayers} -condebug")'
         # $global:launchParams = '@("$global:EXE -ip ${global:ip} -adminpassword `"${global:adminpassword}`" -servername `"${global:HOSTNAME}`"")'
 
 }
