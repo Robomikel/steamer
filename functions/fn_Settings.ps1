@@ -33,7 +33,7 @@ Function Set-SteamerSetting {
     # Disable Logging 0
     $global:log = "1"
     #   Log count 
-    $global:log = "10"
+    $global:logcount = "10"
 }
 
 
