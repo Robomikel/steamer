@@ -110,6 +110,7 @@ Function New-LaunchScriptLFD2serverPS {
         $global:GAME = "left4dead2"
         $global:PROCESS = "l4d2"
         $global:SERVERCFGDIR = "left4dead2\cfg"
+        $global:LOGDIR = "left4dead2"
         Get-StopServerInstall
         # Game-Server-Configs
         $global:gamedirname = "Left4Dead2"
@@ -450,7 +451,8 @@ Function New-LaunchScriptBB2serverPS {
         $global:GAME = "protocol-valve"
         $global:SAVES = ""
         $global:PROCESS = "BB2"
-        $global:SERVERCFGDIR = "cfg"
+        $global:SERVERCFGDIR = "brainbread2\cfg"
+        $global:LOGDIR = "brainbread2"
         Get-StopServerInstall
         #Game-server-configs \/
         $global:gamedirname = "BrainBread2"
@@ -466,9 +468,10 @@ Function New-LaunchScriptBB2serverPS {
         $global:defaultGSLT = ""
         $global:defaultMAP = "bba_barracks"
         $global:defaultMAXPLAYERS = "20"
+        $global:defaultHOSTNAME = "PS Steamer"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #     Add here     /\ /\ /\
-        Get-UserInput 1 1 0 0 1 0 0 1 1 1
+        Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
         Select-RenameSource
         # game config
         Select-EditSourceCFG
