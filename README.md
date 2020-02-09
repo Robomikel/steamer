@@ -38,16 +38,16 @@ Install steam server ```>_./steamer install misserver```
    * Counter-Strike Global Offensive - Dedicated Server (740) "csgoserver" (optional server folder name)
    * Left 4 Dead 2 - Dedicated Server (222860) "lfd2server" (optional server folder name)
    * Age of Chivalry Dedicated Server (17515)  "aocserver" (optional server folder name)
-    * Team Fortress 2 Dedicated Server (232250) "tf2server"
-   # untested
+   * Team Fortress 2 Dedicated Server (232250) "tf2server"
    * Avorion - Dedicated Server (565060)
    * Boundel - Dedicated Server (454070)
+   * Dystopia Dedicated Server (17585)
+   # untested
    * Assetto Corsa Dedicated Server (302550)
    * Alien Swarm Dedicated Server (17515)
    * Ballistic Overkill Dedicated Server (416880)
    * Action: Source Dedicated Server (985050)
    * BrainBread 2 Dedicated Server (475370)
-   * Dystopia Dedicated Server (17585)
    * Half-Life 2: Deathmatch Dedicated Server (232370)
    * Black Mesa: Deathmatch Dedicated Server (346680)
    * Day of Defeat Source Dedicated Server (232290)
