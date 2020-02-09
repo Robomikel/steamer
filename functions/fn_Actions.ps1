@@ -683,7 +683,7 @@ Function Add-NodeJS {
     }
     Set-Location $global:currentdir\node-v$global:nodeversion-win-x64\node-v$global:nodeversion-win-x64
     Write-Host '****   Installing gamedig in Nodejs   ****' -F M -B Black
-    Write-Host '****   Do not stop or cancel! Will need to delete nodejs files and start over!   ****' -F Y -B Black  
+    Write-Host '****   Do not stop or cancel! Will need to delete nodejs files and start over!   ****' -F Y -B Black 
     .\npm install gamedig
     .\npm install gamedig -g
     Set-Location $global:currentdir
