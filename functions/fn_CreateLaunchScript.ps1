@@ -417,7 +417,8 @@ Function New-LaunchScriptAHL2serverPS {
         $global:GAME = "protocol-valve"
         $global:SAVES = ""
         $global:PROCESS = "ahl2"
-        $global:SERVERCFGDIR = "cfg"
+        $global:SERVERCFGDIR = "ahl2\cfg"
+        $global:LOGDIR = "ahl2"
         Get-StopServerInstall
         #Game-server-configs \/
         $global:gamedirname = "ActionSource"
@@ -432,6 +433,8 @@ Function New-LaunchScriptAHL2serverPS {
         $global:defaultGSLT = ""
         $global:defaultMAP = "act_airport"
         $global:defaultMAXPLAYERS = "20"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #     Add here     /\ /\ /\
         Get-UserInput 1 1 0 0 0 0 0 1 1 1 1 1
         Select-RenameSource
@@ -498,6 +501,7 @@ Function New-LaunchScriptHL2DMserverPS {
         $global:PROCESS = "hl2dm"
         #---game config folder \/\/
         $global:SERVERCFGDIR = "hl2mp\cfg"
+        $global:LOGDIR = "hl2mp"
         #---Stop existing process if running          
         Get-StopServerInstall
         # Game-server-manger folder \/
@@ -514,6 +518,8 @@ Function New-LaunchScriptHL2DMserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "dm_lockdown"
         $global:defaultmaxplayers = "16"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         # input questions \/\/
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
         # rename srcds.exe \/\/
@@ -564,6 +570,8 @@ Function New-LaunchScriptDystopiaserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "dys_broadcast"
         $global:defaultmaxplayers = "16"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         # input questions \/\/
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
         # rename srcds.exe \/\/
@@ -596,6 +604,7 @@ Function New-LaunchScriptBlackMesaserverPS {
         $global:PROCESS = "bmdm"
         #--->game config folder
         $global:SERVERCFGDIR = "bms\cfg"
+        $global:LOGDIR = "bms"
         #--->Stop existing process if running
         Get-StopServerInstall
         #--->Game-server-manger folder \/
@@ -612,6 +621,8 @@ Function New-LaunchScriptBlackMesaserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "dm_bounce"
         $global:defaultmaxplayers = "16"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1 0 0 0 0
         #--->rename srcds.exe \/\/
@@ -644,6 +655,7 @@ Function New-LaunchScriptDODSserverPS {
         $global:PROCESS = "dods"
         #--->game config folder
         $global:SERVERCFGDIR = "dod\cfg"
+        $global:LOGDIR = "dod"
         #--->Stop existing process if running 
         Get-StopServerInstall
         #--->Game-server-manger folder \/
@@ -659,6 +671,8 @@ Function New-LaunchScriptDODSserverPS {
         #$global:defaultclientport="27005"
         $global:defaultmap = "dod_Anzio"
         $global:defaultmaxplayers = "16"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 1 1 0 0 0 0 0 1 0 1 1 0 0
         Get-UserInput 1 1 0 0 0 0 0 1 0 1 0 0 0
         #--->rename srcds.exe \/\/
@@ -715,7 +729,8 @@ Function New-LaunchScriptDSTserverPS {
         $global:defaultip = "${global:IP}"
         $global:defaultport = "10999"
         $global:defaultmaxplayers = "32"
-  
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 1 1 0 0 0 0 0 1 0 1 1 0 0
         Get-UserInput 1 1 0 0 0 1 1 0 0 0 0 0
 
@@ -750,6 +765,7 @@ Function New-LaunchScriptGMODserverPS {
         $global:PROCESS = "gmod"
         #--->game config folder
         $global:SERVERCFGDIR = "garrysmod\cfg"
+        $global:LOGDIR = "garrysmod"
         #--->Stop existing process if running        
         Get-StopServerInstall
         #--->Game-server-manger folder \/
@@ -766,7 +782,9 @@ Function New-LaunchScriptGMODserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "gm_construct"
         $global:defaultmaxplayers = "16"
-        $global:defaultgamemode = "sandbox"     
+        $global:defaultgamemode = "sandbox"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"     
         $global:tickrate = "66"
         # API key visit - https://steamcommunity.com/dev/apikey
         $wsapikey = ""
@@ -806,6 +824,7 @@ Function New-LaunchScriptTF2serverPS {
         $global:PROCESS = "tf2"
         #--->game config folder
         $global:SERVERCFGDIR = "tf\cfg"
+        $global:LOGDIR = "tf"
         #--->Stop existing process if running        
         Get-StopServerInstall
         #--->Game-server-manger folder \/
@@ -822,6 +841,8 @@ Function New-LaunchScriptTF2serverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "cp_badlands"
         $global:defaultmaxplayers = "16"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         $global:gslt = ""
         #--->input questions 
         Get-UserInput 1 1 0 0 0 1 1 1 1 1 1 1
@@ -855,6 +876,7 @@ Function New-LaunchScriptNMRIHserverPS {
         $global:PROCESS = "NMRIH"
         #--->game config folder
         $global:SERVERCFGDIR = "nmrih\cfg"
+        $global:LOGDIR = "nmrih"
         #--->Stop existing process if running        
         Get-StopServerInstall
         #--->Game-server-manger folder \/
@@ -871,6 +893,8 @@ Function New-LaunchScriptNMRIHserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "nmo_broadway"
         $global:defaultmaxplayers = "8"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1 0
         #--->rename srcds.exe \/\/
@@ -903,6 +927,7 @@ Function New-LaunchScriptbsserverPS {
         $global:PROCESS = "BladeSymphony"
         #--->game config folder
         $global:SERVERCFGDIR = "berimbau\cfg"
+        $global:LOGDIR = "berimbau"
         #--->Stop existing process if running        
         Get-StopServerInstall
         #--->Game-server-manger folder \/
@@ -920,6 +945,8 @@ Function New-LaunchScriptbsserverPS {
         $global:defaultmap = "duel_winter"
         $global:defaultmaxplayers = "16"
         $global:defaultgslt = ""
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
         #--->rename srcds.exe \/\/
@@ -952,6 +979,7 @@ Function New-LaunchScriptFOFserverPS {
         $global:PROCESS = "FOF"
         #--->game config folder
         $global:SERVERCFGDIR = "fof\cfg"
+        $global:LOGDIR = "fof"
         #--->Stop existing process if running        
         Get-StopServerInstall
         #--->Game-server-manger folder \/
@@ -968,6 +996,8 @@ Function New-LaunchScriptFOFserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "fof_depot"
         $global:defaultmaxplayers = "20"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 0 1 1 1
         #--->rename srcds.exe \/\/
@@ -1064,6 +1094,8 @@ Function New-LaunchScriptSvenCoopserverPS {
         $global:defaultclientport="27005"
         $global:defaultmap="svencoop1"
         $global:defaultmaxplayers="16"
+        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 0 1 1 1 0
         #--->rename srcds.exe \/\/
