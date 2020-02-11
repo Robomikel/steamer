@@ -260,6 +260,8 @@ Function  New-LaunchScriptavserverPS {
         $global:EXE = "AvorionServer"
         $global:EXEDIR = "bin"
         $global:GAME = "protocol-valve"
+        #                       GameDig port Default
+        #$global:PORT            = "27020"
         $global:SAVES = "Avorion"
         $global:PROCESS = "AvorionServer"
         Get-StopServerInstall
