@@ -68,6 +68,7 @@ Install steam server ```>_./steamer install misserver```
    * validate server files 
    * backup server files 
    * monitor server process
+   * console and steamer logging
    * Rcon to server 
    * Daily AutoRestart server process 
    * send discord alerts - backup - monitor - update 
