@@ -1063,10 +1063,10 @@ Function New-LaunchScriptpzserverPS {
         #--->Default Vars
         $global:defaultRCONPORT = "${global:PORT}"
         $global:defaultip = "${global:IP}"
-        $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
+        ${global:adminpassword} = "$global:RANDOMPASSWORD"
         $global:defaultHOSTNAME = "$env:USERNAME"
         #--->input questions 
-        Get-UserInput 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0
+        Get-UserInput 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1
         #--->rename srcds.exe \/\/
         Select-RenameSource
         #--->Edit game config \/ SERVERNAME ADMINPASSWORD
