@@ -1,4 +1,4 @@
-# Version 2.5
+# Final
 #----------   Miscreated Server Install Function   -------------------
 Function New-LaunchScriptMiscreatedPS {
         # Requiered Dont change 

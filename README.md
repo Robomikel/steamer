@@ -105,7 +105,7 @@ Install steam server ```>_./steamer install misserver```
  * Left 4 Dead 2 - Dedicated Server - option for sourcemod and Meta Mod install
  ![](https://github.com/Robomikel/fn_steamer/blob/master/images/steamermod.jpg)
  
-  # MCRcon
+# MCRcon
  * MCRcon Download and Install
  * Use used to Rcon to servers.
  
@@ -114,7 +114,7 @@ Install steam server ```>_./steamer install misserver```
  
 - - - - 
  When creating a Schedule task to run Monitor script.
-- If using a user windows account. Will need to add user to the "log on as batch job" to run the task under that account
+- If using a user windows account. you may need to add user to the "log on as batch job" to run the task under that account
 - - - - 
  Does not install Dependencies like Visual C++ Redistributable or Direct X
  

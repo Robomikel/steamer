@@ -1,4 +1,4 @@
-# Version 2.5
+# Final
 #----------   DOI Server Install Function   -------------------
 Function New-LaunchScriptdoiserverPS {
     # Steamer Vars Do Not Edit

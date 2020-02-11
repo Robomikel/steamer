@@ -1,4 +1,4 @@
-# Version 2.5
+# Final
 #----------   Rust Server Install Function   -------------------
 Function New-LaunchScriptRustPS {
         # Requiered Dont change 

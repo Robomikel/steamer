@@ -1,4 +1,4 @@
-# Version 2.5
+# Final
 #----------   CSGO Server Install Function   -------------------
 Function New-LaunchScriptcsgoserverPS {
         $global:MODDIR = "csgo"

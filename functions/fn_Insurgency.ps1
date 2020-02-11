@@ -1,4 +1,4 @@
-# Version 2.5
+# Final
 #----------   INS Server Install Function   -------------------
 Function New-LaunchScriptInsserverPS {
     # Requiered Dont change 

@@ -1,4 +1,4 @@
-# Version 2.5
+# Final
 #----------   INS: Sandstorm Server Install Function   -------------------
 Function New-LaunchScriptInssserverPS {
         # Requiered Dont change 
