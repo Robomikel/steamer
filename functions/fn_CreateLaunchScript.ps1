@@ -357,25 +357,28 @@ Function New-LaunchScriptacserverPS {
         Get-StopServerInstall
         $global:launchParams = '@("$global:EXEDIR\$global:EXE")'
 }
-Function New-LaunchScriptswarmserverPS {
-        # Alien Swarm Dedicated Server
-        #       635
-        # https://developer.valvesoftware.com/wiki/Alien_Swarm_Dedicated_Server
-        $global:EXE = "swarm"
+Function New-LaunchScriptasrdserverPS {
+        # Alien Swarm: Reactive Drop Dedicated Server
+        #        (582400)
+        # https://steamcommunity.com/app/563560/discussions/1/1319961868328134237/
+        $global:EXE = "asrd"
         $global:EXEDIR = ""
         $global:GAME = "protocol-valve"
-        $global:PROCESS = "swarm"
-        $global:SERVERCFGDIR = "swarm\cfg"
+        $global:PROCESS = "asrd"
+        $global:SERVERCFGDIR = "reactivedrop\cfg"
+        $global:LOGDIR = "reactivedrop"
         Get-StopServerInstall
-        # GSLT used for running a public server.
+
         #  First Run Vars \/ \/ Add Here
         $global:RCONPORT = "${global:PORT}"
+        ${global:defaultIP} = "${global:IP}"
+        ${global:defaultPORT} = "27015"
         $global:defaultMAP = "lobby"
-        $global:defaultMAXPLAYERS = "4"
+        $global:defaultMAXPLAYERS = "10"
         #     Add here     /\ /\ /\ 
-        Get-UserInput 0 0 0 0 0 0 0 1 0 1
+        Get-UserInput 1 1 0 0 0 0 0 1 0 1
         Select-RenameSource
-        $global:launchParams = '@("$global:EXE -console -game swarm +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} -autoupdate -condebug")'
+        $global:launchParams = '@("$global:EXE -console -game reactivedrop -ip ${global:IP} -port ${global:PORT} +map ${global:MAP} -maxplayers ${global:MAXPLAYERS} +exec server.cfg -condebug")'
 }
 Function New-LaunchScriptBOserverPS {
         # Ballistic Overkill Dedicated Server
@@ -400,9 +403,9 @@ Function New-LaunchScriptBOserverPS {
         ${global:defaultIP} = "${global:IP}"
         $global:defaultGSLT = ""
         #     Add here     /\ /\ /\
-        Get-UserInput 1 0 0 0 0 0 0 0 1
+        #Get-UserInput 1 0 0 0 0 0 0 0 1
         # game config
-        Select-EditSourceCFG
+        #Select-EditSourceCFG
         $global:launchParams = '@("$global:EXE -batchmode -nographics -dedicated ")'
 }
 Function New-LaunchScriptAHL2serverPS {

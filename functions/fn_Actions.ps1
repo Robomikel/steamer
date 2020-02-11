@@ -33,6 +33,8 @@ Function Install-ServerFiles {
         .\steamCMD +@ShutdownOnFailedCommand 1 +@NoPromptForPassword 1 +login anonymous +force_install_dir $global:currentdir\$global:server +app_update $global:APPID $global:Branch +Exit
     }
     Else {
+        Write-Host "Enter Username for Steam install" -F Cyan -B Black
+        $global:username = Read-host
         .\steamCMD +@ShutdownOnFailedCommand 1 +login $global:username +force_install_dir $global:currentdir\$global:server +app_update $global:APPID $global:Branch +Exit
     }
     If (($?) -or ($LASTEXITCODE -eq 7)) {
@@ -52,7 +54,7 @@ Function Install-ServerFiles {
 }
 Function Install-Anonserver {
     If ($global:ANON -eq "no") {
-        Write-Host "Enter Username for Steam install, Steam.exe will prompt for Password and Steam Gaurd" -F Cyan -B Black
+        Write-Host "Enter Username for Steam install" -F Cyan -B Black
         $global:username = Read-host
     }
     Write-Host '****    Creating SteamCMD Run txt   *****' -F M -B Black 
@@ -1487,9 +1489,9 @@ Function Read-AppID {
         Set-Console  >$null 2>&1
         New-LaunchScriptacserverPS
     }
-    ElseIf ($global:AppID -eq 635) {
+    ElseIf ($global:AppID -eq 582400) {
         Set-Console  >$null 2>&1
-        New-LaunchScriptswarmserverPS
+        New-LaunchScriptasrdserverPS
     }
     ElseIf ($global:AppID -eq 416880) {
         Set-Console  >$null 2>&1
