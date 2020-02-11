@@ -53,7 +53,7 @@ Function New-LaunchScriptdoiserverPS {
         $global:COOPPLAYERS = "8"
         $global:WORKSHOP = "1"
         $global:SV_PURE = "0"
-        $global:HOSTNAME = "PS Steamer"
+        $global:HOSTNAME = "$env:USERNAME"
         $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
         $global:RCONPORT = "$global:PORT"
         #     Add here     /\ /\ /\ 

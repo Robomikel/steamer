@@ -45,7 +45,7 @@ Function New-LaunchScriptRustPS {
                 $global:RCONPORT = "28016"
                 $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
                 $global:RCONWEB = "1"
-                $global:HOSTNAME = "PS steamer"
+                $global:HOSTNAME = "$env:USERNAME"
                 $global:MAXPLAYERS = "32"
                 $global:SEED = "$global:RANDOMSEED"
                 $global:WORLDSIZE = "3000"

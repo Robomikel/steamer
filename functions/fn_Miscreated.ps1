@@ -36,7 +36,7 @@ Function New-LaunchScriptMiscreatedPS {
                 $global:PORT = "64090"
                 # $global:RCONPORT += "4"
                 $global:RCONPASSWORD = "$global:RANDOMPASSWORD"
-                $global:HOSTNAME = "PS Steamer"
+                $global:HOSTNAME = "$env:USERNAME"
                 $global:MAXPLAYERS = "32"
                 #     Add here     /\ /\ /\  
         }

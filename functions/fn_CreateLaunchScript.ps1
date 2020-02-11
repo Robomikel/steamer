@@ -79,7 +79,7 @@ Function New-LaunchScriptKF2serverPS {
         $global:defaultMAP = "KF-BioticsLab"
         $global:defaultGAMEMODE = "KFGameContent.KFGameInfo_Endless"
         $global:defaultDIFF = "0"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultADMINPASSWORD = "$global:RANDOMPASSWORD"
         #  Edit Vars here     /\ /\ /\
         Get-UserInput 0 1 1 0 0 1 0 0 0 1 0 0 1 1 1 0
@@ -126,7 +126,7 @@ Function New-LaunchScriptLFD2serverPS {
         $global:defaultCLIENTPORT = "27005"
         $global:defaultMAP = "c1m1_hotel"
         $global:defaultMAXPLAYERS = "8"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #  Edit Vars here     /\ /\ /\
         Get-UserInput 1 1 0 0 1 1 0 1 0 1 1
@@ -159,7 +159,7 @@ Function New-LaunchScriptArkPS {
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         $global:defaultMAP = "TheIsland"
         $global:defaultMAXPLAYERS = "70"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         #     Add here     /\ /\ /\
         Get-UserInput 1 1 1 1 1 1 0 1 0 1 0 0
         Select-EditSourceCFG
@@ -436,7 +436,7 @@ Function New-LaunchScriptAHL2serverPS {
         $global:defaultGSLT = ""
         $global:defaultMAP = "act_airport"
         $global:defaultMAXPLAYERS = "20"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #     Add here     /\ /\ /\
         Get-UserInput 1 1 0 0 0 0 0 1 1 1 1 1
@@ -474,7 +474,7 @@ Function New-LaunchScriptBB2serverPS {
         $global:defaultGSLT = ""
         $global:defaultMAP = "bba_barracks"
         $global:defaultMAXPLAYERS = "20"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #     Add here     /\ /\ /\
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
@@ -521,7 +521,7 @@ Function New-LaunchScriptHL2DMserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "dm_lockdown"
         $global:defaultmaxplayers = "16"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         # input questions \/\/
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
@@ -573,7 +573,7 @@ Function New-LaunchScriptDystopiaserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "dys_broadcast"
         $global:defaultmaxplayers = "16"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         # input questions \/\/
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
@@ -624,7 +624,7 @@ Function New-LaunchScriptBlackMesaserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "dm_bounce"
         $global:defaultmaxplayers = "16"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1 0 0 0 0
@@ -674,7 +674,7 @@ Function New-LaunchScriptDODSserverPS {
         #$global:defaultclientport="27005"
         $global:defaultmap = "dod_Anzio"
         $global:defaultmaxplayers = "16"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 1 1 0 0 0 0 0 1 0 1 1 0 0
         Get-UserInput 1 1 0 0 0 0 0 1 0 1 0 0 0
@@ -803,7 +803,7 @@ Function New-LaunchScriptGMODserverPS {
         $global:defaultmap = "gm_construct"
         $global:defaultmaxplayers = "16"
         $global:defaultgamemode = "sandbox"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"     
         $global:tickrate = "66"
         # API key visit - https://steamcommunity.com/dev/apikey
@@ -861,7 +861,7 @@ Function New-LaunchScriptTF2serverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "cp_badlands"
         $global:defaultmaxplayers = "16"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         $global:gslt = ""
         #--->input questions 
@@ -913,7 +913,7 @@ Function New-LaunchScriptNMRIHserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "nmo_broadway"
         $global:defaultmaxplayers = "8"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1 0
@@ -965,7 +965,7 @@ Function New-LaunchScriptbsserverPS {
         $global:defaultmap = "duel_winter"
         $global:defaultmaxplayers = "16"
         $global:defaultgslt = ""
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 1 1 1 1
@@ -1016,7 +1016,7 @@ Function New-LaunchScriptFOFserverPS {
         $global:defaultsourcetvport = "27020"
         $global:defaultmap = "fof_depot"
         $global:defaultmaxplayers = "20"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 0 1 1 1
@@ -1114,7 +1114,7 @@ Function New-LaunchScriptSvenCoopserverPS {
         $global:defaultclientport="27005"
         $global:defaultmap="svencoop1"
         $global:defaultmaxplayers="16"
-        $global:defaultHOSTNAME = "PS Steamer"
+        $global:defaultHOSTNAME = "$env:USERNAME"
         $global:defaultRCONPASSWORD = "$global:RANDOMPASSWORD"
         #--->input questions 
         Get-UserInput 1 1 0 0 1 1 0 1 0 1 1 1 0
