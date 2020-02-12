@@ -1,4 +1,4 @@
-# Steamer (superseding project https://github.com/Robomikel/Steam-Server-Manger)
+# Steamer (superseding project https://github.com/Robomikel/Steam-Server-Manager)
 PowerShell Steam Server Scripter
 - Install and Manage Steam Servers with Powershell.
 
